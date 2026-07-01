@@ -1,0 +1,39 @@
+{
+  "name": "hypertaks",
+  "version": "1.0.0",
+  "description": "Hypertaks Founder operating mode — cross-agent plugin: intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
+  "license": "MIT",
+  "author": "abrur <abrur_nic@yahoo.com>",
+  "homepage": "https://github.com/aabrur/hypertaks-agent#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aabrur/hypertaks-agent.git"
+  },
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "skill",
+    "founder",
+    "multi-agent",
+    "solidity",
+    "web3",
+    "strategy",
+    "finance",
+    "supply-chain",
+    "iot"
+  ],
+  "files": [
+    "skills/",
+    ".claude-plugin/",
+    ".codex-plugin/",
+    ".cursor-plugin/",
+    ".kimi-plugin/",
+    ".openclaw/",
+    ".hermes/",
+    ".opencode/",
+    ".pi/",
+    ".agents/",
+    "README.md",
+    "LICENSE"
+  ]
+}

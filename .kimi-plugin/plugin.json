@@ -1,0 +1,37 @@
+{
+  "name": "hypertaks",
+  "version": "1.0.0",
+  "description": "Hypertaks Founder operating mode — intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
+  "author": {
+    "name": "abrur",
+    "email": "abrur_nic@yahoo.com"
+  },
+  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "license": "MIT",
+  "keywords": [
+    "founder",
+    "strategy",
+    "multi-agent",
+    "web3",
+    "finance",
+    "supply-chain",
+    "iot"
+  ],
+  "skills": "./skills/",
+  "sessionStart": {
+    "skill": "hypertaks"
+  },
+  "skillInstructions": "Kimi Code tool mapping for the Hypertaks skill:\n\n- When the skill's Phase 0 intake gate says to ask the user clarifying/verification questions, call Kimi Code's `AskUserQuestion` tool (1 question, 2-4 concrete options, recommended option first suffixed with `(Recommended)`). Do not render those choices as plain assistant text unless `AskUserQuestion` is unavailable.\n- When the skill says to spawn the 5 specialist agents (Phase 4), use Kimi Code's `Agent` tool. Use a Kimi subagent type such as `coder` for build/engineering roles and `explore`/`plan` for research/strategy roles; do not pass `general-purpose`. Paste each filled agent brief into `prompt` with a short `description`. Keep dependent steps sequential; use `run_in_background: true` only for independent work.\n- When the skill refers to the `Skill` tool, use Kimi Code's native `Skill` tool. When it refers to `TodoWrite`, use `TodoList`.\n- Use Kimi Code's `Read`, `Write`, `Edit`, `Bash`, `Grep`, `Glob`, `FetchURL`, `WebSearch`, and MCP tools by their actual exposed names. For file-content search use `Grep`; for finding files by path use `Glob`; to fetch a URL use `FetchURL`.",
+  "interface": {
+    "displayName": "Hypertaks Founder",
+    "shortDescription": "Founder/CEO operating mode: intake gate, then exactly 5 specialist agents.",
+    "longDescription": "Turns your agent into the Hypertaks Founder: an up-front intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
+    "developerName": "abrur",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/aabrur/hypertaks-agent"
+  }
+}

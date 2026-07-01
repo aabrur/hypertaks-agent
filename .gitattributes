@@ -1,0 +1,16 @@
+# Normalize line endings across platforms
+* text=auto eol=lf
+
+# Markdown and manifests are text
+*.md   text
+*.json text
+*.toml text
+*.yml  text
+*.yaml text
+
+# Treat common binaries correctly
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
+*.zip binary
