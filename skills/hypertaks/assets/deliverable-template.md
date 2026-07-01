@@ -37,7 +37,10 @@ was built.]
 
 ## Daily-note log snippet
 
-Append to `C:\Users\abrur\AI-Agent\Obsidian Vault\Daily\YYYY-MM-DD.md`:
+If the environment has filesystem or Obsidian MCP access to the workspace,
+append to `C:\Users\abrur\AI-Agent\Obsidian Vault\Daily\YYYY-MM-DD.md`.
+Otherwise, include this snippet inline at the end of the deliverable above so
+the Boss can paste it into the vault manually:
 
 ```markdown
 ## Hypertaks — [Task title] (HH:MM)

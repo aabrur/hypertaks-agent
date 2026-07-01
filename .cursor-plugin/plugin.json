@@ -2,7 +2,7 @@
   "name": "hypertaks",
   "displayName": "Hypertaks Founder",
   "description": "Founder/CEO operating mode: intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com"

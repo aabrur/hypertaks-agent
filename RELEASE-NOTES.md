@@ -1,5 +1,28 @@
 # Release Notes
 
+## v1.1.0 — Cross-surface portability
+
+Makes the skill run correctly on AI surfaces with no agent/task-spawning tool
+(claude.ai chat, other assistants, bare API access), not just Claude Code.
+
+### Highlights
+
+- **Environment modes** — a new `SKILL.md` section makes Phase 4 detect
+  whether an Agent/Task-spawning tool is available. **Orchestrated mode**
+  spawns 5 real subagents (unchanged Claude Code behavior). **Synthesized
+  mode** produces all 5 role perspectives directly in one response, in the
+  role's voice, with no fabricated tool calls — used automatically wherever
+  no spawning tool exists.
+- **Portable intake gate** — Phase 0 falls back to plain numbered chat
+  questions when `AskUserQuestion` is unavailable; the gate itself is never
+  skipped, only its UI changes.
+- **Optional vault logging** — Phase 5's Daily-note log now only writes to
+  the local Obsidian vault when filesystem/MCP access exists; otherwise the
+  same log snippet is included inline in the deliverable for manual pasting.
+- No change to the 5-phase loop's discipline: intake gate, exactly 5 roles,
+  auto-detected equipping, and integrated deliverable all still apply on
+  every surface.
+
 ## v1.0.0 — Initial release
 
 First public release of **Hypertaks Founder**, a founder/CEO-grade operating

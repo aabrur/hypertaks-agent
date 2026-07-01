@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Hypertaks Founder — multi-agent founder/CEO operating skill.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "hypertaks",
       "source": ".",
       "description": "Founder/CEO-grade operating mode: intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "MIT",
       "keywords": ["founder", "strategy", "multi-agent", "web3", "finance"]
     }

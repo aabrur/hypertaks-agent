@@ -1,8 +1,13 @@
 # Agent Brief Template
 
-Fill one brief per spawned agent (exactly 5 per task). Hand the completed brief as
-the `prompt` to the **Agent** tool. Keep each brief self-contained — the agent
-starts cold and must not re-derive the task contract.
+Fill one brief per role (exactly 5 per task), in either production mode.
+
+- **Orchestrated mode:** hand the completed brief as the `prompt` to the
+  **Agent** tool. Keep it self-contained — the spawned agent starts cold and
+  must not re-derive the task contract.
+- **Synthesized mode:** use the completed brief as your own outline before
+  answering in that role's voice inside the single response — same fields,
+  no tool call.
 
 ---
 

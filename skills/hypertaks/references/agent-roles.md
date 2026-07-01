@@ -54,9 +54,18 @@ leans on, and the kinds of plugins/MCP connectors it typically wants.
 
 Do **not** invent skills or connectors. Detect what actually exists, then match.
 
+0. **Detect the production mode first.** Check whether an agent/task-spawning
+   tool is present (e.g. Claude Code's `Agent` tool). If yes, run Phase 4 in
+   orchestrated mode. If no such tool exists in this environment (claude.ai
+   chat, most other assistants, bare API access), run Phase 4 in synthesized
+   mode — see **Environment modes** in `SKILL.md`. This does not change how
+   many roles get picked or equipped, only how they get produced.
 1. **Enumerate availability at runtime.** Read the environment's available-skills
    list and the MCP tool list surfaced in the session (system reminders, the tool
-   registry, `ToolSearch` for deferred tools). This is the source of truth.
+   registry, `ToolSearch` for deferred tools). This is the source of truth. On
+   surfaces with no such registry to read, treat step 2 below as "no typical
+   tools available" and equip every role with core reasoning + its frameworks
+   only.
 2. **Match each of the 5 agents to relevant, present tools** using the table
    above as a starting map. If a "typical" tool is absent, pick the closest
    available one or fall back to core tools (WebSearch, Bash, Read/Write/Edit).
