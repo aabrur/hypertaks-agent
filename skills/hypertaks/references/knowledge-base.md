@@ -18,9 +18,9 @@ technology.
 
 ## Contents
 
-1. **Teori (Theory)** — fundamental laws, principles, and mental models
+1. **Theory** — fundamental laws, principles, and mental models
    (business, learning, science, technology).
-2. **Metode (Method)** — operational procedures and execution techniques.
+2. **Method** — operational procedures and execution techniques.
 3. **Framework** — conceptual structures and lenses, from business strategy
    through ML/AI, architecture, security, compliance, and Web3/EIP standards.
 4. **Workflow** — a large flat catalog of structured workflows that also
@@ -29,196 +29,252 @@ technology.
 
 ---
 
-## 1. TEORI (THEORY)
+## 1. THEORY
 
-> **Definisi:** Prinsip fundamental, hukum, dan model mental yang menjelaskan *mengapa* sesuatu terjadi.
+> **Definition:** Fundamental principles, laws, and mental models that explain *why* something happens.
 
-### 1.1 Bisnis
-| Nama | Teori | Pencipta | Aplikasi Hypertaks |
-|------|-------|----------|-------------------|
-| **Theory of the Firm** | Perusahaan ada untuk meminimasi biaya transaksi pasar | Ronald Coase | Menentukan make-vs-buy decision untuk setiap komponen teknologi |
-| **Resource-Based View (RBV)** | Keunggulan kompetitif datang dari sumber daya langka & tak-tergantikan | Jay Barney | Audit internal capability sebelum ekspansi teknologi |
-| **Disruptive Innovation** | Inovasi yang memasuki pasar bawah lalu naik ke atas | Clayton Christensen | Menilai apakah produk teknologi kita disruptif atau sustaining |
-| **Network Effects** | Nilai produk meningkat seiring jumlah pengguna | Robert Metcalfe | Strategi growth & platform design |
-| **Blue Ocean Strategy** | Ciptakan ruang pasar baru, bukan bersaing di pasar merah | Kim & Mauborgne | Positioning produk teknologi |
-| **Long Tail** | Pasar niche terkumpul bisa lebih besar dari pasar mainstream | Chris Anderson | Strategi konten/produk dalam platform |
-| **Pareto Principle (80/20)** | 80% efek dari 20% penyebab | Vilfredo Pareto | Prioritasi fitur & resource allocation |
-| **Agency Theory** | Konflik kepentingan antara principal (owner) dan agent (manager) | Jensen & Meckling | Desain insentif untuk tim & founder |
-| **Behavioral Economics** | Manusia tidak selalu rasional; bias mempengaruhi keputusan | Kahneman & Tversky | UX design, pricing strategy, marketing copy |
-| **Transaction Cost Economics** | Biaya negosiasi, monitoring, dan enforcement | Oliver Williamson | Smart contract design & automation |
+### 1.1 Business
+| Name | Theory | Creator | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Theory of the Firm** | Firms exist to minimize market transaction costs | Ronald Coase | Make-vs-buy decision for every technology component |
+| **Resource-Based View (RBV)** | Competitive advantage comes from rare & inimitable resources | Jay Barney | Internal capability audit before technology expansion |
+| **Disruptive Innovation** | Innovation that enters the low-end market then moves up | Clayton Christensen | Assess whether our technology product is disruptive or sustaining |
+| **Network Effects** | Product value increases with the number of users | Robert Metcalfe | Growth strategy & platform design |
+| **Blue Ocean Strategy** | Create new market space, don't compete in red oceans | Kim & Mauborgne | Technology product positioning |
+| **Long Tail** | Aggregated niche markets can be larger than mainstream | Chris Anderson | Content/product strategy within platforms |
+| **Pareto Principle (80/20)** | 80% of effects come from 20% of causes | Vilfredo Pareto | Feature prioritization & resource allocation |
+| **Agency Theory** | Conflict of interest between principal (owner) and agent (manager) | Jensen & Meckling | Incentive design for teams & founders |
+| **Behavioral Economics** | Humans are not always rational; biases influence decisions | Kahneman & Tversky | UX design, pricing strategy, marketing copy |
+| **Transaction Cost Economics** | Costs of negotiation, monitoring, and enforcement | Oliver Williamson | Smart contract design & automation |
 
-### 1.2 Pembelajaran (Learning)
-| Nama | Teori | Pencipta | Aplikasi Hypertaks |
-|------|-------|----------|-------------------|
-| **Constructivism** | Pengetahuan dibangun aktif oleh pelajar, bukan diterima pasif | Piaget, Vygotsky | Desain tutorial & onboarding UX |
-| **Andragogy** | Pembelajaran orang dewasa: self-directed, experience-based, problem-centered | Malcolm Knowles | Training internal tim & user education |
-| **Spaced Repetition** | Review materi pada interval meningkat untuk retensi jangka panjang | Ebbinghaus, Pimsleur | Knowledge management & skill retention dalam tim |
-| **Deliberate Practice** | Latihan terstruktur di luar zona nyaman dengan feedback | K. Anders Ericsson | Upskilling tim engineering |
-| **Cognitive Load Theory** | Memori kerja terbatas; reduksi beban kognitif meningkatkan pembelajaran | John Sweller | UI/UX design & documentation |
-| **Zone of Proximal Development (ZPD)** | Belajar paling efektif di batas kemampuan saat ini dengan scaffolding | Vygotsky | Mentoring & code review |
-| **Bloom's Taxonomy** | Hierarki kognitif: remember → understand → apply → analyze → evaluate → create | Benjamin Bloom | Definisi skill level & hiring criteria |
-| **Self-Determination Theory** | Motivasi intrinsik: autonomy, competence, relatedness | Deci & Ryan | Desain kultur kerja & employee engagement |
-| **Double-Loop Learning** | Belajar tidak hanya "apa yang salah" tapi juga "mengapa aturan kita salah" | Chris Argyris | Post-mortem & retrospektif tim |
-| **Transfer of Learning** | Kemampuan menerapkan pengetahuan ke konteks baru | Robert Haskell | Cross-training & generalist agent design |
+### 1.2 Learning
+| Name | Theory | Creator | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Constructivism** | Knowledge is actively built by the learner, not passively received | Piaget, Vygotsky | Tutorial design & onboarding UX |
+| **Andragogy** | Adult learning: self-directed, experience-based, problem-centered | Malcolm Knowles | Internal team training & user education |
+| **Spaced Repetition** | Review material at increasing intervals for long-term retention | Ebbinghaus, Pimsleur | Knowledge management & skill retention within teams |
+| **Deliberate Practice** | Structured practice outside the comfort zone with feedback | K. Anders Ericsson | Engineering team upskilling |
+| **Cognitive Load Theory** | Working memory is limited; reducing cognitive load improves learning | John Sweller | UI/UX design & documentation |
+| **Zone of Proximal Development (ZPD)** | Learning is most effective at the boundary of current ability with scaffolding | Vygotsky | Mentoring & code review |
+| **Bloom's Taxonomy** | Cognitive hierarchy: remember → understand → apply → analyze → evaluate → create | Benjamin Bloom | Skill level definition & hiring criteria |
+| **Self-Determination Theory** | Intrinsic motivation: autonomy, competence, relatedness | Deci & Ryan | Work culture design & employee engagement |
+| **Double-Loop Learning** | Learn not just "what went wrong" but also "why our rules were wrong" | Chris Argyris | Post-mortem & team retrospectives |
+| **Transfer of Learning** | Ability to apply knowledge to new contexts | Robert Haskell | Cross-training & generalist agent design |
 
-### 1.3 Sains
-| Nama | Teori | Pencipta | Aplikasi Hypertaks |
-|------|-------|----------|-------------------|
-| **Scientific Method** | Observasi → Hipotesis → Eksperimen → Analisis → Kesimpulan | Galileo, Bacon | A/B testing & data-driven decisions |
-| **Falsification** | Teori ilmiah harus bisa dibuktikan salah | Karl Popper | Product validation: cari bukti produk kita salah, bukan benar |
-| **Bayesian Inference** | Update keyakinan berdasarkan evidence baru | Thomas Bayes | Prior belief → posterior belief dalam decision-making |
-| **Complexity Theory** | Sistem kompleks: emergent behavior, tipping points, adaptasi | Santa Fe Institute | Platform scaling & ecosystem dynamics |
-| **Systems Thinking** | Memahami hubungan dan feedback loop, bukan komponen isolasi | Jay Forrester, Senge | Arsitektur sistem & organizational design |
-| **Chaos Theory** | Sensitivitas terhadap kondisi awal; prediksi jangka panjang sulit | Edward Lorenz | Risk management & scenario planning |
-| **Evolutionary Theory** | Seleksi alam, adaptasi, spesiasi | Charles Darwin | Product iteration & market fit evolution |
-| **Thermodynamics (2nd Law)** | Entropi selalu meningkat; sistem terbuka membutuhkan energi masuk | Clausius, Kelvin | Technical debt management |
-| **Information Theory** | Entropi informasi, channel capacity, noise | Claude Shannon | Data compression, communication protocol, API design |
-| **Control Theory** | Feedback loop untuk menjaga sistem pada setpoint | Norbert Wiener | Autoscaling, monitoring, self-healing systems |
-| **Game Theory** | Interaksi strategis antar aktor rasional | John von Neumann, Nash | Pricing strategy, competitive analysis, mechanism design |
-| **Network Theory** | Properti graf, centrality, small-world, scale-free | Barabási, Watts | Social graph, recommendation engine, blockchain topology |
+### 1.3 Science
+| Name | Theory | Creator | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Scientific Method** | Observation → Hypothesis → Experiment → Analysis → Conclusion | Galileo, Bacon | A/B testing & data-driven decisions |
+| **Falsification** | Scientific theories must be falsifiable | Karl Popper | Product validation: seek evidence that our product is wrong, not right |
+| **Bayesian Inference** | Update beliefs based on new evidence | Thomas Bayes | Prior belief → posterior belief in decision-making |
+| **Complexity Theory** | Complex systems: emergent behavior, tipping points, adaptation | Santa Fe Institute | Platform scaling & ecosystem dynamics |
+| **Systems Thinking** | Understand relationships and feedback loops, not isolated components | Jay Forrester, Senge | System architecture & organizational design |
+| **Chaos Theory** | Sensitivity to initial conditions; long-term prediction is difficult | Edward Lorenz | Risk management & scenario planning |
+| **Evolutionary Theory** | Natural selection, adaptation, speciation | Charles Darwin | Product iteration & market fit evolution |
+| **Thermodynamics (2nd Law)** | Entropy always increases; open systems require energy input | Clausius, Kelvin | Technical debt management |
+| **Information Theory** | Information entropy, channel capacity, noise | Claude Shannon | Data compression, communication protocol, API design |
+| **Control Theory** | Feedback loops to maintain system at setpoint | Norbert Wiener | Autoscaling, monitoring, self-healing systems |
+| **Game Theory** | Strategic interactions among rational actors | John von Neumann, Nash | Pricing strategy, competitive analysis, mechanism design |
+| **Network Theory** | Graph properties, centrality, small-world, scale-free | Barabási, Watts | Social graph, recommendation engine, blockchain topology |
 
-### 1.4 Teknologi
-| Nama | Teori | Pencipta | Aplikasi Hypertaks |
-|------|-------|----------|-------------------|
-| **Turing Machine** | Model komputasi universal | Alan Turing | Batasan komputasi & algorithm design |
-| **CAP Theorem** | Consistency, Availability, Partition Tolerance — pilih dua | Eric Brewer | Arsitektur database & distributed system |
-| **Conway's Law** | Sistem software mencerminkan struktur komunikasi organisasi | Mel Conway | Organizational design untuk arsitektur microservices |
-| **Brooks's Law** | Menambah orang ke proyek terlambat membuatnya lebih lambat | Fred Brooks | Team scaling & project management |
-| **Gall's Law** | Sistem kompleks yang berhasil selalu berevolusi dari sistem sederhana | John Gall | MVP design & iterative development |
-| **Hyrum's Law** | Dengan cukup banyak user, semua perilaku observable menjadi API | Hyrum Wright | Backward compatibility & API design |
-| **Metcalfe's Law** | Nilai jaringan ∝ n² | Robert Metcalfe | Platform growth strategy |
-| **Amdahl's Law** | Speedup dibatasi oleh bagian serial | Gene Amdahl | Parallel computing & performance optimization |
-| **Occam's Razor** | Entitas tidak boleh dikalikan tanpa kebutuhan | William of Ockham | Simple architecture over complex |
-| **Law of Demeter** | Unit software hanya berkomunikasi dengan unit terdekat | Ian Holland | Loose coupling & encapsulation |
-| **Postel's Law** | Konservatif dalam mengirim, liberal dalam menerima | Jon Postel | API design & interoperability |
-| **Pareto Efficiency** | Tidak ada yang bisa lebih baik tanpa membuat yang lain lebih buruk | Vilfredo Pareto | Trade-off analysis dalam engineering |
-| **Lindy Effect** | Umur teknologi masa depan ∝ umur masa lalu | Benoît Mandelbrot | Technology stack selection |
-| **Worse is Better** | Simplicity interface lebih penting dari kesempurnaan implementasi | Richard Gabriel | Product design & API philosophy |
+### 1.4 Technology
+| Name | Theory | Creator | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Turing Machine** | Universal computation model | Alan Turing | Computation boundaries & algorithm design |
+| **CAP Theorem** | Consistency, Availability, Partition Tolerance — pick two | Eric Brewer | Database architecture & distributed system design |
+| **Conway's Law** | Software systems mirror organizational communication structure | Mel Conway | Organizational design for microservices architecture |
+| **Brooks's Law** | Adding people to a late project makes it later | Fred Brooks | Team scaling & project management |
+| **Gall's Law** | Successful complex systems always evolve from simple systems | John Gall | MVP design & iterative development |
+| **Hyrum's Law** | With enough users, all observable behavior becomes an API | Hyrum Wright | Backward compatibility & API design |
+| **Metcalfe's Law** | Network value ∝ n² | Robert Metcalfe | Platform growth strategy |
+| **Amdahl's Law** | Speedup is limited by the serial portion | Gene Amdahl | Parallel computing & performance optimization |
+| **Occam's Razor** | Entities should not be multiplied without necessity | William of Ockham | Simple architecture over complex |
+| **Law of Demeter** | Software units only communicate with immediate neighbors | Ian Holland | Loose coupling & encapsulation |
+| **Postel's Law** | Be conservative in what you send, liberal in what you accept | Jon Postel | API design & interoperability |
+| **Pareto Efficiency** | No one can be made better off without making someone worse off | Vilfredo Pareto | Trade-off analysis in engineering |
+| **Lindy Effect** | Future technology lifespan ∝ past lifespan | Benoît Mandelbrot | Technology stack selection |
+| **Worse is Better** | Interface simplicity is more important than implementation perfection | Richard Gabriel | Product design & API philosophy |
 
 ---
 
-## 2. METODE (METHOD)
+## 2. METHOD
 
-> **Definisi:** Prosedur sistematis, langkah-langkah operasional, dan teknik eksekusi untuk mencapai hasil.
+> **Definition:** Systematic procedures, operational steps, and execution techniques to achieve results.
 
-### 2.1 Bisnis
-| Nama | Metode | Konteks | Aplikasi Hypertaks |
-|------|--------|---------|-------------------|
-| **Lean Startup** | Build-Measure-Learn loop dengan MVP | Startup | Validasi ide bisnis sebelum full build |
+### 2.1 Business
+| Name | Method | Context | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Lean Startup** | Build-Measure-Learn loop with MVP | Startup | Business idea validation before full build |
 | **Customer Development** | Customer Discovery → Validation → Creation → Company Building | Steve Blank | User research & product-market fit |
-| **Jobs-to-be-Done (JTBD)** | Pelanggan "mempekerjakan" produk untuk menyelesaikan tugas | Clayton Christensen | Feature prioritization & UX design |
+| **Jobs-to-be-Done (JTBD)** | Customers "hire" products to get jobs done | Clayton Christensen | Feature prioritization & UX design |
 | **Design Thinking** | Empathize → Define → Ideate → Prototype → Test | IDEO, Stanford d.school | Product innovation & problem solving |
-| **Business Model Canvas** | 9 blok: Kanvas bisnis di satu halaman | Alexander Osterwalder | Business planning & pivot analysis |
+| **Business Model Canvas** | 9 blocks: one-page business canvas | Alexander Osterwalder | Business planning & pivot analysis |
 | **Value Proposition Canvas** | Customer Profile + Value Map | Osterwalder | Messaging & product positioning |
-| **OKR (Objectives & Key Results)** | Tujuan ambisius + hasil terukur | Andy Grove | Goal-setting untuk tim & produk |
-| **Pretotyping** | Uji ide dengan eksperimen murah sebelum prototyping | Alberto Savoia | Validasi konsep dengan biaya minimal |
-| **Wizard of Oz** | Simulasikan otomasi dengan manusia di belakang | HCI Research | MVP tanpa AI/backend sebenarnya |
-| **Concierge MVP** | Layani pelanggan secara manual untuk memahami kebutuhan | Eric Ries | Service design sebelum automation |
+| **OKR (Objectives & Key Results)** | Ambitious goals + measurable outcomes | Andy Grove | Goal-setting for teams & products |
+| **Pretotyping** | Test ideas with cheap experiments before prototyping | Alberto Savoia | Concept validation with minimal cost |
+| **Wizard of Oz** | Simulate automation with humans behind the scenes | HCI Research | MVP without real AI/backend |
+| **Concierge MVP** | Serve customers manually to understand needs | Eric Ries | Service design before automation |
 | **Pirate Metrics (AARRR)** | Acquisition, Activation, Retention, Referral, Revenue | Dave McClure | Funnel analysis & growth metrics |
-| **Cohort Analysis** | Kelompokkan user berdasarkan waktu/jenis untuk analisis perilaku | - | Retention & churn analysis |
-| **Unit Economics** | CAC, LTV, Contribution Margin per unit | - | Profitability analysis & pricing |
-| **Bootstrapping** | Pertumbuhan dari revenue internal tanpa external funding | - | Cash flow management untuk startup |
-| **Blitzscaling** | Pertumbuhan prioritas utama meski tidak efisien | Reid Hoffman | Hypergrowth strategy |
+| **Cohort Analysis** | Group users by time/type for behavior analysis | — | Retention & churn analysis |
+| **Unit Economics** | CAC, LTV, Contribution Margin per unit | — | Profitability analysis & pricing |
+| **Bootstrapping** | Growth from internal revenue without external funding | — | Cash flow management for startups |
+| **Blitzscaling** | Growth as top priority even if inefficient | Reid Hoffman | Hypergrowth strategy |
 
-### 2.2 Pembelajaran
-| Nama | Metode | Konteks | Aplikasi Hypertaks |
-|------|--------|---------|-------------------|
-| **Spaced Repetition System (SRS)** | Review flashcard dengan interval eksponensial | Language learning | Knowledge retention dalam tim |
-| **Feynman Technique** | Jelaskan konsep sederhana untuk mengidentifikasi gap | Richard Feynman | Technical knowledge transfer |
+### 2.2 Learning
+| Name | Method | Context | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Spaced Repetition System (SRS)** | Review flashcards at exponential intervals | Language learning | Knowledge retention within teams |
+| **Feynman Technique** | Explain concepts simply to identify gaps | Richard Feynman | Technical knowledge transfer |
 | **SQ3R** | Survey → Question → Read → Recite → Review | Francis Robinson | Research & documentation reading |
-| **Cornell Notes** | Pembagian halaman: catatan, cue, summary | Walter Pauk | Meeting notes & knowledge capture |
-| **Mind Mapping** | Visualisasi hierarki ide dari pusat ke luar | Tony Buzan | Brainstorming & planning |
-| **Active Recall** | Uji diri sendiri tanpa melihat materi | - | Skill assessment & interview prep |
-| **Interleaving** | Campur topik berbeda dalam satu sesi latihan | - | Cross-training tim |
-| **Scaffolding** | Dukungan bertahap yang dikurangi seiring kemajuan | Vygotsky | Onboarding & skill development |
-| **Peer Instruction** | Diskusi antar peer untuk konsep sulit | Eric Mazur | Code review & pair programming |
-| **Mastery Learning** | Pelajar harus mencapai threshold sebelum lanjut | Benjamin Bloom | Quality gate dalam development |
-| **Microlearning** | Konten pembelajaran dalam chunk kecil (3-5 menit) | - | Documentation & training modules |
-| **Action Learning** | Belajar dari masalah nyata dalam tim | Reg Revans | Problem-solving workshop |
-| **Case Method** | Analisis kasus bisnis nyata | Harvard Business School | Business decision training |
-| **Simulation** | Latihan dalam environment yang meniru nyata | - | Testing & staging environment design |
-| **Reflective Practice** | Refleksi aktif atas pengalaman untuk pembelajaran | Donald Schön | Retrospective & post-mortem |
+| **Cornell Notes** | Page division: notes, cue, summary | Walter Pauk | Meeting notes & knowledge capture |
+| **Mind Mapping** | Visual hierarchy of ideas from center outward | Tony Buzan | Brainstorming & planning |
+| **Active Recall** | Test yourself without looking at material | — | Skill assessment & interview prep |
+| **Interleaving** | Mix different topics in one practice session | — | Cross-training teams |
+| **Scaffolding** | Gradual support reduced as progress is made | Vygotsky | Onboarding & skill development |
+| **Peer Instruction** | Peer discussion for difficult concepts | Eric Mazur | Code review & pair programming |
+| **Mastery Learning** | Learners must reach threshold before advancing | Benjamin Bloom | Quality gates in development |
+| **Microlearning** | Learning content in small chunks (3-5 minutes) | — | Documentation & training modules |
+| **Action Learning** | Learn from real problems in teams | Reg Revans | Problem-solving workshops |
+| **Case Method** | Analysis of real business cases | Harvard Business School | Business decision training |
+| **Simulation** | Practice in environment that mimics reality | — | Testing & staging environment design |
+| **Reflective Practice** | Active reflection on experience for learning | Donald Schön | Retrospectives & post-mortems |
 
-### 2.3 Sains
-| Nama | Metode | Konteks | Aplikasi Hypertaks |
-|------|--------|---------|-------------------|
-| **Scientific Method** | Hipotesis → Eksperimen → Data → Analisis → Kesimpulan | Universal | Data-driven product decisions |
-| **Controlled Experiment** | Kelompok kontrol vs treatment | Lab science | A/B testing & feature rollout |
-| **Double-Blind Study** | Subjek & peneliti tidak tahu treatment | Medical research | Bias-free user testing |
-| **RCT (Randomized Controlled Trial)** | Randomisasi untuk causal inference | Epidemiology | Causal impact analysis |
-| **Grounded Theory** | Teori muncul dari data, bukan dari hipotesis awal | Glaser & Strauss | Qualitative user research |
-| **Ethnography** | Observasi partisipatif dalam kultur asli | Antropologi | Deep user research & contextual inquiry |
-| **Case Study** | Investigasi mendalam satu instance | Social science | Customer success analysis |
-| **Survey Method** | Kuesioner terstruktur untuk populasi besar | Sociology | User satisfaction & NPS |
-| **Longitudinal Study** | Pengamatan pada subjek yang sama dari waktu ke waktu | Developmental psychology | User behavior over time |
-| **Meta-Analysis** | Analisis statistik dari banyak studi | Evidence synthesis | Competitive analysis aggregation |
-| **Root Cause Analysis (5 Whys)** | Tanya "mengapa" 5 kali untuk akar masalah | Toyota | Bug fixing & incident response |
-| **Ishikawa (Fishbone) Diagram** | Kategorisasi penyebab masalah | Kaoru Ishikawa | Systematic debugging & problem analysis |
-| **FMEA (Failure Mode & Effects Analysis)** | Identifikasi & prioritisasi potensi kegagalan | Aerospace | Risk assessment & system design |
-| **Monte Carlo Simulation** | Simulasi probabilistik dengan random sampling | Physics, Finance | Risk modeling & capacity planning |
-| **Sensitivity Analysis** | Uji bagaimana output berubah dengan input variasi | Economics | Parameter tuning & robustness testing |
-| **Replication** | Ulangi eksperimen untuk verifikasi | Science | Test reliability & CI/CD |
-| **Peer Review** | Evaluasi oleh rekan sejawat | Academic publishing | Code review & design review |
+### 2.3 Science
+| Name | Method | Context | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Scientific Method** | Hypothesis → Experiment → Data → Analysis → Conclusion | Universal | Data-driven product decisions |
+| **Controlled Experiment** | Control group vs treatment group | Lab science | A/B testing & feature rollout |
+| **Double-Blind Study** | Subjects & researchers don't know treatment | Medical research | Bias-free user testing |
+| **RCT (Randomized Controlled Trial)** | Randomization for causal inference | Epidemiology | Causal impact analysis |
+| **Grounded Theory** | Theory emerges from data, not initial hypotheses | Glaser & Strauss | Qualitative user research |
+| **Ethnography** | Participatory observation in native culture | Anthropology | Deep user research & contextual inquiry |
+| **Case Study** | In-depth investigation of a single instance | Social science | Customer success analysis |
+| **Survey Method** | Structured questionnaire for large populations | Sociology | User satisfaction & NPS |
+| **Longitudinal Study** | Observation of same subjects over time | Developmental psychology | User behavior over time |
+| **Meta-Analysis** | Statistical analysis of multiple studies | Evidence synthesis | Competitive analysis aggregation |
+| **Root Cause Analysis (5 Whys)** | Ask "why" 5 times to reach root cause | Toyota | Bug fixing & incident response |
+| **Ishikawa (Fishbone) Diagram** | Categorization of problem causes | Kaoru Ishikawa | Systematic debugging & problem analysis |
+| **FMEA (Failure Mode & Effects Analysis)** | Identify & prioritize potential failures | Aerospace | Risk assessment & system design |
+| **Monte Carlo Simulation** | Probabilistic simulation with random sampling | Physics, Finance | Risk modeling & capacity planning |
+| **Sensitivity Analysis** | Test how output changes with input variation | Economics | Parameter tuning & robustness testing |
+| **Replication** | Repeat experiments for verification | Science | Test reliability & CI/CD |
+| **Peer Review** | Evaluation by peers | Academic publishing | Code review & design review |
 
-### 2.4 Teknologi
-| Nama | Metode | Konteks | Aplikasi Hypertaks |
-|------|--------|---------|-------------------|
-| **Test-Driven Development (TDD)** | Red → Green → Refactor | Software Engineering | Kualitas kode & confidence |
-| **Behavior-Driven Development (BDD)** | Given-When-Then; spec executable | Dan North | Communication antara bisnis & dev |
-| **Domain-Driven Design (DDD)** | Model domain sebagai core; bounded contexts | Eric Evans | Complex business logic architecture |
-| **Event Storming** | Workshop untuk menemukan domain events | Alberto Brandolini | Discovery & modeling bisnis proses |
-| **Pair Programming** | Dua programmer di satu workstation | XP | Knowledge sharing & quality |
-| **Mob Programming** | Seluruh tim di satu kode | Woody Zuill | Complex problem solving |
-| **Code Review** | Inspeksi kode oleh rekan sebelum merge | Open Source | Quality & knowledge transfer |
-| **Refactoring** | Perubahan struktur tanpa mengubah perilaku | Martin Fowler | Technical debt management |
-| **Continuous Integration (CI)** | Merge kode ke trunk secara rutin | Kent Beck | Fast feedback & conflict reduction |
-| **Continuous Delivery (CD)** | Deploy kapan saja dengan confidence | Jez Humble | Release readiness |
-| **Infrastructure as Code (IaC)** | Infrastruktur didefinisikan & diprovide via kode | - | Reproducible environment |
-| **Chaos Engineering** | Sengaja buat kegagalan untuk membangun resilience | Netflix | System reliability testing |
-| **Feature Flags** | Aktif/nonaktif fitur tanpa deploy | Martin Fowler | Safe rollout & experimentation |
-| **Canary Release** | Deploy ke subset user terlebih dahulu | - | Risk mitigation |
-| **Blue-Green Deployment** | Dua environment identik; switch instan | - | Zero-downtime deployment |
-| **Strangler Fig Pattern** | Ganti sistem lama secara bertahap | Martin Fowler | Legacy migration |
-| **Circuit Breaker** | Hentikan request ke service yang gagal | Michael Nygard | Fault tolerance |
-| **Bulkhead** | Isolasi failure ke compartment terbatas | - | Resilience engineering |
-| **Saga Pattern** | Transaksi terdistribusi dengan kompensasi | - | Microservices transaction |
+### 2.4 Technology
+| Name | Method | Context | Hypertaks Application |
+|------|--------|---------|----------------------|
+| **Test-Driven Development (TDD)** | Red → Green → Refactor | Software Engineering | Code quality & confidence |
+| **Behavior-Driven Development (BDD)** | Given-When-Then; executable specs | Dan North | Communication between business & dev |
+| **Domain-Driven Design (DDD)** | Domain model as core; bounded contexts | Eric Evans | Complex business logic architecture |
+| **Event Storming** | Workshop to discover domain events | Alberto Brandolini | Discovery & modeling of business processes |
+| **Pair Programming** | Two programmers at one workstation | XP | Knowledge sharing & quality |
+| **Mob Programming** | Whole team on one piece of code | Woody Zuill | Complex problem solving |
+| **Code Review** | Peer code inspection before merge | Open Source | Quality & knowledge transfer |
+| **Refactoring** | Change structure without changing behavior | Martin Fowler | Technical debt management |
+| **Continuous Integration (CI)** | Regularly merge code to trunk | Kent Beck | Fast feedback & conflict reduction |
+| **Continuous Delivery (CD)** | Deploy anytime with confidence | Jez Humble | Release readiness |
+| **Infrastructure as Code (IaC)** | Infrastructure defined & provisioned via code | — | Reproducible environments |
+| **Chaos Engineering** | Deliberately cause failures to build resilience | Netflix | System reliability testing |
+| **Feature Flags** | Enable/disable features without deploy | Martin Fowler | Safe rollout & experimentation |
+| **Canary Release** | Deploy to subset of users first | — | Risk mitigation |
+| **Blue-Green Deployment** | Two identical environments; instant switch | — | Zero-downtime deployment |
+| **Strangler Fig Pattern** | Replace legacy systems gradually | Martin Fowler | Legacy migration |
+| **Circuit Breaker** | Stop requests to failing services | Michael Nygard | Fault tolerance |
+| **Bulkhead** | Isolate failure to limited compartments | — | Resilience engineering |
+| **Saga Pattern** | Distributed transactions with compensation | — | Microservices transactions |
 | **CQRS** | Separate read & write models | Greg Young | Performance & scalability |
-| **Event Sourcing** | Simpan state sebagai urutan event | Martin Fowler | Audit trail & state reconstruction |
-| **API-First** | Design API sebelum implementasi | - | Contract-driven development |
-| **Mobile-First / Responsive** | Design untuk mobile dulu | Luke Wroblewski | UX design |
-| **Progressive Enhancement** | Fungsionalitas dasar dulu, enhancement bertahap | - | Accessibility & resilience |
-| **Graceful Degradation** | Turunkan fungsionalitas saat resource terbatas | - | Reliability under stress |
-| **Load Balancing** | Distribusi beban ke multiple resources | - | Scalability |
-| **Caching Strategy** | Cache-Aside, Write-Through, Write-Behind | - | Performance optimization |
-| **Database Sharding** | Partisi horizontal data | - | Scalability data |
-| **Indexing & Query Optimization** | Struktur data untuk akses cepat | - | Database performance |
-| **Rate Limiting** | Batasi request per unit waktu | - | API protection & fairness |
-| **Webhook vs Polling** | Push vs pull untuk event notification | - | Real-time system design |
-| **GraphQL vs REST vs RPC** | Paradigma API berbeda | - | API architecture decision |
-| **Microservices vs Monolith** | Decomposition vs unified architecture | - | System architecture decision |
-| **Serverless** | Function-as-a-Service, event-driven | - | Cost optimization & scaling |
-| **Edge Computing** | Proses data di dekat sumber | - | Latency reduction |
-| **Zero Trust Architecture** | "Never trust, always verify" | - | Security architecture |
-| **DevSecOps** | Security diintegrasikan ke DevOps pipeline | - | Shift-left security |
-| **Observability (3 Pillars)** | Metrics, Logs, Traces | - | System monitoring |
+| **Event Sourcing** | Store state as sequence of events | Martin Fowler | Audit trail & state reconstruction |
+| **API-First** | Design API before implementation | — | Contract-driven development |
+| **Mobile-First / Responsive** | Design for mobile first | Luke Wroblewski | UX design |
+| **Progressive Enhancement** | Basic functionality first, enhancements gradually | — | Accessibility & resilience |
+| **Graceful Degradation** | Reduce functionality when resources are limited | — | Reliability under stress |
+| **Load Balancing** | Distribute load across multiple resources | — | Scalability |
+| **Caching Strategy** | Cache-Aside, Write-Through, Write-Behind | — | Performance optimization |
+| **Database Sharding** | Horizontal data partitioning | — | Data scalability |
+| **Indexing & Query Optimization** | Data structures for fast access | — | Database performance |
+| **Rate Limiting** | Limit requests per unit time | — | API protection & fairness |
+| **Webhook vs Polling** | Push vs pull for event notification | — | Real-time system design |
+| **GraphQL vs REST vs RPC** | Different API paradigms | — | API architecture decision |
+| **Microservices vs Monolith** | Decomposition vs unified architecture | — | System architecture decision |
+| **Serverless** | Function-as-a-Service, event-driven | — | Cost optimization & scaling |
+| **Edge Computing** | Process data near the source | — | Latency reduction |
+| **Zero Trust Architecture** | "Never trust, always verify" | — | Security architecture |
+| **DevSecOps** | Security integrated into DevOps pipeline | — | Shift-left security |
+| **Observability (3 Pillars)** | Metrics, Logs, Traces | — | System monitoring |
 | **SRE (Site Reliability Engineering)** | Error budgets, SLO, SLI | Google | Reliability management |
-| **GitOps** | Git sebagai source of truth untuk operations | Weaveworks | Infrastructure management |
+| **GitOps** | Git as source of truth for operations | Weaveworks | Infrastructure management |
 | **Trunk-Based Development** | Short-lived branches, frequent merge | Paul Hammant | Fast integration |
-| **Semantic Versioning** | MAJOR.MINOR.PATCH | - | Release management |
-| **Dependency Injection** | Inversi kontrol untuk testability | - | Maintainable code |
-| **Design Patterns (GoF)** | Solusi reusable untuk masalah umum | Gang of Four | Code quality |
+| **Semantic Versioning** | MAJOR.MINOR.PATCH | — | Release management |
+| **Dependency Injection** | Inversion of control for testability | — | Maintainable code |
+| **Design Patterns (GoF)** | Reusable solutions to common problems | Gang of Four | Code quality |
 | **SOLID Principles** | Single, Open/Closed, Liskov, Interface, Dependency | Robert Martin | OOP design |
-| **DRY / KISS / YAGNI** | Don't Repeat, Keep Simple, You Ain't Gonna Need It | - | Code simplicity |
-| **Clean Code** | Kode yang mudah dibaca & diubah | Robert Martin | Maintainability |
-| **Static Analysis** | Analisis kode tanpa eksekusi | - | Early bug detection |
-| **Fuzzing** | Input random untuk menemukan crash | - | Security testing |
-| **Penetration Testing** | Simulasi serangan | - | Security assessment |
-| **Threat Modeling** | Identifikasi ancaman secara sistematis | Microsoft | Security design |
-| **OWASP Top 10** | Risiko keamanan web paling kritis | OWASP | Security checklist |
-| **Dependency Scanning** | Audit library pihak ketiga | - | Supply chain security |
-| **SBOM (Software Bill of Materials)** | Daftar komponen software | - | Compliance & security |
+| **DRY / KISS / YAGNI** | Don't Repeat, Keep Simple, You Ain't Gonna Need It | — | Code simplicity |
+| **Clean Code** | Code that is easy to read & change | Robert Martin | Maintainability |
+| **Static Analysis** | Code analysis without execution | — | Early bug detection |
+| **Fuzzing** | Random input to find crashes | — | Security testing |
+| **Penetration Testing** | Simulated attacks | — | Security assessment |
+| **Threat Modeling** | Systematic threat identification | Microsoft | Security design |
+| **OWASP Top 10** | Most critical web security risks | OWASP | Security checklist |
+| **Dependency Scanning** | Audit third-party libraries | — | Supply chain security |
+| **SBOM (Software Bill of Materials)** | List of software components | — | Compliance & security |
 
 ---
+
+## 3. FRAMEWORK
+
+> **Definition:** Conceptual structures that provide foundation, context, and lenses for thinking and acting.
+
+### 3.1 Business
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|----------------------|
+| **Porter's Five Forces** | Supplier power, Buyer power, Threat of new entry, Substitutes, Rivalry | Industry competitiveness analysis | Market entry strategy |
+| **SWOT** | Strengths, Weaknesses, Opportunities, Threats | Strategic snapshot of organization | Strategic planning |
+| **TOWS** | SWOT connected: SO, ST, WO, WT | Strategy from SWOT | Action planning |
+| **PESTLE** | Political, Economic, Social, Technological, Legal, Environmental | Macro environment analysis | Market research & risk |
+| **VRIO** | Value, Rarity, Imitability, Organization | Competitive resource evaluation | Internal capability audit |
+| **Ansoff Matrix** | Market Penetration, Development, Product Development, Diversification | Growth strategy | Growth roadmap |
+| **BCG Matrix** | Stars, Cash Cows, Question Marks, Dogs | Product portfolio | Resource allocation |
+| **GE-McKinsey Matrix** | Industry Attractiveness vs Business Strength | Portfolio analysis | Investment priority |
+| **Value Chain** | Primary & support activities that create value | Business activity analysis | Operational optimization |
+| **Balanced Scorecard** | Financial, Customer, Internal Process, Learning & Growth | Holistic measurement | KPI dashboard design |
+| **OKR Framework** | Objective + 3-5 Key Results | Goal alignment | Team & product goals |
+| **Lean Canvas** | Problem, Solution, Unique Value Prop, Unfair Advantage, Customer Segments, Key Metrics, Channels, Cost Structure, Revenue Streams | Lean business planning | Startup validation |
+| **Porter's Value Chain** | Inbound → Operations → Outbound → Marketing & Sales → Service | Value activities | Process optimization |
+| **STP (Segmentation, Targeting, Positioning)** | Divide market, select target, determine position | Marketing strategy | Go-to-market |
+| **4P / 7P Marketing Mix** | Product, Price, Place, Promotion (+ People, Process, Physical Evidence) | Marketing tactics | Marketing planning |
+| **AIDA** | Attention, Interest, Desire, Action | Marketing funnel | Copywriting & landing page |
+| **Flywheel** | Self-reinforcing loop for growth | Growth model | Ecosystem design |
+| **Hedgehog Concept** | Passion + Best at + Economic Engine | Strategic focus | Product focus |
+| **Three Horizons** | Horizon 1 (core), 2 (emerging), 3 (transformational) | Innovation portfolio | R&D planning |
+| **OODA Loop** | Observe, Orient, Decide, Act | Fast decision cycle | Competitive response |
+| **Cynefin Framework** | Clear, Complicated, Complex, Chaotic, Disorder | Sense-making | Problem classification |
+| **Theory of Constraints (TOC)** | Identify & eliminate bottleneck | Process improvement | System optimization |
+| **SCOR Model** | Plan, Source, Make, Deliver, Return, Enable | Supply chain management | Supply chain & ERP |
+| **Osterwalder's Business Model Canvas** | 9 building blocks | Business model design | Startup & pivot |
+| **Red Ocean vs Blue Ocean** | Compete in existing market vs create new market | Strategic positioning | Market strategy |
+| **Crossing the Chasm** | Adopter categories: Innovators → Early Adopters → Early Majority → Late Majority → Laggards | Technology adoption | Go-to-market timing |
+| **S-Curve** | Technology growth: emergence → growth → maturity → decline | Technology lifecycle | Investment timing |
+| **Product Lifecycle** | Introduction, Growth, Maturity, Decline | Product management | Feature & marketing strategy |
+| **Bass Diffusion Model** | Innovators + Imitators = Adoption curve | Innovation diffusion | Growth forecasting |
+| **Kano Model** | Basic, Performance, Excitement needs | Customer satisfaction | Feature prioritization |
+| **MoSCoW** | Must have, Should have, Could have, Won't have | Prioritization | Backlog management |
+| **RICE** | Reach, Impact, Confidence, Effort | Data-driven prioritization | Feature scoring |
+| **Eisenhower Matrix** | Urgent/Important quadrants | Time management | Task prioritization |
+| **Porter's Generic Strategies** | Cost Leadership, Differentiation, Focus | Competitive strategy | Positioning |
+| **Resource-Based View (RBV)** | VRIN resources | Competitive advantage | Capability building |
+| **Dynamic Capabilities** | Sense, Seize, Transform | Adaptation to change | Organizational agility |
+| **Platform Strategy** | Two-sided markets, network effects | Ecosystem business | Platform design |
+| **Freemium Model** | Free + premium | Monetization | Pricing strategy |
+| **Razor-and-Blades** | Cheap product + expensive consumables | Monetization | SaaS & hardware |
+| **Subscription Economy** | Recurring revenue | Business model | SaaS pricing |
+| **API Economy** | Product as API | Business model | Developer platform |
+| **Data Monetization** | Revenue from data | Business model | Analytics product |
+| **ESG Framework** | Environmental, Social, Governance | Sustainability | Corporate responsibility |
+| **Circular Economy** | Reduce, Reuse, Recycle, Recover | Sustainability | Supply chain design |
+| **Shared Value** | Profit + social progress | CSR integration | Impact business |
+| **Stakeholder Theory** | Interests of all stakeholders | Governance | Decision-making |
+| **Shareholder Primacy** | Maximize shareholder value | Governance | Financial strategy |
+| **Agile Governance** | Adaptive governance | Organizational | Decision-making speed |
 
 ## 3. FRAMEWORK
 
@@ -1739,29 +1795,33 @@ technology.
 
 ---
 
-## 📌 CATATAN IMPLEMENTASI UNTUK HYPERTAKS
+## 📌 IMPLEMENTATION NOTES FOR HYPERTAKS
 
-### Cara Menggunakan Knowledge Base Ini dalam Hypertaks:
+### How to Use This Knowledge Base in Hypertaks:
 
-1. **Intake Gate Enhancement**: Setiap pertanyaan intake gate bisa merujuk ke framework/framework di atas untuk memastikan pertanyaan mencakup seluruh dimensi.
+1. **Intake Gate Enhancement**: Every intake gate question can reference the frameworks above to ensure the question covers all dimensions.
 
-2. **Agent Specialization**: 5 agen Hypertaks bisa diberikan "domain lens" dari daftar di atas:
+2. **Agent Specialization**: The 5 Hypertaks agents can be given "domain lenses" from the list above:
    - **Business Agent**: Porter, SWOT, TOWS, Business Model Canvas, Unit Economics
    - **Engineering Agent**: TDD, DDD, CI/CD, Microservices, Security
    - **Web3 Agent**: Tokenomics, Smart Contract Security, DeFi Primitives, ZK
    - **Marketing/Copy Agent**: AIDA, JTBD, Hook Model, Behavioral Economics
    - **Integrator Agent**: Systems Thinking, Cynefin, TOC, OKR
 
-3. **Dynamic Task Tiering**: Gunakan framework untuk menentukan tier tugas:
-   - Tier 1 (1 Agen): KISS, Occam's Razor, Pomodoro
-   - Tier 2 (2-3 Agen): Lean Startup, Design Thinking, Agile
-   - Tier 3 (5 Agen): Full Business Model Canvas + DDD + TDD + Tokenomics + Go-to-Market
+3. **Dynamic Task Tiering**: Use frameworks to determine task tiers:
+   - Tier 1 (1 Agent): KISS, Occam's Razor, Pomodoro
+   - Tier 2 (2-3 Agents): Lean Startup, Design Thinking, Agile
+   - Tier 3 (5 Agents): Full Business Model Canvas + DDD + TDD + Tokenomics + Go-to-Market
 
-4. **Quality Gates**: Setiap output agen harus melewati "framework check" sesuai domain:
+4. **Quality Gates**: Every agent output must pass a "framework check" according to domain:
    - Engineering output → TDD check? SOLID check? Security check?
    - Business output → Unit economics check? Competitive analysis check?
    - Web3 output → Smart contract security check? Tokenomics sustainability check?
 
-5. **Cross-Agent Review**: Integrator menggunakan Systems Thinking + Cynefin untuk mengevaluasi apakah hasil 5 agen koheren dan tidak kontradiktif.
+5. **Cross-Agent Review**: The Integrator uses Systems Thinking + Cynefin to evaluate whether the outputs from the 5 agents are coherent and non-contradictory.
 
-6. **Continuous Improvement**: Setiap proyek selesai → Post-mortem menggunakan 5 Whys + Double-Loop Learning + Retrospective → Update knowledge base.
+6. **Continuous Improvement**: Every completed project → Post-mortem using 5 Whys + Double-Loop Learning + Retrospective → Update knowledge base.
+
+---
+
+*This document is a living document. Each category can be expanded further with sub-categories, case studies, and specific implementation instructions for Hypertaks.*

@@ -2,7 +2,7 @@
 
 Phase 5 reconciles the agents' outputs into ONE deliverable for the Boss. Lead
 with the decision; support it with the evidence. Do not dump raw agent reports.
-Every deliverable — every tier — ends with the compliance footer and the work
+Every deliverable - every tier - ends with the compliance footer and the work
 log.
 
 ---
@@ -33,21 +33,21 @@ Prime, 6–10+ for Hyper):
 
 ### Recommended next actions
 
-1. [Sequenced, concrete next steps — who/what/when.]
+1. [Sequenced, concrete next steps - who/what/when.]
 2. […]
 3. […]
 
 ### Compliance footer (mandatory, every tier)
 
-- **Tier & gate:** [e.g. Prime / Deep — announced in contract? yes/no]
-- **Agents produced:** [count — matches the announced tier? yes/no]
+- **Tier & gate:** [e.g. Prime / Deep - announced in contract? yes/no]
+- **Agents produced:** [count - matches the announced tier? yes/no]
 - **References read this session:** [agent-roles / frameworks / plugins-and-mcp
-  / engineering — list the ones actually read]
+  / engineering - list the ones actually read]
 - **Frameworks used → output shapes delivered:** [e.g. Five Forces → rated
   table ✓; SWOT → 2×2 + TOWS ✓. Anything named but not shaped must be listed
   as NOT used.]
 - **Engineering evidence (build tasks):** [test output / run / deploy check
-  attached — or "n/a"]
+  attached - or "n/a"]
 - **Work log:** [appended to vault / included inline below]
 
 ---
@@ -62,7 +62,7 @@ the Boss can paste it into the vault manually.
 Full variant (Standard / Prime / Hyper):
 
 ```markdown
-## Hypertaks — [Task title] (HH:MM)
+## Hypertaks - [Task title] (HH:MM)
 - **Tier / shape:** [Lite/Standard/Prime/Hyper] / [analysis / execution / both]
 - **Agents:** [Role 1], [Role 2], […]
 - **Decision/outcome:** [one line]

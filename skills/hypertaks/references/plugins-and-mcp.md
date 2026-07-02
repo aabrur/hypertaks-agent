@@ -1,8 +1,8 @@
-# Plugins & MCP Connectors — Live Inventory
+# Plugins & MCP Connectors - Live Inventory
 
 Concrete catalog of what is installed in this workspace, so Phase 3 (equip) maps
 each agent in the tier's lineup to real tools instead of guessing. **Availability still
-varies per session** — confirm a tool/connector is actually loaded before an agent
+varies per session** - confirm a tool/connector is actually loaded before an agent
 depends on it (deferred MCP tools must be loaded via `ToolSearch` first). Treat
 this as the default map; the live session list overrides it.
 
@@ -22,7 +22,7 @@ this as the default map; the live session list overrides it.
 | **Google Calendar** | `mcp__claude_ai_Google_Calendar__*` | Events, scheduling, suggest times | Founder/Integrator, Ops |
 | **Google Drive** | `mcp__claude_ai_Google_Drive__*` | Read/create/search files, share docs | Founder/Integrator, Finance, Ops |
 | **Slack** | `mcp__claude_ai_Slack__*` | Team comms / notifications (auth required) | Founder/Integrator, Marketing |
-| **Obsidian** | `mcp__obsidian__*` | Shared vault: notes, search, daily log, wikilinks | Founder/Integrator (always — Phase 5 logging), all |
+| **Obsidian** | `mcp__obsidian__*` | Shared vault: notes, search, daily log, wikilinks | Founder/Integrator (always - Phase 5 logging), all |
 | **Firebase** | `mcp__plugin_firebase_firebase__*` | App/project setup, deploy, security rules, SDK config, hosting | Engineer, IoT, Founder/Integrator |
 | **Microsoft Learn** | `mcp__plugin_microsoft-docs_microsoft-learn__*` | Official MS/Azure docs search, code samples, full-page fetch | Engineer, Legal/Compliance, Data |
 
@@ -30,7 +30,7 @@ this as the default map; the live session list overrides it.
 
 | Plugin | Provides | Best-fit roles |
 |--------|----------|----------------|
-| **frontend-design** | `frontend-design:frontend-design` — distinctive production UI | Engineer, UX/UI |
+| **frontend-design** | `frontend-design:frontend-design` - distinctive production UI | Engineer, UX/UI |
 | **higgsfield** | `higgsfield-generate`, `higgsfield-product-photoshoot`, `higgsfield-marketplace-cards`, `higgsfield-soul-id` | Marketing, Copywriting/Brand, UX/UI |
 | **chrome-devtools-mcp** | `a11y-debugging`, `debug-optimize-lcp`, `memory-leak-debugging`, `chrome-devtools`, `troubleshooting` | Engineer, UX/UI |
 | **postman** | API Readiness Analyzer agent + `generate-spec`, `mock`, `run-collection`, `security`, `send-request`, `test`, `sync` | Engineer, Data |
@@ -40,7 +40,7 @@ this as the default map; the live session list overrides it.
 | **mcp-apps** | `create-mcp-app`, `add-app-to-server`, `convert-web-app`, `migrate-oai-app` | Engineer |
 | **claude-md-management** | `revise-claude-md`, `claude-md-improver` | Founder/Integrator, Engineer |
 | **claude-code-setup** | `claude-automation-recommender` | Founder/Integrator |
-| **telegram** | `access`, `configure` — Telegram comms | Marketing, Founder/Integrator |
+| **telegram** | `access`, `configure` - Telegram comms | Marketing, Founder/Integrator |
 
 ## C. High-value warehouse skills by role
 

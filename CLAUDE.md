@@ -1,9 +1,9 @@
-# CLAUDE.md — Hypertaks plugin repo
+# CLAUDE.md - Hypertaks plugin repo
 
 This repository packages the **Hypertaks Founder** skill as a cross-agent plugin.
 
 - The skill itself lives in [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md).
-  Read it first — it defines the mandatory 5-phase loop (sized intake gate →
+  Read it first - it defines the mandatory 5-phase loop (sized intake gate →
   frame → pick the tier's roles → equip → produce the agents → integrate &
   deliver) and the Dynamic Agent Allocation tiers (Lite 1 / Standard 3 /
   Prime 5 / Hyper 6–10+).
@@ -19,4 +19,4 @@ This repository packages the **Hypertaks Founder** skill as a cross-agent plugin
   before committing.
 - Manifest files in the dot-directories (`.claude-plugin`, `.codex-plugin`, etc.)
   are per-agent adapters that all point back to the single `skills/hypertaks`
-  skill — keep versions in sync when bumping.
+  skill - keep versions in sync when bumping.

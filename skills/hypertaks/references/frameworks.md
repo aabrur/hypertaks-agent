@@ -1,4 +1,4 @@
-# Frameworks — Applied How-To
+# Frameworks - Applied How-To
 
 Each entry gives **when to use**, **inputs needed**, **steps**, and **output
 shape**. Apply frameworks; do not merely define them. Assign each to the agent(s)
@@ -8,15 +8,15 @@ whose role owns it (see `agent-roles.md`).
 
 **Naming a framework obliges producing its output shape as written below.**
 "Blue Ocean thinking" without an ERRC grid, "SWOT" without the 2×2 + TOWS list,
-or "Five Forces" without the rated table is label-dropping — it counts as not
+or "Five Forces" without the rated table is label-dropping - it counts as not
 having used the framework, and the deliverable's compliance footer must not
 claim it. If the full shape is genuinely disproportionate to the task, either
 pick a lighter framework or say explicitly that the framework is being applied
 partially and why. The narrative may summarize the shape; it never replaces it.
 
 This file holds the **core** frameworks with full applied how-tos. The
-**extended catalog** — 1,600+ theories, methods, frameworks, and workflows
-across business, learning, science, and technology — lives in
+**extended catalog** - 1,600+ theories, methods, frameworks, and workflows
+across business, learning, science, and technology - lives in
 `references/knowledge-base.md`. Grep it by keyword or domain (it is far too
 large to load whole). Items pulled from the catalog obey the same output-shape
 law: define the shape their application must return in the agent brief.
@@ -28,7 +28,7 @@ law: define the shape their application must return in the agent brief.
 - **When:** assessing industry attractiveness and structural profit pressure.
 - **Inputs:** competitor set, supplier/buyer concentration, substitutes, entry
   barriers.
-- **Steps:** rate each force (Low/Med/High) — (1) competitive rivalry,
+- **Steps:** rate each force (Low/Med/High) - (1) competitive rivalry,
   (2) supplier power, (3) buyer power, (4) threat of substitutes, (5) threat of
   new entrants. Justify each rating with evidence.
 - **Output:** a 5-force table + one-line verdict on where structural profit
@@ -55,7 +55,7 @@ law: define the shape their application must return in the agent brief.
 
 - **When:** structured root-cause analysis of a defect or failure.
 - **Inputs:** a clearly stated problem/effect.
-- **Steps:** branch causes across the 6M — Man, Machine, Method, Material,
+- **Steps:** branch causes across the 6M - Man, Machine, Method, Material,
   Measurement, Environment (Milieu). Drill each with "why".
 - **Output:** a cause tree + the most probable root cause(s) to test.
 
@@ -63,20 +63,20 @@ law: define the shape their application must return in the agent brief.
 
 - **When:** escaping red-ocean competition by redefining value.
 - **Inputs:** industry factors buyers compete on.
-- **Steps:** build the **ERRC grid** — Eliminate, Reduce, Raise, Create. Plot a
+- **Steps:** build the **ERRC grid** - Eliminate, Reduce, Raise, Create. Plot a
   **strategy canvas** vs. incumbents to visualize the new value curve.
 - **Output:** an ERRC grid + a differentiated value proposition and canvas.
 
 ## Red Apples & Bad Barrels
 
-- **When:** diagnosing ethics, integrity, fraud, or persistent misconduct — deciding
+- **When:** diagnosing ethics, integrity, fraud, or persistent misconduct - deciding
   whether the problem is people or the system.
 - **Inputs:** incident patterns, incentive structures, controls, culture signals.
 - **Steps:** separate **bad apples** (individual actors) from **bad barrels**
   (systemic conditions: incentives, pressure, weak controls, tone at the top) and
   the **bad-barrel-makers** (leaders/policies shaping the barrel). Test whether
   removing individuals would actually fix the pattern.
-- **Output:** a verdict — apple vs. barrel vs. barrel-maker — with targeted
+- **Output:** a verdict - apple vs. barrel vs. barrel-maker - with targeted
   remedies (discipline vs. redesign incentives/controls vs. leadership change).
 
 ## Bottleneck / Theory of Constraints (5 focusing steps)
@@ -85,7 +85,7 @@ law: define the shape their application must return in the agent brief.
 - **Inputs:** the process flow and its stage capacities/rates.
 - **Steps:** (1) **Identify** the constraint, (2) **Exploit** it (max its output
   with no capex), (3) **Subordinate** everything else to it, (4) **Elevate** it
-  (add capacity), (5) **Repeat** — the constraint moves; do not let inertia
+  (add capacity), (5) **Repeat** - the constraint moves; do not let inertia
   become the new one.
 - **Output:** the current constraint + the sequenced plan to raise system
   throughput.
@@ -102,7 +102,7 @@ law: define the shape their application must return in the agent brief.
 
 - **When:** optimizing working capital across the trading network.
 - **Inputs:** payment terms, DPO/DSO, supplier cash-flow health, cost of capital.
-- **Steps:** evaluate instruments — **factoring** (seller sells receivables),
+- **Steps:** evaluate instruments - **factoring** (seller sells receivables),
   **reverse factoring** (buyer-led supplier financing), **dynamic discounting**
   (early payment for a discount), and inventory finance. Weigh cost vs. liquidity
   vs. supplier resilience.
@@ -130,7 +130,7 @@ law: define the shape their application must return in the agent brief.
 
 - **When:** sensors/devices feed data or trigger actions.
 - **Inputs:** device types, connectivity, data volume, latency/security needs.
-- **Steps:** design the layers — device/edge, gateway, ingestion, storage,
+- **Steps:** design the layers - device/edge, gateway, ingestion, storage,
   analytics, action; decide edge-vs-cloud compute split; address security and OTA
   updates.
 - **Output:** a layered architecture diagram + data-flow and security plan.
