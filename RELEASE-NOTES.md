@@ -1,5 +1,47 @@
 # Release Notes
 
+## v2.0.0 — Super Hypertaks: dynamic tiering & enforcement
+
+Breaking behavior change, driven by two independent AI reviews that found the
+same failure pattern: the protocol was well-designed but easy to abandon
+silently (references unread, frameworks name-dropped without their output
+shapes, "exactly 5" quietly dropped after the first turn, work logs omitted).
+
+### Highlights
+
+- **Dynamic Agent Allocation replaces "exactly 5, always"** — the intake gate
+  now assesses every task into a tier that fixes the agent count: **Lite** (1,
+  Founder solo), **Standard** (3), **Prime** (5 — the classic default), and
+  **Hyper** (6–10+ for multi-workstream programs, scaled by splitting roles and
+  adding QA/red-team, never by padding).
+- **Sized intake gate** — **Express** mode (3 highest-leverage dimensions,
+  one-line contract) for Lite/Standard; **Deep** mode (all 8 dimensions) for
+  Prime/Hyper. The gate is never skipped, only sized.
+- **Explicit follow-up rule** — a continuation inside a confirmed contract runs
+  as Lite with a one-line announcement; new scope means a new loop. Silent
+  reclassification is the violation, not the downgrade itself.
+- **Framework output-shape law** — naming a framework obliges producing its
+  defined output shape (rated Five Forces table, SWOT 2×2 + TOWS, ERRC grid,
+  6M fishbone tree, ranked Pareto list, TOC 5 steps). Label-dropping counts as
+  not having used the framework.
+- **Mandatory reference reads** — Phases 2–3 require reading `agent-roles.md`,
+  `frameworks.md`, `plugins-and-mcp.md` (and `engineering.md` for builds) this
+  session; working from memory of them is a violation.
+- **Red-flags table** — anti-rationalization counters seeded with the exact
+  excuses observed in review ("this is just a follow-up", "I know what SWOT
+  means", "the full gate is overkill").
+- **Compliance footer + mandatory work log** — every deliverable, every tier,
+  ends with a self-check (tier announced? references read? output shapes
+  delivered? evidence attached?) and the Daily-note log (one-line variant for
+  Lite).
+- **Engineering quality gate hardened** — test evidence, systematic debugging,
+  and verification-before-completion are now a hard gate for any code
+  deliverable; Web3 additionally passes the audit checklist before "done".
+- **New QA / Red-Team / Verifier role** (role 15) for Hyper lineups.
+- **CSO fix** — the SKILL.md frontmatter description now states only the
+  triggering conditions, not the workflow, so agents read the body instead of
+  shortcutting from the description.
+
 ## v1.1.0 — Cross-surface portability
 
 Makes the skill run correctly on AI surfaces with no agent/task-spawning tool

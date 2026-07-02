@@ -80,9 +80,22 @@ deployment, monitoring) through it.
 8. Full test suite + fuzz/invariant tests pass; gas within the agreed ceiling.
 9. Testnet deployment verified end-to-end before mainnet.
 
-## Quality bar (applies to all engineering)
+## Quality gate (hard — applies to all engineering)
 
-- Apply `verification-before-completion`: run it, observe it work, report results
-  faithfully — never claim done without evidence.
-- Match the surrounding code's style, naming, and structure.
-- Surface assumptions and unknowns explicitly rather than guessing silently.
+No engineering agent reports "done" until every line below holds. This is a
+gate, not a suggestion — an output that skips it goes back to the agent, and
+the deliverable's compliance footer must reflect what actually ran.
+
+1. **Test evidence** — tests exist and pass, test-first where a TDD skill
+   (`tdd` / `test-driven-development`) is present. Attach the output.
+2. **Systematic debugging** — failures are diagnosed via root cause
+   (`systematic-debugging` / `diagnosing-bugs`), never patched by
+   trial-and-error.
+3. **Verification before completion** — run it, observe it work, report results
+   faithfully (`verification-before-completion`). Never claim done without
+   evidence.
+4. **Web3 additionally:** the audit checklist above passes in full before any
+   deployment claim; testnet before mainnet, always.
+5. Match the surrounding code's style, naming, and structure; make surgical
+   changes; surface assumptions and unknowns explicitly rather than guessing
+   silently (`karpathy-guidelines`).

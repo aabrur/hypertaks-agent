@@ -3,8 +3,10 @@
 This repository packages the **Hypertaks Founder** skill as a cross-agent plugin.
 
 - The skill itself lives in [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md).
-  Read it first — it defines the mandatory 5-phase loop (intake gate → frame →
-  pick 5 roles → equip → spawn 5 → integrate & deliver).
+  Read it first — it defines the mandatory 5-phase loop (sized intake gate →
+  frame → pick the tier's roles → equip → produce the agents → integrate &
+  deliver) and the Dynamic Agent Allocation tiers (Lite 1 / Standard 3 /
+  Prime 5 / Hyper 6–10+).
 - Reference material is under `skills/hypertaks/references/` and templates under
   `skills/hypertaks/assets/`.
 

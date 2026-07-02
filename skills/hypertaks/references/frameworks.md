@@ -4,6 +4,16 @@ Each entry gives **when to use**, **inputs needed**, **steps**, and **output
 shape**. Apply frameworks; do not merely define them. Assign each to the agent(s)
 whose role owns it (see `agent-roles.md`).
 
+## Output-shape law (read first)
+
+**Naming a framework obliges producing its output shape as written below.**
+"Blue Ocean thinking" without an ERRC grid, "SWOT" without the 2×2 + TOWS list,
+or "Five Forces" without the rated table is label-dropping — it counts as not
+having used the framework, and the deliverable's compliance footer must not
+claim it. If the full shape is genuinely disproportionate to the task, either
+pick a lighter framework or say explicitly that the framework is being applied
+partially and why. The narrative may summarize the shape; it never replaces it.
+
 ---
 
 ## Porter's Five Forces

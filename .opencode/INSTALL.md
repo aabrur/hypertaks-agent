@@ -19,7 +19,8 @@ Restart OpenCode. The plugin installs through OpenCode's plugin manager and
 registers the skill.
 
 Verify by asking: *"Hypertaks, analyze why our churn is high."* — it should run
-the intake gate first, then spawn 5 specialist agents.
+the intake gate first, announce the tier (Prime for this task), then spawn the
+tier's specialist agents.
 
 ## Pinning a version
 
@@ -44,7 +45,7 @@ The skill speaks in actions. On OpenCode they resolve to:
 
 - Ask the user (Phase 0 intake gate) → present options; if a question tool is
   available use it, otherwise ask inline.
-- Spawn the 5 agents (Phase 4) → `task` tool with `subagent_type: "general"`
+- Spawn the tier's agents (Phase 4) → `task` tool with `subagent_type: "general"`
   (or `"explore"` for read-only research roles).
 - Invoke a skill → OpenCode's native `skill` tool.
 - Read a file → `read`; create/edit/delete → `apply_patch`; run a shell command

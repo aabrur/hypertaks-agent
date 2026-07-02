@@ -1,21 +1,36 @@
 # Hypertaks
 
 **Founder/CEO-grade operating skill for AI coding agents.** Hypertaks turns your
-agent into the *Hypertaks Founder* — it runs an up-front intake gate to lock the
-request, then spawns **exactly 5 specialist agents** for the task, each equipped
-with the right business frameworks plus the plugins/skills and MCP connectors
-available in your environment.
+agent into the *Hypertaks Founder* — it runs a **sized intake gate** (Express or
+Deep) to lock the request, then spawns a **dynamically tiered team of specialist
+agents** for the task, each equipped with the right business frameworks plus the
+plugins/skills and MCP connectors available in your environment.
 
 Domains covered: business strategy, full-spectrum engineering (web, backend,
 mobile, data, and **deep Solidity/Web3 smart contracts**), marketing, copywriting,
 finance, ERP, supply chain, supply chain finance, and IoT.
 
-## Two hard rules
+## Three hard rules
 
-1. **Intake gate first** — every task starts with a structured verification round;
-   no work begins until the request is unambiguous and confirmed.
-2. **Exactly 5 agents, always** — after the gate, spawn precisely 5 specialists
-   chosen for the task, no more, no fewer.
+1. **Intake gate first, sized to the task** — every task starts with a
+   verification round (Express for light tasks, Deep for heavy ones); no work
+   begins until the request is unambiguous and confirmed. The gate is never
+   skipped, only sized.
+2. **Dynamic Agent Allocation** — the gate assesses the task into a tier that
+   fixes the agent count:
+
+   | Tier | Agents | Typical task |
+   |------|--------|--------------|
+   | Lite | 1 | typo fix, one copy tweak, follow-up inside a confirmed contract |
+   | Standard | 3 | 2–3 domains, one deliverable |
+   | Prime | 5 | classic founder-shaped cross-domain work |
+   | Hyper | 6–10+ | multi-workstream programs (launches, company-wide diagnosis) |
+
+3. **No silent deviation** — tier, gate mode, and assumptions are announced in
+   the task contract; frameworks must be delivered in their defined output
+   shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone tree — not
+   just the name); every deliverable ends with a compliance footer and a work
+   log.
 
 ## Frameworks
 
@@ -99,13 +114,17 @@ approach works for any agent with a scanned skills folder.
 
 Just address the founder:
 
-- *"Hypertaks, why is our churn high?"* → analysis lineup (Strategy, Finance,
-  Marketing, Ops, Integrator).
-- *"Hypertaks, build a landing page + smart contract for a new product."* →
-  execution lineup (Engineer, Web3, Copywriting, Finance/Tokenomics, Integrator).
+- *"Hypertaks, fix the headline typo."* → **Lite** (Founder solo, Express gate).
+- *"Hypertaks, add a pricing table + its copy."* → **Standard** (Engineer,
+  Copywriting, Integrator).
+- *"Hypertaks, why is our churn high?"* → **Prime** analysis lineup (Strategy,
+  Finance, Marketing, Ops, Integrator).
+- *"Hypertaks, launch the product: contract + app + GTM + legal."* → **Hyper**
+  (6–10+ agents, one per workstream).
 
-The skill will ask its intake questions first, confirm a one-paragraph task
-contract, then spawn the 5 agents and deliver one founder-grade result.
+The skill asks its intake questions first, confirms a task contract that names
+the tier, then produces the tier's agents and delivers one founder-grade result
+ending with a compliance footer and work log.
 
 ## Repo layout
 

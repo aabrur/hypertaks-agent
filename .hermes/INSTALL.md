@@ -31,7 +31,8 @@ visible in that directory.
      ```
 
 3. Restart Hermes. Verify: *"Hypertaks, analyze why our churn is high."* — it
-   should run the intake gate, then spawn 5 specialist agents.
+   should run the intake gate, announce the tier (Prime for this task), then
+   spawn the tier's specialist agents.
 
 > Replace `<your-hermes-skills-dir>` with your own path. This repo does not
 > assume any particular workspace layout.

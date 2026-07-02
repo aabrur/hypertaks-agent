@@ -1,7 +1,7 @@
 # Plugins & MCP Connectors — Live Inventory
 
 Concrete catalog of what is installed in this workspace, so Phase 3 (equip) maps
-each of the 5 agents to real tools instead of guessing. **Availability still
+each agent in the tier's lineup to real tools instead of guessing. **Availability still
 varies per session** — confirm a tool/connector is actually loaded before an agent
 depends on it (deferred MCP tools must be loaded via `ToolSearch` first). Treat
 this as the default map; the live session list overrides it.
@@ -80,8 +80,8 @@ Only skills confirmed present this session should be invoked. Common picks:
 
 ## How to use this inventory
 
-1. In Phase 3, for each of the 5 agents, pick tools from sections A–D by the
-   agent's role column.
+1. In Phase 3, for each agent in the tier's lineup, pick tools from sections
+   A–D by the agent's role column.
 2. Confirm the tool/connector is loaded this session (load deferred MCP tools with
    `ToolSearch` using `select:<tool_name>`; check the available-skills list for
    skills). If absent, fall back to the nearest available option or core tools.

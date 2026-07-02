@@ -13,8 +13,11 @@ loads the same skill.
 
 1. Read `skills/hypertaks/SKILL.md` before changing behavior.
 2. English only, imperative voice in the skill files.
-3. The two hard rules of the skill are non-negotiable: always run the intake gate
-   first, and always spawn exactly 5 agents. Do not weaken these.
+3. The three hard rules of the skill are non-negotiable: always run the intake
+   gate first (sized Express/Deep, never skipped), always produce the announced
+   tier's agent count (Lite 1 / Standard 3 / Prime 5 / Hyper 6–10+), and never
+   deviate silently (tier, gate mode, and framework output shapes are
+   announced and enforced). Do not weaken these.
 4. Keep every per-agent manifest's `version` in sync with
    `.claude-plugin/plugin.json` and `package.json`.
 5. Validate the skill before committing (`.github/workflows/validate.yml` runs

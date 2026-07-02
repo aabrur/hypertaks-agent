@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "1.1.0",
-  "description": "Hypertaks Founder operating mode — intake gate, then exactly 5 specialist agents across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
+  "version": "2.0.0",
+  "description": "Hypertaks Founder operating mode — sized intake gate, then a dynamically tiered team of specialist agents (1 / 3 / 5 / 6-10+) across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com",
@@ -24,8 +24,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Hypertaks Founder",
-    "shortDescription": "Founder/CEO operating mode: intake gate, then exactly 5 specialist agents.",
-    "longDescription": "Turns your agent into the Hypertaks Founder. It runs an up-front intake/verification gate to lock the request, then spawns exactly 5 specialist agents for the task across business strategy, full-spectrum engineering (incl. Solidity/Web3), marketing, copywriting, finance, ERP, supply chain, supply chain finance, and IoT.",
+    "shortDescription": "Founder/CEO operating mode: sized intake gate, then a dynamically tiered agent team.",
+    "longDescription": "Turns your agent into the Hypertaks Founder. It runs a sized intake/verification gate (Express or Deep) to lock the request, then spawns a dynamically tiered team of specialist agents (Lite 1 / Standard 3 / Prime 5 / Hyper 6-10+) for the task across business strategy, full-spectrum engineering (incl. Solidity/Web3), marketing, copywriting, finance, ERP, supply chain, supply chain finance, and IoT.",
     "developerName": "abrur",
     "category": "Coding",
     "capabilities": [
