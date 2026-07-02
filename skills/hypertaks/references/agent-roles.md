@@ -25,7 +25,7 @@ leans on, and the kinds of plugins/MCP connectors it typically wants.
 | 11 | **IoT / Embedded** | Sensors, edge, connectivity | Edge→cloud architecture | engineering skills, Firebase MCP |
 | 12 | **Legal / Compliance / Ethics** | Risk, regulation, integrity | Red Apples & Bad Barrels, compliance review | WebSearch, `microsoft-docs` |
 | 13 | **UX / UI & Product Design** | Interfaces, flows, usability | Design heuristics, journey mapping | `frontend-design`, `superdesign`, Figma, Canva, Adobe |
-| 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Decision matrices, all frameworks | `obsidian` (logs the decision) |
+| 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Systems Thinking, Cynefin, decision matrices, all frameworks | `obsidian` (logs the decision) |
 | 15 | **QA / Red-Team / Verifier** | Break it before the Boss does | Verification-before-completion, audit checklists, adversarial review | `webapp-testing`, `qa`, `verification-before-completion`, Chrome |
 
 ## Pick the tier's count — heuristics

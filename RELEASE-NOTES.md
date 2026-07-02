@@ -1,5 +1,26 @@
 # Release Notes
 
+## v2.1.0 — Extended knowledge base
+
+Adds the **Encyclopedia of Applied Knowledge** as
+`references/knowledge-base.md` — a 1,600+ item catalog of theories, methods,
+frameworks, and workflows across business, learning, science, and technology
+(JTBD, Kano, RICE, Cynefin, OKR, PESTLE, DDD, MLOps, distributed-systems
+consistency models, EIP standards, sales methodologies, mental models, and
+far more).
+
+- **Lazy-loaded by design** — the catalog is grepped by keyword/domain in
+  Phase 3, never loaded whole, so it adds zero context cost on any AI surface.
+- **Same output-shape law** — items pulled from the catalog must define the
+  shape their application returns, just like the core frameworks.
+- **Integrator lens** — Phase 5 reconciliation now explicitly uses Systems
+  Thinking + Cynefin (coherent, blind-spot-free, executable).
+- **Retrospective** — Prime/Hyper deliverables close with a 2–3 line
+  post-run retrospective (continuous improvement loop).
+- Note: the catalog's item names are English; some annotations are Indonesian.
+  Treat item names as the lookup key. Sections 5–10 promised by its index are
+  folded into the section-4 catalog.
+
 ## v2.0.0 — Super Hypertaks: dynamic tiering & enforcement
 
 Breaking behavior change, driven by two independent AI reviews that found the

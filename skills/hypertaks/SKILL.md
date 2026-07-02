@@ -175,6 +175,15 @@ cumulative-% list, Theory of Constraints means the 5 focusing steps. A
 framework name without its output shape is label-dropping and counts as not
 having used the framework at all.
 
+**Extended knowledge base:** when the task needs breadth beyond the core
+frameworks — theories, methods, extended frameworks, or workflows across
+business, learning, science, and technology (e.g. JTBD, Kano, RICE, Cynefin,
+OKR, PESTLE, DDD, MLOps, consistency models, EIP standards, sales
+methodologies, mental models) — consult `references/knowledge-base.md`. It is
+a large catalog (1,600+ items): **grep it by keyword or domain; never load
+the whole file into context.** An item pulled from it follows the same
+output-shape law — state in the brief what shape its application must return.
+
 ### Phase 4 — Produce the agents (spawn or synthesize)
 
 Fill one `assets/agent-brief-template.md` per role either way: role, exact
@@ -195,10 +204,14 @@ Produce exactly the tier's count — announced up front, no silent shrinking.
 
 ### Phase 5 — Integrate & deliver
 
-Collect the outputs, reconcile conflicts, and deliver ONE founder-grade result
-using `assets/deliverable-template.md` — decision-first, with supporting
+Collect the outputs, reconcile conflicts using a systems lens (Systems
+Thinking + Cynefin: are the pieces coherent, blind-spot-free, and
+executable?), and deliver ONE founder-grade result using
+`assets/deliverable-template.md` — decision-first, with supporting
 analysis or the built artifact attached, ending with the **compliance footer**
-defined in that template. Then, if this environment has filesystem or Obsidian
+defined in that template. On Prime/Hyper tasks, close with a 2–3 line
+retrospective (what worked, what to change next run — 5 Whys any failure);
+skip it on Lite/Standard unless something went wrong. Then, if this environment has filesystem or Obsidian
 MCP access to the workspace vault, append a work log to
 `C:\Users\abrur\AI-Agent\Obsidian Vault\Daily\YYYY-MM-DD.md` per the workspace
 standard. On surfaces without that access (claude.ai, other assistants,
@@ -237,7 +250,10 @@ appears, stop and run the phase properly:
   plugin/MCP auto-detection method with per-role mappings.
 - `references/plugins-and-mcp.md` — live inventory of the actual plugins and MCP
   connectors installed in this workspace, mapped to roles.
-- `references/frameworks.md` — applied how-to + output shape for every framework.
+- `references/frameworks.md` — applied how-to + output shape for every core framework.
+- `references/knowledge-base.md` — extended encyclopedia (1,600+ theories, methods,
+  frameworks, workflows across business/learning/science/technology). Grep by
+  keyword; never load whole.
 - `references/engineering.md` — full-spectrum coding playbook + Solidity/Web3 + quality gate.
 - `assets/agent-brief-template.md` — the brief handed to each agent.
 - `assets/deliverable-template.md` — the integrated output, compliance footer, and Daily-log format.

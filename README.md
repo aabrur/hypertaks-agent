@@ -34,9 +34,16 @@ finance, ERP, supply chain, supply chain finance, and IoT.
 
 ## Frameworks
 
-Porter's Five Forces · SWOT/TOWS · Pareto (80/20) · Fishbone (Ishikawa) · Blue
-Ocean (ERRC) · Red Apples & Bad Barrels · Theory of Constraints (bottleneck) ·
-SCOR supply chain · Supply Chain Finance · ERP · Smart contracts · IoT.
+Core (full applied how-tos with mandatory output shapes): Porter's Five
+Forces · SWOT/TOWS · Pareto (80/20) · Fishbone (Ishikawa) · Blue Ocean (ERRC)
+· Red Apples & Bad Barrels · Theory of Constraints (bottleneck) · SCOR supply
+chain · Supply Chain Finance · ERP · Smart contracts · IoT.
+
+Extended: `references/knowledge-base.md` — a 1,600+ item encyclopedia of
+theories, methods, frameworks, and workflows across business, learning,
+science, and technology (JTBD, Kano, RICE, Cynefin, OKR, PESTLE, DDD, MLOps,
+EIP standards, sales methodologies, mental models, and more). Lazy-loaded:
+agents grep it by keyword, so it costs no context until needed.
 
 ## Install
 

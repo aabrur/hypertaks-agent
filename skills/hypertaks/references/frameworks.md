@@ -14,6 +14,13 @@ claim it. If the full shape is genuinely disproportionate to the task, either
 pick a lighter framework or say explicitly that the framework is being applied
 partially and why. The narrative may summarize the shape; it never replaces it.
 
+This file holds the **core** frameworks with full applied how-tos. The
+**extended catalog** — 1,600+ theories, methods, frameworks, and workflows
+across business, learning, science, and technology — lives in
+`references/knowledge-base.md`. Grep it by keyword or domain (it is far too
+large to load whole). Items pulled from the catalog obey the same output-shape
+law: define the shape their application must return in the agent brief.
+
 ---
 
 ## Porter's Five Forces
