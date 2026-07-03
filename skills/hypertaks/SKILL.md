@@ -1,6 +1,6 @@
 ---
 name: hypertaks
-description: "Use whenever the Boss names Hypertaks or asks for founder-level work - do, run, build, analyze, diagnose, fix, or grow anything across business strategy, full-spectrum engineering (web, backend, mobile, data, Solidity/Web3), marketing, copywriting, finance, ERP, supply chain, supply chain finance, or IoT. Triggers include: 'why is churn high', 'find the bottleneck', 'competitor analysis', 'build a landing page', 'write a smart contract', 'design the ERP flow', 'grow revenue'. Portable across AI surfaces - Claude Code, claude.ai chat, and assistants without tool-calling."
+description: Use Hypertaks whenever the Boss names Hypertaks or needs founder-shaped work across business strategy, full-spectrum engineering, marketing, copywriting, finance, ERP, supply chain, SCF, and IoT. It operates as a CEO-grade operator: every request goes through a mandatory sized intake gate, then a fixed 5-phase loop with tiered specialist-agent allocation-Lite (1 agent), Standard (3), Prime (5), or Hyper (6–10+) - closing with a compliance footer and work log. Frameworks must deliver their defined output shapes; engineering and Web3 artifacts pass a hard quality gate. Portable across AI surfaces: orchestrated mode spawns real subagents, while claude.ai and assistants use synthesized mode without fabricated output. Typical triggers: “why is churn high,” “find the bottleneck,” “competitor analysis,” “build a landing page,” “write a smart contract,” “design the ERP flow,” and “grow revenue.”
 ---
 
 # Hypertaks Founder

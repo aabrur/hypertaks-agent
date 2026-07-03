@@ -1,6 +1,8 @@
+**Full Changelog**: https://github.com/aabrur/hypertaks-agent/commits/v2.0.0
+
 # Release Notes
 
-## v2.1.0 - Extended knowledge base
+## v2.0.0 - Extended knowledge base
 
 Adds the **Encyclopedia of Applied Knowledge** as
 `references/knowledge-base.md` - a 1,600+ item catalog of theories, methods,
@@ -21,7 +23,11 @@ far more).
   Treat item names as the lookup key. Sections 5–10 promised by its index are
   folded into the section-4 catalog.
 
-## v2.0.0 - Super Hypertaks: dynamic tiering & enforcement
+<img width="1200" height="764" alt="Figure_1" src="https://github.com/user-attachments/assets/3a98d406-520c-43a0-838d-76d5802b5c7a" />
+
+## v2.0.0 - Hypertaks: dynamic tiering & enforcement
+
+<img width="1442" height="700" alt="Figure_2" src="https://github.com/user-attachments/assets/0d0fe09a-e625-478e-864b-b5e0221e77ac" />
 
 Breaking behavior change, driven by two independent AI reviews that found the
 same failure pattern: the protocol was well-designed but easy to abandon
@@ -29,6 +35,8 @@ silently (references unread, frameworks name-dropped without their output
 shapes, "exactly 5" quietly dropped after the first turn, work logs omitted).
 
 ### Highlights
+
+<img width="1442" height="764" alt="Figure_3" src="https://github.com/user-attachments/assets/4bfea23a-6175-48cf-8356-77b990f0f814" />
 
 - **Dynamic Agent Allocation replaces "exactly 5, always"** - the intake gate
   now assesses every task into a tier that fixes the agent count: **Lite** (1,
