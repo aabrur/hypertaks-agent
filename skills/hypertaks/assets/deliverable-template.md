@@ -47,7 +47,14 @@ Prime, 6–10+ for Hyper):
   table ✓; SWOT → 2×2 + TOWS ✓. Anything named but not shaped must be listed
   as NOT used.]
 - **Engineering evidence (build tasks):** [test output / run / deploy check
-  attached - or "n/a"]
+  attached - or "n/a"; TDD RED-GREEN-REFACTOR log cited where code shipped]
+- **Token accounting:** [tier budget ~X; roughly used Y; waste flagged/recovered
+  if any - e.g. "circular reasoning ~300, rolled back". Honest estimate, not a
+  metered number.]
+- **Validation layers:** [self ✓ / cross-agent ✓ / external ✓ / human PENDING -
+  mark each PASS / PENDING / n/a. See engineering.md 4-layer stack.]
+- **Confidence:** [high / medium / low - if <70%, the uncertainty is surfaced in
+  Risks above; if <50%, this was returned as a question, not a deliverable.]
 - **Work log:** [appended to vault / included inline below]
 
 ---

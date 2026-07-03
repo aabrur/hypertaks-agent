@@ -20,11 +20,17 @@ agent count (see the tier table in `SKILL.md`).
 
 | Signal | Points toward |
 |--------|---------------|
+| A single quick answer or clarification, nothing to build or decide | **Nano** (0 agents, no gate) - escalate up the instant it needs building |
 | Single domain, single artifact, reversible | **Lite** (1 agent, Express gate) |
 | Continuation inside an already-confirmed contract | **Lite** - see Follow-ups below |
 | 2–3 domains touched, one clear deliverable | **Standard** (3 agents, Express gate) |
 | Cross-domain, founder-shaped, needs a reconciled decision | **Prime** (5 agents, Deep gate) |
 | Multiple workstreams, multiple deliverables, high stakes (mainnet, money, legal) | **Hyper** (6–10+ agents, Deep gate) |
+| Multi-quarter strategic program the Boss explicitly frames at that scale, human go/no-go gates | **Omega** (10+ agents, Deep gate + Boss check-ins) |
+
+Nano and Omega are the endpoints: Nano skips the ceremony for a one-line answer;
+Omega adds human decision gates for program-scale work. Each tier also carries a
+token budget - see the tier table in `SKILL.md` and `references/token-discipline.md`.
 
 Rules:
 

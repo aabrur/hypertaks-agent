@@ -99,3 +99,59 @@ the deliverable's compliance footer must reflect what actually ran.
 5. Match the surrounding code's style, naming, and structure; make surgical
    changes; surface assumptions and unknowns explicitly rather than guessing
    silently (`karpathy-guidelines`).
+
+## TDD - RED-GREEN-REFACTOR (the iron law)
+
+When a TDD skill (`tdd` / `test-driven-development`) is present, **no production
+code ships without a failing test written first.** Run the cycle and log each
+step so the compliance footer can cite it:
+
+- **RED** - write the failing test; run it; confirm it fails for the *right*
+  reason. Log: "RED: [test] -> expected fail, got [message]."
+- **GREEN** - write the minimum code to pass; run it; confirm green. Log:
+  "GREEN: [test] -> pass."
+- **REFACTOR** - clean up with tests still green; confirm no regression. Log:
+  "REFACTOR: [change] -> all pass."
+- **COMMIT** - `type(scope): description`.
+
+Skipping a phase, or writing code before the test, sends the deliverable back.
+For a genuine spike where the Boss waived tests, that waiver is announced in the
+contract - never assumed.
+
+## Systematic debugging - 4-phase protocol
+
+Bugs are diagnosed to root cause, never patched by trial-and-error
+(`systematic-debugging`):
+
+1. **Reproduce** - a test that triggers the bug 100% of the time. Can't
+   reproduce -> stop and revisit assumptions before touching code.
+2. **Isolate** - narrow to the minimal code that triggers it (binary search:
+   halve, test, repeat). Log the file:line and a root-cause hypothesis.
+3. **Hypothesize & instrument** - state "bug caused by X because Y"; add
+   logging/instrumentation to confirm before changing behavior.
+4. **Fix & regression-test** - apply the fix, watch the reproduce-test pass, and
+   keep it as a regression test so the bug cannot silently return.
+
+## Verification before completion
+
+Before any "done" claim, run the thing and observe it (`verification-before-completion`).
+
+- **Forbidden (auto-flag) phrases:** "should work", "it compiles", "tests should
+  pass", "looks correct", "probably fine".
+- **Required form:** "Verified: [test] passes - output [result]" / "Deployed:
+  [URL] - checked [evidence]" / "Tested: [scenario] -> [observed behavior]".
+
+## 4-layer validation stack
+
+Every engineering deliverable clears these layers in order; any failure sends it
+back to the agent (max 2 rejection cycles per layer, then escalate to the Boss):
+
+1. **Self-validation** (the building agent) - output-shape law met, changes
+   surgical, TDD cycle logged, within token budget.
+2. **Cross-agent** (the Integrator) - outputs reconcile, no contradictions,
+   every named framework actually applied, compliance footer accurate.
+3. **External** (tools/MCP) - tests run and pass, code compiles/deploys, lint /
+   type-check / security scan clean; Web3 testnet verified before any mainnet
+   claim.
+4. **Human** (the Boss) - deliverable matches the contract, decision is
+   actionable, risks and assumptions are transparent.

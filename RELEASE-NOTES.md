@@ -1,6 +1,58 @@
-**Full Changelog**: https://github.com/aabrur/hypertaks-agent/commits/v2.0.0
+**Full Changelog**: https://github.com/aabrur/hypertaks-agent/commits/v3.0.0
 
 # Release Notes
+
+## v3.0.0 - Karpathy discipline, TDD/verify gates, token discipline
+
+Behavioral upgrade, not a workflow rewrite. The 5-phase loop and tiered
+allocation are unchanged; v3.0 layers founder-grade engineering hygiene and
+token economics on top.
+
+### Highlights
+
+- **Karpathy behavioral DNA baked in** - read-before-write, surgical changes
+  (every changed line traces to the request), simplicity-first, and fail-loud
+  on confusion. Encoded concisely in `SKILL.md` so it applies on every tier.
+- **Engineering quality gate formalized** - `engineering.md` now carries the
+  explicit **TDD RED-GREEN-REFACTOR** loop, the **systematic-debugging
+  4-phase** protocol, **verification-before-completion**, and a **4-layer
+  validation** stack. Build tasks fail loud until each gate clears; Web3
+  additionally passes the on-chain audit checklist.
+- **Per-tier token budgets** - new `references/token-discipline.md` defines
+  budget envelopes per tier, waste patterns (wholesale reference loading,
+  re-reading cached files, framework name-dropping), and a recovery protocol
+  that fails loud instead of silently cutting scope.
+- **Two new endpoints: Nano & Omega** - `intake-protocol.md` tier signals now
+  cover **Nano** (sub-Lite, single-line confirmation, solo Founder) and
+  **Omega** (beyond-Hyper, program-level). The tier table gains a
+  **token-budget column**.
+- **Superpowers phase-map** - new `references/superpowers-map.md` names the
+  specialized skill each phase leans on (karpathy-guidelines, tdd,
+  systematic-debugging, verification-before-completion), so equipped agents
+  route to the right discipline at the right time.
+- **Enhanced compliance footer** - the deliverable template now closes with
+  **token accounting** and the **4 validation layers**, not just the tier/
+  references/output-shape self-check.
+- **Validation script** - `scripts/validate_skill.py` checks the structural
+  invariants (frontmatter parses, every referenced file exists, all manifest
+  versions agree, JSON parses). This is the executable analog of `/tdd` +
+  `/verify` for a docs skill, wired to run in CI.
+- **Red flags v3.0** - new anti-rationalization rows for "I'll just load the
+  whole KB to be safe", "the budget can slip this once", and "I can skip
+  verification, it obviously works".
+
+### Notes
+
+- Versions bumped in lockstep across all 7 manifests (Claude, Codex, Cursor,
+  Kimi, OpenCode, Pi, cross-agent catalog) + the skill card.
+- No change to the 5-phase loop, the gate modes, or the existing four tier
+  sizes - only additions around them.
+- Deferred (honest scope): physical 9-way split of `knowledge-base.md` and a
+  runtime cache/cost-routing model - these are harness-level concerns a
+  markdown skill cannot genuinely deliver. Captured as candidates for a
+  separate verified task.
+
+---
 
 ## v2.0.0 - Extended knowledge base
 
