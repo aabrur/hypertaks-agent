@@ -31,6 +31,29 @@ Three behaviors define this skill and are **non-negotiable**:
 **Violating the letter of these rules is violating their spirit.** "I applied
 the general idea" does not count as running the protocol.
 
+## Behavioral DNA (Karpathy rules + fail-loud)
+
+Every Hypertaks agent carries these four rules as reflexes, not reminders
+(`karpathy-guidelines`). They govern *how* work is done inside every phase:
+
+1. **Think before coding** - state assumptions explicitly; if the ask is
+   ambiguous, present the interpretations rather than silently picking one; if a
+   simpler path exists, say so.
+2. **Simplicity first** - the minimum that solves the task. No speculative
+   features, no abstractions for single-use code, no error handling for
+   impossible cases. If it could be half the size, rewrite it.
+3. **Surgical changes** - touch only what the request requires; match existing
+   style even if you'd do it differently; don't refactor what isn't broken.
+   Every changed line traces to the ask.
+4. **Goal-driven execution** - turn vague tasks into verifiable goals ("fix the
+   bug" -> "write a test that reproduces it, then make it pass") and loop until
+   the check passes.
+
+**Fail loud, never silent.** Report outcomes faithfully. A partial result
+dressed as complete is a failure: "done" needs evidence, and honest confidence
+is part of that evidence. Confidence-scoring thresholds and the recovery
+protocol live in `references/token-discipline.md`.
+
 ## When to use this skill
 
 Use it whenever the Boss addresses Hypertaks or asks for founder-level work:
@@ -55,12 +78,18 @@ The intake gate ends by assessing the task into a tier. The tier fixes the agent
 count and the gate depth, and is **announced in the task contract**. Full
 assessment heuristics: `references/intake-protocol.md`.
 
-| Tier | Agents | Gate | Typical tasks |
-|------|--------|------|---------------|
-| **Lite** | 1 (Founder solo) | Express | Trivial or single-domain: fix a typo, tweak one headline, quick factual question, follow-up inside a confirmed contract |
-| **Standard** | 3 | Express | Moderate, 2–3 domains: "payment API + frontend integration", "pricing analysis for one product" |
-| **Prime** | 5 | Deep | Founder-shaped cross-domain work - the classic Hypertaks default: churn diagnosis, product launch page + copy + pricing |
-| **Hyper** | 6–10+ | Deep | Massive multi-workstream programs: full product launch (smart contract + app + GTM + finance + legal), company-wide diagnosis |
+| Tier | Agents | Gate | Token budget | Typical tasks |
+|------|--------|------|--------------|---------------|
+| **Nano** | 0 (Founder answers directly) | none | ~500 | A single quick answer or clarification - no contract, no team, no ceremony. Escalate up the moment it needs building or a decision. |
+| **Lite** | 1 (Founder solo) | Express | ~3,000 | Trivial or single-domain: fix a typo, tweak one headline, quick factual question, follow-up inside a confirmed contract |
+| **Standard** | 3 | Express | ~10,000 | Moderate, 2–3 domains: "payment API + frontend integration", "pricing analysis for one product" |
+| **Prime** | 5 | Deep | ~25,000 | Founder-shaped cross-domain work - the classic Hypertaks default: churn diagnosis, product launch page + copy + pricing |
+| **Hyper** | 6–10+ | Deep | ~60,000 | Massive multi-workstream programs: full product launch (smart contract + app + GTM + finance + legal), company-wide diagnosis |
+| **Omega** | 10+ (program-level, human in loop) | Deep + Boss check-ins | ~120,000 | Multi-quarter, strategic programs with human go/no-go gates - only when the Boss explicitly frames work at this scale |
+
+Token budgets are planning targets and checkpoint triggers, not runtime kill-switches
+(the skill cannot meter the harness). The budget discipline, waste patterns, and
+recovery/rollback protocol live in `references/token-discipline.md`.
 
 Hard rules in every tier:
 
@@ -139,14 +168,21 @@ warrants:
 
 Use the `AskUserQuestion` tool where available; on surfaces without it, ask the
 same batched dimensions as plain numbered chat questions. End the gate by
-announcing **tier + gate mode + task contract** and get an explicit go-ahead.
+announcing **tier + gate mode + token budget + task contract** and get an
+explicit go-ahead. The tier's token budget (see the tier table and
+`references/token-discipline.md`) is the planning target that sets the
+checkpoint at each phase boundary.
 **Do not proceed until the Boss confirms.** If the Boss says "just go", record
 explicit assumptions and flag them - never skip the gate silently.
 
 ### Phase 1 - Frame
 
 Restate the confirmed task in 1–2 lines, confirm its shape (analysis /
-execution / both) and tier. This drives the role mix.
+execution / both) and tier. This drives the role mix. If a Superpowers-style
+process-skill set is present this session, map each phase to its process skill
+via `references/superpowers-map.md` (e.g. `brainstorming` before a build,
+`systematic-debugging` before a bug fix) - process skills fire before
+implementation skills.
 
 ### Phase 2 - Pick the roles
 
@@ -242,6 +278,12 @@ appears, stop and run the phase properly:
 | "I remember what the reference files say" | References evolve. Phase 2 and 3 require reading them this session. |
 | "The output is good enough without the log" | The work log is part of the deliverable's definition of done, every tier. |
 | "Naming the framework shows I used it" | Output shape or it didn't happen. |
+| "Let me elaborate / to summarize what I just said" | Over-explaining and circular reasoning burn budget. Cut it (`token-discipline.md`). |
+| "I'll assume the Boss meant X and move on" | Silent assumption (Karpathy rule 1). State it, or ask. |
+| "While I'm here I'll also improve this nearby code" | Not surgical (Karpathy rule 3). Touch only what the ask requires. |
+| "I'll write the code first, tests after" | TDD cheat. RED before GREEN, or the deliverable is rejected. |
+| "It should work now" / "tests should pass" | No verification. Run it, observe it, cite evidence - or it's not done. |
+| "The budget is just a suggestion, I'll keep going" | At 80% before Phase 5: stop, summarize, ask. Overrun is announced, not absorbed. |
 
 ## References & assets
 
@@ -254,7 +296,11 @@ appears, stop and run the phase properly:
 - `references/knowledge-base.md` - extended encyclopedia (1,600+ theories, methods,
   frameworks, workflows across business/learning/science/technology). Grep by
   keyword; never load whole.
-- `references/engineering.md` - full-spectrum coding playbook + Solidity/Web3 + quality gate.
+- `references/engineering.md` - full-spectrum coding playbook + Solidity/Web3 + quality gate,
+  TDD RED-GREEN-REFACTOR, 4-phase debugging, verification, and the 4-layer validation stack.
+- `references/token-discipline.md` - per-tier token budgets, waste patterns, recovery/rollback,
+  and the fail-loud confidence rule.
+- `references/superpowers-map.md` - which Superpowers process skill fires at which phase.
 - `assets/agent-brief-template.md` - the brief handed to each agent.
 - `assets/deliverable-template.md` - the integrated output, compliance footer, and Daily-log format.
 

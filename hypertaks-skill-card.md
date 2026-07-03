@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** unreleased-local
+**Version:** 3.0.0
 
 ---
 
@@ -10,9 +10,11 @@ Hypertaks is the founder-operator layer that executes founder-shaped work
 end-to-end across business strategy, engineering, full-stack-developer, marketing, finance, ERP,
 supply-chain, supply-chain finance, and IoT. It enforces a mandatory 5-phase
 loop-Intake & Verify, Frame, Pick Roles, Equip, Produce, Integrate & Deliver-
-with a sized intake gate, tiered agent allocation (Lite / Standard / Prime /
-Hyper), and an engineering quality gate for build tasks. Every workflow closes
-with a compliance footer and a work-log entry.
+with a sized intake gate, tiered agent allocation (Nano / Lite / Standard /
+Prime / Hyper / Omega), Karpathy discipline (read-before-write, surgical
+changes, fail-loud), and an engineering quality gate (TDD RED-GREEN-REFACTOR,
+systematic debugging, verification-before-completion) for build tasks. Every
+workflow closes with a token-accounted compliance footer and a work-log entry.
 
 ---
 
@@ -73,6 +75,9 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
   plainly; never pretend to spawn what the environment does not provide.
 - **Missing or late work log** - Work log is mandatory in every tier; close the
   deliverable with it.
+- **Token bloat from wholesale KB/reference loading** - References are
+  grepped by keyword in Phase 3, never loaded whole; the per-tier token budget
+  in `token-discipline.md` bounds spend and fails loud on overrun.
 
 ---
 
@@ -84,6 +89,8 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 - `references/frameworks.md`
 - `references/knowledge-base.md`
 - `references/engineering.md`
+- `references/token-discipline.md`
+- `references/superpowers-map.md`
 - `assets/agent-brief-template.md`
 - `assets/deliverable-template.md`
 
@@ -103,7 +110,7 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 
 ## Skill Version
 
-`unreleased-local`
+`3.0.0`
 
 ---
 
@@ -119,9 +126,9 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 
 ## Compliance
 
-- Tiers: Lite / Standard / Prime / Hyper with locked, announced counts. Tier
-  is locked once announced; scope growth requires re-gating and explicit
-  go-ahead.
+- Tiers: Nano / Lite / Standard / Prime / Hyper / Omega with locked, announced
+  counts and per-tier token budgets. Tier is locked once announced; scope growth
+  requires re-gating and explicit go-ahead.
 - Intake gate: Express for Lite/Standard, Deep for Prime/Hyper. The gate is
   sized, never skipped.
 - Agent quality: no duplicate roles; Founder/Integrator mandatory at 3+
@@ -135,9 +142,15 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
   inline.
 - No silent deviation: assumptions, tier changes, and shortcuts are announced
   to the Boss in the task contract.
+- Token discipline: per-tier budget set in Phase 0, tracked through the loop;
+  overruns trigger the recovery protocol in `token-discipline.md`, never a
+  silent scope cut.
+- Karpathy DNA: read-before-write, surgical changes (every changed line traces
+  to the request), simplicity-first, and fail-loud on confusion.
 
 ---
 
 ## Work Log
 
 `2026-07-03 | Hypertaks: produced unreleased-local reviewer-ready skill card from integrated front/back blocks with compliance footer and work-log snippet.`
+`2026-07-03 | Hypertaks v3.0.0: card bumped — Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`

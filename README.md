@@ -10,7 +10,7 @@ work, each equipped with the right business frameworks plus whatever
 plugins/skills and MCP connectors your environment already has.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-2.1.0-blue)
+![Version](https://img.shields.io/badge/version-3.0.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
 
 </div>
