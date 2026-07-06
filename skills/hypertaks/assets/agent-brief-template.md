@@ -30,14 +30,18 @@ Five Forces + Pareto. State how each applies to this agent's slice. The agent
 must return each framework's defined **output shape** - see the output-shape
 law in `references/frameworks.md`.]
 
-**Skills to invoke:** [Only skills verified present this session, e.g. `excel-xlsx`,
-`frontend-design`. If none apply, say "core tools only".]
-
-**MCP connectors to use:** [Only connectors present, e.g. Obsidian (vault),
-Chrome (QA), Adobe/Canva/Figma (design). If none, say "none".]
+**Tool bindings (skills / MCP):** [Per category from
+`references/plugins-and-mcp.md`, only tools verified present this session,
+recorded as category -> actual tool name (e.g. "spreadsheets -> the session's
+xlsx skill", "web testing -> the session's browser tool"). If nothing
+matches, say "core tools only".]
 
 **Constraints:** [Budget, stack, brand, compliance, on-chain network, data
 sensitivity - inherited from the contract, plus any specific to this role.]
+
+**Depends on:** [none - spawn in the first wave | Agent N's output (name the
+artifact) - spawn in the wave after that output exists. In synthesized mode
+this sets the writing order instead.]
 
 **Output format expected back:** [Exact shape you need for integration, e.g. a
 ranked root-cause table; a working code file + test results; an ERRC grid.]

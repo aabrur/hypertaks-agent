@@ -2,7 +2,7 @@
 """Structural validation for the Hypertaks skill and its per-agent manifests.
 
 Run from the repo root: `python3 scripts/validate_skill.py`
-Exits non-zero on the first broken invariant so CI fails loudly.
+Exits non-zero with every broken invariant listed so CI fails loudly.
 
 Checks:
   1. SKILL.md has valid YAML frontmatter (kebab-case name, no angle brackets in
@@ -10,6 +10,14 @@ Checks:
   2. Every `references/*.md` and `assets/*.md` path mentioned in SKILL.md exists.
   3. All JSON manifests parse.
   4. All per-agent plugin manifests declare the same version.
+  5. No Indonesian-language residue in any skill markdown file.
+  6. No personal absolute filesystem paths anywhere in the skill.
+  7. No version numbers in skill body text (allowed only in README.md,
+     RELEASE-NOTES.md, hypertaks-skill-card.md, and JSON manifest fields).
+  8. No duplicate section headers in references/knowledge-base.md.
+
+Note: these are structural invariants, not behavioral tests - they cannot
+verify that an agent actually runs the intake gate or the phase loop.
 """
 import json
 import re
@@ -75,6 +83,66 @@ for rel in [".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
 distinct = set(versions.values())
 check(len(distinct) <= 1,
       f"Manifest versions out of sync: {versions}")
+
+# --- content checks over the skill's markdown files ---
+SKILL_MD = sorted(SKILL_DIR.rglob("*.md"))
+
+# 5. Indonesian-language residue. Common Indonesian function words that do
+# not occur as English words; word-boundary matched, case-insensitive.
+INDONESIAN = re.compile(
+    r"\b(yang|untuk|dengan|dari|dalam|adalah|atau|pada|tidak|bisa|akan|"
+    r"harus|sudah|setiap|kalau|tanpa|sebelum|setelah|menjadi|secara|"
+    r"terhadap|sebagai|karena|belum|sebuah|tersebut|melalui|antara|"
+    r"berdasarkan|seluruh|lainnya)\b",
+    re.IGNORECASE,
+)
+for p in SKILL_MD:
+    for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+        m = INDONESIAN.search(line)
+        if m:
+            errors.append(
+                f"Indonesian residue in {p.relative_to(ROOT)}:{i} "
+                f"(word: {m.group(0)!r})")
+
+# 6. Personal absolute paths (Windows user profiles, Unix home dirs).
+PERSONAL_PATH = re.compile(
+    r"[A-Za-z]:\\Users\\[A-Za-z0-9_.-]+|/(?:home|Users)/[A-Za-z0-9_.-]+")
+for p in SKILL_MD:
+    for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+        m = PERSONAL_PATH.search(line)
+        if m:
+            errors.append(
+                f"Personal path in {p.relative_to(ROOT)}:{i}: {m.group(0)}")
+
+# 7. Version numbers outside the allowed files. JSON manifest `version`
+# fields are exempt (checked in #4); only markdown body text is scanned.
+VERSION_ALLOWED = {"RELEASE-NOTES.md", "hypertaks-skill-card.md", "README.md"}
+VERSION_PATTERN = re.compile(r"\bv\d+\.\d+(?:\.\d+)?\b|\bversion\s+\d+\.\d+",
+                             re.IGNORECASE)
+for p in SKILL_MD:
+    if p.name in VERSION_ALLOWED:
+        continue
+    for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+        m = VERSION_PATTERN.search(line)
+        if m:
+            errors.append(
+                f"Version number in body text {p.relative_to(ROOT)}:{i}: "
+                f"{m.group(0)!r} (allowed only in README.md, "
+                f"RELEASE-NOTES.md, hypertaks-skill-card.md)")
+
+# 8. Duplicate section headers in the knowledge base.
+kb = SKILL_DIR / "references" / "knowledge-base.md"
+if kb.exists():
+    seen = {}
+    for i, line in enumerate(kb.read_text(encoding="utf-8").splitlines(), 1):
+        if re.match(r"^#{2,3} ", line):
+            header = line.strip()
+            if header in seen:
+                errors.append(
+                    f"Duplicate header in knowledge-base.md: {header!r} "
+                    f"(lines {seen[header]} and {i})")
+            else:
+                seen[header] = i
 
 if errors:
     print("VALIDATION FAILED:")

@@ -1,4 +1,4 @@
-# Token Discipline (v3.0) - Budget, Waste, Recovery, Fail-Loud
+# Token Discipline - Budget, Waste, Recovery, Fail-Loud
 
 Hypertaks spends tokens like a founder spends cash: against a stated budget, with
 checkpoints, and with an honest post-mortem when it overruns. This reference is
@@ -7,10 +7,14 @@ compliance footer). It also arms the fail-loud rule that runs on every output.
 
 ## 1. Token budget per tier
 
-Each tier carries a soft token budget. It is a **planning target and a
-checkpoint trigger**, not a hard kill-switch enforced by the runtime - the skill
-cannot meter the harness. Treat it as a founder's budget line: aim to land
-under it, and when a checkpoint shows an overrun coming, stop and decide.
+Each tier carries a soft token budget. **These figures are working heuristics,
+not measurements**: the skill cannot meter the harness, and no benchmark sits
+behind the numbers. They are order-of-magnitude estimates of what each tier's
+ceremony plus production typically costs, chosen so that the ratios between
+tiers are right even where the absolute numbers are not. Use them as a
+planning target and a checkpoint trigger - a founder's budget line: aim to
+land under it, and when a checkpoint shows an overrun coming, stop and decide.
+If a harness exposes real token counts, prefer those and say so in the footer.
 
 | Tier | Token budget | Checkpoint | On 80% before Phase 5 |
 |------|-------------|------------|------------------------|
@@ -54,14 +58,23 @@ Rollback target by tier: Lite -> restart lean · Standard -> back to Phase 2
 (re-pick roles) · Prime -> back to Phase 3 (re-equip) · Hyper -> back to Phase 1
 (re-frame).
 
+The same stop-and-roll-back response applies to **contract violations** of any
+kind (wrong tier, skipped phase, scope drift, ungranted access), with one
+addition: after rolling back, re-present the adjusted contract and wait for a
+new approval. See `references/intake-protocol.md`, Step 5.
+
 ## 4. Fail-loud rule (confidence scoring)
 
 Every material output carries an honest confidence read. Do not paper over
-uncertainty to sound finished.
+uncertainty to sound finished. The percentage thresholds below are **rules of
+thumb, not calibrated measurements** - they exist to force two distinct
+behaviors ("say what you are unsure of" vs "stop and ask"), and the exact
+cutoffs are judgment lines, not statistics:
 
-- **Confidence < 70%** - surface the uncertainty explicitly in the deliverable;
-  state what would raise it.
-- **Confidence < 50%** - stop and ask for clarification before delivering.
+- **Confidence < ~70%** (noticeably unsure) - surface the uncertainty
+  explicitly in the deliverable; state what would raise it.
+- **Confidence < ~50%** (a coin flip or worse) - stop and ask for
+  clarification before delivering.
 - A partial result reported as complete is a failure, not a rounding error:
   - "Migration complete" while N% was skipped -> report the skip, not "done".
   - "Tests pass" while some were excluded -> name the excluded ones.

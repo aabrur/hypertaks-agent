@@ -1,6 +1,86 @@
-**Full Changelog**: https://github.com/aabrur/hypertaks-agent/commits/v3.0.0
+**Full Changelog**: https://github.com/aabrur/hypertaks-agent/commits/main
 
 # Release Notes
+
+## v4.0.0 - Binding contracts, universal tooling, knowledge-base repair
+
+This release fixes structural defects that had been present since v2.0.0 and
+removes every dependency on one person's local setup. It also makes the Phase 0
+approval gate genuinely binding instead of narrative.
+
+### Fixed (defects, stated plainly)
+
+- **`knowledge-base.md` was broken at its core.** The FRAMEWORK section
+  appeared twice under identical headers: a small English business table,
+  then a much larger Indonesian table that actually held the whole catalog
+  (architecture, security, ML, Web3) while labeled as business-only. The
+  WORKFLOW section was one ~950-row table with the same mislabel. Dozens of
+  entries were duplicated across sections, and the rows for ERC-8000 through
+  ERC-10000 described standards that do not exist in the EIP registry. The
+  file is now a single English catalog with 12 framework and 25 workflow
+  domain subsections, no duplicate headers, no duplicate entries, and the
+  fabricated rows removed.
+- **The published item count was wrong.** "1,600+" counted duplicate and
+  fabricated rows. The verified count after cleanup is 1,496 unique items,
+  now advertised as 1,400+.
+- **`plugins-and-mcp.md` was one person's tool inventory** presented as a
+  general resource. It is now a function-category map (notes, design,
+  scheduling, messaging, storage, browsing/testing, code hosting,
+  spreadsheets, documents, media, data execution, deployment, secrets,
+  on-chain execution) with a runtime binding procedure and a stated fallback
+  per category. No named product is required anywhere.
+- **Personal filesystem paths were hardwired** into SKILL.md and the
+  deliverable template (a Windows user profile and a private vault). Logging
+  is now conditional: follow the workspace's own standards file if one
+  exists, otherwise log inline. No default path, no default file name.
+- **Version numbers leaked into reference titles and body text.** They now
+  appear only in README.md, RELEASE-NOTES.md, the skill card, and the JSON
+  manifest `version` fields, and the validator enforces that.
+- **Token budgets and confidence thresholds looked measured but were not.**
+  They are now labeled as what they are: order-of-magnitude working
+  heuristics and judgment lines, with a note to prefer real counts where a
+  harness exposes them.
+
+### Added
+
+- **Binding task contract.** Phase 0 ends in one structured block: objective
+  and definition of done, scope and exclusions, tier + gate + agent count,
+  token budget target, estimated effort, explicit access permissions,
+  frameworks with promised output shapes per role, measurable success
+  criteria (now required as a one-liner on Lite/Standard too), and
+  assumptions with alternative interpretations. It activates only on an
+  explicitly affirmative reply; silence never counts.
+- **Violation rollback.** Wrong tier, skipped phase, shapeless framework,
+  scope drift, budget blow-through, or ungranted access triggers a fixed
+  response: stop, roll back to the last clean phase boundary, name the
+  violation, re-present the adjusted contract, resume only on new approval.
+  Delivery is bound to the contracted success criteria for analysis and
+  content tasks as well as code.
+- **Mandatory trigger check** - doubt about whether the skill applies must be
+  stated in one line, never resolved silently.
+- **Dependency-declared waves** - each agent brief declares what it depends
+  on; independent agents are produced in the same wave, dependents wait
+  (orchestrated Hyper/Omega; sets writing order in synthesized mode).
+- **Minimalism ladder** - before any Phase 4 artifact: does it need to exist,
+  can an existing asset be reused, is there a standard solution - in that
+  order, before anything custom.
+- **Conditional visual capability** - Phase 0 scans whether the environment
+  can render charts or generate images; if yes, the gate asks whether numeric
+  or process findings should ship as visuals; if no, the topic is skipped
+  entirely.
+- **Validator regression checks** - Indonesian-language residue, personal
+  absolute paths, version numbers outside the allowed files, and duplicate
+  knowledge-base headers now fail CI. These remain structural checks; they
+  still cannot test runtime behavior, and the script says so.
+
+### Notes
+
+- Versions bumped in lockstep across all manifests, package.json, the
+  marketplace record, the README badge, and the skill card.
+- The 5-phase loop, tier sizes, and gate modes are unchanged; what changed is
+  that deviating from them now has a defined, mandatory consequence.
+
+---
 
 ## v3.0.0 - Karpathy discipline, TDD/verify gates, token discipline
 

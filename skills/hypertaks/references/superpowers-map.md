@@ -1,4 +1,4 @@
-# Superpowers -> Hypertaks Phase Map (v3.0)
+# Superpowers -> Hypertaks Phase Map
 
 When the Superpowers plugin (or an equivalent process-skill set) is present in
 the environment, use its skills at the phase where each one earns its keep. This
@@ -26,8 +26,8 @@ When more than one applies, run process skills before implementation skills:
 
 1. **Process first** - `brainstorming` (creative) or `systematic-debugging`
    (bug) decides *how* to approach the task.
-2. **Implementation second** - domain skills (`frontend-design`, `mcp-builder`,
-   engineering references) execute inside that approach.
+2. **Implementation second** - domain skills and the engineering references
+   execute inside that approach.
 
 "Let's build X" -> brainstorm, then build. "Fix this bug" -> debug protocol,
 then patch. See `engineering.md` for the RED-GREEN-REFACTOR and 4-phase debug

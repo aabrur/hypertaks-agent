@@ -1,4 +1,4 @@
-# Agent Roles, Tier-Based Selection & Plugin/MCP Auto-Detection
+# Agent Roles, Tier-Based Selection & Runtime Tool Detection
 
 Phase 2 (pick the roles) and Phase 3 (equip each) draw on this file. The rule:
 **the tier announced in the task contract fixes the agent count** (Lite 1,
@@ -8,25 +8,26 @@ duplicates, and never shrunk silently.
 ## The role pool (N)
 
 Select from this pool. Each role has a professional lens, the frameworks it
-leans on, and the kinds of plugins/MCP connectors it typically wants.
+leans on, and the **tool categories** it typically wants - bind categories to
+the session's actual tools per `references/plugins-and-mcp.md`.
 
-| # | Role | Professional lens | Typical frameworks | Typical tools/skills (verify at runtime) |
-|---|------|-------------------|--------------------|------------------------------------------|
-| 1 | **Strategy / Business Analyst** | Market, competition, positioning | Porter's Five Forces, SWOT/TOWS, Blue Ocean, Pareto | `market-research`, `brainstorming`, WebSearch, `obsidian` |
-| 2 | **Finance & Unit-Economics** | P&L, margins, pricing, modeling | Unit economics, Pareto, break-even, DCF | `excel-xlsx`, `financial-datasets`, `stock-analysis` |
-| 3 | **Marketing & Growth** | Acquisition, retention, funnels | AARRR, Pareto, A/B testing | `market-research`, `competitive-ads-extractor`, `seo-geo-claude-skills`, Higgsfield |
-| 4 | **Copywriting & Brand** | Messaging, voice, narrative | AIDA, PAS, brand guidelines | `content-research-writer`, `humanizer`, `writing-skills`, `brand-guidelines` |
-| 5 | **Full-Stack / Software Engineer** | Web, backend, mobile, data | TDD, systematic debugging | `tdd`, `react-best-practices`, `systematic-debugging`, `frontend-design`, Chrome |
-| 6 | **Smart-Contract / Web3 Engineer** | On-chain, Solidity, tokenomics | Security patterns, audit checklist | `hermes-crypto-agent`, `engineering.md` Web3 section |
-| 7 | **Data / ML & Analytics** | Metrics, models, experiments | Statistics, cohort analysis, Pareto | `excel-xlsx`, `financial-datasets`, data scripts |
-| 8 | **Supply Chain & Operations** | Flow, throughput, logistics | Theory of Constraints, SCOR, Fishbone | `automation-workflows`, `obsidian` |
-| 9 | **Supply Chain Finance** | Working capital, trade finance | Factoring, reverse factoring, dynamic discounting | `excel-xlsx`, `financial-datasets` |
-| 10 | **ERP / Process Architect** | End-to-end business processes | Process mapping, ERP module view | `automation-workflows`, `excel-xlsx` |
-| 11 | **IoT / Embedded** | Sensors, edge, connectivity | Edge→cloud architecture | engineering skills, Firebase MCP |
-| 12 | **Legal / Compliance / Ethics** | Risk, regulation, integrity | Red Apples & Bad Barrels, compliance review | WebSearch, `microsoft-docs` |
-| 13 | **UX / UI & Product Design** | Interfaces, flows, usability | Design heuristics, journey mapping | `frontend-design`, `superdesign`, Figma, Canva, Adobe |
-| 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Systems Thinking, Cynefin, decision matrices, all frameworks | `obsidian` (logs the decision) |
-| 15 | **QA / Red-Team / Verifier** | Break it before the Boss does | Verification-before-completion, audit checklists, adversarial review | `webapp-testing`, `qa`, `verification-before-completion`, Chrome |
+| # | Role | Professional lens | Typical frameworks | Tool categories (bind at runtime) |
+|---|------|-------------------|--------------------|-----------------------------------|
+| 1 | **Strategy / Business Analyst** | Market, competition, positioning | Porter's Five Forces, SWOT/TOWS, Blue Ocean, Pareto | Web search & market research; notes & knowledge base |
+| 2 | **Finance & Unit-Economics** | P&L, margins, pricing, modeling | Unit economics, Pareto, break-even, DCF | Spreadsheets & financial modeling; data & analytics execution |
+| 3 | **Marketing & Growth** | Acquisition, retention, funnels | AARRR, Pareto, A/B testing | Web browsing & testing; media generation; market research |
+| 4 | **Copywriting & Brand** | Messaging, voice, narrative | AIDA, PAS, brand guidelines | Notes & knowledge base; visual design & creative |
+| 5 | **Full-Stack / Software Engineer** | Web, backend, mobile, data | TDD, systematic debugging | Web browsing & testing; code hosting & version control; deployment & hosting |
+| 6 | **Smart-Contract / Web3 Engineer** | On-chain, Solidity, tokenomics | Security patterns, audit checklist | On-chain execution; code hosting & version control |
+| 7 | **Data / ML & Analytics** | Metrics, models, experiments | Statistics, cohort analysis, Pareto | Data & analytics execution; spreadsheets & financial modeling |
+| 8 | **Supply Chain & Operations** | Flow, throughput, logistics | Theory of Constraints, SCOR, Fishbone | Spreadsheets; scheduling & calendar; notes |
+| 9 | **Supply Chain Finance** | Working capital, trade finance | Factoring, reverse factoring, dynamic discounting | Spreadsheets & financial modeling |
+| 10 | **ERP / Process Architect** | End-to-end business processes | Process mapping, ERP module view | Spreadsheets; document & file storage |
+| 11 | **IoT / Embedded** | Sensors, edge, connectivity | Edge→cloud architecture | Deployment & hosting; data & analytics execution |
+| 12 | **Legal / Compliance / Ethics** | Risk, regulation, integrity | Red Apples & Bad Barrels, compliance review | Web search; document & file storage; secrets & credentials |
+| 13 | **UX / UI & Product Design** | Interfaces, flows, usability | Design heuristics, journey mapping | Visual design & creative; web browsing & testing |
+| 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Systems Thinking, Cynefin, decision matrices, all frameworks | Notes & knowledge base (owns the work log); communication; scheduling |
+| 15 | **QA / Red-Team / Verifier** | Break it before the Boss does | Verification-before-completion, audit checklists, adversarial review | Web browsing & testing; data & analytics execution |
 
 ## Pick the tier's count - heuristics
 
@@ -59,44 +60,34 @@ leans on, and the kinds of plugins/MCP connectors it typically wants.
    (never silently). Fewer seem needed → the tier was assessed too high; that is
    also a contract re-statement, not a silent shrink.
 
-## Plugin / skill / MCP auto-detection method
+## Runtime tool detection
 
-> The concrete, installed inventory of connectors and plugins lives in
-> `references/plugins-and-mcp.md` - use it as the default map. The steps below are
-> how to confirm what is actually loaded this session.
+> The category map and binding procedure live in
+> `references/plugins-and-mcp.md`. The steps below are how to confirm what is
+> actually loaded this session.
 
 Do **not** invent skills or connectors. Detect what actually exists, then match.
 
 0. **Detect the production mode first.** Check whether an agent/task-spawning
-   tool is present (e.g. Claude Code's `Agent` tool). If yes, run Phase 4 in
-   orchestrated mode. If no such tool exists in this environment (claude.ai
-   chat, most other assistants, bare API access), run Phase 4 in synthesized
-   mode - see **Environment modes** in `SKILL.md`. This does not change how
-   many roles get picked or equipped, only how they get produced.
-1. **Enumerate availability at runtime.** Read the environment's available-skills
-   list and the MCP tool list surfaced in the session (system reminders, the tool
-   registry, `ToolSearch` for deferred tools). This is the source of truth. On
-   surfaces with no such registry to read, treat step 2 below as "no typical
-   tools available" and equip every role with core reasoning + its frameworks
-   only.
-2. **Match each agent to relevant, present tools** using the table above as a
-   starting map. If a "typical" tool is absent, pick the closest available one
-   or fall back to core tools (WebSearch, Bash, Read/Write/Edit).
-3. **Wire MCP connectors by role need**, only if present:
-   - Notes / knowledge / logging → **Obsidian** MCP (vault).
-   - Design / visuals → **Adobe**, **Canva**, **Figma**, `frontend-design`.
-   - Comms & docs → **Gmail**, **Google Calendar**, **Google Drive**.
-   - Web interaction / scraping / QA → **Chrome** (claude-in-chrome),
-     **chrome-devtools**.
-   - Media generation → **Higgsfield**.
-   - Backend / hosting → **Firebase**.
-   - Docs / reference → **microsoft-docs** (microsoft-learn).
-4. **State the equip list in each agent brief** so the spawned agent knows exactly
-   which skills to invoke and which MCP connectors to use - see
-   `assets/agent-brief-template.md`.
-5. **Verify before relying.** Availability changes per session; confirm a tool is
-   loadable (via `ToolSearch` for deferred tools) before instructing an agent to
-   depend on it.
+   tool is present (e.g. an `Agent` or task tool). If yes, run Phase 4 in
+   orchestrated mode. If no such tool exists in this environment (chat
+   surfaces, bare API access), run Phase 4 in synthesized mode - see
+   **Environment modes** in `SKILL.md`. This does not change how many roles
+   get picked or equipped, only how they get produced.
+1. **Enumerate availability at runtime.** Read the environment's
+   available-skills list and the tool registry surfaced in the session
+   (system reminders, deferred-tool search if the host provides one). This is
+   the source of truth. On surfaces with no such registry to read, treat every
+   category as unmatched and equip every role with core reasoning + its
+   frameworks only.
+2. **Match each agent's tool categories to present tools** using the table
+   above and the category map in `references/plugins-and-mcp.md`. If a
+   category has no match, fall back to core tools (web search, file
+   operations, shell where present) and record the gap.
+3. **State the bindings in each agent brief** so the produced agent knows
+   exactly which tools to invoke - see `assets/agent-brief-template.md`.
+4. **Verify before relying.** Availability changes per session; confirm a tool
+   is loadable before instructing an agent to depend on it.
 
 ## Worked example - Lite: "Fix the headline typo on the landing page"
 
@@ -111,7 +102,9 @@ Tier: Lite (1), Express gate. Continuation or trivial single-domain task.
 
 Tier: Standard (3), Express gate. Two domains + integration.
 
-1. **Full-Stack Engineer** - build the pricing-table component; QA in Chrome.
+1. **Full-Stack Engineer** - build the pricing-table component; QA it in the
+   session's browser tool if one is present, otherwise state that rendering is
+   unverified.
 2. **Copywriting & Brand** - tier names, feature bullets, CTA copy (AIDA).
 3. **Founder / Integrator** - merge copy into component, verify rendering,
    deliver + log.
@@ -121,15 +114,16 @@ Tier: Standard (3), Express gate. Two domains + integration.
 Tier: Prime (5), Deep gate. Task shape: analysis.
 
 1. **Strategy / Business Analyst** - Porter + SWOT on competitive switching costs
-   and substitutes; tools: `market-research`, WebSearch.
+   and substitutes; tools: web search & market research category.
 2. **Finance & Unit-Economics** - LTV/CAC, payback, cohort revenue decay; tools:
-   `excel-xlsx`, `financial-datasets`.
+   spreadsheets & financial modeling category.
 3. **Marketing & Growth** - funnel & retention-curve teardown, Pareto of churn
-   reasons; tools: `competitive-ads-extractor`, `market-research`.
+   reasons; tools: market research and ads-analysis tooling where present.
 4. **Supply Chain & Operations / Product** - Fishbone on service failures and
    fulfillment/experience bottlenecks (Theory of Constraints).
 5. **Founder / Integrator** - reconcile the four into a ranked root-cause list
-   with recommended interventions; logs the decision to the vault via Obsidian.
+   with recommended interventions; logs the decision per the notes category
+   (inline fallback).
 
 ## Worked example - Hyper: "Launch the new product: smart contract + app + GTM + legal"
 
@@ -144,6 +138,7 @@ stakes, so the QA/Red-Team slot is mandatory (not folded into the Integrator).
 6. **Finance / Tokenomics** - supply schedule, fee routing, unit economics.
 7. **Legal / Compliance** - jurisdiction and offering-risk review.
 8. **QA / Red-Team / Verifier** - adversarial review: audit checklist on the
-   contract, end-to-end app QA in Chrome, launch-readiness verification.
+   contract, end-to-end app QA in the browser tool where present,
+   launch-readiness verification.
 9. **Founder / Integrator** - reconcile all workstreams into the launch
-   decision; owns the vault log.
+   decision; owns the work log.

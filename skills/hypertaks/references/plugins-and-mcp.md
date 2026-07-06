@@ -1,90 +1,64 @@
-# Plugins & MCP Connectors - Live Inventory
+# Tool Categories & Runtime Binding
 
-Concrete catalog of what is installed in this workspace, so Phase 3 (equip) maps
-each agent in the tier's lineup to real tools instead of guessing. **Availability still
-varies per session** - confirm a tool/connector is actually loaded before an agent
-depends on it (deferred MCP tools must be loaded via `ToolSearch` first). Treat
-this as the default map; the live session list overrides it.
+Phase 3 (equip) maps each agent to **categories of function**, then binds each
+category to whatever tool is actually installed in the running session. This
+file names no specific product as a requirement. Whoever installs this skill,
+with whatever tool mix their environment has, can run every role: a matching
+tool improves the output, a missing tool degrades it gracefully, and the agent
+says which of the two happened.
 
----
+## Ground rules
 
-## A. MCP connectors (servers)
+1. **Detect, never assume.** Enumerate what the session actually exposes: the
+   available-skills list, the MCP/tool registry, and any deferred-tool search
+   the host provides. That live list is the only source of truth; nothing in
+   this file overrides it.
+2. **Category first, brand never.** Agent briefs name the category and the
+   session's matching tool. No brief may depend on a tool that was not
+   verified present this session.
+3. **Degrade gracefully and say so.** When a category has no match, the role
+   runs on core reasoning, its frameworks, and whatever generic tools exist
+   (file operations, shell, web search). The brief records "core tools only"
+   and the deliverable's risks section carries the limitation.
+4. **Never fabricate.** No invented tool names, no pretended tool calls, no
+   fabricated tool output. This extends the synthesized-mode rule in
+   `SKILL.md`.
 
-| Connector | Tool prefix | Use it for | Best-fit roles |
-|-----------|-------------|-----------|----------------|
-| **Chrome (Claude-in-Chrome)** | `mcp__claude-in-chrome__*` | Browse, fill forms, screenshot, read console/network, QA web apps, GIF capture | Engineer, UX/UI, Marketing, Data |
-| **Chrome DevTools** | `mcp__plugin_chrome-devtools-mcp_chrome-devtools__*` | Performance traces, Lighthouse audits, network/console inspection, heap snapshots | Engineer, UX/UI |
-| **Adobe (for creativity)** | `mcp__claude_ai_Adobe_for_creativity__*` | Image editing, vector, InDesign/Express, document render, fonts, video | UX/UI, Copywriting/Brand, Marketing |
-| **Canva** | `mcp__claude_ai_Canva__*` | Designs from templates/brand kits, export, resize, brand templates | UX/UI, Marketing, Copywriting/Brand |
-| **Figma** | `mcp__claude_ai_Figma__*` | Design↔code, design systems, FigJam diagrams, Code Connect | UX/UI, Engineer |
-| **Higgsfield** | `mcp__claude_ai_Higgsfield__*` | Generate image/video/3D/audio, ads (Marketing Studio), virality predictor | Marketing, Copywriting/Brand, UX/UI |
-| **Gmail** | `mcp__claude_ai_Gmail__*` | Search threads, drafts, labels, send comms | Founder/Integrator, Marketing, Legal |
-| **Google Calendar** | `mcp__claude_ai_Google_Calendar__*` | Events, scheduling, suggest times | Founder/Integrator, Ops |
-| **Google Drive** | `mcp__claude_ai_Google_Drive__*` | Read/create/search files, share docs | Founder/Integrator, Finance, Ops |
-| **Slack** | `mcp__claude_ai_Slack__*` | Team comms / notifications (auth required) | Founder/Integrator, Marketing |
-| **Obsidian** | `mcp__obsidian__*` | Shared vault: notes, search, daily log, wikilinks | Founder/Integrator (always - Phase 5 logging), all |
-| **Firebase** | `mcp__plugin_firebase_firebase__*` | App/project setup, deploy, security rules, SDK config, hosting | Engineer, IoT, Founder/Integrator |
-| **Microsoft Learn** | `mcp__plugin_microsoft-docs_microsoft-learn__*` | Official MS/Azure docs search, code samples, full-page fetch | Engineer, Legal/Compliance, Data |
+## Function categories
 
-## B. Plugins (namespaced skills & agents)
+| Category | What it covers | Roles that want it | If absent |
+|----------|----------------|--------------------|-----------|
+| **Notes & knowledge base** | Note-taking apps, vaults, wikis, memory stores | Founder/Integrator (work log), all roles | Include the work log inline in the deliverable |
+| **Visual design & creative** | Design, prototyping, image-editing, whiteboard tools | UX/UI, Marketing, Copywriting/Brand | Apply design heuristics in text and state the limitation |
+| **Scheduling & calendar** | Calendar and scheduling services | Founder/Integrator, Ops | Propose the schedule as text for the Boss to enter |
+| **Communication & messaging** | Email, chat, team-messaging connectors | Founder/Integrator, Marketing, Legal | Draft the messages; the Boss sends them |
+| **Document & file storage** | Cloud drives, shared document stores | Finance, Ops, Founder/Integrator | Deliver files in the local workspace or inline |
+| **Web browsing & testing** | Browser automation, dev-tools, site QA | Engineer, UX/UI, QA/Red-Team, Marketing | Reason from static analysis; mark browser-dependent claims as unverified |
+| **Code hosting & version control** | Git hosting, PR/issue tooling | Engineer, Founder/Integrator | Work locally; note that push/PR needs a manual step |
+| **Spreadsheets & financial modeling** | Workbook/spreadsheet skills, financial data sources | Finance, Supply Chain Finance, Data | Deliver markdown tables with formulas stated |
+| **Presentations & formal documents** | Slide, document, and PDF generation | Any role with a formal deliverable | Deliver structured markdown instead |
+| **Media generation** | Image, audio, video generation services | Marketing, UX/UI, Copywriting/Brand | Skip media output and state the limitation |
+| **Data & analytics execution** | Code execution, notebooks, query engines | Data/ML, Engineer, Finance | Reason analytically; no computed charts (see the visual-capability check in `SKILL.md`) |
+| **Deployment & hosting** | Cloud deploy, serverless, app hosting | Engineer, IoT | Hand over a runnable artifact plus deploy instructions |
+| **Secrets & credentials** | Secret managers, credential vaults | Engineer, Legal/Compliance | Never handle raw secrets inline; ask the Boss for a safe channel |
+| **On-chain execution** | Wallets, contract deploys, chain monitoring | Smart-Contract/Web3 Engineer | Produce contracts + tests + deployment scripts; the Boss executes on-chain steps |
 
-| Plugin | Provides | Best-fit roles |
-|--------|----------|----------------|
-| **frontend-design** | `frontend-design:frontend-design` - distinctive production UI | Engineer, UX/UI |
-| **higgsfield** | `higgsfield-generate`, `higgsfield-product-photoshoot`, `higgsfield-marketplace-cards`, `higgsfield-soul-id` | Marketing, Copywriting/Brand, UX/UI |
-| **chrome-devtools-mcp** | `a11y-debugging`, `debug-optimize-lcp`, `memory-leak-debugging`, `chrome-devtools`, `troubleshooting` | Engineer, UX/UI |
-| **postman** | API Readiness Analyzer agent + `generate-spec`, `mock`, `run-collection`, `security`, `send-request`, `test`, `sync` | Engineer, Data |
-| **firebase** | Firebase MCP tools + developer-knowledge docs | Engineer, IoT |
-| **microsoft-docs** | `microsoft-docs`, `microsoft-code-reference`, `microsoft-skill-creator` | Engineer, Legal/Compliance |
-| **agent-sdk-dev** | `new-sdk-app` + Python/TS SDK verifier agents | Engineer |
-| **mcp-apps** | `create-mcp-app`, `add-app-to-server`, `convert-web-app`, `migrate-oai-app` | Engineer |
-| **claude-md-management** | `revise-claude-md`, `claude-md-improver` | Founder/Integrator, Engineer |
-| **claude-code-setup** | `claude-automation-recommender` | Founder/Integrator |
-| **telegram** | `access`, `configure` - Telegram comms | Marketing, Founder/Integrator |
+## Binding procedure (run in Phase 3)
 
-## C. High-value warehouse skills by role
+1. **Enumerate** the session's skills, tools, and connectors.
+2. **Match** each agent's categories against that list; pick the closest
+   present tool per category, whatever its brand.
+3. **Record** the binding in the agent brief (`assets/agent-brief-template.md`):
+   category, then the actual tool name found this session.
+4. **Fallback**: for categories with no match, write "core tools only" in the
+   brief and carry the limitation into the deliverable's risks section.
+5. **Verify before relying.** Availability changes per session; confirm a tool
+   is loadable before instructing an agent to depend on it.
 
-Only skills confirmed present this session should be invoked. Common picks:
+## Workspace standards (conditional)
 
-- **Strategy / Business Analyst** → `market-research`, `brainstorming`, `admapix`,
-  `competitive-ads-extractor`, `grilling`.
-- **Finance & Unit-Economics / Supply Chain Finance** → `excel-xlsx`,
-  `financial-datasets`, `stock-analysis`, `portfolio-risk`, `execution-cost`.
-- **Marketing & Growth** → `seo-geo-claude-skills`, `competitive-ads-extractor`,
-  `twitter-algorithm-optimizer`, `ckm-banner-design`, `automation-workflows`.
-- **Copywriting & Brand** → `content-research-writer`, `humanizer`,
-  `writing-skills`, `brand-guidelines`, `brandkit`, `theme-factory`.
-- **Full-Stack / Software Engineer** → `tdd` / `test-driven-development`,
-  `react-best-practices`, `react-native-skills`, `systematic-debugging`,
-  `diagnosing-bugs`, `frontend-design`, `karpathy-guidelines`,
-  `verification-before-completion`, `webapp-testing`, `deploy-to-vercel`,
-  `docker-essentials`, `mcp-builder`.
-- **Smart-Contract / Web3 Engineer** → `hermes-crypto-agent` (multi-chain
-  wallets, swaps, deploy, monitoring), plus `engineering.md` Web3 section.
-- **Data / ML & Analytics** → `excel-xlsx`, `financial-datasets`,
-  `langsmith-fetch`, `stock-analysis`.
-- **Supply Chain & Operations / ERP** → `automation-workflows`, `obsidian`,
-  `excel-xlsx`, `file-organizer`.
-- **IoT / Embedded** → Firebase MCP, `microsoft-docs`, engineering skills.
-- **Legal / Compliance / Ethics** → `microsoft-docs`, WebSearch, `1password`
-  (secrets handling).
-- **UX / UI & Product Design** → `frontend-design`, `superdesign`, `taste-skill`,
-  `ui-ux-pro-max`, `redesign-skill`, Figma/Canva/Adobe MCP.
-- **Founder / Integrator** → `obsidian` (vault logging), `doc-coauthoring`,
-  `internal-comms`, `dispatching-parallel-agents`, Gmail/Calendar/Drive MCP.
-
-## D. Delivery / distribution skills (any role, as needed)
-
-`pptx` / `powerpoint-pptx` (decks), `word-docx` (docs), `pdf`, `slides-generator`,
-`canvas-design`, `markdown-converter`, `deploy-to-vercel`, `vercel-cli-with-tokens`.
-
-## How to use this inventory
-
-1. In Phase 3, for each agent in the tier's lineup, pick tools from sections
-   A–D by the agent's role column.
-2. Confirm the tool/connector is loaded this session (load deferred MCP tools with
-   `ToolSearch` using `select:<tool_name>`; check the available-skills list for
-   skills). If absent, fall back to the nearest available option or core tools.
-3. List the chosen skills + MCP connectors explicitly in each agent brief
-   (`assets/agent-brief-template.md`) so the spawned agent knows exactly what to
-   invoke.
+If the running workspace carries its own standards file (a `CLAUDE.md`,
+`AGENTS.md`, or an equivalent the host agent surfaces), follow it for logging
+locations, folder conventions, and anything it regulates. If no such file
+exists, skip this entirely: assume no path, no vault, and no naming convention,
+and use the inline work-log fallback from Phase 5 of `SKILL.md`.
