@@ -1,16 +1,15 @@
-# Encyclopedia of Applied Knowledge — Extended Catalog
+# Encyclopedia of Applied Knowledge - Extended Catalog
 
-Extended knowledge base for Hypertaks Phase 3 (equip): 1,600+ theories,
+Extended knowledge base for Hypertaks Phase 3 (equip): 1,400+ theories,
 methods, frameworks, and workflows across business, learning, science, and
 technology.
 
 ## How to use this file
 
-- **Never load this file whole** — it is ~212 KB. Grep it by item name,
-  keyword, or domain (e.g. `JTBD`, `Cynefin`, `RICE`, `MLOps`, `EIP-4626`,
-  `MEDDIC`, `Zettelkasten`) and read only the matching rows.
-- Item **names are English** and are the lookup key; some annotations are in
-  Indonesian — translate when quoting, and deliver all output prose in English.
+- **Never load this file whole.** It is large by design. Grep it by item
+  name, keyword, or domain (e.g. `JTBD`, `Cynefin`, `RICE`, `MLOps`,
+  `EIP-4626`, `MEDDIC`, `Zettelkasten`) and read only the matching rows.
+- All content is English. Item **names** are the lookup key.
 - Items pulled from here obey the **output-shape law** in
   `references/frameworks.md`: state in the agent brief what shape the item's
   application must return. The core frameworks with full applied how-tos stay
@@ -18,14 +17,17 @@ technology.
 
 ## Contents
 
-1. **Theory** — fundamental laws, principles, and mental models
+1. **Theory** - fundamental laws, principles, and mental models
    (business, learning, science, technology).
-2. **Method** — operational procedures and execution techniques.
-3. **Framework** — conceptual structures and lenses, from business strategy
-   through ML/AI, architecture, security, compliance, and Web3/EIP standards.
-4. **Workflow** — a large flat catalog of structured workflows that also
-   folds in strategy, management, integration, documentation,
-   design/planning, psychology, and mental-model material.
+2. **Method** - operational procedures and execution techniques
+   (business, learning, science, technology).
+3. **Framework** - conceptual structures and lenses, split by domain:
+   business, economics, data platforms, responsible AI, machine learning,
+   algorithms, software architecture, distributed systems, testing,
+   security, legal and compliance, and Web3.
+4. **Workflow** - structured step sequences by domain, from corporate
+   operations and marketing through engineering delivery, cybersecurity,
+   and blockchain.
 
 ---
 
@@ -64,7 +66,6 @@ technology.
 ### 1.3 Science
 | Name | Theory | Creator | Hypertaks Application |
 |------|--------|---------|----------------------|
-| **Scientific Method** | Observation → Hypothesis → Experiment → Analysis → Conclusion | Galileo, Bacon | A/B testing & data-driven decisions |
 | **Falsification** | Scientific theories must be falsifiable | Karl Popper | Product validation: seek evidence that our product is wrong, not right |
 | **Bayesian Inference** | Update beliefs based on new evidence | Thomas Bayes | Prior belief → posterior belief in decision-making |
 | **Complexity Theory** | Complex systems: emergent behavior, tipping points, adaptation | Santa Fe Institute | Platform scaling & ecosystem dynamics |
@@ -81,7 +82,7 @@ technology.
 | Name | Theory | Creator | Hypertaks Application |
 |------|--------|---------|----------------------|
 | **Turing Machine** | Universal computation model | Alan Turing | Computation boundaries & algorithm design |
-| **CAP Theorem** | Consistency, Availability, Partition Tolerance — pick two | Eric Brewer | Database architecture & distributed system design |
+| **CAP Theorem** | Consistency, Availability, Partition Tolerance - pick two | Eric Brewer | Database architecture & distributed system design |
 | **Conway's Law** | Software systems mirror organizational communication structure | Mel Conway | Organizational design for microservices architecture |
 | **Brooks's Law** | Adding people to a late project makes it later | Fred Brooks | Team scaling & project management |
 | **Gall's Law** | Successful complex systems always evolve from simple systems | John Gall | MVP design & iterative development |
@@ -115,9 +116,9 @@ technology.
 | **Wizard of Oz** | Simulate automation with humans behind the scenes | HCI Research | MVP without real AI/backend |
 | **Concierge MVP** | Serve customers manually to understand needs | Eric Ries | Service design before automation |
 | **Pirate Metrics (AARRR)** | Acquisition, Activation, Retention, Referral, Revenue | Dave McClure | Funnel analysis & growth metrics |
-| **Cohort Analysis** | Group users by time/type for behavior analysis | — | Retention & churn analysis |
-| **Unit Economics** | CAC, LTV, Contribution Margin per unit | — | Profitability analysis & pricing |
-| **Bootstrapping** | Growth from internal revenue without external funding | — | Cash flow management for startups |
+| **Cohort Analysis** | Group users by time/type for behavior analysis | - | Retention & churn analysis |
+| **Unit Economics** | CAC, LTV, Contribution Margin per unit | - | Profitability analysis & pricing |
+| **Bootstrapping** | Growth from internal revenue without external funding | - | Cash flow management for startups |
 | **Blitzscaling** | Growth as top priority even if inefficient | Reid Hoffman | Hypergrowth strategy |
 
 ### 2.2 Learning
@@ -128,15 +129,15 @@ technology.
 | **SQ3R** | Survey → Question → Read → Recite → Review | Francis Robinson | Research & documentation reading |
 | **Cornell Notes** | Page division: notes, cue, summary | Walter Pauk | Meeting notes & knowledge capture |
 | **Mind Mapping** | Visual hierarchy of ideas from center outward | Tony Buzan | Brainstorming & planning |
-| **Active Recall** | Test yourself without looking at material | — | Skill assessment & interview prep |
-| **Interleaving** | Mix different topics in one practice session | — | Cross-training teams |
+| **Active Recall** | Test yourself without looking at material | - | Skill assessment & interview prep |
+| **Interleaving** | Mix different topics in one practice session | - | Cross-training teams |
 | **Scaffolding** | Gradual support reduced as progress is made | Vygotsky | Onboarding & skill development |
 | **Peer Instruction** | Peer discussion for difficult concepts | Eric Mazur | Code review & pair programming |
 | **Mastery Learning** | Learners must reach threshold before advancing | Benjamin Bloom | Quality gates in development |
-| **Microlearning** | Learning content in small chunks (3-5 minutes) | — | Documentation & training modules |
+| **Microlearning** | Learning content in small chunks (3-5 minutes) | - | Documentation & training modules |
 | **Action Learning** | Learn from real problems in teams | Reg Revans | Problem-solving workshops |
 | **Case Method** | Analysis of real business cases | Harvard Business School | Business decision training |
-| **Simulation** | Practice in environment that mimics reality | — | Testing & staging environment design |
+| **Simulation** | Practice in environment that mimics reality | - | Testing & staging environment design |
 | **Reflective Practice** | Active reflection on experience for learning | Donald Schön | Retrospectives & post-mortems |
 
 ### 2.3 Science
@@ -173,50 +174,49 @@ technology.
 | **Refactoring** | Change structure without changing behavior | Martin Fowler | Technical debt management |
 | **Continuous Integration (CI)** | Regularly merge code to trunk | Kent Beck | Fast feedback & conflict reduction |
 | **Continuous Delivery (CD)** | Deploy anytime with confidence | Jez Humble | Release readiness |
-| **Infrastructure as Code (IaC)** | Infrastructure defined & provisioned via code | — | Reproducible environments |
+| **Infrastructure as Code (IaC)** | Infrastructure defined & provisioned via code | - | Reproducible environments |
 | **Chaos Engineering** | Deliberately cause failures to build resilience | Netflix | System reliability testing |
 | **Feature Flags** | Enable/disable features without deploy | Martin Fowler | Safe rollout & experimentation |
-| **Canary Release** | Deploy to subset of users first | — | Risk mitigation |
-| **Blue-Green Deployment** | Two identical environments; instant switch | — | Zero-downtime deployment |
+| **Canary Release** | Deploy to subset of users first | - | Risk mitigation |
+| **Blue-Green Deployment** | Two identical environments; instant switch | - | Zero-downtime deployment |
 | **Strangler Fig Pattern** | Replace legacy systems gradually | Martin Fowler | Legacy migration |
 | **Circuit Breaker** | Stop requests to failing services | Michael Nygard | Fault tolerance |
-| **Bulkhead** | Isolate failure to limited compartments | — | Resilience engineering |
-| **Saga Pattern** | Distributed transactions with compensation | — | Microservices transactions |
+| **Bulkhead** | Isolate failure to limited compartments | - | Resilience engineering |
+| **Saga Pattern** | Distributed transactions with compensation | - | Microservices transactions |
 | **CQRS** | Separate read & write models | Greg Young | Performance & scalability |
 | **Event Sourcing** | Store state as sequence of events | Martin Fowler | Audit trail & state reconstruction |
-| **API-First** | Design API before implementation | — | Contract-driven development |
+| **API-First** | Design API before implementation | - | Contract-driven development |
 | **Mobile-First / Responsive** | Design for mobile first | Luke Wroblewski | UX design |
-| **Progressive Enhancement** | Basic functionality first, enhancements gradually | — | Accessibility & resilience |
-| **Graceful Degradation** | Reduce functionality when resources are limited | — | Reliability under stress |
-| **Load Balancing** | Distribute load across multiple resources | — | Scalability |
-| **Caching Strategy** | Cache-Aside, Write-Through, Write-Behind | — | Performance optimization |
-| **Database Sharding** | Horizontal data partitioning | — | Data scalability |
-| **Indexing & Query Optimization** | Data structures for fast access | — | Database performance |
-| **Rate Limiting** | Limit requests per unit time | — | API protection & fairness |
-| **Webhook vs Polling** | Push vs pull for event notification | — | Real-time system design |
-| **GraphQL vs REST vs RPC** | Different API paradigms | — | API architecture decision |
-| **Microservices vs Monolith** | Decomposition vs unified architecture | — | System architecture decision |
-| **Serverless** | Function-as-a-Service, event-driven | — | Cost optimization & scaling |
-| **Edge Computing** | Process data near the source | — | Latency reduction |
-| **Zero Trust Architecture** | "Never trust, always verify" | — | Security architecture |
-| **DevSecOps** | Security integrated into DevOps pipeline | — | Shift-left security |
-| **Observability (3 Pillars)** | Metrics, Logs, Traces | — | System monitoring |
+| **Progressive Enhancement** | Basic functionality first, enhancements gradually | - | Accessibility & resilience |
+| **Graceful Degradation** | Reduce functionality when resources are limited | - | Reliability under stress |
+| **Load Balancing** | Distribute load across multiple resources | - | Scalability |
+| **Caching Strategy** | Cache-Aside, Write-Through, Write-Behind | - | Performance optimization |
+| **Database Sharding** | Horizontal data partitioning | - | Data scalability |
+| **Indexing & Query Optimization** | Data structures for fast access | - | Database performance |
+| **Rate Limiting** | Limit requests per unit time | - | API protection & fairness |
+| **Webhook vs Polling** | Push vs pull for event notification | - | Real-time system design |
+| **GraphQL vs REST vs RPC** | Different API paradigms | - | API architecture decision |
+| **Microservices vs Monolith** | Decomposition vs unified architecture | - | System architecture decision |
+| **Serverless** | Function-as-a-Service, event-driven | - | Cost optimization & scaling |
+| **Edge Computing** | Process data near the source | - | Latency reduction |
+| **DevSecOps** | Security integrated into DevOps pipeline | - | Shift-left security |
+| **Observability (3 Pillars)** | Metrics, Logs, Traces | - | System monitoring |
 | **SRE (Site Reliability Engineering)** | Error budgets, SLO, SLI | Google | Reliability management |
 | **GitOps** | Git as source of truth for operations | Weaveworks | Infrastructure management |
 | **Trunk-Based Development** | Short-lived branches, frequent merge | Paul Hammant | Fast integration |
-| **Semantic Versioning** | MAJOR.MINOR.PATCH | — | Release management |
-| **Dependency Injection** | Inversion of control for testability | — | Maintainable code |
+| **Semantic Versioning** | MAJOR.MINOR.PATCH | - | Release management |
+| **Dependency Injection** | Inversion of control for testability | - | Maintainable code |
 | **Design Patterns (GoF)** | Reusable solutions to common problems | Gang of Four | Code quality |
 | **SOLID Principles** | Single, Open/Closed, Liskov, Interface, Dependency | Robert Martin | OOP design |
-| **DRY / KISS / YAGNI** | Don't Repeat, Keep Simple, You Ain't Gonna Need It | — | Code simplicity |
+| **DRY / KISS / YAGNI** | Don't Repeat, Keep Simple, You Ain't Gonna Need It | - | Code simplicity |
 | **Clean Code** | Code that is easy to read & change | Robert Martin | Maintainability |
-| **Static Analysis** | Code analysis without execution | — | Early bug detection |
-| **Fuzzing** | Random input to find crashes | — | Security testing |
-| **Penetration Testing** | Simulated attacks | — | Security assessment |
+| **Static Analysis** | Code analysis without execution | - | Early bug detection |
+| **Fuzzing** | Random input to find crashes | - | Security testing |
+| **Penetration Testing** | Simulated attacks | - | Security assessment |
 | **Threat Modeling** | Systematic threat identification | Microsoft | Security design |
 | **OWASP Top 10** | Most critical web security risks | OWASP | Security checklist |
-| **Dependency Scanning** | Audit third-party libraries | — | Supply chain security |
-| **SBOM (Software Bill of Materials)** | List of software components | — | Compliance & security |
+| **Dependency Scanning** | Audit third-party libraries | - | Supply chain security |
+| **SBOM (Software Bill of Materials)** | List of software components | - | Compliance & security |
 
 ---
 
@@ -224,7 +224,7 @@ technology.
 
 > **Definition:** Conceptual structures that provide foundation, context, and lenses for thinking and acting.
 
-### 3.1 Business
+### 3.1 Business & Strategy
 | Name | Framework | Function | Hypertaks Application |
 |------|-----------|----------|----------------------|
 | **Porter's Five Forces** | Supplier power, Buyer power, Threat of new entry, Substitutes, Rivalry | Industry competitiveness analysis | Market entry strategy |
@@ -261,7 +261,6 @@ technology.
 | **RICE** | Reach, Impact, Confidence, Effort | Data-driven prioritization | Feature scoring |
 | **Eisenhower Matrix** | Urgent/Important quadrants | Time management | Task prioritization |
 | **Porter's Generic Strategies** | Cost Leadership, Differentiation, Focus | Competitive strategy | Positioning |
-| **Resource-Based View (RBV)** | VRIN resources | Competitive advantage | Capability building |
 | **Dynamic Capabilities** | Sense, Seize, Transform | Adaptation to change | Organizational agility |
 | **Platform Strategy** | Two-sided markets, network effects | Ecosystem business | Platform design |
 | **Freemium Model** | Free + premium | Monetization | Pricing strategy |
@@ -276,99 +275,29 @@ technology.
 | **Shareholder Primacy** | Maximize shareholder value | Governance | Financial strategy |
 | **Agile Governance** | Adaptive governance | Organizational | Decision-making speed |
 
-## 3. FRAMEWORK
-
-> **Definisi:** Struktur konseptual yang menyediakan fondasi, konteks, dan lensa untuk berpikir dan bertindak.
-
-### 3.1 Bisnis
-| Nama | Framework | Fungsi | Aplikasi Hypertaks |
-|------|-----------|--------|-------------------|
-| **Porter's Five Forces** | Supplier power, Buyer power, Threat of new entry, Substitutes, Rivalry | Analisis daya saing industri | Market entry strategy |
-| **SWOT** | Strengths, Weaknesses, Opportunities, Threats | Snapshot strategis organisasi | Strategic planning |
-| **TOWS** | SWOT yang dihubungkan: SO, ST, WO, WT | Strategi dari SWOT | Action planning |
-| **PESTLE** | Political, Economic, Social, Technological, Legal, Environmental | Analisis makro lingkungan | Market research & risk |
-| **VRIO** | Value, Rarity, Imitability, Organization | Evaluasi sumber daya kompetitif | Internal capability audit |
-| **Ansoff Matrix** | Market Penetration, Development, Product Development, Diversification | Strategi pertumbuhan | Growth roadmap |
-| **BCG Matrix** | Stars, Cash Cows, Question Marks, Dogs | Portfolio produk | Resource allocation |
-| **GE-McKinsey Matrix** | Industry Attractiveness vs Business Strength | Portfolio analysis | Investment priority |
-| **Value Chain** | Aktivitas primer & pendukung yang menciptakan nilai | Analisis aktivitas bisnis | Operational optimization |
-| **Balanced Scorecard** | Financial, Customer, Internal Process, Learning & Growth | Pengukuran holistik | KPI dashboard design |
-| **OKR Framework** | Objective + 3-5 Key Results | Goal alignment | Team & product goals |
-| **Lean Canvas** | Problem, Solution, Unique Value Prop, Unfair Advantage, Customer Segments, Key Metrics, Channels, Cost Structure, Revenue Streams | Lean business planning | Startup validation |
-| **Porter's Value Chain** | Inbound → Operations → Outbound → Marketing & Sales → Service | Aktivitas nilai | Process optimization |
-| **STP (Segmentation, Targeting, Positioning)** | Bagi pasar, pilih target, tentukan posisi | Marketing strategy | Go-to-market |
-| **4P / 7P Marketing Mix** | Product, Price, Place, Promotion (+ People, Process, Physical Evidence) | Marketing tactics | Marketing planning |
-| **AIDA** | Attention, Interest, Desire, Action | Funnel pemasaran | Copywriting & landing page |
-| **Flywheel** | Loop self-reinforcing untuk growth | Growth model | Ecosystem design |
-| **Hedgehog Concept** | Passion + Best at + Economic Engine | Fokus strategis | Product focus |
-| **Three Horizons** | Horizon 1 (core), 2 (emerging), 3 (transformational) | Innovation portfolio | R&D planning |
-| **OODA Loop** | Observe, Orient, Decide, Act | Decision cycle cepat | Competitive response |
-| **Cynefin Framework** | Clear, Complicated, Complex, Chaotic, Disorder | Sense-making | Problem classification |
-| **Theory of Constraints (TOC)** | Identifikasi & eliminasi bottleneck | Process improvement | System optimization |
-| **SCOR Model** | Plan, Source, Make, Deliver, Return, Enable | Supply chain management | Supply chain & ERP |
-| **Osterwalder's Business Model Canvas** | 9 building blocks | Business model design | Startup & pivot |
-| **Red Ocean vs Blue Ocean** | Bersaing di pasar ada vs ciptakan pasar baru | Strategic positioning | Market strategy |
-| **Crossing the Chasm** | Adopter categories: Innovators → Early Adopters → Early Majority → Late Majority → Laggards | Technology adoption | Go-to-market timing |
-| **S-Curve** | Pertumbuhan teknologi: emergence → growth → maturity → decline | Technology lifecycle | Investment timing |
-| **Product Lifecycle** | Introduction, Growth, Maturity, Decline | Product management | Feature & marketing strategy |
-| **Bass Diffusion Model** | Innovators + Imitators = Adoption curve | Innovation diffusion | Growth forecasting |
-| **Kano Model** | Basic, Performance, Excitement needs | Customer satisfaction | Feature prioritization |
-| **MoSCoW** | Must have, Should have, Could have, Won't have | Prioritasi | Backlog management |
-| **RICE** | Reach, Impact, Confidence, Effort | Prioritasi berbasis data | Feature scoring |
-| **Eisenhower Matrix** | Urgent/Important quadrants | Time management | Task prioritization |
-| **Porter's Generic Strategies** | Cost Leadership, Differentiation, Focus | Competitive strategy | Positioning |
-| **Resource-Based View (RBV)** | VRIN resources | Competitive advantage | Capability building |
-| **Dynamic Capabilities** | Sense, Seize, Transform | Adaptation to change | Organizational agility |
-| **Platform Strategy** | Two-sided markets, network effects | Ecosystem business | Platform design |
-| **Freemium Model** | Gratis + premium | Monetization | Pricing strategy |
-| **Razor-and-Blades** | Produk murah + consumables mahal | Monetization | SaaS & hardware |
-| **Subscription Economy** | Recurring revenue | Business model | SaaS pricing |
-| **API Economy** | Produk sebagai API | Business model | Developer platform |
-| **Data Monetization** | Revenue dari data | Business model | Analytics product |
-| **ESG Framework** | Environmental, Social, Governance | Sustainability | Corporate responsibility |
-| **Circular Economy** | Reduce, Reuse, Recycle, Recover | Sustainability | Supply chain design |
-| **Shared Value** | Profit + social progress | CSR integration | Impact business |
-| **Stakeholder Theory** | Kepentingan semua stakeholder | Governance | Decision-making |
-| **Shareholder Primacy** | Maksimalkan shareholder value | Governance | Financial strategy |
-| **Agile Governance** | Governance yang adaptif | Organizational | Decision-making speed |
-| **Decentralized Autonomous Organization (DAO)** | Organisasi tanpa hierarki via smart contract | Web3 | Organizational design |
-| **Tokenomics** | Desain ekonomi token | Web3 | Incentive alignment |
-| **GameFi** | Game + DeFi | Web3 | Engagement & monetization |
-| **DeFi Primitives** | Lending, DEX, Yield Farming, Insurance | Web3 | Financial product |
-| **NFT Use Cases** | Ownership, Access, Identity, Royalties | Web3 | Digital asset |
-| **Zero-Knowledge Proofs** | Bukti tanpa pengungkapan data | Web3 | Privacy & scalability |
-| **Layer 2 Scaling** | Rollups, Sidechains, State Channels | Web3 | Blockchain scalability |
-| **MEV (Maximal Extractable Value)** | Profit dari reordering transaksi | Web3 | Trading strategy |
-| **Smart Contract Security** | Audit, Formal Verification, Bug Bounty | Web3 | Contract safety |
-| **Oracles** | Data off-chain ke on-chain | Web3 | Real-world integration |
-| **Interoperability** | Cross-chain communication | Web3 | Multi-chain strategy |
-| **Soulbound Tokens (SBT)** | Token non-transferable | Web3 | Identity & reputation |
-| **Quadratic Funding** | Matching fund berbasis jumlah kontributor | Web3 | Public goods funding |
-| **Reputation Systems** | Trust & credibility on-chain | Web3 | Community governance |
-| **Governance Tokens** | Voting rights via token | Web3 | Decentralized decision |
-| **Liquid Democracy** | Delegasi voting | Web3 | Governance efficiency |
-| **Conviction Voting** | Voting power meningkat seiring waktu | Web3 | Long-term alignment |
-| **Holographic Consensus** | Prediksi + voting | Web3 | Decision accuracy |
-| **Futarchy** | Vote values, bet beliefs | Web3 | Governance mechanism |
-| **Radical Markets** | Harberger Tax, Quadratic Voting | Economics | Market design |
-| **Mechanism Design** | Desain aturan untuk outcome yang diinginkan | Economics | Incentive engineering |
+### 3.2 Economics & Market Design
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
+| **Mechanism Design** | Designing rules to produce desired outcomes | Economics | Incentive engineering |
 | **Auction Theory** | English, Dutch, Vickrey, Combinatorial | Economics | Pricing mechanism |
-| **Principal-Agent Problem** | Alignment insentif | Economics | Contract design |
-| **Moral Hazard** | Risk-taking karena proteksi | Economics | Insurance & governance |
-| **Adverse Selection** | Informasi asymmetry | Economics | Market design |
-| **Signaling** | Mengirim sinyal kualitas | Economics | Branding & certification |
-| **Screening** | Mendeteksi tipe tersembunyi | Economics | Hiring & filtering |
-| **Price Discrimination** | Harga berbeda untuk segment berbeda | Economics | Pricing tiers |
+| **Principal-Agent Problem** | Incentive alignment | Economics | Contract design |
+| **Moral Hazard** | Risk-taking induced by protection | Economics | Insurance & governance |
+| **Adverse Selection** | Information asymmetry | Economics | Market design |
+| **Signaling** | Sending quality signals | Economics | Branding & certification |
+| **Screening** | Detecting hidden types | Economics | Hiring & filtering |
 | **Network Monetization** | Monetize connections | Economics | Platform revenue |
-| **Two-Sided Market** | Platform menghubungkan dua kelompok | Economics | Marketplace design |
-| **Multi-Sided Platform** | Lebih dari dua sisi | Economics | Ecosystem |
-| **Chicken-and-Egg Problem** | Mana yang didahulukan: supply atau demand | Economics | Cold start strategy |
-| **Trust & Safety** | Moderasi, fraud detection, content policy | Operations | Platform integrity |
+| **Two-Sided Market** | Platform connecting two groups | Economics | Marketplace design |
+| **Multi-Sided Platform** | More than two sides | Economics | Ecosystem |
+| **Chicken-and-Egg Problem** | Which side comes first: supply or demand | Economics | Cold start strategy |
+
+### 3.3 Product, Data & Analytics Platforms
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
+| **Trust & Safety** | Moderation, fraud detection, content policy | Operations | Platform integrity |
 | **Content Moderation** | Human review + AI + community | Operations | UGC platform |
 | **Recommendation Systems** | Collaborative, Content-based, Hybrid | Technology | Personalization |
 | **Search & Discovery** | Indexing, ranking, query understanding | Technology | Information retrieval |
 | **Personalization Engine** | User profile + context + behavior | Technology | UX customization |
-| **Customer Data Platform (CDP)** | Unified customer data | Technology | Marketing ops |
 | **Marketing Automation** | Trigger-based campaign | Technology | Growth ops |
 | **Sales Funnel Optimization** | Lead → MQL → SQL → Opportunity → Customer | Technology | Revenue ops |
 | **CRM Strategy** | HubSpot, Salesforce, custom | Technology | Relationship management |
@@ -380,48 +309,49 @@ technology.
 | **ETL / ELT** | Extract, Transform, Load / Extract, Load, Transform | Technology | Data pipeline |
 | **Reverse ETL** | Warehouse → operational tools | Technology | Data activation |
 | **Data Mesh** | Domain-oriented data ownership | Technology | Data architecture |
-| **Data Fabric** | Abstraction layer untuk data access | Technology | Data integration |
-| **Master Data Management (MDM)** | Single source of truth untuk entitas kunci | Technology | Data quality |
+| **Data Fabric** | Abstraction layer for data access | Technology | Data integration |
 | **Data Governance** | Policy, quality, lineage, catalog | Technology | Data compliance |
+
+### 3.4 Privacy, Security & Responsible AI
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Data Privacy (GDPR, CCPA)** | Consent, right to deletion, portability | Legal | Compliance |
 | **Data Security** | Encryption, masking, access control | Security | Protection |
-| **Anonymization & Pseudonymization** | Privacy-preserving techniques | Security | Compliance |
-| **Differential Privacy** | Statistik tanpa mengungkap individual | Security | Privacy analytics |
-| **Federated Learning** | ML tanpa data centralization | Technology | Privacy-preserving AI |
-| **Homomorphic Encryption** | Komputasi pada encrypted data | Security | Secure computation |
-| **Secure Multi-Party Computation** | Komputasi kolaboratif tanpa expose data | Security | Collaborative analytics |
-| **Confidential Computing** | Enclave untuk sensitive computation | Security | Cloud security |
-| **Zero-Knowledge Machine Learning** | Bukti inference tanpa expose model | Security | Verifiable AI |
-| **Explainable AI (XAI)** | Transparansi keputusan AI | Ethics | Trust & compliance |
+| **Zero-Knowledge Machine Learning** | Proving inference without exposing the model | Security | Verifiable AI |
+| **Explainable AI (XAI)** | Transparency of AI decisions | Ethics | Trust & compliance |
 | **Responsible AI** | Fairness, accountability, transparency | Ethics | AI governance |
 | **AI Ethics Principles** | Beneficence, non-maleficence, autonomy, justice, explicability | Ethics | Framework |
-| **Algorithmic Bias Auditing** | Deteksi & mitigasi bias | Ethics | Fairness |
-| **Human-in-the-Loop (HITL)** | Manusia mengawasi/mengoreksi AI | Operations | Quality control |
-| **Human-on-the-Loop** | Manusia monitor & intervensi saat perlu | Operations | Supervision |
-| **Human-out-of-the-Loop** | AI beroperasi autonomus | Operations | Full automation |
+| **Algorithmic Bias Auditing** | Bias detection & mitigation | Ethics | Fairness |
+| **Human-in-the-Loop (HITL)** | Humans supervise and correct the AI | Operations | Quality control |
+| **Human-on-the-Loop** | Humans monitor & intervene when needed | Operations | Supervision |
+| **Human-out-of-the-Loop** | AI operates autonomously | Operations | Full automation |
+
+### 3.5 Machine Learning & AI
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Supervised Learning** | Labeled data | ML | Classification, regression |
 | **Unsupervised Learning** | Unlabeled data | ML | Clustering, dimensionality |
-| **Reinforcement Learning** | Agent belajar dari reward/penalty | ML | Game, robotics, optimization |
-| **Semi-Supervised Learning** | Sedikit label + banyak unlabel | ML | Cost-effective training |
-| **Self-Supervised Learning** | Generate label dari data itu sendiri | ML | Representation learning |
-| **Transfer Learning** | Model pre-trained ke task baru | ML | Efficiency |
-| **Few-Shot Learning** | Belajar dari sedikit contoh | ML | Low-data scenarios |
-| **Zero-Shot Learning** | Generalisasi ke class tak terlihat | ML | Open vocabulary |
-| **Multi-Task Learning** | Satu model untuk banyak task | ML | Efficiency |
-| **Meta-Learning** | Belajar cara belajar | ML | Rapid adaptation |
-| **Neural Architecture Search (NAS)** | Auto-design arsitektur neural network | ML | Optimal architecture |
-| **AutoML** | Automasi pipeline ML | ML | Democratization |
-| **MLOps** | DevOps untuk ML | ML | Production ML |
+| **Reinforcement Learning** | Agent learns from rewards/penalties | ML | Game, robotics, optimization |
+| **Semi-Supervised Learning** | Few labels + many unlabeled examples | ML | Cost-effective training |
+| **Self-Supervised Learning** | Generate labels from the data itself | ML | Representation learning |
+| **Transfer Learning** | Pre-trained model applied to a new task | ML | Efficiency |
+| **Few-Shot Learning** | Learning from few examples | ML | Low-data scenarios |
+| **Zero-Shot Learning** | Generalizing to unseen classes | ML | Open vocabulary |
+| **Multi-Task Learning** | One model for many tasks | ML | Efficiency |
+| **Meta-Learning** | Learning how to learn | ML | Rapid adaptation |
+| **Neural Architecture Search (NAS)** | Automated neural-network architecture design | ML | Optimal architecture |
+| **AutoML** | Automating the ML pipeline | ML | Democratization |
+| **MLOps** | DevOps for ML | ML | Production ML |
 | **Feature Store** | Centralized feature management | ML | Feature consistency |
-| **Model Registry** | Versioning & lifecycle model | ML | Governance |
+| **Model Registry** | Model versioning & lifecycle | ML | Governance |
 | **Model Monitoring** | Drift detection, performance tracking | ML | Reliability |
-| **A/B Testing for ML** | Eksperimen model | ML | Improvement validation |
-| **Shadow Deployment** | Model baru diprediksi tanpa dipakai | ML | Safe validation |
-| **Multi-Armed Bandit** | Eksplorasi vs eksploitasi | ML | Dynamic optimization |
-| **Contextual Bandit** | Bandit dengan konteks | ML | Personalization |
-| **Reinforcement Learning from Human Feedback (RLHF)** | Reward model dari preferensi manusia | ML | Alignment (ChatGPT) |
-| **Constitutional AI** | AI yang mengkritik & revise output-nya sendiri | ML | Safety |
-| **Adversarial Training** | Latih dengan contoh adversarial | ML | Robustness |
+| **A/B Testing for ML** | Model experimentation | ML | Improvement validation |
+| **Shadow Deployment** | New model predicts without serving live traffic | ML | Safe validation |
+| **Multi-Armed Bandit** | Exploration vs exploitation | ML | Dynamic optimization |
+| **Contextual Bandit** | Bandits with context | ML | Personalization |
+| **Reinforcement Learning from Human Feedback (RLHF)** | Reward model from human preferences | ML | Alignment (ChatGPT) |
+| **Constitutional AI** | AI that critiques & revises its own output | ML | Safety |
+| **Adversarial Training** | Training with adversarial examples | ML | Robustness |
 | **Ensemble Methods** | Bagging, Boosting, Stacking | ML | Performance |
 | **Gradient Boosting** | XGBoost, LightGBM, CatBoost | ML | Tabular data |
 | **Random Forest** | Multiple decision trees | ML | General purpose |
@@ -429,44 +359,44 @@ technology.
 | **Neural Networks** | Deep learning, CNN, RNN, Transformer | ML | Complex patterns |
 | **Transformer Architecture** | Self-attention, parallelizable | ML | NLP, vision, multimodal |
 | **BERT / GPT / T5** | Pre-trained language models | ML | NLP tasks |
-| **Vision Transformer (ViT)** | Transformer untuk vision | ML | Image classification |
+| **Vision Transformer (ViT)** | Transformers for vision | ML | Image classification |
 | **Diffusion Models** | Generative via denoising | ML | Image generation |
 | **GAN (Generative Adversarial Network)** | Generator vs Discriminator | ML | Generation |
 | **VAE (Variational Autoencoder)** | Latent space representation | ML | Generation, compression |
 | **Flow-Based Models** | Invertible transformations | ML | Exact likelihood |
-| **Neural Radiance Fields (NeRF)** | 3D scene dari 2D images | ML | 3D reconstruction |
+| **Neural Radiance Fields (NeRF)** | 3D scenes from 2D images | ML | 3D reconstruction |
 | **Large Language Models (LLM)** | Scale + emergent abilities | ML | Generative AI |
 | **Retrieval-Augmented Generation (RAG)** | Retrieve + Generate | ML | Factual accuracy |
-| **Chain-of-Thought (CoT)** | Prompt untuk reasoning step-by-step | ML | Complex reasoning |
-| **Tree-of-Thought (ToT)** | Eksplorasi multiple reasoning paths | ML | Decision making |
-| **Graph-of-Thought (GoT)** | Reasoning sebagai graph | ML | Complex reasoning |
+| **Chain-of-Thought (CoT)** | Prompting for step-by-step reasoning | ML | Complex reasoning |
+| **Tree-of-Thought (ToT)** | Exploring multiple reasoning paths | ML | Decision making |
+| **Graph-of-Thought (GoT)** | Reasoning as a graph | ML | Complex reasoning |
 | **Prompt Engineering** | Zero-shot, Few-shot, Chain-of-Thought, Self-Consistency | ML | LLM utilization |
-| **In-Context Learning** | Belajar dari prompt tanpa update weight | ML | Adaptation |
-| **Instruction Tuning** | Fine-tune pada instruction-following data | ML | Obedience |
+| **In-Context Learning** | Learning from the prompt without weight updates | ML | Adaptation |
+| **Instruction Tuning** | Fine-tuning on instruction-following data | ML | Obedience |
 | **Parameter-Efficient Fine-Tuning (PEFT)** | LoRA, Adapter, Prefix Tuning | ML | Cost-efficient tuning |
-| **Quantization** | Reduce precision untuk deployment | ML | Edge deployment |
-| **Pruning** | Hapus weight tidak penting | ML | Model compression |
+| **Quantization** | Reduced precision for deployment | ML | Edge deployment |
+| **Pruning** | Removing unimportant weights | ML | Model compression |
 | **Knowledge Distillation** | Teacher → Student model | ML | Compression |
 | **Model Compression** | Quantization + Pruning + Distillation | ML | Efficiency |
-| **Edge AI** | Inference di perangkat edge | ML | Latency, privacy |
-| **TinyML** | ML di microcontrollers | ML | IoT |
-| **Federated Analytics** | Analytics tanpa data centralization | ML | Privacy |
-| **Swarm Intelligence** | Collective behavior dari agent sederhana | ML | Optimization |
-| **Genetic Algorithms** | Evolusi untuk optimization | ML | Search |
+| **Edge AI** | Inference on edge devices | ML | Latency, privacy |
+| **TinyML** | ML on microcontrollers | ML | IoT |
+| **Federated Analytics** | Analytics without centralizing data | ML | Privacy |
+| **Swarm Intelligence** | Collective behavior from simple agents | ML | Optimization |
+| **Genetic Algorithms** | Evolution for optimization | ML | Search |
 | **Simulated Annealing** | Probabilistic optimization | ML | Combinatorial |
-| **Particle Swarm Optimization** | Social behavior untuk optimization | ML | Continuous optimization |
-| **Ant Colony Optimization** | Stigmergy untuk path finding | ML | Graph optimization |
+| **Particle Swarm Optimization** | Social behavior for optimization | ML | Continuous optimization |
+| **Ant Colony Optimization** | Stigmergy for path finding | ML | Graph optimization |
 | **Bayesian Optimization** | Efficient global optimization | ML | Hyperparameter tuning |
 | **Hyperparameter Optimization** | Grid, Random, Bayesian, Population-Based | ML | Model tuning |
 | **Cross-Validation** | K-Fold, Stratified, Time Series Split | ML | Generalization |
-| **Bootstrap Aggregating** | Resampling untuk variance reduction | ML | Stability |
+| **Bootstrap Aggregating** | Resampling for variance reduction | ML | Stability |
 | **Ensemble Diversification** | Heterogeneous models | ML | Robustness |
-| **Stacking (Stacked Generalization)** | Meta-learner pada output base models | ML | Performance |
+| **Stacking (Stacked Generalization)** | Meta-learner on base-model outputs | ML | Performance |
 | **Blending** | Weighted average predictions | ML | Simplicity |
 | **Voting Classifiers** | Majority / soft voting | ML | Democracy |
 | **Calibration** | Probabilistic accuracy | ML | Reliability |
 | **Threshold Moving** | Adjust decision threshold | ML | Cost-sensitive |
-| **Cost-Sensitive Learning** | Weight berdasarkan cost | ML | Imbalanced data |
+| **Cost-Sensitive Learning** | Weights based on cost | ML | Imbalanced data |
 | **Oversampling / Undersampling** | SMOTE, ADASYN | ML | Imbalance |
 | **Anomaly Detection** | Statistical, ML-based, deep learning | ML | Fraud, intrusion |
 | **Time Series Analysis** | ARIMA, Prophet, LSTM, Transformer | ML | Forecasting |
@@ -474,6 +404,10 @@ technology.
 | **Causal Inference** | Propensity score, instrumental variable, diff-in-diff | ML | Cause-effect |
 | **Uplift Modeling** | Treatment effect per individual | ML | Targeting |
 | **Multi-Armed Bandit for Pricing** | Dynamic pricing | ML | Revenue optimization |
+
+### 3.6 Algorithms, Optimization & Formal Methods
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Dynamic Programming** | Optimal substructure | Algorithms | Optimization |
 | **Greedy Algorithms** | Local optimal choice | Algorithms | Approximation |
 | **Divide and Conquer** | Recursively break down | Algorithms | Efficiency |
@@ -489,20 +423,24 @@ technology.
 | **SAT Solvers** | Boolean satisfiability | Optimization | Verification |
 | **SMT Solvers** | Satisfiability Modulo Theories | Optimization | Formal verification |
 | **Model Checking** | Verify temporal properties | Verification | System correctness |
-| **Theorem Proving** | Bukti formal | Verification | Mathematical correctness |
-| **Type Theory** | Sistem tipe untuk program correctness | PL Theory | Bug prevention |
-| **Category Theory** | Abstraksi matematika untuk computation | Math | Functional programming |
+| **Theorem Proving** | Formal proofs | Verification | Mathematical correctness |
+| **Type Theory** | Type systems for program correctness | PL Theory | Bug prevention |
+| **Category Theory** | Mathematical abstraction for computation | Math | Functional programming |
 | **Homotopy Type Theory** | Types as spaces, equality as paths | Math | Formalization |
 | **Lambda Calculus** | Foundation of functional programming | PL Theory | Computation model |
 | **Process Calculus** | CSP, CCS, π-calculus | PL Theory | Concurrent systems |
-| **Actor Model** | Concurrent computation dengan aktor | PL Theory | Distributed systems |
+| **Actor Model** | Concurrent computation with actors | PL Theory | Distributed systems |
+
+### 3.7 Software Architecture & Operations
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Event-Driven Architecture** | React to events | Architecture | Responsiveness |
 | **CQRS + Event Sourcing** | Separate read/write, immutable log | Architecture | Audit, scalability |
 | **Hexagonal Architecture** | Ports and Adapters | Architecture | Testability |
-| **Onion Architecture** | Layers dengan domain di pusat | Architecture | Dependency direction |
+| **Onion Architecture** | Layers with the domain at the center | Architecture | Dependency direction |
 | **Clean Architecture** | Uncle Bob's layered architecture | Architecture | Independence |
 | **Vertical Slice Architecture** | Features, not layers | Architecture | Cohesion |
-| **Modular Monolith** | Monolith dengan batasan internal | Architecture | Migration path |
+| **Modular Monolith** | A monolith with internal boundaries | Architecture | Migration path |
 | **Service-Oriented Architecture (SOA)** | Services via contract | Architecture | Enterprise |
 | **Microservices** | Independently deployable services | Architecture | Scale, autonomy |
 | **Nanodevices / Nanoservices** | Extremely fine-grained | Architecture | Over-decomposition |
@@ -514,17 +452,17 @@ technology.
 | **Message Queue** | Async communication | Architecture | Decoupling |
 | **Pub/Sub** | Publish-subscribe pattern | Architecture | Event distribution |
 | **Event Bus** | Central event distribution | Architecture | Integration |
-| **CQRS Event Bus** | Separate buses untuk command & query | Architecture | Scalability |
-| **Saga Orchestration** | Central coordinator untuk saga | Architecture | Transaction management |
+| **CQRS Event Bus** | Separate buses for command & query | Architecture | Scalability |
+| **Saga Orchestration** | Central coordinator for the saga | Architecture | Transaction management |
 | **Saga Choreography** | Event-driven saga | Architecture | Decentralized coordination |
 | **Outbox Pattern** | Reliable message publishing | Architecture | Consistency |
 | **Inbox Pattern** | Idempotent message processing | Architecture | Reliability |
 | **Idempotency Key** | Duplicate request handling | Architecture | Safety |
-| **Compensating Transaction** | Undo untuk failure | Architecture | Consistency |
+| **Compensating Transaction** | Undo actions for failures | Architecture | Consistency |
 | **Materialized View** | Pre-computed read model | Architecture | Performance |
 | **Read Model Projection** | Event → read model | Architecture | CQRS |
 | **Snapshotting** | Periodic state capture | Architecture | Performance |
-| **Event Versioning** | Schema evolution untuk events | Architecture | Compatibility |
+| **Event Versioning** | Schema evolution for events | Architecture | Compatibility |
 | **Upcaster** | Transform old events to new schema | Architecture | Migration |
 | **Temporal Coupling** | Avoid time-based dependencies | Architecture | Flexibility |
 | **Location Transparency** | Service location independent | Architecture | Discovery |
@@ -555,6 +493,10 @@ technology.
 | **Multi-Region Active-Active** | Simultaneous operation | Operations | Global availability |
 | **Multi-Region Active-Passive** | Standby region | Operations | Cost-effective DR |
 | **Data Replication** | Synchronous, asynchronous | Operations | Consistency vs latency |
+
+### 3.8 Distributed Systems & Data Infrastructure
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Consensus Algorithms** | Paxos, Raft | Distributed Systems | Agreement |
 | **Byzantine Fault Tolerance** | Tolerate malicious nodes | Distributed Systems | Blockchain |
 | **State Machine Replication** | Replicate state transitions | Distributed Systems | Consistency |
@@ -622,8 +564,12 @@ technology.
 | **Data Compression** | Snappy, LZ4, Zstandard | Storage | Efficiency |
 | **Serialization Formats** | Protocol Buffers, Avro, Thrift, JSON, MessagePack | Data | Interoperability |
 | **Schema Evolution** | Backward/forward compatibility | Data | Compatibility |
+
+### 3.9 Testing & Quality
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Contract Testing** | Pact, Spring Cloud Contract | Testing | API compatibility |
-| **Consumer-Driven Contracts** | Test dari perspektif consumer | Testing | Collaboration |
+| **Consumer-Driven Contracts** | Testing from the consumer's perspective | Testing | Collaboration |
 | **End-to-End Testing** | Selenium, Cypress, Playwright | Testing | User journey |
 | **Integration Testing** | Component interaction | Testing | Interface |
 | **Unit Testing** | Isolated function testing | Testing | Correctness |
@@ -634,7 +580,6 @@ technology.
 | **Performance Testing** | Load, Stress, Spike, Endurance | Testing | Scalability |
 | **Security Testing** | SAST, DAST, IAST | Testing | Vulnerability |
 | **Accessibility Testing** | WCAG compliance | Testing | Inclusion |
-| **Usability Testing** | Task completion, SUS score | Testing | UX |
 | **Exploratory Testing** | Simultaneous learning & testing | Testing | Discovery |
 | **Crowd Testing** | Distributed real-world testing | Testing | Diversity |
 | **Beta Testing** | Pre-release user feedback | Testing | Validation |
@@ -645,10 +590,11 @@ technology.
 | **Spike Testing** | Sudden load increase | Testing | Burst handling |
 | **Failover Testing** | Automatic recovery | Testing | Resilience |
 | **Backup Testing** | Restore verification | Testing | Recovery |
-| **Penetration Testing** | Ethical hacking | Security | Vulnerability |
+
+### 3.10 Security Operations
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Red Team / Blue Team** | Attack vs defense simulation | Security | Readiness |
-| **Purple Team** | Collaborative attack/defense | Security | Improvement |
-| **Threat Hunting** | Proactive threat search | Security | Detection |
 | **Digital Forensics** | Incident investigation | Security | Evidence |
 | **Malware Analysis** | Reverse engineering malware | Security | Understanding |
 | **OSINT (Open Source Intelligence)** | Public data gathering | Security | Reconnaissance |
@@ -659,28 +605,16 @@ technology.
 | **Privacy by Design** | Privacy from inception | Privacy | Compliance |
 | **Least Privilege** | Minimum necessary access | Security | Limitation |
 | **Defense in Depth** | Multiple security layers | Security | Redundancy |
-| **Zero Trust** | Verify every request | Security | Perimeter-less |
-| **BeyondCorp** | Google Zero Trust implementation | Security | Enterprise |
-| **SASE (Secure Access Service Edge)** | Network + security convergence | Security | Cloud-native |
-| **SSE (Security Service Edge)** | Cloud security services | Security | SaaS protection |
-| **CASB (Cloud Access Security Broker)** | Cloud app security | Security | Visibility |
-| **SWG (Secure Web Gateway)** | Web traffic filtering | Security | Content |
-| **DLP (Data Loss Prevention)** | Sensitive data protection | Security | Exfiltration |
 | **SIEM (Security Information & Event Management)** | Centralized security monitoring | Security | Detection |
-| **SOAR (Security Orchestration, Automation & Response)** | Automated response | Security | Speed |
-| **XDR (Extended Detection & Response)** | Cross-layer detection | Security | Correlation |
 | **EDR (Endpoint Detection & Response)** | Endpoint monitoring | Security | Device |
 | **NDR (Network Detection & Response)** | Network monitoring | Security | Traffic |
-| **MDR (Managed Detection & Response)** | Outsourced security ops | Security | Expertise |
-| **Threat Intelligence** | Indicators of compromise | Security | Proactive |
-| **Vulnerability Management** | Identify, prioritize, remediate | Security | Lifecycle |
-| **Patch Management** | Update deployment | Security | Maintenance |
-| **Configuration Management** | Desired state enforcement | Security | Consistency |
 | **Compliance Management** | Regulatory adherence | Security | Governance |
 | **Risk Management** | Identify, assess, mitigate | Security | Quantification |
-| **Business Continuity Planning (BCP)** | Operational resilience | Security | Survival |
-| **Crisis Management** | Emergency response | Security | Coordination |
 | **Brand Protection** | Reputation safeguarding | Security | Trust |
+
+### 3.11 Legal & Compliance
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
 | **Intellectual Property** | Patent, trademark, copyright | Legal | Protection |
 | **Trade Secrets** | Confidential business info | Legal | Competitive advantage |
 | **Open Source Licensing** | GPL, MIT, Apache, BSD | Legal | Compliance |
@@ -706,12 +640,9 @@ technology.
 | **Data Processing Agreement (DPA)** | GDPR processor terms | Legal | Compliance |
 | **Business Associate Agreement (BAA)** | HIPAA compliance | Legal | Healthcare |
 | **SOC 2** | Security, availability, processing integrity, confidentiality, privacy | Compliance | Audit |
-| **ISO 27001** | Information security management | Compliance | Certification |
 | **ISO 9001** | Quality management | Compliance | Process |
 | **ISO 14001** | Environmental management | Compliance | Sustainability |
 | **ISO 45001** | Occupational health & safety | Compliance | Worker safety |
-| **NIST Cybersecurity Framework** | Identify, Protect, Detect, Respond, Recover | Compliance | Risk-based |
-| **CIS Controls** | Prioritized security actions | Compliance | Implementation |
 | **PCI DSS** | Payment card security | Compliance | Payment |
 | **HIPAA** | Health information privacy | Compliance | Healthcare |
 | **GDPR** | EU data protection | Compliance | Privacy |
@@ -759,6 +690,17 @@ technology.
 | **HKMA Guidelines** | Hong Kong banking | Compliance | Stability |
 | **CBIRC Regulations** | China banking & insurance | Compliance | Financial |
 | **RBI Guidelines** | India banking | Compliance | Monetary |
+
+### 3.12 Web3 & Digital Assets
+| Name | Framework | Function | Hypertaks Application |
+|------|-----------|----------|-----------------------|
+| **Decentralized Autonomous Organization (DAO)** | Organization without hierarchy, run via smart contracts | Web3 | Organizational design |
+| **Tokenomics** | Economic design of a token | Web3 | Incentive alignment |
+| **GameFi** | Game + DeFi | Web3 | Engagement & monetization |
+| **DeFi Primitives** | Lending, DEX, Yield Farming, Insurance | Web3 | Financial product |
+| **NFT Use Cases** | Ownership, Access, Identity, Royalties | Web3 | Digital asset |
+| **Interoperability** | Cross-chain communication | Web3 | Multi-chain strategy |
+| **Reputation Systems** | Trust & credibility on-chain | Web3 | Community governance |
 | **Central Bank Digital Currency (CBDC)** | Sovereign digital currency | Fintech | Monetary policy |
 | **Stablecoin Regulation** | Fiat-backed crypto oversight | Fintech | Stability |
 | **Securities Token** | Regulated digital securities | Fintech | Capital markets |
@@ -785,8 +727,6 @@ technology.
 | **Validium** | ZK proof + off-chain data | Blockchain | Throughput |
 | **Volition** | User chooses on/off-chain data | Blockchain | Flexibility |
 | **Data Availability Sampling** | Light client verification | Blockchain | Decentralization |
-| **Danksharding** | Proto-danksharding + full danksharding | Blockchain | Ethereum scaling |
-| **EIP-4844 (Proto-Danksharding)** | Blob transactions | Blockchain | Cost reduction |
 | **Account Abstraction (ERC-4337)** | Smart contract wallets | Blockchain | UX |
 | **Paymaster** | Gas fee sponsorship | Blockchain | Subsidized tx |
 | **Bundlers** | UserOperation aggregation | Blockchain | Efficiency |
@@ -797,51 +737,25 @@ technology.
 | **Shamir's Secret Sharing** | Split secret into parts | Blockchain | Security |
 | **Verifiable Secret Sharing** | VSS for distributed key | Blockchain | Trustless |
 | **Distributed Key Generation (DKG)** | Collaborative key creation | Blockchain | Decentralization |
-| **Multi-Party Computation (MPC)** | Compute without revealing inputs | Blockchain | Privacy |
-| **Trusted Execution Environment (TEE)** | Hardware enclave | Blockchain | Confidentiality |
 | **Oracle Network** | Decentralized data feeds | Blockchain | Real-world data |
 | **Chainlink CCIP** | Cross-chain interoperability | Blockchain | Interoperability |
-| **LayerZero** | Omnichain messaging | Blockchain | Cross-chain |
-| **Axelar** | Cross-chain communication | Blockchain | Interoperability |
-| **Wormhole** | Token bridge & messaging | Blockchain | Cross-chain |
-| **Stargate** | Cross-chain liquidity | Blockchain | Bridging |
 | **Cross-Chain MEV** | Arbitrage across chains | Blockchain | Value extraction |
-| **Intent-Based Architecture** | User states intent, solver executes | Blockchain | UX abstraction |
-| **Account Abstraction Wallet** | Smart wallet with programmable logic | Blockchain | Flexibility |
 | **Session Keys** | Temporary scoped permissions | Blockchain | UX |
 | **Gasless Transactions** | Relayer pays gas | Blockchain | Onboarding |
 | **Meta-Transactions** | Signed tx executed by relayer | Blockchain | Abstraction |
-| **EIP-2612 (Permit)** | Gasless approval via signature | Blockchain | ERC-20 UX |
-| **EIP-712 (Typed Data Signing)** | Structured data signing | Blockchain | Security |
-| **EIP-721 (NFT)** | Non-fungible standard | Blockchain | Digital ownership |
-| **EIP-1155 (Multi-Token)** | Multi-token standard | Blockchain | Efficiency |
-| **EIP-20 (ERC-20)** | Fungible token standard | Blockchain | Currency |
-| **EIP-777 (Advanced Token)** | Operator & send hooks | Blockchain | Flexibility |
-| **EIP-4626 (Tokenized Vault)** | Yield-bearing vault standard | Blockchain | DeFi composability |
-| **EIP-2981 (Royalty)** | NFT royalty standard | Blockchain | Creator revenue |
-| **EIP-4907 (Rental NFT)** | Rental & expiration | Blockchain | Utility |
-| **EIP-5058 (Lockable NFT)** | Lock without transfer | Blockchain | Collateral |
-| **EIP-5484 (Soulbound)** | Issuer-bound non-transferable | Blockchain | Identity |
-| **EIP-5604 (Token-Linked Account)** | Account bound to token | Blockchain | Membership |
 | **EIP-5750 (General Data)** | General data storage | Blockchain | Metadata |
-| **EIP-6066 (Signature Validation)** | Contract signature validation | Blockchain | Interoperability |
-| **EIP-6381 (Social Metadata)** | Emoji reaction standard | Blockchain | Social |
-| **EIP-6551 (Token-Bound Account)** | NFT as smart contract wallet | Blockchain | Composability |
-| **EIP-6909 (Minimal Multi-Token)** | Gas-efficient multi-token | Blockchain | Optimization |
-| **EIP-7496 (Dynamic NFT)** | On-chain dynamic traits | Blockchain | Gaming |
-| **EIP-7572 (Contract Metadata)** | Contract-level metadata | Blockchain | Discovery |
+
 
 ---
 
 ## 4. WORKFLOW
 
-> **Definisi:** Urutan langkah-langkah terstruktur yang menghubungkan input ke output dalam proses berulang.
+> **Definition:** Structured sequences of steps that connect inputs to outputs in repeatable processes.
 
-### 4.1 Bisnis
-| Nama | Workflow | Langkah-Langkah | Aplikasi Hypertaks |
-|------|----------|-----------------|-------------------|
+### 4.1 Business Strategy & Corporate Development
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Lean Startup Loop** | Build → Measure → Learn | 1. Hypothesis 2. MVP 3. Metrics 4. Pivot/Persevere | Product validation |
-| **Customer Development** | Discovery → Validation → Creation → Building | 1. Problem interviews 2. Solution validation 3. Product development 4. Scale | Go-to-market |
 | **Sales Process** | Prospecting → Qualification → Proposal → Closing → Nurturing | 1. Lead gen 2. BANT/MEDDIC 3. Demo 4. Negotiation 5. Onboarding | Revenue ops |
 | **Marketing Funnel** | Awareness → Interest → Desire → Action → Retention | 1. Content/Ads 2. Landing page 3. Email nurture 4. Conversion 5. Loyalty | Growth |
 | **Product Discovery** | Problem → Ideation → Prototyping → Validation → Roadmap | 1. User research 2. Brainstorm 3. Wireframe 4. Test 5. Prioritize | Product management |
@@ -884,6 +798,10 @@ technology.
 | **Joint Venture Formation** | Partner Search → Negotiation → Structure → Agreement → Governance → Operation | 1. Strategic fit 2. Term sheet 3. Legal form 4. JV contract 5. Board 6. Management | JV |
 | **Licensing** | IP Audit → Valuation → Negotiation → Agreement → Royalty → Audit | 1. Portfolio 2. NPV 3. Terms 4. Contract 5. Payment 6. Compliance | IP monetization |
 | **Franchise Development** | Model → Legal → Recruitment → Training → Support → Compliance → Renewal | 1. Operations manual 2. FDD 3. Lead gen 4. Academy 5. Field support 6. Audit 7. Renew | Franchising |
+
+### 4.2 Operations, Quality & Process Improvement
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Retail Operations** | Planogram → Inventory → Merchandising → Sales → Service → Loss Prevention | 1. Store layout 2. Stock 3. Display 4. Transaction 5. Experience 6. Security | Retail |
 | **E-commerce Operations** | Listing → Pricing → Fulfillment → Payment → Customer Service → Returns | 1. Product page 2. Dynamic pricing 3. Pick-pack-ship 4. Gateway 5. Support 6. Reverse logistics | E-commerce |
 | **Manufacturing** | Design → Procurement → Production → QC → Packaging → Distribution | 1. CAD 2. BOM 3. Assembly 4. Inspection 5. Labeling 6. Shipping | Manufacturing |
@@ -896,7 +814,6 @@ technology.
 | **Kaizen** | Continuous improvement by everyone | 1. Identify waste 2. Propose improvement 3. Implement 4. Measure | Culture |
 | **Gemba Walk** | Go to the actual place of work | 1. Observe 2. Ask why 3. Respect 4. Learn | Management |
 | **Hoshin Kanri** | Policy deployment, catchball | 1. Strategic plan 2. Department goals 3. Individual targets 4. Review | Alignment |
-| **Theory of Constraints (TOC)** | Identify → Exploit → Subordinate → Elevate → Return to Step 1 | 1. Bottleneck 2. Optimize 3. Align 4. Increase capacity 5. Repeat | Throughput |
 | **Critical Chain Project Management** | Buffer management, resource constraints | 1. Network diagram 2. Critical chain 3. Buffer 4. Monitor | Project delivery |
 | **Agile Portfolio Management** | Strategic themes → Epics → Features → Stories | 1. Investment 2. Initiative 3. Breakdown 4. Execution | Scale |
 | **Stage-Gate Process** | Idea → Scoping → Business Case → Development → Testing → Launch → Post-Launch | 1. Concept 2. Preliminary 3. Detailed 4. Build 5. Validate 6. Commercialize 7. Review | NPD |
@@ -944,6 +861,10 @@ technology.
 | **Records Management** | Classification → Storage → Retrieval → Retention → Disposition → Audit | 1. Taxonomy 2. Archive 3. Search 4. Schedule 5. Destruction 6. Compliance | Compliance |
 | **Email Management** | Receive → Triage → Action → File → Follow-up → Archive/Delete | 1. Inbox 2. Priority 3. Response 4. Folder 5. Reminder 6. Retention | Productivity |
 | **Meeting Management** | Objective → Agenda → Invite → Facilitate → Notes → Action Items → Follow-up | 1. Purpose 2. Topics 3. Attendees 4. Timekeeping 5. Minutes 6. Tasks 7. Review | Collaboration |
+
+### 4.3 Project, Product & Software Delivery
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Project Management (PMBOK)** | Initiate → Plan → Execute → Monitor & Control → Close | 1. Charter 2. WBS 3. Work 4. Tracking 5. Handover | Traditional PM |
 | **Agile Project Management** | Vision → Product Backlog → Sprint Planning → Daily Standup → Sprint Review → Retrospective | 1. Goal 2. Stories 3. Commitment 4. Sync 5. Demo 6. Improve | Agile PM |
 | **Scrum** | Product Owner → Scrum Master → Dev Team → Sprints → Artifacts → Events | Roles, 2-week sprint, backlog, increment | Agile framework |
@@ -975,6 +896,10 @@ technology.
 | **Integration Platform as a Service (iPaaS)** | Connect → Transform → Orchestrate → Monitor → Manage | Cloud integration | Enterprise connectivity |
 | **Enterprise Service Bus (ESB)** | Route → Transform → Mediate → Orchestrate → Monitor | Legacy integration | Middleware |
 | **Microservices Governance** | Design standards → Service catalog → Inter-service contract → Observability → Security → Deprecation | Distributed governance | Microservices |
+
+### 4.4 Data & Information Management
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Data Governance Workflow** | Policy → Stewardship → Quality → Metadata → Lineage → Privacy → Compliance | Data management | Data program |
 | **Master Data Management (MDM)** | Identify → Clean → Match → Merge → Distribute → Govern | Golden record | Data consistency |
 | **Data Quality Management** | Define → Measure → Analyze → Improve → Control → Monitor | Dimensions: accuracy, completeness, timeliness, consistency, validity, uniqueness | Data trust |
@@ -989,6 +914,10 @@ technology.
 | **Customer Data Platform (CDP)** | Collect → Unify → Segment → Activate → Personalize → Analyze | Customer 360 | Marketing tech |
 | **Identity Resolution** | Collect → Match → Merge → Enrich → Segment → Activate | Single customer view | Personalization |
 | **Tag Management** | Implement → Configure → Test → Deploy → Monitor → Update | Marketing tags | Web ops |
+
+### 4.5 Marketing, Sales & Customer
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Web Analytics** | Implement → Collect → Process → Report → Analyze → Optimize | User behavior | Digital analytics |
 | **Attribution Modeling** | First-Touch → Last-Touch → Linear → Time-Decay → Position-Based → Data-Driven | Credit allocation | Marketing ROI |
 | **Marketing Mix Modeling (MMM)** | Historical data → Statistical model → Channel contribution → Optimization → Forecast | Budget allocation | Media planning |
@@ -1042,6 +971,10 @@ technology.
 | **Voice of Customer (VoC)** | Collect → Analyze → Synthesize → Prioritize → Action → Communicate | Insights | Product |
 | **Customer Journey Mapping** | Persona → Touchpoints → Emotions → Pain Points → Opportunities → Blueprint | Experience design | CX |
 | **Service Blueprinting** | Customer Actions → Frontstage → Backstage → Support Processes → Physical Evidence | Service design | Operations |
+
+### 4.6 Design, UX Research & Product Analytics
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Design Sprint** | Map → Sketch → Decide → Prototype → Test | 5-day Google Ventures | Rapid validation |
 | **Double Diamond** | Discover → Define → Develop → Deliver | Diverge-converge | Design thinking |
 | **Human-Centered Design** | Empathize → Define → Ideate → Prototype → Test → Implement | User-focused | Innovation |
@@ -1070,6 +1003,10 @@ technology.
 | **Product-Market Fit Survey** | Segment → Question → Score → Analysis → Benchmark → Action → Track | Sean Ellis test | Validation |
 | **Growth Accounting** | New → Retained → Resurrected → Churned → Quick Ratio → Growth Rate | User accounting | Growth health |
 | **North Star Metric** | Input → Action → Output → Metric → Align → Monitor → Optimize | Focus metric | Alignment |
+
+### 4.7 People & Organization
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **OKR Cycle** | Annual → Quarterly → Weekly → Check-in → Mid-quarter → End-quarter → Retro → Reset | Rhythm | Goal management |
 | **1:1 Meeting** | Check-in → Priorities → Blockers → Feedback → Career → Action Items → Follow-up | Manager-direct report | Development |
 | **Performance Review** | Self-review → Manager review → Peer feedback → Calibration → Meeting → Plan → Follow-up | Evaluation | Growth |
@@ -1093,6 +1030,10 @@ technology.
 | **Benefits Administration** | Enrollment → Eligibility → Carrier → Claims → Support → Renewal → Audit | Welfare | Employee satisfaction |
 | **Workers' Compensation** | Injury → Report → Investigation → Claim → Medical → Return-to-Work → Close | Safety | Compliance |
 | **Workplace Safety** | Hazard → Assessment → Control → Training → Incident → Investigation → Corrective → Audit | OSHA | Prevention |
+
+### 4.8 Sustainability & Society
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Environmental Management** | Aspect → Impact → Objective → Program → Monitoring → Reporting → Improvement → Audit | ISO 14001 | Sustainability |
 | **Energy Management** | Baseline → Audit → Efficiency → Renewable → Monitoring → Reporting → Optimization | ISO 50001 | Carbon |
 | **Waste Management** | Audit → Reduce → Reuse → Recycle → Recover → Dispose → Report → Improve | Circular | Environment |
@@ -1110,6 +1051,10 @@ technology.
 | **Regulatory Filing** | Requirement → Preparation → Review → Submission → Response → Approval → Maintenance → Renewal | Compliance | Regulation |
 | **Lobbying Workflow** | Issue → Strategy → Stakeholder → Engagement → Message → Coalition → Legislation → Monitor | Advocacy | Policy |
 | **Public Affairs** | Monitoring → Position → Messaging → Engagement → Coalition → Campaign → Evaluation | Government relations | Reputation |
+
+### 4.9 Communications, Brand & Community
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Crisis Communications** | Monitoring → Triage → Spokesperson → Message → Channel → Stakeholder → Follow-up → Evaluation | Reputation | Emergency |
 | **Media Relations** | Pitch → Brief → Interview → Coverage → Monitor → Analysis → Relationship → Optimize | Press | Awareness |
 | **Investor Relations** | Strategy → Reporting → Earnings → Roadshow → Conference → Website → Analyst → Governance | Shareholders | Valuation |
@@ -1131,6 +1076,10 @@ technology.
 | **Referral Program** | Design → Incentive → Tracking → Promotion → Conversion → Reward → Fraud → Optimize | Viral growth | Acquisition |
 | **Loyalty Program** | Design → Earn → Burn → Tier → Personalize → Communicate → Measure → Evolve | Retention | Repeat |
 | **Gamification** | Objectives → Behaviors → Mechanics → Rewards → Feedback → Social → Progress → Optimize | Engagement | Motivation |
+
+### 4.10 Behavior & Decision-Making
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Behavioral Economics in Product** | Nudge → Default → Social Proof → Scarcity → Loss Aversion → Framing → Feedback → Iterate | Psychology | Conversion |
 | **Habit Formation** | Trigger → Action → Variable Reward → Investment → Habit → Loop → Craving → Behavior | Nir Eyal | Retention |
 | **Hook Model** | Trigger → Action → Reward → Investment | Habit design | Engagement |
@@ -1152,7 +1101,6 @@ technology.
 | **Barbell Strategy** | Safe + Speculative, nothing in between | Nassim Taleb | Risk management |
 | **Antifragility** | Gain from disorder → Stressors → Optionality → Convexity → Evolution | Nassim Taleb | Resilience |
 | **Skin in the Game** | Alignment through personal risk → Accountability → Symmetry → Ethics | Nassim Taleb | Governance |
-| **Lindy Effect** | Future life expectancy ∝ past life | Technology selection | Durability |
 | **Via Negativa** | Improvement by subtraction → Remove → Simplify → Essentialize | Minimalism | Focus |
 | **Inversion** | Think backwards → Avoid stupidity → Prevent failure → Solve by negation | Charlie Munger | Decision |
 | **Second-Order Thinking** | Consequences of consequences → Systemic → Long-term → Unintended | Howard Marks | Strategy |
@@ -1186,7 +1134,6 @@ technology.
 | **Devil's Advocate** | Argue opposite position → Strengthen → Weakness → Robustness | Catholic Church | Decision |
 | **Dialectical Inquiry** | Thesis → Antithesis → Synthesis | Hegel | Truth |
 | **Delphi Method** | Expert panel → Iterative → Convergence → Forecast | RAND | Prediction |
-| **Scenario Planning** | Multiple futures → Implications → Strategy → Flexibility → Monitoring | Shell | Foresight |
 | **Backcasting** | Define future → Work backwards → Milestones → Actions → Today | Sustainability | Planning |
 | **Forecasting** | Data → Model → Prediction → Interval → Update → Accuracy | Statistics | Prediction |
 | **Prediction Market** | Wisdom of crowds → Incentives → Aggregation → Accuracy | Hanson | Collective intelligence |
@@ -1195,6 +1142,10 @@ technology.
 | **Reference Class Forecasting** | Similar projects → Base rate → Adjust → Probability | Flyvbjerg | Planning |
 | **Planning Fallacy** | Underestimate time/cost → Reference class → Pessimistic → Buffer | Kahneman & Tversky | Project |
 | **Optimism Bias** | Overestimate positive outcomes → Realistic → Sensitivity → Scenario | Tali Sharot | Risk |
+
+### 4.11 Safety, Human Factors & Inclusive Design
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Normal Accident Theory** | Complex systems inevitably fail → Simplify → Redundancy → Resilience | Charles Perrow | Safety |
 | **High Reliability Organization (HRO)** | Preoccupation with failure → Reluctance to simplify → Sensitivity to operations → Commitment to resilience → Deference to expertise | Weick & Sutcliffe | Reliability |
 | **Swiss Cheese Model** | Layers of defense with holes → Alignment → Redundancy → Culture | James Reason | Safety |
@@ -1222,6 +1173,10 @@ technology.
 | **Ambient Intelligence** | Invisible → Responsive → Adaptive → Anticipatory → Personalized → Ubiquitous | ISTAG | Environment |
 | **Ubiquitous Computing** | Embedding computation → Invisible → Context-aware → Adaptive → Calm | Mark Weiser | Computing |
 | **Pervasive Computing** | Everywhere → Anytime → Any device → Seamless → Integrated → Intelligent | IBM | Mobile |
+
+### 4.12 Web Engineering & Digital Experience
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Mobile-First** | Design for constraints → Progressive enhancement → Responsive → Adaptive → Performance | Luke Wroblewski | Design |
 | **Responsive Web Design** | Fluid grids → Flexible images → Media queries → Breakpoints → Mobile → Desktop | Ethan Marcotte | Web |
 | **Adaptive Design** | Server-side detection → Device-specific → Performance → Experience → Maintenance | - | Performance |
@@ -1245,11 +1200,13 @@ technology.
 | **Experience Economy** | Commodity → Goods → Services → Experience → Transformation | Pine & Gilmore | Business model |
 | **Service-Dominant Logic** | Value co-creation → Operant resources → Service exchange → Value-in-use | Vargo & Lusch | Marketing |
 | **Customer Co-Creation** | Involve customer in design → Ideas → Feedback → Beta → Community → Loyalty | Prahalad & Ramaswamy | Innovation |
-| **Open Innovation** | External ideas → Internal ideas → External paths → Internal paths → Coupled | Chesbrough | R&D |
+
+### 4.13 Innovation & Platform Strategy
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **User Innovation** | Lead users → Need → Solution → Diffusion → Commercialization → Platform | Eric von Hippel | Product |
 | **Crowdsourcing Innovation** | Challenge → Crowd → Ideas → Evaluation → Development → Launch → Reward | InnoCentive | Open R&D |
 | **Innovation Tournament** | Challenge → Entries → Screening → Testing → Finals → Winner → Implementation | Terwiesch & Ulrich | Selection |
-| **Stage-Gate Innovation** | Idea → Scoping → Business Case → Development → Testing → Launch → Post-Launch | Cooper | Process |
 | **Lean Innovation** | Hypothesis → Experiment → Learn → Pivot → Scale → Standardize → Optimize | Lean Startup | Efficiency |
 | **Disruptive Innovation Process** | Niche → Low-end → New market → Mainstream → Incumbent response → Market transformation | Christensen | Strategy |
 | **Sustaining Innovation** | Incremental improvement → Existing market → Current customers → Better performance | Christensen | Continuity |
@@ -1259,7 +1216,6 @@ technology.
 | **Innovation Ambidexterity** | Exploitation (existing) + Exploration (new) → Balance → Structural → Contextual → Sequential | Tushman & O'Reilly | Dual focus |
 | **Innovation Ecosystem** | Platform → Complementors → Users → Developers → Partners → Competitors → Regulators | Adner | Ecosystem |
 | **Two-Sided Market Innovation** | Platform → Side A → Side B → Network effects → Pricing → Growth → Governance | Rochet & Tirole | Platform |
-| **Multi-Sided Platform** | Platform → Multiple sides → Cross-side network effects → Pricing structure → Governance | Evans & Schmalensee | Complex platform |
 | **Platform Envelopment** | Platform A absorbs Platform B's functionality → Bundle → Competition → Winner-take-all | Eisenmann, Parker, Van Alstyne | Strategy |
 | **Data Network Effects** | More data → Better product → More users → More data | - | AI product |
 | **Learning Effects** | More usage → Better algorithm → Better product → More usage | - | AI advantage |
@@ -1276,10 +1232,13 @@ technology.
 | **Open Standard Strategy** | Open standard → Adoption → Complementors → Ecosystem → Monetize complement | - | Standards |
 | **Proprietary Standard Strategy** | Control standard → License → Royalty → Ecosystem dominance → Rent extraction | - | Control |
 | **Commoditize Your Complement** | Open/low-price complement → Increase demand for core → Profit from core | Joel Spolsky | Strategy |
+
+### 4.14 Pricing & Revenue
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Bundling Strategy** | Package products → Price discrimination → Consumer surplus → Market power → Entry deterrence | - | Pricing |
 | **Unbundling Strategy** | Separate products → Focus → Specialization → Niche → Premium → New market | - | Focus |
 | **Freemium Strategy** | Free → Limited → Premium → Upgrade path → Conversion → Revenue | - | SaaS |
-| **Razor-and-Blades** | Cheap razor → Expensive blades → Lock-in → Recurring → Platform | Gillette | Hardware |
 | **Subscription Model** | Access over ownership → Recurring revenue → Predictability → Customer lifetime → Retention | - | SaaS |
 | **Usage-Based Pricing** | Pay per use → Align value → Low barrier → Scale → Transparency → Fairness | - | Cloud |
 | **Outcome-Based Pricing** | Pay for result → Risk transfer → Alignment → Trust → Measurement → Guarantee | - | Enterprise |
@@ -1299,6 +1258,10 @@ technology.
 | **Yield Management** | Perishable inventory → Forecast → Overbooking → Price → Segment → Optimize | - | Airlines, hotels |
 | **Revenue Management** | Demand forecasting → Price → Inventory → Capacity → Channel → Optimization | - | Hospitality |
 | **Total Revenue Management** | All revenue streams → Holistic → Customer → Channel → Time → Optimization | - | Integrated |
+
+### 4.15 Finance, Risk & Economics
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Profitability Analysis** | Revenue → Variable cost → Contribution → Fixed cost → Operating profit → Net profit | - | Financial |
 | **Break-Even Analysis** | Fixed cost / (Price - Variable cost) → Volume → Target → Sensitivity | - | Planning |
 | **Margin Analysis** | Gross → Operating → Net → Contribution → Segment → Product → Customer | - | Performance |
@@ -1310,8 +1273,6 @@ technology.
 | **Profitability Index** | NPV / Initial investment → Ratio → Rank → Capital rationing | - | Efficiency |
 | **Real Options Analysis** | Option to defer → Expand → Abandon → Switch → Value flexibility → Strategic NPV | - | Uncertainty |
 | **Decision Tree Analysis** | Decision nodes → Chance nodes → Probabilities → Payoffs → Rollback → Optimal | - | Sequential |
-| **Monte Carlo Simulation** | Random variables → Distributions → Iterations → Output distribution → Risk → Decision | - | Stochastic |
-| **Sensitivity Analysis** | One variable → Change → Output → Tornado diagram → Key drivers → Focus | - | Robustness |
 | **Scenario Analysis** | Best → Base → Worst case → Assumptions → Probability → Strategy → Contingency | - | Planning |
 | **Stress Testing** | Extreme scenario → Impact → Vulnerability → Capital → Recovery → Plan | - | Resilience |
 | **Value at Risk (VaR)** | Confidence level → Time horizon → Maximum loss → Historical → Variance-covariance → Monte Carlo | - | Risk |
@@ -1375,23 +1336,26 @@ technology.
 | **Friendshoring** | Ally → Supply chain → Trust → Security → Values → Trade → Risk reduction | - | Geopolitics |
 | **Nearshoring** | Close geography → Supply chain → Cost → Time → Risk → Trade agreement | - | Supply chain |
 | **Reshoring** | Domestic production → Jobs → Security → Cost → Quality → Policy → Incentive | - | Industrial policy |
+
+### 4.16 Advanced Manufacturing & Automation
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Industry 4.0** | Cyber-physical → IoT → Big data → AI → Cloud → Additive → Autonomous → Digital twin | - | Manufacturing |
 | **Industry 5.0** | Human-centric → Sustainability → Resilience → Collaboration → Customization → Well-being | EU | Future manufacturing |
 | **Smart Manufacturing** | Connected → Data-driven → Autonomous → Optimized → Predictive → Adaptive → Sustainable | - | Manufacturing |
 | **Digital Twin** | Physical → Virtual → Simulation → Prediction → Optimization → Maintenance → Design | - | Industry |
 | **Predictive Maintenance** | Sensor → Data → Model → Prediction → Intervention → Schedule → Cost reduction | - | Operations |
 | **Additive Manufacturing** | 3D printing → Design freedom → Customization → Waste reduction → Distributed → On-demand | - | Manufacturing |
-| **Robotics Process Automation (RPA)** | Bot → Rule-based → Repetitive → Integration → Scale → Cognitive → Intelligent | - | Automation |
 | **Cognitive Automation** | AI → NLP → Computer vision → Decision → Unstructured → Learning → Scale | - | Advanced automation |
-| **Hyperautomation** | RPA + AI + iBPMS + Low-code → End-to-end → Discovery → Orchestration → Analytics | Gartner | Enterprise automation |
-| **Intelligent Process Automation (IPA)** | RPA + ML → Cognitive → Decision → Unstructured → Continuous improvement | - | Next-gen RPA |
 | **Autonomous Enterprise** | Self-driving → AI → Decision → Operation → Customer → Employee → Ecosystem → Governance | - | Future org |
 | **Self-Healing Systems** | Detect → Diagnose → Remediate → Learn → Predict → Prevent → Autonomous | - | Resilience |
-| **AIOps** | Ingest → Detect → Correlate → Predict → Automate → Remediate → Learn | - | Intelligent ops |
 | **No-Ops** | Fully automated → Self-healing → Self-scaling → Self-securing → Developer focus → Platform | - | Future ops |
 | **Platform Ops** | Internal platform → Self-service → Golden path → Standardization → Developer experience → Product | - | Platform engineering |
-| **Developer Experience (DX)** | Onboarding → Documentation → Tooling → Feedback → Support → Community → Metrics | - | Productivity |
 | **Developer Productivity Engineering (DPE)** | Build → Test → CI/CD → Local → Remote → Metrics → Optimization → Acceleration | - | Velocity |
+
+### 4.17 Future of Work & Organizational Models
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Remote-First** | Async → Documentation → Transparency → Trust → Results → Flexibility → Inclusion → Cost | - | Future of work |
 | **Hybrid Work** | Office + Remote → Schedule → Collaboration → Culture → Equity → Performance → Policy | - | Post-pandemic |
 | **Async-First** | Documentation → Written → Time zone → Deep work → Meeting reduction → Decision log | - | Distributed |
@@ -1406,8 +1370,11 @@ technology.
 | **Future Search** | Whole system → Future → Common ground → Action → Stakeholder → Diversity → Commitment | Weisbord & Janoff | Planning |
 | **Search Conference** | Stakeholder → Environment → System → Action planning → Implementation → Learning | - | Participatory |
 | **Real-Time Strategic Change** | Large group → Whole system → Future → Action → Rapid → Implementation → Sustainability | - | Fast change |
+
+### 4.18 Lean & Process Safety
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Gemba Kaizen** | Go to actual place → See actual situation → Understand actual problem → Take actual action | - | Continuous improvement |
-| **Hoshin Kanri (Policy Deployment)** | Strategic plan → Catchball → Department goals → Individual targets → Review → Adjustment | - | Alignment |
 | **Obeya (War Room)** | Visual management → Cross-functional → Rapid decision → Problem-solving → Accountability → Rhythm | - | Agile management |
 | **A3 Problem Solving** | Background → Current condition → Goal → Analysis → Countermeasures → Plan → Follow-up | - | Lean problem solving |
 | **Toyota Production System (TPS)** | Just-in-time → Jidoka → Heijunka → Standardized work → Kaizen → Respect for people | - | Lean manufacturing |
@@ -1416,11 +1383,8 @@ technology.
 | **Kanban (Pull System)** | Visual signal → Limit WIP → Flow → Pull → Replenish → Just-in-time | - | Inventory |
 | **Andon (Visual Control)** | Signal → Stop → Fix → Alert → Transparency → Problem → Response | - | Quality |
 | **Poka-Yoke (Mistake-Proofing)** | Design → Prevent → Detect → Correct → Error-proof → Fool-proof → Fail-safe | - | Quality |
-| **5 Whys** | Ask why repeatedly → Root cause → Countermeasure → Verification → Standardization | - | Root cause |
-| **Ishikawa (Fishbone) Diagram** | Problem → Categories → Causes → Sub-causes → Analysis → Priority → Action | - | Cause analysis |
 | **Fault Tree Analysis** | Top event → Logic gates → Basic events → Cut sets → Probability → Importance → Mitigation | - | Reliability |
 | **Event Tree Analysis** | Initiating event → Outcomes → Consequences → Probability → Risk → Decision | - | Safety |
-| **Failure Mode and Effects Analysis (FMEA)** | Item → Failure mode → Effect → Cause → Current control → Severity → Occurrence → Detection → RPN → Action | - | Risk |
 | **Hazard and Operability Study (HAZOP)** | Guide words → Deviation → Cause → Consequence → Safeguard → Action → Recommendation | - | Process safety |
 | **Layer of Protection Analysis (LOPA)** | Scenario → Initiating event → Consequence → IPL → Risk → Decision → Mitigation | - | Safety |
 | **Bow-Tie Analysis** | Hazard → Top event → Threats → Preventive → Consequences → Mitigative → Escalation | - | Risk visualization |
@@ -1437,6 +1401,10 @@ technology.
 | **Cyber-Physical System Security** | IT + OT → Convergence → Risk → ISA/IEC 62443 → Zones → Conduits → Security levels | - | Industrial security |
 | **Industrial Control System (ICS) Security** | SCADA → DCS → PLC → HMI → Network segmentation → Asset inventory → Monitoring → Incident response | - | Critical infrastructure |
 | **Operational Technology (OT) Security** | Availability → Safety → Integrity → Confidentiality → Different from IT → Convergence → Risk | - | OT security |
+
+### 4.19 Cybersecurity & Privacy Engineering
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **NIST Cybersecurity Framework (CSF)** | Identify → Protect → Detect → Respond → Recover → Govern (CSF 2.0) | NIST | Cybersecurity |
 | **ISO/IEC 27001** | ISMS → Risk assessment → Risk treatment → Statement of applicability → Internal audit → Management review → Certification | ISO | Info security |
 | **ISO/IEC 27002** | Controls → Organizational → People → Physical → Technological → Guidance → Implementation | ISO | Security controls |
@@ -1505,6 +1473,10 @@ technology.
 | **Hash Function** | SHA-256 → SHA-3 → Blake2 → Blake3 → Merkle-Damgård → Sponge → Collision → Preimage | - | Integrity |
 | **Merkle Tree** | Hash tree → Root → Proof → Verification → Efficient → Blockchain → Certificate transparency | - | Verification |
 | **Verifiable Delay Function (VDF)** | Sequential → Unparallelizable → Verifiable → Randomness → Blockchain → Consensus | - | Randomness |
+
+### 4.20 Blockchain Consensus & Infrastructure
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Proof of Work (PoW)** | Hash → Difficulty → Nonce → Energy → Security → Decentralization → Bitcoin → Criticism | - | Consensus |
 | **Proof of Stake (PoS)** | Stake → Validator → Epoch → Slashing → Finality → Energy efficient → Ethereum → Centralization risk | - | Consensus |
 | **Delegated Proof of Stake (DPoS)** | Vote → Delegate → Block producer → Rotation → Speed → Criticism → EOS → Democracy | - | Consensus |
@@ -1524,6 +1496,10 @@ technology.
 | **Rust (Solana, Near, Polkadot)** | Memory safety → Performance → Wasm → Smart contract → Concurrency → Type safety | - | Modern blockchain |
 | **Move Language** | Resource-oriented → Bytecode verifier → Safety → Aptos → Sui → Facebook/Diem | - | Safe smart contract |
 | **Cadence (Flow)** | Resource-oriented → Type safety → Pre/post conditions → Capability-based → NBA Top Shot | - | Flow blockchain |
+
+### 4.21 Smart Contract Security & DeFi
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Smart Contract Security** | Reentrancy → Integer overflow → Access control → Front-running → Oracle manipulation → Flash loan → Audit → Formal verification | - | Web3 safety |
 | **Formal Verification** | Mathematical proof → Specification → Model checking → Theorem proving → Coq → Isabelle → Certora | - | Correctness |
 | **Symbolic Execution** | Path exploration → Constraint solving → Bug finding → EVM → Mythril → Manticore → Halmos | - | Bug detection |
@@ -1545,9 +1521,11 @@ technology.
 | **MEV (Maximal Extractable Value)** | Reordering → Insertion → Censorship → Arbitrage → Liquidation → Sandwich → Front-running → PBS | - | Block production |
 | **Proposer-Builder Separation (PBS)** | Proposer → Builder → Relay → Block → MEV-Boost → Censorship → Inclusion list → Ethereum | - | MEV mitigation |
 | **Intent-Based Architecture** | User intent → Solver → Execution → RFQ → Dutch auction → Batch → CoW Protocol → Anoma | - | UX abstraction |
-| **Account Abstraction (ERC-4337)** | Smart contract wallet → UserOperation → Bundler → EntryPoint → Paymaster → Gas abstraction → Social recovery | - | Wallet UX |
+
+### 4.22 Web3 Identity, Governance & Public Goods
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Passkey / WebAuthn** | FIDO2 → Biometric → Hardware → Phishing-resistant → Credential → Cross-device → Platform → Roaming | - | Authentication |
-| **Soulbound Token (SBT)** | Non-transferable → Identity → Reputation → Credential → Membership → Issuer → Revocation → EIP-5484 | - | Web3 identity |
 | **Decentralized Physical Infrastructure (DePIN)** | Physical → Token → Incentives → Network → Helium → Hivemapper → Filecoin → Render → IoT | - | Tokenized infrastructure |
 | **Decentralized Science (DeSci)** | Research → Funding → IP → NFT → DAO → Peer review → Data → Open access → VitaDAO → LabDAO | - | Scientific research |
 | **Regenerative Finance (ReFi)** | Environmental → Token → Carbon → Biodiversity → Impact → Verification → Market → Toucan → Klima | - | Sustainable finance |
@@ -1569,6 +1547,10 @@ technology.
 | **Platform Cooperativism** | Worker-owned → Platform → Democracy → Fair → Uber → Up & Go → Stocksy → Resilience → Alternative | - | Platform economy |
 | **Solid (Social Linked Data)** | Pod → Data ownership → Interoperability → App → Permission → Tim Berners-Lee → Decentralization → Web | - | Data sovereignty |
 | **Web5 (TBD)** | Decentralized web → DWN → DID → VC → Bitcoin → Decentralized → Identity → Data → App | Jack Dorsey | Decentralized web |
+
+### 4.23 Decentralized Storage, Oracles & Interoperability
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **InterPlanetary File System (IPFS)** | Content-addressed → DAG → DHT → Pinning → Gateway → CID → Immutable → Distributed → Filecoin | - | Decentralized storage |
 | **Filecoin** | Storage → Retrieval → Proof of replication → Proof of spacetime → Market → Incentives → IPFS | - | Decentralized storage |
 | **Arweave** | Permaweb → Blockweave → Proof of access → One-time fee → Permanent → Immutable → Archive | - | Permanent storage |
@@ -1606,6 +1588,10 @@ technology.
 | **Lagrange** | ZK coprocessor → Big data → Proof → State → Cross-chain → Compute → Trustless → Scale | - | ZK big data |
 | **Herodotus** | ZK → Storage proof → Historical → Ethereum → State → Access → Trustless → Archive → Proof | - | ZK history |
 | **HyperOracle** | ZK oracle → Ethereum → Off-chain → Computation → On-chain → Verifiable → Automation → Trustless | - | ZK automation |
+
+### 4.24 Layer 2 & Modular Blockchains
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Pantheon** | ZK → EVM → Parallel → Execution → Proof → Verification → Rollup → Scalable → General | - | ZK EVM |
 | **Scroll** | ZK-EVM → Bytecode → Proof → Ethereum → Compatibility → Security → Decentralization → Layer 2 | - | ZK-EVM |
 | **Polygon zkEVM** | ZK → EVM → Type 2 → Proof → Ethereum → Scalability → Security → Decentralized → Hermez | - | ZK-EVM |
@@ -1644,7 +1630,6 @@ technology.
 | **Flashbots Protect** | RPC → MEV → Protection → Private → Transaction → Inclusion → Safety → User → Ethereum | - | MEV protection |
 | **Suave** | Flashbots → MEV → Unified → Auction → Value → Expression → Execution → Decentralized → Builder | - | MEV infrastructure |
 | **Censorship Resistance** | Inclusion list → Force inclusion → CrList → PBS → Builder → Proposer → Ethereum → Neutrality | - | Neutrality |
-| **Proposer-Builder Separation (PBS)** | Separation → MEV → Efficiency → Censorship → Inclusion list → Ethereum → Upgrade → Deneb | - | Ethereum upgrade |
 | **Danksharding** | Proto-danksharding → Full → Blob → Data availability → Sampling → Ethereum → Scalability → EIP-4844 | - | Ethereum scaling |
 | **Proto-Danksharding (EIP-4844)** | Blob → Transaction → Temporary → Data availability → Cost → Rollup → Ethereum → Scalability | - | Ethereum upgrade |
 | **Verkle Trees** | State → Proof → Efficiency → Witness → Stateless → Ethereum → Scalability → Verkle → Upgrade | - | Ethereum state |
@@ -1674,13 +1659,11 @@ technology.
 | **The Verge** | Verkle → Trees → Statelessness → Witness → Scalability → Ethereum → Verification → Upgrade | - | Ethereum state |
 | **The Purge** | History → Expiry → State → Simplification → Ethereum → Client → Resource → Upgrade | - | Ethereum simplification |
 | **The Splurge** | EVM → Improvement → Account abstraction → PBS → MEV → Censorship → Ethereum → Upgrade | - | Ethereum improvement |
-| **Account Abstraction (AA)** | ERC-4337 → Smart contract → Wallet → UserOperation → Bundler → EntryPoint → Paymaster → Gas → Social recovery | - | Wallet future |
-| **Paymaster** | Gas → Sponsorship → ERC-20 → Payment → Account abstraction → UX → Onboarding → Subsidy → Strategy | - | Gas abstraction |
-| **Bundler** | UserOperation → Bundle → EntryPoint → Mempool → P2P → Account abstraction → Ethereum → MEV → Inclusion | - | AA infrastructure |
-| **EntryPoint** | Singleton → Contract → Account abstraction → Validation → Execution → Ethereum → Standard → ERC-4337 | - | AA core |
+
+### 4.25 Account Abstraction & Token Standards
+| Name | Workflow | Steps | Hypertaks Application |
+|------|----------|-------|-----------------------|
 | **Smart Contract Wallet** | Account abstraction → Multisig → Social recovery → Session → Key → Plugin → Modular → Security → UX | - | Wallet evolution |
-| **Session Key** | Temporary → Scoped → Permission → Account abstraction → Gaming → UX → Security → Time → Limit | - | AA feature |
-| **Social Recovery** | Guardian → Recovery → Account abstraction → Wallet → Security → Trust → UX → Backup → Key loss | - | AA security |
 | **Modular Smart Account** | Plugin → Module → Account abstraction → Extension → Customization → Security → Upgrade → Standard → ERC-6900 | - | AA modular |
 | **ERC-6900 (Modular Smart Account)** | Plugin → Execution → Validation → Hook → Account abstraction → Standard → Interoperability → Security | - | AA standard |
 | **ERC-7579 (Minimal Modular Account)** | Module → Standard → Account abstraction → Interoperability → Minimal → Execution → Validation → Hook | - | AA minimal |
@@ -1746,82 +1729,32 @@ technology.
 | **ERC-7950 (Conditional Transfer)** | Conditional → Transfer → Standard → Token → Restriction → Requirement → Verification | - | Conditional transfer |
 | **ERC-7970 (Token-Gated Governance)** | Token → Gated → Governance → Standard → NFT → Voting → Proposal → Access → Restriction | - | Token governance |
 | **ERC-7994 (Fractional Ownership)** | Fractional → Ownership → Standard → Asset → Share → Dividend → Voting → Real estate | - | Fractional ownership |
-| **ERC-8000 (Dynamic Royalty)** | Dynamic → Royalty → Standard → NFT → Market → Condition → Percentage → Creator | - | Dynamic royalty |
-| **ERC-8022 (Time-Locked Token)** | Time → Locked → Token → Standard → Vesting → Cliff → Release → Schedule → Employee | - | Vesting |
-| **ERC-8050 (Cross-Chain Identity)** | Cross-chain → Identity → Standard → DID → Verification → Attestation → Interoperability | - | Cross-chain identity |
-| **ERC-8100 (Verifiable Credential Token)** | Verifiable → Credential → Token → Standard → SBT → Attestation → Claim → Verification | - | VC token |
-| **ERC-8150 (Automated Market Maker Standard)** | AMM → Standard → Interface → DEX → Liquidity → Pool → Swap → Price → Invariant | - | AMM standard |
-| **ERC-8200 (Oracle Interface)** | Oracle → Interface → Standard → Data → Price → Feed → Request → Response → Verification | - | Oracle standard |
-| **ERC-8250 (Staking Standard)** | Staking → Standard → Interface → Deposit → Withdraw → Reward → Claim → Slashing | - | Staking standard |
-| **ERC-8300 (Bridge Interface)** | Bridge → Interface → Standard → Cross-chain → Lock → Mint → Burn → Unlock → Verification | - | Bridge standard |
-| **ERC-8350 (Governance Standard)** | Governance → Standard → Interface → Proposal → Vote → Execute → Delegation → Timelock | - | Governance standard |
-| **ERC-8400 (Escrow Standard)** | Escrow → Standard → Interface → Deposit → Release → Refund → Dispute → Arbitration | - | Escrow standard |
-| **ERC-8450 (Lending Standard)** | Lending → Standard → Interface → Deposit → Borrow → Interest → Liquidation → Collateral | - | Lending standard |
-| **ERC-8500 (Derivative Standard)** | Derivative → Standard → Interface → Underlying → Price → Settlement → Margin → Expiry | - | Derivative standard |
-| **ERC-8550 (Insurance Standard)** | Insurance → Standard → Interface → Policy → Premium → Claim → Underwriting → Payout | - | Insurance standard |
-| **ERC-8600 (Prediction Market Standard)** | Prediction → Market → Standard → Interface → Outcome → Bet → Resolution → Oracle → Settlement | - | Prediction standard |
-| **ERC-8650 (DAO Standard)** | DAO → Standard → Interface → Proposal → Vote → Treasury → Execution → Membership | - | DAO standard |
-| **ERC-8700 (Reputation Standard)** | Reputation → Standard → Interface → Score → History → Verification → Trust → Decay | - | Reputation standard |
-| **ERC-8750 (Attestation Standard)** | Attestation → Standard → Interface → Claim → Verify → Issuer → Subject → Revocation | - | Attestation standard |
-| **ERC-8800 (Credential Standard)** | Credential → Standard → Interface → Issue → Verify → Present → Revoke → Expire | - | Credential standard |
-| **ERC-8850 (Badge Standard)** | Badge → Standard → Interface → Earn → Display → Verify → Achievement → Skill | - | Badge standard |
-| **ERC-8900 (Certificate Standard)** | Certificate → Standard → Interface → Issue → Verify → Authenticate → Academic → Professional | - | Certificate standard |
-| **ERC-8950 (License Standard)** | License → Standard → Interface → Grant → Verify → Restrict → Term → Revocation | - | License standard |
-| **ERC-9000 (Membership Standard)** | Membership → Standard → Interface → Join → Verify → Renew → Expire → Benefit | - | Membership standard |
-| **ERC-9050 (Subscription Standard)** | Subscription → Standard → Interface → Subscribe → Renew → Cancel → Payment → Access | - | Subscription standard |
-| **ERC-9100 (Royalty Split Standard)** | Royalty → Split → Standard → Interface → Share → Recipient → Percentage → Distribution | - | Royalty split |
-| **ERC-9150 (Token Curated Registry)** | Token → Curated → Registry → Standard → Interface → List → Vote → Challenge → Deposit | - | TCR standard |
-| **ERC-9200 (Bonding Curve Standard)** | Bonding → Curve → Standard → Interface → Mint → Burn → Price → Formula → Reserve | - | Bonding curve |
-| **ERC-9250 (Curation Market Standard)** | Curation → Market → Standard → Interface → Signal → Reward → Quality → Discovery | - | Curation standard |
-| **ERC-9300 (Futarchy Standard)** | Futarchy → Standard → Interface → Market → Vote → Decision → Policy → Execution | - | Futarchy standard |
-| **ERC-9350 (Quadratic Funding Standard)** | Quadratic → Funding → Standard → Interface → Donate → Match → Pool → Distribution | - | QF standard |
-| **ERC-9400 (Retroactive Funding Standard)** | Retroactive → Funding → Standard → Interface → Impact → Measurement → Reward → Distribution | - | RetroPGF standard |
-| **ERC-9450 (Public Goods Standard)** | Public → Goods → Standard → Interface → Define → Fund → Measure → Sustain | - | Public goods |
-| **ERC-9500 (Impact Bond Standard)** | Impact → Bond → Standard → Interface → Investor → Outcome → Payment → Verification | - | Impact bond |
-| **ERC-9550 (Social Impact Standard)** | Social → Impact → Standard → Interface → Project → Measurement → Verification → Reporting | - | Social impact |
-| **ERC-9600 (Environmental Standard)** | Environmental → Standard → Interface → Carbon → Offset → Credit → Verification → Retirement | - | Environmental |
-| **ERC-9650 (Carbon Credit Standard)** | Carbon → Credit → Standard → Interface → Mint → Verify → Trade → Retire → Offset | - | Carbon credit |
-| **ERC-9700 (Renewable Energy Standard)** | Renewable → Energy → Standard → Interface → Generation → Certificate → Trade → Verification | - | Renewable energy |
-| **ERC-9750 (Water Credit Standard)** | Water → Credit → Standard → Interface → Conservation → Verification → Trade → Offset | - | Water credit |
-| **ERC-9800 (Biodiversity Credit Standard)** | Biodiversity → Credit → Standard → Interface → Conservation → Measurement → Trade | - | Biodiversity |
-| **ERC-9850 (Natural Capital Standard)** | Natural → Capital → Standard → Interface → Asset → Valuation → Trade → Conservation | - | Natural capital |
-| **ERC-9900 (ESG Standard)** | ESG → Standard → Interface → Environmental → Social → Governance → Measurement → Reporting | - | ESG standard |
-| **ERC-9950 (Impact Token Standard)** | Impact → Token → Standard → Interface → Project → Outcome → Verification → Trade | - | Impact token |
-| **ERC-10000 (Universal Token Standard)** | Universal → Token → Standard → Interface → Fungible → Non-fungible → Hybrid → Extensible | - | Universal token |
 
 ---
 
-*Dokumen ini adalah living document. Setiap kategori bisa diekspansi lebih lanjut dengan sub-kategori, case study, dan instruksi implementasi spesifik untuk Hypertaks.*
+## Implementation notes for Hypertaks
+
+1. **Phase 3 (equip):** grep this catalog by keyword or domain and hand each
+   agent only the rows its brief needs. Never paste whole sections into a
+   brief.
+2. **Domain lenses:** give each role the items that match its professional
+   angle (see `references/agent-roles.md` for the role pool and typical
+   framework picks per tier).
+3. **Output-shape law:** every item pulled from this catalog must state, in
+   the agent brief, the shape its application returns (table, grid, ranked
+   list, cause tree, step sequence). A name without its shape counts as not
+   used.
+4. **Quality gates:** check agent outputs against the domain's own standards
+   in this catalog (engineering: TDD, SOLID, security rows; business: unit
+   economics, competitive analysis; Web3: smart contract security, tokenomics
+   sustainability).
+5. **Integration:** the Founder/Integrator reconciles outputs with Systems
+   Thinking + Cynefin before delivery.
+6. **Continuous improvement:** close Prime/Hyper tasks with a 5 Whys +
+   Double-Loop Learning retrospective; feed durable lessons back into this
+   catalog.
 
 ---
 
-## 📌 IMPLEMENTATION NOTES FOR HYPERTAKS
-
-### How to Use This Knowledge Base in Hypertaks:
-
-1. **Intake Gate Enhancement**: Every intake gate question can reference the frameworks above to ensure the question covers all dimensions.
-
-2. **Agent Specialization**: The 5 Hypertaks agents can be given "domain lenses" from the list above:
-   - **Business Agent**: Porter, SWOT, TOWS, Business Model Canvas, Unit Economics
-   - **Engineering Agent**: TDD, DDD, CI/CD, Microservices, Security
-   - **Web3 Agent**: Tokenomics, Smart Contract Security, DeFi Primitives, ZK
-   - **Marketing/Copy Agent**: AIDA, JTBD, Hook Model, Behavioral Economics
-   - **Integrator Agent**: Systems Thinking, Cynefin, TOC, OKR
-
-3. **Dynamic Task Tiering**: Use frameworks to determine task tiers:
-   - Tier 1 (1 Agent): KISS, Occam's Razor, Pomodoro
-   - Tier 2 (2-3 Agents): Lean Startup, Design Thinking, Agile
-   - Tier 3 (5 Agents): Full Business Model Canvas + DDD + TDD + Tokenomics + Go-to-Market
-
-4. **Quality Gates**: Every agent output must pass a "framework check" according to domain:
-   - Engineering output → TDD check? SOLID check? Security check?
-   - Business output → Unit economics check? Competitive analysis check?
-   - Web3 output → Smart contract security check? Tokenomics sustainability check?
-
-5. **Cross-Agent Review**: The Integrator uses Systems Thinking + Cynefin to evaluate whether the outputs from the 5 agents are coherent and non-contradictory.
-
-6. **Continuous Improvement**: Every completed project → Post-mortem using 5 Whys + Double-Loop Learning + Retrospective → Update knowledge base.
-
----
-
-*This document is a living document. Each category can be expanded further with sub-categories, case studies, and specific implementation instructions for Hypertaks.*
+*This document is a living catalog. Each category can be expanded with
+sub-categories, case studies, and Hypertaks-specific implementation guidance.*

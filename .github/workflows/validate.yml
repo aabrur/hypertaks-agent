@@ -11,41 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate SKILL.md frontmatter
-        run: |
-          python3 - <<'PY'
-          import re, sys, pathlib
-          skill = pathlib.Path("skills/hypertaks/SKILL.md")
-          assert skill.exists(), "skills/hypertaks/SKILL.md missing"
-          text = skill.read_text(encoding="utf-8")
-          assert text.startswith("---"), "no YAML frontmatter"
-          m = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
-          assert m, "invalid frontmatter"
-          fm = m.group(1)
-          assert "name:" in fm, "missing name"
-          assert "description:" in fm, "missing description"
-          name = re.search(r"name:\s*(.+)", fm).group(1).strip()
-          assert re.match(r"^[a-z0-9-]+$", name), f"bad name: {name}"
-          desc = re.search(r'description:\s*"?(.+)', fm).group(1)
-          assert "<" not in desc and ">" not in desc, "angle brackets in description"
-          print("SKILL.md OK:", name)
-          PY
-
-      - name: Validate all JSON manifests parse
-        run: |
-          python3 - <<'PY'
-          import json, os, sys
-          bad = 0
-          for root, _, files in os.walk("."):
-              if "node_modules" in root or "/.git" in root:
-                  continue
-              for fn in files:
-                  if fn.endswith(".json"):
-                      p = os.path.join(root, fn)
-                      try:
-                          json.load(open(p, encoding="utf-8"))
-                          print("OK ", p)
-                      except Exception as e:
-                          print("ERR", p, e); bad += 1
-          sys.exit(1 if bad else 0)
-          PY
+      - name: Run skill validation
+        run: python3 scripts/validate_skill.py

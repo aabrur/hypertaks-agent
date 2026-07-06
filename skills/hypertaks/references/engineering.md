@@ -8,28 +8,29 @@ present in the environment rather than reinventing them.
 ## General stacks
 
 - **Web / frontend** - React/Next.js, Vue, Svelte, plain HTML/CSS/TS. Reuse
-  `frontend-design`, `react-best-practices`, `react-native-skills`,
-  `composition-patterns` when available. QA in-browser via Chrome / chrome-devtools.
+  any frontend-design or framework best-practices skills present in the
+  session. QA in-browser via the session's browser/dev-tools category.
 - **Backend / APIs** - Node/TypeScript, Python (FastAPI/Django), Go, Java,
-  Rust; REST and GraphQL; auth, rate limiting, and API-readiness. Reuse
-  `mcp-builder` for MCP servers.
-- **Mobile** - React Native, Flutter, native iOS/Android. Reuse
-  `react-native-skills`.
+  Rust; REST and GraphQL; auth, rate limiting, and API-readiness. Reuse an
+  MCP-builder skill for MCP servers when one is present.
+- **Mobile** - React Native, Flutter, native iOS/Android. Reuse mobile
+  best-practices skills when present.
 - **Data / ML & analytics** - Python (pandas, scikit-learn, PyTorch), SQL,
-  notebooks; cohort/experiment analysis. Pair with `excel-xlsx` and
-  `financial-datasets` for reporting.
-- **Scripting / automation / infra** - Bash/PowerShell, CI/CD, Docker
-  (`docker-essentials`), cloud (Firebase, Vercel via `deploy-to-vercel`). Reuse
-  `automation-workflows`.
+  notebooks; cohort/experiment analysis. Pair with spreadsheet and
+  financial-data tooling for reporting.
+- **Scripting / automation / infra** - Bash/PowerShell, CI/CD, Docker, cloud
+  deploy targets - use whatever container, deployment, and
+  workflow-automation skills the session provides.
 - **Quality discipline** - apply `tdd` / `test-driven-development`,
   `systematic-debugging`, `karpathy-guidelines`, and `verification-before-completion`.
   Match surrounding code style; make surgical changes; surface assumptions.
 
 ## Web3 / Solidity deep dive (flagship)
 
-Use for smart contracts, tokenomics, and any on-chain deliverable. When the
-`hermes-crypto-agent` skill is present, route on-chain execution (wallets, swaps,
-deployment, monitoring) through it.
+Use for smart contracts, tokenomics, and any on-chain deliverable. When an
+on-chain execution tool (wallets, swaps, deployment, monitoring) is present in
+the session, route on-chain execution through it; otherwise deliver contracts,
+tests, and deployment scripts for the Boss to execute.
 
 ### Languages & platforms
 - **Solidity** (EVM: Ethereum, Base, Arbitrum, Optimism, Polygon, BSC, Avalanche,
@@ -61,7 +62,7 @@ deployment, monitoring) through it.
 ### Tokenomics (pair with the Finance agent)
 - Supply schedule (fixed/inflationary/deflationary), emission and vesting,
   utility and sinks, fee routing and treasury, governance rights. Model the
-  numbers in `excel-xlsx` before hardcoding constants.
+  numbers in spreadsheet tooling before hardcoding constants.
 
 ### Testing & deployment tooling
 - **Foundry** (`forge test`, fuzzing, invariant tests, `forge script` deploys) -

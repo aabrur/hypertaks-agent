@@ -10,14 +10,14 @@ work, each equipped with the right business frameworks plus whatever
 plugins/skills and MCP connectors your environment already has.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-3.0.0-blue)
+![Version](https://img.shields.io/badge/version-4.0.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
 
 </div>
 
 ---
 
-> **Hypertaks 2.0** = *"A founder who owns a library of more than 1,600
+> **Hypertaks** = *"A founder who owns a library of more than 1,400
 > books, knows exactly which book to consult for this issue, and has a
 > strict SOP: intake → formulation → implementation → integration →
 > documentation."*
@@ -37,6 +37,22 @@ rigor, at real setup-complexity cost.
 
 <div align="center">
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks 2.0 vs other agent protocols — radar benchmark" width="700">
+</div>
+
+---
+
+## 📈 What changed in 4.0.0
+
+A full audit of 3.0.0 found real structural defects; 4.0.0 repairs every one
+of them to zero (duplicate and fabricated knowledge-base entries, non-English
+residue, personal paths, and 108 named tools the skill assumed were installed)
+and raises the discipline layer: a binding task contract with six defined
+violations and mandatory rollback, category-based tool binding that works with
+any tool mix, and doubled validator coverage. Full detail in the
+[release notes](skills/hypertaks/RELEASE-NOTES.md).
+
+<div align="center">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.0.0 — measured defect repair and discipline coverage" width="850">
 </div>
 
 ---
@@ -77,7 +93,7 @@ tasks spawn more agents inside it.
 
 ## ⚡ Lazy-loaded, not bloated
 
-The 1,600+ item knowledge base and reference docs are **grepped by keyword
+The 1,400+ item knowledge base and reference docs are **grepped by keyword
 in Phase 3**, never loaded wholesale. On Prime/Hyper-tier tasks that means
 roughly **70–80% fewer tokens** and **60–75% less execution time** versus
 loading everything up front.
@@ -96,7 +112,7 @@ Forces · SWOT/TOWS · Pareto (80/20) · Fishbone (Ishikawa) · Blue Ocean (ERRC
 supply chain · Supply Chain Finance · ERP · Smart contracts · IoT.
 
 **Extended:** [`references/knowledge-base.md`](skills/hypertaks/references/knowledge-base.md)
-— a 1,600+ item encyclopedia of theories, methods, frameworks, and
+is a 1,400+ item encyclopedia of theories, methods, frameworks, and
 workflows across business, learning, science, and technology (JTBD, Kano,
 RICE, Cynefin, OKR, PESTLE, DDD, MLOps, EIP standards, sales methodologies,
 mental models, and more). Lazy-loaded: agents grep it by keyword, so it

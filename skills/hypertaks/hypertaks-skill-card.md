@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** 3.0.0
+**Version:** 4.0.0
 
 ---
 
@@ -58,8 +58,8 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 - Reference files: `intake-protocol.md`, `agent-roles.md`,
   `plugins-and-mcp.md`, `frameworks.md`, `engineering.md`.
 - Assets: `agent-brief-template.md`, `deliverable-template.md`.
-- Filesystem or Obsidian MCP access to the workspace vault for work-log
-  appending; inline log fallback when absent.
+- A notes/knowledge-base tool (any brand) for work-log appending when
+  present; inline log fallback otherwise.
 
 ---
 
@@ -103,14 +103,14 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 - Frameworked artifacts when applicable (5-forces table, 2×2 SWOT, ERRC grid,
   6M fishbone, ranked Pareto list, 5 focusing steps, etc.).
 - Compliance footer per `assets/deliverable-template.md`.
-- Work-log snippet at the end of the deliverable or appended to the vault
-  Daily note.
+- Work-log snippet at the end of the deliverable or appended per the
+  workspace standard.
 
 ---
 
 ## Skill Version
 
-`3.0.0`
+`4.0.0`
 
 ---
 
@@ -131,6 +131,10 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
   requires re-gating and explicit go-ahead.
 - Intake gate: Express for Lite/Standard, Deep for Prime/Hyper. The gate is
   sized, never skipped.
+- Contract binding: the Phase 0 contract activates only on explicit approval
+  and lists tier, budget, access permissions, output shapes, and success
+  criteria. Violations trigger a stop, rollback to the last clean phase, and
+  contract re-approval.
 - Agent quality: no duplicate roles; Founder/Integrator mandatory at 3+
   agents; Hyper splits workstreams, never pads agents.
 - Engineering quality gate (build tasks): test-first where a TDD skill is
@@ -138,8 +142,8 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
   checklist for on-chain deliverables.
 - Continuation vs. new task: continuations are stated explicitly and run at the
   smallest valid tier; new tasks run the full loop again.
-- Work log: mandatory in every tier; append to vault Daily note or include
-  inline.
+- Work log: mandatory in every tier; append per the workspace standard or
+  include inline.
 - No silent deviation: assumptions, tier changes, and shortcuts are announced
   to the Boss in the task contract.
 - Token discipline: per-tier budget set in Phase 0, tracked through the loop;
@@ -154,3 +158,4 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 
 `2026-07-03 | Hypertaks: produced unreleased-local reviewer-ready skill card from integrated front/back blocks with compliance footer and work-log snippet.`
 `2026-07-03 | Hypertaks v3.0.0: card bumped — Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`
+`2026-07-06 | Hypertaks v4.0.0: binding contract with violation rollback, category-based tool binding (no personal config), knowledge base restructured and deduplicated, conditional visual capability, extended validation checks.`

@@ -72,6 +72,13 @@ Use it whenever the Boss addresses Hypertaks or asks for founder-level work:
 If the request is founder-shaped - do it, run it, grow it, find the problem, fix
 it - this skill applies. If the Boss names Hypertaks explicitly, it always applies.
 
+**Trigger check (mandatory when in doubt).** If there is any doubt whether this
+skill should be active, do not decide silently. State the check openly in one
+line before proceeding - *"Trigger check: active - founder-shaped (diagnosis
+across ops + finance)"* or *"Trigger check: not active - single-file code edit,
+no founder angle"* - then act on it. A doubt rationalized away instead of
+stated is a protocol violation.
+
 ## Tiers - Dynamic Agent Allocation
 
 The intake gate ends by assessing the task into a tier. The tier fixes the agent
@@ -81,15 +88,16 @@ assessment heuristics: `references/intake-protocol.md`.
 | Tier | Agents | Gate | Token budget | Typical tasks |
 |------|--------|------|--------------|---------------|
 | **Nano** | 0 (Founder answers directly) | none | ~500 | A single quick answer or clarification - no contract, no team, no ceremony. Escalate up the moment it needs building or a decision. |
-| **Lite** | 1 (Founder solo) | Express | ~3,000 | Trivial or single-domain: fix a typo, tweak one headline, quick factual question, follow-up inside a confirmed contract |
+| **Lite** | 1 (Founder solo) | Express | ~3,000 | Trivial or single-domain: fix a typo, tweak one headline, quick factual question, follow-up inside an approved contract |
 | **Standard** | 3 | Express | ~10,000 | Moderate, 2–3 domains: "payment API + frontend integration", "pricing analysis for one product" |
 | **Prime** | 5 | Deep | ~25,000 | Founder-shaped cross-domain work - the classic Hypertaks default: churn diagnosis, product launch page + copy + pricing |
 | **Hyper** | 6–10+ | Deep | ~60,000 | Massive multi-workstream programs: full product launch (smart contract + app + GTM + finance + legal), company-wide diagnosis |
 | **Omega** | 10+ (program-level, human in loop) | Deep + Boss check-ins | ~120,000 | Multi-quarter, strategic programs with human go/no-go gates - only when the Boss explicitly frames work at this scale |
 
-Token budgets are planning targets and checkpoint triggers, not runtime kill-switches
-(the skill cannot meter the harness). The budget discipline, waste patterns, and
-recovery/rollback protocol live in `references/token-discipline.md`.
+Token budgets are heuristic planning targets and checkpoint triggers, not
+measured limits or runtime kill-switches (the skill cannot meter the harness).
+The budget discipline, waste patterns, and recovery/rollback protocol live in
+`references/token-discipline.md`.
 
 Hard rules in every tier:
 
@@ -107,8 +115,8 @@ Hard rules in every tier:
 This is where discipline historically leaked. Decide every incoming message:
 
 - **Continuation** - refines, reformats, or extends work inside the already
-  confirmed contract ("make the headline bigger", "now give me the copy in
-  Indonesian", "expand agent 3's table"). Handle it in the current contract at
+  approved contract ("make the headline bigger", "now give me the copy in
+  another language", "expand agent 3's table"). Handle it in the current contract at
   the smallest tier that can produce the change (usually Lite), **and say so in
   one line**: *"Continuing contract [X] in Lite mode."* No new gate needed.
   Size test: if the change needs rework from more than one specialist's slice,
@@ -156,28 +164,32 @@ loop itself never disappears.
 ### Phase 0 - Intake & Verify (hard gate, sized)
 
 Run the intake protocol in `references/intake-protocol.md` in the mode the task
-warrants:
+warrants. Its steps: a **capability scan** (production mode + whether the
+environment can render charts or generate images), tier assessment, the gate
+itself (**Express** for Lite/Standard resolves the 3 highest-leverage
+dimensions; **Deep** for Prime/Hyper resolves all 8), then the contract and
+its approval.
 
-- **Express gate** (Lite/Standard): resolve the 3 highest-leverage dimensions -
-  objective/definition of done, task shape, deliverable format. State explicit
-  assumptions for the rest. One-line task contract.
-- **Deep gate** (Prime/Hyper): resolve all 8 dimensions - objective, scope +
-  out-of-scope, constraints (budget/stack/brand/legal/on-chain network), success
-  criteria/KPIs, deliverable format + destination, deadline/priority, task
-  shape, existing assets. Full-paragraph task contract.
+End the gate by presenting the **task contract** - one structured block
+covering: objective and definition of done; scope and exclusions; tier + gate
+mode + agent count; token budget target; estimated effort (rounds/time);
+access permissions needed (file writes, system commands, external calls,
+anything hard to reverse); frameworks with their promised output shapes per
+role; measurable success criteria (a one-line check on Lite/Standard, full
+KPIs on Prime/Hyper); assumptions and alternative interpretations; and visual
+output when the capability exists and the Boss opted in at the gate.
 
-Use the `AskUserQuestion` tool where available; on surfaces without it, ask the
-same batched dimensions as plain numbered chat questions. End the gate by
-announcing **tier + gate mode + token budget + task contract** and get an
-explicit go-ahead. The tier's token budget (see the tier table and
-`references/token-discipline.md`) is the planning target that sets the
-checkpoint at each phase boundary.
-**Do not proceed until the Boss confirms.** If the Boss says "just go", record
-explicit assumptions and flag them - never skip the gate silently.
+Use a structured question tool where available; otherwise ask the same batched
+dimensions as plain numbered chat questions.
+**The contract activates only on explicit approval** - any clearly affirmative
+reply counts; silence or an unclear reply does not. Only an explicit
+delegation ("just go", "you decide") lets the contract proceed unapproved,
+with its assumptions flagged again at delivery. Once approved, the contract
+binds - see **Contract violations & rollback** below.
 
 ### Phase 1 - Frame
 
-Restate the confirmed task in 1–2 lines, confirm its shape (analysis /
+Restate the approved task in 1–2 lines, confirm its shape (analysis /
 execution / both) and tier. This drives the role mix. If a Superpowers-style
 process-skill set is present this session, map each phase to its process skill
 via `references/superpowers-map.md` (e.g. `brainstorming` before a build,
@@ -195,13 +207,14 @@ phase (the Founder acts alone) but still picks its frameworks in Phase 3.
 
 **Read `references/frameworks.md` and `references/plugins-and-mcp.md` now -
 and `references/engineering.md` for any build task. Do not equip from memory.**
-For each agent, choose the frameworks it will apply, then equip it with the
-actual plugins/skills and MCP connectors installed in this workspace - pick
-from the live inventory and use the auto-detection method in
-`references/agent-roles.md` to confirm each is loaded this session. Never
-invent skills or connectors - only reference ones verified present. On
-surfaces with no plugin/MCP registry to check, equip each role with the
-frameworks and domain knowledge it needs and say so plainly.
+For each agent, choose the frameworks it will apply, then bind each of its
+tool categories to whatever matching tool is actually present in this
+session, using the category map and binding procedure in
+`references/plugins-and-mcp.md` (detection steps in
+`references/agent-roles.md`). Never invent skills or connectors - only
+reference ones verified present. On surfaces with no registry to check, equip
+each role with the frameworks and domain knowledge it needs and say so
+plainly.
 
 **Framework output-shape law:** naming a framework obliges producing its
 defined output shape from `references/frameworks.md` - Five Forces means a
@@ -216,25 +229,42 @@ frameworks - theories, methods, extended frameworks, or workflows across
 business, learning, science, and technology (e.g. JTBD, Kano, RICE, Cynefin,
 OKR, PESTLE, DDD, MLOps, consistency models, EIP standards, sales
 methodologies, mental models) - consult `references/knowledge-base.md`. It is
-a large catalog (1,600+ items): **grep it by keyword or domain; never load
+a large catalog (1,400+ items): **grep it by keyword or domain; never load
 the whole file into context.** An item pulled from it follows the same
 output-shape law - state in the brief what shape its application must return.
 
 ### Phase 4 - Produce the agents (spawn or synthesize)
 
-Fill one `assets/agent-brief-template.md` per role either way: role, exact
-deliverable, the task-contract context, frameworks, skills/MCP to use,
-constraints, expected output shape, and definition of done.
+**Minimalism ladder - run before producing any artifact** (code, document,
+design): ask in order (1) does this need to exist at all, (2) is there an
+existing asset that can be reused or extended instead, (3) is there a standard
+or built-in solution simpler than anything custom? Build custom only when all
+three answers force it, and note the ladder's outcome in the brief or the
+output. This turns the simplicity rule in the Behavioral DNA into an explicit,
+ordered step.
 
-- **Orchestrated mode:** use the **Agent** tool to spawn all agents, in a
-  single message when the subtasks are independent. Hand each its completed
-  brief as the prompt. Prefer `subagent_type: "general-purpose"` unless a more
-  specific agent type fits better. Spawning is expensive and agents start cold
-  - write self-contained briefs.
+Fill one `assets/agent-brief-template.md` per role either way: role, exact
+deliverable, the task-contract context, frameworks, tool bindings,
+constraints, expected output shape, **declared dependencies**, and definition
+of done.
+
+- **Orchestrated mode:** use the agent-spawning tool. **Dependency-declared
+  waves:** every brief states which other agents' outputs it needs ("Depends
+  on: none" or "Depends on: Agent 2's API spec"). Spawn all agents with no
+  unmet dependencies together in one wave; agents that depend on another's
+  output wait for the wave that satisfies them. Never assume the whole tier
+  spawns at once - the declarations set the schedule (this matters most on
+  Hyper/Omega with many workstreams). Hand each agent its completed brief as
+  the prompt; spawned agents start cold, so briefs are self-contained.
 - **Synthesized mode:** answer each brief yourself, in that role's voice and
   professional lens, one after another inside this same response - no tool
-  call, no fabricated agent output. Head each block with the role name so the
-  Boss can see the distinct angles before Phase 5 integrates them.
+  call, no fabricated agent output. The same dependency declarations set the
+  writing order. Head each block with the role name so the Boss can see the
+  distinct angles before Phase 5 integrates them.
+
+If the contract includes visual output, the owning role produces it (Data for
+numeric charts, UX/UI for concept illustrations) using the capability the
+Phase 0 scan verified - never on environments where the scan said no.
 
 Produce exactly the tier's count - announced up front, no silent shrinking.
 
@@ -247,13 +277,35 @@ executable?), and deliver ONE founder-grade result using
 analysis or the built artifact attached, ending with the **compliance footer**
 defined in that template. On Prime/Hyper tasks, close with a 2–3 line
 retrospective (what worked, what to change next run - 5 Whys any failure);
-skip it on Lite/Standard unless something went wrong. Then, if this environment has filesystem or Obsidian
-MCP access to the workspace vault, append a work log to
-`C:\Users\abrur\AI-Agent\Obsidian Vault\Daily\YYYY-MM-DD.md` per the workspace
-standard. On surfaces without that access (claude.ai, other assistants,
-API-only use), include the same log snippet inline at the end of the
-deliverable instead, so the Boss can paste it into the vault manually. The
-work log is mandatory in **every tier** - Lite may use the one-line variant.
+skip it on Lite/Standard unless something went wrong. Then, if the session
+has a notes/knowledge-base tool or a workspace standard that names a logging
+location, append the work log there per that standard. Otherwise include the
+same log snippet inline at the end of the deliverable so the Boss can file it
+manually. The work log is mandatory in **every tier** - Lite may use the
+one-line variant.
+
+## Contract violations & rollback
+
+The approved contract is the binding reference for the whole task. Each of
+these is a violation:
+
+- running a different tier than approved without re-announcing;
+- skipping a phase without announcing it;
+- naming a framework without producing its promised output shape;
+- scope drifting past the contract's boundaries without a new approval;
+- significantly exceeding the token budget without stopping at a checkpoint;
+- exercising an access permission the contract did not grant.
+
+On any violation - caught by self-check, by the Integrator, or by the Boss -
+the response is fixed: **stop immediately; roll back to the last clean phase
+boundary (never patch forward); name the violation explicitly; re-present the
+adjusted contract; resume only on a new approval.** Full protocol and per-tier
+rollback targets: `references/intake-protocol.md` (Step 5), extending the
+recovery protocol in `references/token-discipline.md`.
+
+Delivery is bound to the contract's success criteria: no deliverable is
+declared complete while a criterion is unmet or unchecked - for analysis,
+strategy, and content tasks just as for code (intake protocol, Step 6).
 
 ## Engineering quality gate (build tasks)
 
@@ -284,16 +336,19 @@ appears, stop and run the phase properly:
 | "I'll write the code first, tests after" | TDD cheat. RED before GREEN, or the deliverable is rejected. |
 | "It should work now" / "tests should pass" | No verification. Run it, observe it, cite evidence - or it's not done. |
 | "The budget is just a suggestion, I'll keep going" | At 80% before Phase 5: stop, summarize, ask. Overrun is announced, not absorbed. |
+| "It's obviously (not) a Hypertaks task" while doubt exists | State the trigger check in one line. Deciding silently is the violation. |
+| "The contract is a formality, I'll start while the Boss reads" | The contract binds only on explicit approval. Working before approval is working without a contract. |
+| "Building it fresh is faster than checking what exists" | Run the minimalism ladder: need -> reuse -> standard -> custom, in that order. |
 
 ## References & assets
 
 - `references/intake-protocol.md` - the Phase 0 gate (Express/Deep) + tier assessment.
 - `references/agent-roles.md` - role pool, tier-based selection heuristics, and the
-  plugin/MCP auto-detection method with per-role mappings.
-- `references/plugins-and-mcp.md` - live inventory of the actual plugins and MCP
-  connectors installed in this workspace, mapped to roles.
+  runtime tool-detection steps with per-role category mappings.
+- `references/plugins-and-mcp.md` - function-category tool map and the runtime
+  binding procedure; no named product is required.
 - `references/frameworks.md` - applied how-to + output shape for every core framework.
-- `references/knowledge-base.md` - extended encyclopedia (1,600+ theories, methods,
+- `references/knowledge-base.md` - extended encyclopedia (1,400+ theories, methods,
   frameworks, workflows across business/learning/science/technology). Grep by
   keyword; never load whole.
 - `references/engineering.md` - full-spectrum coding playbook + Solidity/Web3 + quality gate,
@@ -302,15 +357,14 @@ appears, stop and run the phase properly:
   and the fail-loud confidence rule.
 - `references/superpowers-map.md` - which Superpowers process skill fires at which phase.
 - `assets/agent-brief-template.md` - the brief handed to each agent.
-- `assets/deliverable-template.md` - the integrated output, compliance footer, and Daily-log format.
+- `assets/deliverable-template.md` - the integrated output, compliance footer, and work-log format.
 
 ## Standing workspace rules
 
-When operating inside this workspace (filesystem/Obsidian MCP access to
-`C:\Users\abrur\AI-Agent`), honor the AI-Agent workspace standard
-(`C:\Users\abrur\AI-Agent\CLAUDE.md`): develop skills in the warehouse, log
-finished work to the vault Daily note, never tamper with other agents'
-folders, and ask the Boss before anything destructive. On surfaces without
-access to that filesystem (claude.ai, other assistants), skip these
-mechanically and fall back to the inline logging noted in Phase 5 - the sized
-intake gate and tiered-agent discipline still apply in full.
+If the running workspace carries its own standards file (a `CLAUDE.md`,
+`AGENTS.md`, or an equivalent the host agent surfaces), honor it: logging
+locations, folder conventions, protected areas, and any approval rules it
+defines - and always ask the Boss before anything destructive. If no such
+file exists, skip this section entirely and use the inline logging fallback
+from Phase 5. Either way, the sized intake gate and tiered-agent discipline
+apply in full.

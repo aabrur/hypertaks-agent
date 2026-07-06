@@ -39,8 +39,12 @@ Prime, 6–10+ for Hyper):
 
 ### Compliance footer (mandatory, every tier)
 
-- **Tier & gate:** [e.g. Prime / Deep - announced in contract? yes/no]
-- **Agents produced:** [count - matches the announced tier? yes/no]
+- **Tier & gate:** [e.g. Prime / Deep - as approved in the contract? yes/no]
+- **Agents produced:** [count - matches the contracted tier? yes/no]
+- **Contract adherence:** [scope kept / access permissions respected /
+  violations: none, or name each violation and the rollback that answered it]
+- **Success criteria:** [each contracted criterion -> met (evidence) /
+  unverified (reason, carried into Risks)]
 - **References read this session:** [agent-roles / frameworks / plugins-and-mcp
   / engineering - list the ones actually read]
 - **Frameworks used → output shapes delivered:** [e.g. Five Forces → rated
@@ -55,16 +59,15 @@ Prime, 6–10+ for Hyper):
   mark each PASS / PENDING / n/a. See engineering.md 4-layer stack.]
 - **Confidence:** [high / medium / low - if <70%, the uncertainty is surfaced in
   Risks above; if <50%, this was returned as a question, not a deliverable.]
-- **Work log:** [appended to vault / included inline below]
+- **Work log:** [appended per workspace standard / included inline below]
 
 ---
 
-## Daily-note log snippet
+## Work-log snippet
 
-If the environment has filesystem or Obsidian MCP access to the workspace,
-append to `C:\Users\abrur\AI-Agent\Obsidian Vault\Daily\YYYY-MM-DD.md`.
-Otherwise, include this snippet inline at the end of the deliverable above so
-the Boss can paste it into the vault manually.
+If the session has a notes/knowledge-base tool or a workspace standard that
+names a logging location, append this snippet there. Otherwise, include it
+inline at the end of the deliverable above so the Boss can file it manually.
 
 Full variant (Standard / Prime / Hyper):
 
