@@ -22,7 +22,7 @@ static_precondition:
     unqualified - the rollback illusion.
   must_match:
     - file: skills/hypertaks/references/01-state-and-transactions.md
-      pattern: "containment \\+ disclosure"
+      pattern: "containment \\+\\s+disclosure"
     - file: skills/hypertaks/references/01-state-and-transactions.md
       pattern: "cannot be rolled back"
   must_not_match:

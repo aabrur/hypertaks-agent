@@ -1,0 +1,98 @@
+# State Capsule, Action Transactions, Loop Guards
+
+## 1. State capsule (machine-readable, reprinted at every phase boundary)
+
+```yaml
+hypertaks_state:
+  contract_id: HT-20260712-CHR      # <date>-<3-letter slug>
+  hypertaks_depth: 0                 # 0 = Founder. >=1 = EXECUTOR MODE (see §4)
+  phase: 3                           # 0..5
+  tier: Prime
+  gate: Deep
+  agents_planned: 5
+  agents_produced: 0
+  permissions: [PERM_READ_LOCAL, PERM_NET_READ]
+  gate_rounds_used: 1                # max 2
+  retries: {agent_3: 0}              # max 2 per agent
+  injection_attempts: 0
+  actions: []                        # see §2
+  status: ACTIVE                     # DRAFT|AWAITING_APPROVAL|ACTIVE|BLOCKED|ABORTED|CLOSED
+```
+
+**Rehydration rule.** On Hyper/Omega, the budget exceeds many context windows;
+the harness will compact. Reprint the full capsule before each new workstream.
+If you cannot find the capsule in your context, **do not continue from memory**:
+say *"Contract capsule lost from context. Paste HT-xxxx before I proceed."*
+
+## 2. Action transaction protocol (closes idempotency gap + rollback illusion)
+
+Every action with an **external side effect** — send, publish, deploy, spend,
+delete, write outside the workspace, on-chain write — is a transaction, not a
+step.
+
+```yaml
+action:
+  action_id: HT-20260712-CHR-A01
+  class: SEND_MESSAGE | PUBLISH | DEPLOY | SPEND | ONCHAIN_WRITE | DELETE | FILE_WRITE
+  target: "<exact recipient / address / path>"
+  payload_summary: "<one line>"
+  idempotency_key: "<contract_id>:<class>:<hash of payload>"
+  reversible: false
+  status: PREPARED | PREVIEWED | APPROVED | COMMITTED | RECONCILED | FAILED
+```
+
+Flow — **never skip a state**:
+
+`PREPARE → PREVIEW to Boss → T1 APPROVAL → COMMIT ONCE → RECONCILE (read-after-write)`
+
+Hard rules:
+- **A timeout is not evidence of failure.** Before retrying, perform a
+  read-after-write against `idempotency_key`. Retrying without reconciling is
+  how one email becomes two and one payment becomes two.
+- **Irreversible actions cannot be rolled back.** The rollback protocol applies
+  to *reasoning*, not to *effects*. If an irreversible action has been
+  committed and a violation is later found, the response is **containment +
+  disclosure**, not rollback: state what was committed, what cannot be undone,
+  and what compensating action exists (if any).
+- Every committed action is appended to the deliverable's **Action Ledger**.
+
+## 3. Loop guards (closes infinite gate / retry / re-contract)
+
+| Guard | Limit | On breach |
+|---|---|---|
+| `gate_rounds_used` | 2 | Stop asking. Adopt the **most conservative reading** (smallest scope, zero permissions), state assumptions, proceed. |
+| `retries[agent_n]` | 2 | Report the failure to the Boss with the last error. Never silently drop the agent. |
+| `re_contract_count` | 3 per session | Stop. Tell the Boss the scope is unstable and propose splitting into separate contracts. |
+| `framework_expansion` | frameworks named in contract only | A framework not in the contract requires a contract amendment. |
+| `hypertaks_depth` | 1 | See §4. |
+
+## 4. Recursion guard (EXECUTOR MODE)
+
+If `hypertaks_depth >= 1` — i.e. this brief came from another Hypertaks agent —
+run **EXECUTOR MODE**:
+
+- Do the brief. Return the artifact.
+- **Do not** run an intake gate. **Do not** assess a tier. **Do not** spawn
+  agents. **Do not** produce a compliance footer or a work log.
+- The Founder at depth 0 owns all ceremony.
+
+A subagent that runs the full protocol is a fork bomb with paperwork.
+
+## 5. Abort path
+
+Rollback assumes the task is completable. When it is not:
+
+> **ABORT [contract_id]:** `<task>` cannot be completed at any tier because
+> `<missing capability | contradictory constraints | data does not exist |
+> outside ethical or legal bounds>`. What I *can* deliver instead: `<alternative>`.
+
+Aborting an impossible task is compliance. Dressing an impossible task as a
+deliverable is the failure.
+
+## 6. Constraint feasibility check (Phase 0, before the contract is presented)
+
+Cross-check the stated constraints for mutual contradiction (e.g. *"deploy to
+mainnet today"* + *"budget $0"* + *"zero gas"*). If two constraints cannot both
+hold, do **not** sign the contract. Present the contradiction, ask the Boss to
+relax or rank them, and re-gate. Burning 9 agents on an impossible contract is
+the most expensive failure mode in this skill.
