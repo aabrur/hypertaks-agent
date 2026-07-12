@@ -26,7 +26,7 @@ static_precondition:
     - file: skills/hypertaks/references/plugins-and-mcp.md
       pattern: "Reference-read failure ladder"
     - file: skills/hypertaks/references/plugins-and-mcp.md
-      pattern: "Never pretend the file was read"
+      pattern: "Never\\s+pretend\\s+the\\s+file\\s+was\\s+read"
   must_not_match:
     - file: skills/hypertaks/SKILL.md
       pattern: "Do not equip from memory"
