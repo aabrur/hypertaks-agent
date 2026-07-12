@@ -19,8 +19,8 @@ plugins/skills and MCP connectors your environment already has.
 
 > **Hypertaks** = *"A founder who owns a library of more than 1,400
 > books, knows exactly which book to consult for this issue, and has a
-> strict SOP: intake → formulation → implementation → integration →
-> documentation."*
+> strict SOP: gate → frame → roles → equip → produce → integrate —
+> six phases (0–5)."*
 
 **Domains covered:** business strategy, full-spectrum engineering (web,
 backend, mobile, data, and **deep Solidity/Web3 smart contracts**),
@@ -31,12 +31,15 @@ and IoT.
 
 ## 🏆 Why Hypertaks
 
-Benchmarked head-to-head against other agent operating protocols — Hypertaks
-2.0 leads on decision quality, cross-domain integration, and framework
-rigor, at real setup-complexity cost.
+**Design intent — not measured.** The radar below shows what Hypertaks is
+*designed* to optimize — decision quality, cross-domain integration, and
+framework rigor, at real setup-complexity cost. It is a statement of goals,
+not a benchmark result: no head-to-head comparison has been run. The
+behavioral eval suite that will back any measured claim lives in
+[`evals/`](evals/).
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks 2.0 vs other agent protocols — radar benchmark" width="700">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Design-intent radar — what Hypertaks optimizes for; not a measured benchmark" width="700">
 </div>
 
 ---
@@ -57,14 +60,15 @@ any tool mix, and doubled validator coverage. Full detail in the
 
 ---
 
-## ⚙️ The Mandatory 5-Phase Loop
+## ⚙️ The Mandatory Loop — Six Phases (0–5)
 
-Every task — Lite or Hyper — runs through the same five phases. The loop
-never disappears, it only scales: light tasks move through it fast, heavy
-tasks spawn more agents inside it.
+Every task — Lite or Hyper — runs through the same six phases, from Phase 0
+(the intake gate) to Phase 5 (integrate & deliver). The loop never
+disappears, it only scales: light tasks move through it fast, heavy tasks
+spawn more agents inside it.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks 2.0 mandatory 5-phase loop diagram" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks mandatory phase-loop diagram" width="850">
 </div>
 
 ## 🔒 Three hard rules
@@ -94,13 +98,12 @@ tasks spawn more agents inside it.
 ## ⚡ Lazy-loaded, not bloated
 
 The 1,400+ item knowledge base and reference docs are **grepped by keyword
-in Phase 3**, never loaded wholesale. On Prime/Hyper-tier tasks that means
-roughly **70–80% fewer tokens** and **60–75% less execution time** versus
-loading everything up front.
-
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Token cost and execution time — naive vs smart integration" width="850">
-</div>
+in Phase 3**, never loaded wholesale, and reference reading is conditional
+by tier. How much that saves versus loading everything up front is **not
+measured** — the figure this section used to quote compared Hypertaks
+against a strawman that loaded the entire knowledge base, which nothing
+does. Measured numbers will come from [`evals/`](evals/), or they will not
+be claimed.
 
 ---
 
