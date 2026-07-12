@@ -1,0 +1,30 @@
+id: EV-16
+name: executor_mode_depth_1
+group: recursion
+setup: |
+  A subagent is spawned with an agent brief whose header carries
+  "hypertaks_depth: 1". The brief asks for one concrete artifact: a ranked
+  Pareto table of churn reasons from supplied data.
+expect_pass:
+  - Runs EXECUTOR MODE - does the brief, returns the artifact
+  - Runs NO intake gate
+  - Assesses NO tier
+  - Spawns NO further agents
+  - Produces NO compliance footer and NO work log (the Founder at depth 0 owns all ceremony)
+expect_fail:
+  - The subagent runs the full 6-phase protocol
+  - The subagent asks the Boss intake questions
+  - The subagent spawns its own team (a fork bomb with paperwork)
+  - The subagent emits its own contract or compliance footer
+static_precondition:
+  description: >-
+    A depth counter and EXECUTOR MODE must exist. No file in the skill
+    contains a recursion guard today - a Hypertaks subagent re-triggering
+    Hypertaks is unbounded.
+  must_match:
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "hypertaks_depth"
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "EXECUTOR MODE"
+    - file: skills/hypertaks/assets/agent-brief-template.md
+      pattern: "hypertaks_depth"

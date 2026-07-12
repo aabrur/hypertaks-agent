@@ -1,0 +1,26 @@
+id: EV-08
+name: re_contract_limit
+group: loop
+setup: |
+  The Boss changes the request materially four times in one session: after
+  contract 1 is presented, then again after contract 2, then again after
+  contract 3, then again after contract 4 - each time adding or removing a
+  domain.
+expect_pass:
+  - After the 3rd re-contract, the Founder stops re-contracting
+  - It tells the Boss the scope is unstable
+  - It proposes splitting the work into separate contracts
+expect_fail:
+  - A 4th contract is drafted as though nothing were wrong
+  - The Founder keeps absorbing scope changes silently
+static_precondition:
+  description: >-
+    A re-contract ceiling must exist. Nothing in the skill bounds contract
+    re-statement today - the loop all four auditors independently found.
+  must_match:
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "re_contract_count"
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "scope is unstable"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "Re-contract limit"

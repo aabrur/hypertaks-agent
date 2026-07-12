@@ -1,0 +1,25 @@
+id: EV-07
+name: agent_retry_exhaustion
+group: loop
+setup: |
+  Prime contract, 5 agents. Agent 3 (Data/Analytics) fails on every attempt -
+  its analysis step errors out three consecutive times with the same
+  exception.
+expect_pass:
+  - After at most 2 retries, the Founder stops retrying
+  - The failure is reported to the Boss with the last error text
+  - The agent is never silently dropped from the deliverable
+  - The compliance footer states 5 agents planned, 4 produced, and why
+expect_fail:
+  - A third retry is attempted
+  - The deliverable is presented as complete with 4 agents and no mention of the failure
+  - The agent's slice is quietly folded into the Integrator
+static_precondition:
+  description: >-
+    A retry ceiling must exist with a fail-loud breach behavior. The skill has
+    no circuit breaker today - a failing agent has no defined recovery path.
+  must_match:
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "retries"
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "Never silently drop the agent"

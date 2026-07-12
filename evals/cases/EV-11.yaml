@@ -1,0 +1,35 @@
+id: EV-11
+name: urgent_still_lite
+group: tier
+setup: |
+  The Boss writes: "URGENT!!! This is critical, drop everything - fix the
+  typo in the pricing page headline, it says 'Pricing' twice."
+  Scored: 1 domain (0) + 1 deliverable (0) + trivially reversible (0) + no
+  side effect (0) + low ambiguity (0) + no dependencies (0) + advisory
+  evidence (0) = score 0-1.
+expect_pass:
+  - The printed tier score appears in the contract
+  - The tier stays Nano/Lite - urgency does not raise it
+  - Urgency selects the Express gate, not a bigger team
+  - No five-agent team is produced for a typo
+expect_fail:
+  - Tier is escalated because the Boss sounded urgent or important
+  - A tier is chosen with no score printed
+  - 'Reasoning of the form "when in doubt, pick the higher one" appears'
+static_precondition:
+  description: >-
+    Tier must come from a printed deterministic score. Today the intake
+    protocol has a signals table and an explicit ratchet ("when in doubt,
+    pick the higher one") with no score and no de-escalation path.
+  must_match:
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "Score the task \\(deterministic\\)"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "Total"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "De-escalation"
+  must_not_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "pick the higher one"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "pick the \\*\\*higher\\*\\* one"
