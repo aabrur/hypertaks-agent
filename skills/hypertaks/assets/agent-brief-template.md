@@ -16,11 +16,20 @@ Fill one brief per role - as many as the tier announced in the task contract
 
 **Agent [N of T] - [Role from the pool] - [Tier]**
 
-**hypertaks_depth:** [parent depth + 1 - a brief written by the Founder at
-depth 0 carries `1`. Any agent receiving a brief with `hypertaks_depth >= 1`
-runs **EXECUTOR MODE** per `references/01-state-and-transactions.md` §4: do the
-brief, return the artifact. No intake gate, no tier assessment, no sub-team, no
-compliance footer, no work log - the Founder at depth 0 owns all ceremony.]
+**hypertaks_depth:** [the depth of the agent that will **run** this brief - not
+of the one writing it.
+
+- **Spawned subagent** (orchestrated mode): the writer's depth + 1. A brief the
+  Founder spawns carries `1`.
+- **The Founder's own brief** (Lite tier, or any brief the Founder answers
+  itself in synthesized mode): `0`. The Founder never hands itself a depth-1
+  brief, and never enters EXECUTOR MODE by reading its own outline.
+
+An agent that **receives** a brief with `hypertaks_depth >= 1` runs **EXECUTOR
+MODE** per `references/01-state-and-transactions.md` §4: do the brief, return
+the artifact. No intake gate, no tier assessment, no sub-team, no compliance
+footer, no work log - the Founder at depth 0 owns all ceremony, in every tier
+and both production modes.]
 
 **Permissions granted:** [an explicit subset of the approved contract's
 permissions, named with the `PERM_*` tokens from
