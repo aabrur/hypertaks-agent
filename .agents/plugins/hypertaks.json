@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.0.0",
+  "version": "4.2.0",
   "description": "Hypertaks Founder operating mode - sized intake gate, then a dynamically tiered team of specialist agents (Nano / Lite / Standard / Prime / Hyper / Omega) across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT. Adds Karpathy discipline, TDD/debug/verify gates, and per-tier token budgets.",
   "author": {
     "name": "abrur",

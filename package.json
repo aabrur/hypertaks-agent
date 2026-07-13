@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.0.0",
+  "version": "4.2.0",
   "description": "Hypertaks Founder operating mode - cross-agent plugin: sized intake gate (Express/Deep), then a dynamically tiered team of specialist agents (Lite 1 / Standard 3 / Prime 5 / Hyper 6-10+) across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
