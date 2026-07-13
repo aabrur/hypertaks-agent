@@ -167,3 +167,4 @@ results:
   EV-15: {verdict: "SKIPPED(not-run)", method: static, name: five_forces_no_data}
   EV-17: {verdict: "SKIPPED(not-run)", method: static, name: constraint_contradiction}
   EV-18: {verdict: "SKIPPED(not-run)", method: static, name: announced_downgrade_lite}
+  EV-19: {verdict: "SKIPPED(not-run)", method: static, name: lite_synthesized_keeps_ceremony}
