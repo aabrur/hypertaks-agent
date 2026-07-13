@@ -199,9 +199,21 @@ def cmd_report(results_path):
     print(line)
     print(f"  graded: {len(beh)} of {len(ids)} cases")
     if ungraded:
+        # Do not claim these "carry a static GREEN" without checking: some are RED,
+        # i.e. the skill cannot exhibit the behavior at all. Overstating the evidence
+        # in the report is the same sin the report exists to prevent.
+        by_id = {c["id"]: c for c in cases}
+        green = [k for k in ungraded if eval_static(by_id[k])[0]]
+        red = [k for k in ungraded if k not in green]
         print(f"\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
-        print("  These carry a static GREEN and nothing else. A static GREEN is not")
-        print("  a PASS. They block release claims for their group (evals/rubric.md).")
+        if green:
+            print(f"    static GREEN, never run ({len(green)}): {', '.join(green)}")
+            print("    The words exist in the files. That is not a PASS.")
+        if red:
+            print(f"    static RED ({len(red)}): {', '.join(red)}")
+            print("    STRUCTURALLY IMPOSSIBLE: the skill lacks the artifacts these")
+            print("    cases need. They cannot pass on any harness, by any model.")
+        print("  All of the above block release claims for their group (evals/rubric.md).")
     if meta.get("confirmed_by_boss") is False:
         print(f"\n  grader: {meta.get('grader', 'unknown')}")
         print("  confirmed_by_boss: FALSE - self-graded. Stronger than a grep,")
