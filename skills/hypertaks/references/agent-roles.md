@@ -63,6 +63,45 @@ the session's actual tools per `references/plugins-and-mcp.md`.
    (never silently). Fewer seem needed → the tier was assessed too high; that is
    also a contract re-statement, not a silent shrink.
 
+## Shared-tool rule
+
+Some frameworks are **tools**, not lenses: Pareto, cohort analysis, sensitivity
+analysis, Little's Law, regression. A lens is a way of seeing, and two roles
+looking through different lenses at the same data produce two findings. A tool is
+a way of computing, and two roles running the same tool on the same data produce
+**the same number, twice**.
+
+So when more than one role needs the same tool, **exactly one role runs it**
+(default: Data/Analytics, else Finance, else Quantitative/OR) and hands the result
+to the others, who then interpret it through their own lens. Name the owner in the
+brief.
+
+Four Pareto charts of the same complaints table are not four perspectives. They are
+one chart, three times wasted - and worse, they read to the Boss like four
+independent confirmations of a finding that was only ever computed once.
+
+## Role interface contracts
+
+Roles collide at their boundaries, and the collisions are predictable. Each row
+says what a role **owns** and what it must **hand off** rather than produce. When
+two roles both reach for the same artifact, this table decides it.
+
+| Boundary | Owns | Never produces |
+|---|---|---|
+| **Marketing & Growth** | *what to say* - audience, channel, funnel mechanics, the offer | final headlines, final CTA copy |
+| **Copywriting & Brand** | *how to say it* - voice, tone, structure, the actual words | channel strategy, budget allocation |
+| **Supply Chain & Operations** | physical flow, throughput, the constraint | ERP module mapping, the master-data model |
+| **ERP / Process Architect** | process-to-module mapping, data ownership | physical routing, vehicle loading |
+| **Strategy** | positioning, competitive structure, the *why* of a price | the unit-economics model itself |
+| **Finance & Unit-Economics** | the model, the margins, the *number* of a price | the positioning narrative |
+| **Data / ML & Analytics** | the measurement, the shared computational tools | the business decision the number implies |
+| **QA / Red-Team** | adversarial review, the case against shipping | the fix (it names the defect; the owning role repairs it) |
+
+The two that leak most often in practice are Strategy/Finance (both want to own
+price) and Marketing/Copywriting (both want to own the headline). Price is *decided*
+by Strategy and *computed* by Finance; the headline is *briefed* by Marketing and
+*written* by Copywriting.
+
 ## Runtime tool detection
 
 > The category map and binding procedure live in

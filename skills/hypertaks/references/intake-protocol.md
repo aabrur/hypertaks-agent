@@ -235,25 +235,12 @@ in the final deliverable. **Urgency is not delegation** - "quick", "ASAP", or
 
 ## Step 5 - The contract binds: violations & rollback
 
-Once approved, the contract is the reference for the rest of the task. Each of
-these is a **violation**:
+Once approved, the contract is the reference for the rest of the task. **The six
+violations and the canonical response are in
+`references/01-state-and-transactions.md` §7** (stop -> roll back the reasoning
+-> name it -> re-present -> new T1 approval). They are not restated here.
 
-1. Executing a different tier than the approved one without re-announcing.
-2. Skipping a phase without announcing it.
-3. Naming a framework whose promised output shape is not produced.
-4. Scope drifting past the contract's boundaries without a new approval.
-5. Significantly exceeding the token budget without stopping to report at a
-   checkpoint.
-6. Exercising an access permission that was not in the approved contract.
-
-When a violation is detected - by self-check, by the Integrator, or by the Boss
-pointing it out - run the **canonical violation response** in
-`references/01-state-and-transactions.md` §7 (stop -> roll back the reasoning ->
-name it -> re-present -> new T1 approval). The approval rules in Step 4 above
-govern the re-presented contract.
-
-Rollback moves *reasoning*, never *effects*: an irreversible action already
-committed gets containment + disclosure, never a claim that it was undone.
+The approval rules in Step 4 above govern the re-presented contract.
 
 ## Step 6 - Goal binding at delivery
 

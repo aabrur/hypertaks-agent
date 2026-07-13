@@ -1,7 +1,10 @@
 # Agent Brief Template
 
 Fill one brief per role - as many as the tier announced in the task contract
-(Lite 1, Standard 3, Prime 5, Hyper 6–10+) - in either production mode.
+(the tier table in `SKILL.md` is canonical for the counts) - in either
+production mode. **Lite fills one brief, for the Founder itself.** Lite skips
+role *selection*, never the brief: the brief is what carries `hypertaks_depth`,
+and a brief that is never written is a depth that is never declared.
 
 - **Orchestrated mode:** hand the completed brief as the `prompt` to the
   **Agent** tool. Keep it self-contained - the spawned agent starts cold and

@@ -82,10 +82,16 @@ spawn more agents inside it.
 
    | Tier | Agents | Typical task |
    |------|--------|--------------|
+   | ⚪ Nano | 0 | a single factual answer - no contract, no team (escalates the moment anything must be built or decided) |
    | 🟢 Lite | 1 | typo fix, one copy tweak, follow-up inside a confirmed contract |
    | 🔵 Standard | 3 | 2–3 domains, one deliverable |
    | 🟣 Prime | 5 | classic founder-shaped cross-domain work |
    | 🔴 Hyper | 6–10+ | multi-workstream programs (launches, company-wide diagnosis) |
+   | ⚫ Omega | 10+ | multi-quarter programs with human go/no-go gates (needs explicit framing at this scale) |
+
+   The tier is set by a **printed 7-factor score**, not by a hunch, and it can be
+   *de-escalated* mid-run if the task proves smaller. The table in
+   `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
 
 3. **No silent deviation** — tier, gate mode, and assumptions are announced
    in the task contract; frameworks must be delivered in their defined

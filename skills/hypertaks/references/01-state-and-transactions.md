@@ -99,9 +99,19 @@ the most expensive failure mode in this skill.
 
 ## 7. Violation response & rollback (canonical - every other file points here)
 
-On any contract violation - wrong tier, skipped phase, a named framework whose
-output shape never appeared, scope drift, budget overrun without a checkpoint,
-an ungranted permission exercised - the response is fixed, in order:
+**The six violations.** This list lives here and nowhere else; SKILL.md and
+`intake-protocol.md` point at it rather than restate it, because a rule written
+in three places is a rule that will disagree with itself in two.
+
+1. Running a different tier than the approved one without re-announcing.
+2. Skipping a phase without announcing it.
+3. Naming a framework whose promised output shape is never produced.
+4. Scope drifting past the contract's boundaries without a new approval.
+5. Significantly exceeding the token budget without stopping at a checkpoint.
+6. Exercising an access permission the contract did not grant.
+
+On any of them - caught by self-check, by the Integrator, or by the Boss - the
+response is fixed, in order:
 
 1. **Stop** immediately. Never patch forward from the current position.
 2. **Roll back the reasoning** to the last clean phase boundary:

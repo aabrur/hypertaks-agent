@@ -18,8 +18,8 @@ including tier + gate mode.]
 
 ### Key findings / build artifacts (per agent)
 
-List one line per agent actually produced (1 for Lite, 3 for Standard, 5 for
-Prime, 6–10+ for Hyper):
+List one line per agent actually produced (the tier table in `SKILL.md` is
+canonical for the counts):
 
 - **[Role 1]:** [Its core finding or the part it built + link/path if an artifact.]
 - **[Role 2]:** […]

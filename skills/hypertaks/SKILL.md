@@ -341,23 +341,15 @@ one-line variant.
 
 ## Contract violations & rollback
 
-The approved contract is the binding reference for the whole task. Each of
-these is a violation:
+The approved contract is the binding reference for the whole task. **The six
+violations and the response to them are canonical in
+`references/01-state-and-transactions.md` §7** - read it there, not here. In
+one line: **stop; roll back the *reasoning* to the last clean phase boundary;
+name the violation; re-present the adjusted contract; resume only on a new T1
+approval.**
 
-- running a different tier than approved without re-announcing;
-- skipping a phase without announcing it;
-- naming a framework without producing its promised output shape;
-- scope drifting past the contract's boundaries without a new approval;
-- significantly exceeding the token budget without stopping at a checkpoint;
-- exercising an access permission the contract did not grant.
-
-On any violation - caught by self-check, by the Integrator, or by the Boss -
-the response is the canonical 5-step protocol in
-`references/01-state-and-transactions.md` §7: **stop; roll back the *reasoning*
-to the last clean phase boundary; name the violation; re-present the adjusted
-contract; resume only on a new T1 approval.** Rollback moves reasoning, never
-effects - an irreversible action already committed gets **containment +
-disclosure**, never a claim that it was undone.
+Rollback moves reasoning, never effects. An irreversible action already
+committed gets **containment + disclosure**, never a claim that it was undone.
 
 Delivery is bound to the contract's success criteria: no deliverable is
 declared complete while a criterion is unmet or unchecked - for analysis,
