@@ -207,3 +207,59 @@ compliance-footer field.** The static grep was GREEN through all three runs.
 ### Also done
 - **Em-dash sweep** (`d52ad82`): 347 removed across 21 files; zero remain repo-wide. Verified first
   that no eval regex pattern contained one, so no static precondition changed meaning.
+
+---
+
+## CHECKPOINT 3 - session stopped here (subagent limit hit, resets 11pm Asia/Jakarta)
+
+Boss asked to stop after this checkpoint and rest. Full status in `HANDOFF.md`, written
+alongside this file - read that one first, it is the standalone report. This entry is the
+technical trail.
+
+### W7 - PARTIAL
+
+Landed (`bd27ea7`, `88a0f3c`):
+- Nine domain packs (D1-D9) + `domains/INDEX.md`, dispatched in parallel.
+- Every pack passes `validate_skill.py` (no Indonesian residue, no version strings, INDEX
+  routes every pack that exists) and carries zero em dashes.
+- **D7 (customs/tariffs) verified mechanically, not just by instruction: grepped for any
+  numeric percentage anywhere in the file. Found zero.** Every rate is a named LOOKUP
+  variable behind an explicit volatility protocol.
+- EV-14's static precondition was Indonesia-specific and went RED against D7's deliberately
+  jurisdiction-neutral design (a duty-rate rule scoped to one country is a weaker rule).
+  Generalized the case to match the improvement rather than narrowing the pack to match the
+  old case. Static suite is now **19/19 GREEN.**
+
+NOT done, and not attempted once the session limit hit mid-dispatch:
+- **SKILL.md Phase 3 does not reference `references/domains/` at all.** The packs are
+  inert - nothing currently instructs the Founder to read the INDEX or route to a pack.
+  This is the single most important remaining wiring task.
+- **`agent-roles.md` has no roles 16-20** (Quantitative/OR Analyst, Freight & Customs
+  Specialist, Quality & Lean Engineer, Research Methodologist, Asset & Maintenance
+  Engineer) and the Prime pools were never widened to draw from them.
+- Three packs overshot the 200-350 line target: D4 (496), D7 (527), D9 (625). Content over
+  padding was the right call under the constraint, but they should be tightened.
+
+### Step 8 (domain-pack evals beyond EV-13/EV-14) - NOT STARTED
+
+The blueprint asks for at least one DATA-UNAVAILABLE-on-missing-input case per pack, plus a
+second D7-specific case (distinct from EV-14) verifying tariffs are never stated without a
+fetched source. Only EV-13 (D5/EOQ) and EV-14 (D7/duty-rate) exist; D1-D4, D6, D8, D9 have
+no dedicated eval case yet.
+
+### Step 9 (SKILL-core.md) - NOT STARTED
+
+### Step 10 (acceptance-criteria audit) - see `HANDOFF.md`, done there since it is the
+handoff's own job to state honestly what is and is not proven.
+
+### Numbers at stop (static and behavioral never mixed)
+- **Behavioral: 8/19 PASS, 0 FAIL, 8 of 19 graded.** (EV-01..EV-05, EV-15, EV-16, EV-19 - all
+  from before W7 domain-pack work; nothing new was run behaviorally against the packs.)
+- **Static: 19/19 GREEN.** (Was 17/19 before W7; EV-13 and EV-14 both went GREEN with the
+  packs landing and the EV-14 generalization.)
+- `validate_skill.py`: OK, version 4.0.0 (version bump to 4.2.0 was never done - see HANDOFF).
+
+### Stray file noticed, not investigated
+`hypertaks-v4-kernel.bundle` (854KB) appeared untracked at repo root during this session,
+timestamped mid-session. Not created intentionally by any command I ran; left untouched and
+unstaged. Worth the Boss checking what produced it before the next session.
