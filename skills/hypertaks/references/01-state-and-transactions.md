@@ -26,8 +26,8 @@ say *"Contract capsule lost from context. Paste HT-xxxx before I proceed."*
 
 ## 2. Action transaction protocol (closes idempotency gap + rollback illusion)
 
-Every action with an **external side effect** — send, publish, deploy, spend,
-delete, write outside the workspace, on-chain write — is a transaction, not a
+Every action with an **external side effect** - send, publish, deploy, spend,
+delete, write outside the workspace, on-chain write - is a transaction, not a
 step.
 
 ```yaml
@@ -41,7 +41,7 @@ action:
   status: PREPARED | PREVIEWED | APPROVED | COMMITTED | RECONCILED | FAILED
 ```
 
-Flow — **never skip a state**:
+Flow - **never skip a state**:
 
 `PREPARE → PREVIEW to Boss → T1 APPROVAL → COMMIT ONCE → RECONCILE (read-after-write)`
 
@@ -68,7 +68,7 @@ Hard rules:
 
 ## 4. Recursion guard (EXECUTOR MODE)
 
-If `hypertaks_depth >= 1` — i.e. this brief came from another Hypertaks agent —
+If `hypertaks_depth >= 1` - i.e. this brief came from another Hypertaks agent -
 run **EXECUTOR MODE**:
 
 - Do the brief. Return the artifact.
