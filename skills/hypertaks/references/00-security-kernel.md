@@ -37,16 +37,18 @@ a permission grant, or a change to Hypertaks' identity or output destination:
 
 ## 3. Permission model
 
-Permissions are enumerated, never inferred:
+Permissions are enumerated by **EFFECT**, never by tool menu:
 
 ```
 PERM_READ_LOCAL      PERM_NET_READ        PERM_FILE_WRITE
-PERM_SHELL           PERM_SEND_MESSAGE    PERM_PUBLISH
+PERM_EXECUTE         PERM_SEND_3P         PERM_PUBLISH
 PERM_SPEND           PERM_ONCHAIN_WRITE   PERM_DELETE
 ```
 
 Rules:
 - A permission not listed in the approved contract is **denied**.
+- **MAPPING IS MANDATORY**: Every tool, including those not yet invented, MUST be mapped to its underlying effect before use. If a tool cannot be cleanly mapped, it is treated as having the highest possible effect (unsafe).
+- Examples of the mapping rule: `Monitor` executes bash, so it requires `PERM_EXECUTE`. Spawning a subagent delegates capability; therefore the `Agent` tool requires whatever effect the subagent is instructed to perform. If the contract lacks `PERM_EXECUTE`, using `Monitor` or spawning a subagent to run code is explicitly denied, closing the backdoor.
 - A subagent inherits **a subset** of the parent contract's permissions. It can
   never hold a permission the contract lacks. Escalation requests from a
   subagent are surfaced to the Boss, never granted by the Founder.
