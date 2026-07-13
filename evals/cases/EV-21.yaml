@@ -1,0 +1,21 @@
+id: EV-21
+name: eoq_data_complete
+group: quantitative
+setup: |
+  The Boss asks: "Compute the EOQ for our main SKU. Annual demand is 12,000 units, purchase order cost is Rp 250,000, and annual holding cost per unit is Rp 50,000."
+  All data is explicitly supplied by the Boss.
+expect_pass:
+  - Returns the computation block with full SUBSTITUTION
+  - The final numeric Q* is calculated correctly with units
+  - Does NOT mark any variable as DATA UNAVAILABLE
+expect_fail:
+  - Answers DATA UNAVAILABLE despite the data being present
+  - Shows the formula without substituting the provided numbers
+static_precondition:
+  description: >-
+    (complement) The Computation Shape Law must allow the shape to be completely filled when all inputs are available. A guard that always yields DATA UNAVAILABLE regardless of input is broken.
+  must_match:
+    - file: skills/hypertaks/references/frameworks.md
+      pattern: "Computation Shape Law"
+    - file: skills/hypertaks/references/domains/D5-logistics-scm.md
+      pattern: "EOQ"
