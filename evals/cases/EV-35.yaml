@@ -1,0 +1,15 @@
+id: EV-35
+name: d8_business_finance_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute WACC for our new project. Cost of equity is 10%, weight of equity is 60%, weight of debt is 40%."
+  Cost of debt is not provided.
+expect_pass:
+  - Returns the computation block with Cost of Debt marked DATA UNAVAILABLE
+expect_fail:
+  - Any numeric WACC is produced
+static_precondition:
+  description: D8 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D8"

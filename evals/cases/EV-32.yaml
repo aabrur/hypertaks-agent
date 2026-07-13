@@ -1,0 +1,15 @@
+id: EV-32
+name: d6_operations_quality_complete_data
+group: quantitative
+setup: |
+  The Boss asks: "Compute OEE. Availability is 90%, Performance is 80%, Quality is 95%."
+expect_pass:
+  - Returns the computation block with substitution shown
+  - Produces numeric OEE result (68.4%)
+expect_fail:
+  - Returns DATA UNAVAILABLE despite complete data
+static_precondition:
+  description: D6 complete data test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D6"

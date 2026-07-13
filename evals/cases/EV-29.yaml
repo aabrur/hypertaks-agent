@@ -1,0 +1,15 @@
+id: EV-29
+name: d4_research_method_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Calculate the sample size using Slovin's formula for a population of 5000."
+  The margin of error (e) is not provided.
+expect_pass:
+  - Returns the computation block with margin of error marked DATA UNAVAILABLE
+expect_fail:
+  - Uses a default margin of error (like 5%) without it being stated in the prompt and flags it as a final answer
+static_precondition:
+  description: D4 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D4"

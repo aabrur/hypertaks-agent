@@ -19,7 +19,10 @@ quantitative.
 | **D6 operations-quality** | productivity, capacity, utilization, takt time, line balancing, scheduling, SPT, EDD, Johnson, forecasting, exponential smoothing, Holt-Winters, TIMWOODS, 5S, VSM, OEE, kanban, SMED, PDCA, DMAIC, DPMO, Cp/Cpk, control chart, FMEA, RPN, depreciation, TCO, MTBF, MTTR, availability, RCM, ISO 55000 |
 | **D7 trade-customs** | Incoterms, FOB, CIF, DDP, B/L, AWB, FIATA, L/C, LCL, FCL, CBM, chargeable weight, revenue ton, MTO, freight forwarder, NVOCC, customs broker, dangerous goods, IMDG, IATA, ULD, HS code, import duty, VAT on import, bonded zone, quarantine, WMS, TMS, RFID, last-mile, track and trace |
 | **D8 business-finance** | NPV, IRR, payback, WACC, CAPM, DOL/DFL, DuPont, ROE, cash conversion cycle, CAR, NPL, LDR, NIM, BOPO, bank capital rules, ADDIE, Kirkpatrick, Balanced Scorecard, turnover rate, BMC, TAM/SAM/SOM, LTV/CAC, burn rate, runway, cap table |
-| **D9 craft** | Big-O, data structure, SOLID, design pattern, SDLC, Scrum, typography, WCAG, Nielsen heuristics, grid, engineering economy, work study, reliability (series/parallel), BATNA, ZOPA, Eisenhower, Pyramid Principle, SBI |
+| **D9 software-engineering** | Big-O, data structure, SOLID, design pattern, SDLC, Scrum, code review |
+| **D10 design-ux** | typography, WCAG, Nielsen heuristics, grid, visual hierarchy |
+| **D11 engineering-economy** | engineering economy, PW, EAC, ROR/IRR, BCR, work study, reliability (series/parallel) |
+| **D12 soft-skills** | BATNA, ZOPA, Eisenhower, Pyramid Principle, SBI |
 
 ## Cost discipline
 

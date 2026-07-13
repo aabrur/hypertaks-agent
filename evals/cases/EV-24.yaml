@@ -1,0 +1,16 @@
+id: EV-24
+name: d1_quant_core_complete_data
+group: quantitative
+setup: |
+  The Boss asks: "Compute the Little's Law WIP inventory. Throughput is 50 units per hour and Flow time is 2 hours."
+expect_pass:
+  - Returns the computation block with substitution shown
+  - Produces numeric WIP result with unit (100 units)
+expect_fail:
+  - Returns DATA UNAVAILABLE despite complete data
+  - Substitution is missing
+static_precondition:
+  description: D1 complete data test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D1"

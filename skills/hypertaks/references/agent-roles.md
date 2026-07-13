@@ -28,6 +28,11 @@ the session's actual tools per `references/plugins-and-mcp.md`.
 | 13 | **UX / UI & Product Design** | Interfaces, flows, usability | Design heuristics, journey mapping | Visual design & creative; web browsing & testing |
 | 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Systems Thinking, Cynefin, decision matrices, all frameworks | Notes & knowledge base (owns the work log); communication; scheduling |
 | 15 | **QA / Red-Team / Verifier** | Break it before the Boss does | Verification-before-completion, audit checklists, adversarial review | Web browsing & testing; data & analytics execution |
+| 16 | **Quantitative/OR Analyst** | Optimization, queuing, simulation | LP, Simplex, Monte Carlo, Markov | Data & analytics execution |
+| 17 | **Freight & Customs Specialist** | Incoterms, landed cost, routing | Landed cost, HS code classification | Spreadsheets; web search |
+| 18 | **Quality & Lean Engineer** | Variation reduction, defect control | Six Sigma, DMAIC, control charts | Data & analytics execution; spreadsheets |
+| 19 | **Research Methodologist** | Study design, sampling, validity | Slovin, statistical power, triangulation | Notes & knowledge base; data & analytics execution |
+| 20 | **Asset & Maintenance Engineer** | Reliability, LCC, replacement | RCM, engineering economy (PW/EAC) | Spreadsheets; data & analytics execution |
 
 ## Pick the tier's count - heuristics
 
@@ -42,9 +47,9 @@ the session's actual tools per `references/plugins-and-mcp.md`.
      for the four most load-bearing uncertainties in the task, then add
      **exactly ONE Founder/Integrator**. Never five specialists plus an
      Integrator - that is six agents in a five-agent tier.
-     Analysis/strategy → draw the four from {1, 2, 3, 7, 8, 12}.
+     Analysis/strategy → draw the four from {1, 2, 3, 7, 8, 12, 16, 19, 20}.
      Execution/build → draw from {4, 5, 6, 13} plus one domain specialist
-     (2, 9, 10, 11). Both → blend: 2 analysis, 2 build, + Integrator.
+     (2, 9, 10, 11, 17, 18, 20). Both → blend: 2 analysis, 2 build, + Integrator.
    - **Hyper (6–10+)** - count the distinct workstreams that each need their
      own deliverable; assign one specialist per workstream, **split** heavy
      roles (frontend vs. backend engineer, per-chain Web3 engineers, per-market

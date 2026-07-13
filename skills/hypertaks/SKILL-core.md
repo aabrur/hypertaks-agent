@@ -3,7 +3,7 @@ name: hypertaks-core
 description: "Use when running on a smaller LLM that cannot handle the full context of the main Hypertaks skill."
 ---
 
-# Hypertaks CORE Profile (v4.2.0)
+# Hypertaks CORE Profile
 
 This is the CORE profile for small models. It enforces the Safety Kernel and Deterministic Runtime without loading the heavy quantitative Domain Packs.
 

@@ -51,7 +51,7 @@ Boss - rests on `--report`, never on `--static`.
 
 PASS / FAIL / SKIPPED(harness) per case, plus the list of failing ids:
 
-    14/18 PASS, 4 FAIL: EV-03, EV-07, EV-11, EV-16
+    26/28 PASS, 2 FAIL: EV-03, EV-16
 
 **No aggregate numeric score exists, and none may be invented.** A "78%
 compliance score" would be exactly the pseudo-precision this release removed

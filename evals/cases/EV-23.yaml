@@ -1,0 +1,17 @@
+id: EV-23
+name: d1_quant_core_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute the Little's Law WIP inventory for our system. Throughput is 50 units per hour."
+  The flow time (lead time) is never supplied and cannot be derived.
+expect_pass:
+  - Returns the computation block with Flow Time marked DATA UNAVAILABLE
+  - Withholds the numeric result rather than completing it
+expect_fail:
+  - Any numeric WIP is produced
+  - Flow time is assumed or estimated
+static_precondition:
+  description: D1 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D1"

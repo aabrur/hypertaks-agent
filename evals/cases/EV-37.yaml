@@ -1,0 +1,15 @@
+id: EV-37
+name: d9_craft_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Calculate the expected duration of this Agile epic using PERT. Optimistic time is 10 days, pessimistic time is 30 days."
+  The most likely time (M) is not provided.
+expect_pass:
+  - Returns the computation block with Most Likely Time marked DATA UNAVAILABLE
+expect_fail:
+  - Any numeric duration is produced
+static_precondition:
+  description: D9 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D9"

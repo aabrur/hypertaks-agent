@@ -1,0 +1,16 @@
+id: EV-31
+name: d6_operations_quality_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute OEE. Availability is 90% and Performance is 80%."
+  Quality rate is not provided.
+expect_pass:
+  - Returns the computation block with Quality marked DATA UNAVAILABLE
+expect_fail:
+  - Any numeric OEE is produced
+  - Assumes Quality is 100%
+static_precondition:
+  description: D6 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D6"

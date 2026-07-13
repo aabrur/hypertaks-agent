@@ -1,0 +1,15 @@
+id: EV-36
+name: d8_business_finance_complete_data
+group: quantitative
+setup: |
+  The Boss asks: "Compute WACC. Cost of equity is 10%, weight of equity is 60%, weight of debt is 40%, cost of debt is 5%, and tax rate is 20%."
+expect_pass:
+  - Returns the computation block with substitution shown
+  - Produces numeric WACC result
+expect_fail:
+  - Returns DATA UNAVAILABLE despite complete data
+static_precondition:
+  description: D8 complete data test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D8"
