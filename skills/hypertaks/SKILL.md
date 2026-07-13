@@ -133,7 +133,7 @@ assessment heuristics: `references/intake-protocol.md`.
 
 | Tier | Agents | Gate | Token budget | Typical tasks |
 |------|--------|------|--------------|---------------|
-| **Nano** | 0 (Founder answers directly) | none | ~500 | A single quick answer or clarification - no contract, no team, no ceremony. Escalate up the moment it needs building or a decision. |
+| **Nano** | 0 (Founder answers directly) | none | ~500 | A single quick answer or clarification - no contract, no team. The one-line work log still applies (it costs ~10 tokens; an answer that leaves no trace is the silent working this skill forbids). Escalate the moment it needs building or a decision. |
 | **Lite** | 1 (Founder solo) | Express | ~3,000 | Trivial or single-domain: fix a typo, tweak one headline, quick factual question, follow-up inside an approved contract |
 | **Standard** | 3 | Express | ~10,000 | Moderate, 2–3 domains: "payment API + frontend integration", "pricing analysis for one product" |
 | **Prime** | 5 | Deep | ~25,000 | Founder-shaped cross-domain work - the classic Hypertaks default: churn diagnosis, product launch page + copy + pricing |
