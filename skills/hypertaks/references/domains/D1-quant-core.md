@@ -81,8 +81,8 @@ carries a unit. Every method touching money or safety carries a SENSITIVITY line
 
 ## Sample size (proportion, mean, and Slovin)
 - **When:** deciding how many respondents or items to collect before the survey or experiment runs.
-- **Inputs:** z = z-score for the confidence level (dimensionless; 1.96 at 95%); p = expected proportion (dimensionless, 0-1); e = margin of error (same unit as the estimate; a proportion for p, the variable's unit for a mean); sigma = expected SD (unit of x); N = population size (count).
-- **Formula:** proportion: `n = z^2 x p x (1-p) / e^2` · mean: `n = (z x sigma / e)^2` · finite population correction: `n_adj = n / (1 + (n-1)/N)` · Slovin: `n = N / (1 + N x e^2)`
+- **Inputs:** `n` or `N` (sample/population size), `sigma` or `s` (std dev), `p` (proportion), `e` or `E` (margin of error), `z` or `t` (critical value for given confidence level). **For Slovin, if e is not provided, it is `DATA UNAVAILABLE`. Do not assume e = 0.05.**
+- **Formula:** proportion: `n = z^2 x p x (1-p) / e^2` | mean: `n = (z x sigma / e)^2` | finite population correction: `n_adj = n / (1 + (n-1)/N)` | Slovin: `n = N / (1 + N x e^2)`
 - **Output shape:** computation block, plus a small table of n at e = 0.03 / 0.05 / 0.10 so the cost-vs-precision trade is visible. Always round **up**.
 - **Traps:** p = 0.5 maximizes `p(1-p)` and therefore gives the largest, safest n - use it when p is unknown, not a hopeful 0.1. Slovin's formula is a convenience shortcut with no clear primary source: it silently assumes 95% confidence and p = 0.5, applies only to estimating a proportion in a finite population, and cannot be used for a mean or at any other confidence level - if a reviewer challenges it, the honest reply is to re-derive n from the proportion formula plus the FPC. The computed n is the number of **usable** responses; inflate it for the expected non-response rate. Ignoring cluster or stratified design effects understates n, sometimes by 2x or more.
 - **Volatility:** MEDIUM (the 0.70/0.05 conventions and the acceptability of Slovin vary by field and reviewer)

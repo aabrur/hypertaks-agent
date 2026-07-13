@@ -77,7 +77,7 @@ Data never upgrades a design. Correlational data cannot support a causal claim. 
 ## Sample Size Determination (Slovin and power analysis)
 
 - **When:** Sizing a descriptive estimate from a probability sample (Slovin) or testing a hypothesis (power analysis).
-- **Inputs:** Slovin: N, margin of error e. Power: 3 of `alpha`, power `1 - beta`, minimum effect size, `n`.
+- **Inputs:** Slovin: N, margin of error e. Power: 3 of `alpha`, power `1 - beta`, minimum effect size, `n`. **If e is not provided, it is `DATA UNAVAILABLE`. Do not assume e = 0.05.**
 - **Formula:** proportion sample size `n0 = Z^2 x p x (1 - p) / e^2`, with the finite population correction `n = n0 / (1 + (n0 - 1) / N)`. **Slovin** is that pair collapsed under `Z ~ 2` and `p = 0.5`: `n = N / (1 + N x e^2)`. Power, two independent means, two-tailed: `n per group = 2 x (Z_(1-alpha/2) + Z_(1-beta))^2 / d^2`, where `d = (mu1 - mu2) / sigma_pooled` and `sigma_pooled = sqrt( ((n1-1)s1^2 + (n2-1)s2^2) / (n1 + n2 - 2) )`. Power for a correlation, via the Fisher transform: `n = ((Z_(1-alpha/2) + Z_(1-beta)) / C)^2 + 3`, with `C = 0.5 x ln((1 + r)/(1 - r))`.
 - **Output shape:** A computation block containing inputs, formulas, substitutions, result, assumptions, and claim ceiling.
 - **Traps:**
