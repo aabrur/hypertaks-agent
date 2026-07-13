@@ -25,3 +25,4 @@ dist/
 # Local agent state (never part of the plugin)
 .claude/
 .remember/
+*.bundle
