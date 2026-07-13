@@ -10,8 +10,10 @@ work, each equipped with the right business frameworks plus whatever
 plugins/skills and MCP connectors your environment already has.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.0.0-blue)
+![Version](https://img.shields.io/badge/version-4.2.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
+
+**Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
 
 </div>
 
@@ -44,18 +46,18 @@ behavioral eval suite that will back any measured claim lives in
 
 ---
 
-## 📈 What changed in 4.0.0
+## 📈 What changed in 4.2.0
 
-A full audit of 3.0.0 found real structural defects; 4.0.0 repairs every one
+A full audit of 3.0.0 found real structural defects; 4.2.0 repairs every one
 of them to zero (duplicate and fabricated knowledge-base entries, non-English
 residue, personal paths, and 108 named tools the skill assumed were installed)
 and raises the discipline layer: a binding task contract with six defined
-violations and mandatory rollback, category-based tool binding that works with
+violations and mandatory rollback (proven via EV-07, EV-08), category-based tool binding that works with
 any tool mix, and doubled validator coverage. Full detail in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.0.0 - measured defect repair and discipline coverage" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.2.0 - measured defect repair and discipline coverage" width="850">
 </div>
 
 ---
