@@ -8,7 +8,7 @@
 
 Hypertaks is the founder-operator layer that executes founder-shaped work
 end-to-end across business strategy, engineering, full-stack-developer, marketing, finance, ERP,
-supply-chain, supply-chain finance, and IoT. It enforces a mandatory 5-phase
+supply-chain, supply-chain finance, and IoT. It enforces a mandatory six-phase
 loop-Intake & Verify, Frame, Pick Roles, Equip, Produce, Integrate & Deliver-
 with a sized intake gate, tiered agent allocation (Nano / Lite / Standard /
 Prime / Hyper / Omega), Karpathy discipline (read-before-write, surgical

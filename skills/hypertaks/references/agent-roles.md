@@ -38,10 +38,13 @@ the session's actual tools per `references/plugins-and-mcp.md`.
    - **Standard (3)** - the 2 most load-bearing specialists for the task +
      **Founder/Integrator**. Example: Engineer + Copywriting + Integrator for a
      small landing tweak with copy.
-   - **Prime (5)** - the classic lineup. Analysis/strategy → bias toward roles
-     1, 2, 3, 8, 12 + Integrator. Execution/build → bias toward 5, 6, 4, 13
-     plus one domain specialist (2, 9, 10, 11). Both → blend: 1–2 analysis,
-     2–3 build, + Integrator.
+   - **Prime (5)** - select **exactly FOUR specialists** from the pool, chosen
+     for the four most load-bearing uncertainties in the task, then add
+     **exactly ONE Founder/Integrator**. Never five specialists plus an
+     Integrator - that is six agents in a five-agent tier.
+     Analysis/strategy → draw the four from {1, 2, 3, 7, 8, 12}.
+     Execution/build → draw from {4, 5, 6, 13} plus one domain specialist
+     (2, 9, 10, 11). Both → blend: 2 analysis, 2 build, + Integrator.
    - **Hyper (6–10+)** - count the distinct workstreams that each need their
      own deliverable; assign one specialist per workstream, **split** heavy
      roles (frontend vs. backend engineer, per-chain Web3 engineers, per-market

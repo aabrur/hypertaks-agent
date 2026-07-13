@@ -96,3 +96,26 @@ mainnet today"* + *"budget $0"* + *"zero gas"*). If two constraints cannot both
 hold, do **not** sign the contract. Present the contradiction, ask the Boss to
 relax or rank them, and re-gate. Burning 9 agents on an impossible contract is
 the most expensive failure mode in this skill.
+
+## 7. Violation response & rollback (canonical - every other file points here)
+
+On any contract violation - wrong tier, skipped phase, a named framework whose
+output shape never appeared, scope drift, budget overrun without a checkpoint,
+an ungranted permission exercised - the response is fixed, in order:
+
+1. **Stop** immediately. Never patch forward from the current position.
+2. **Roll back the reasoning** to the last clean phase boundary:
+   Lite -> restart lean · Standard -> Phase 2 (re-pick roles) ·
+   Prime -> Phase 3 (re-equip) · Hyper -> Phase 1 (re-frame).
+3. **Name the violation** to the Boss: which rule, where, what it cost.
+4. **Re-present the contract**, adjusted to reality.
+5. **Wait for a new T1 approval** before resuming.
+
+**Rollback moves reasoning, never effects.** Step 2 rewinds what you were
+*thinking*, not what you *did*. An email that was sent is sent; a mainnet deploy
+is deployed; money moved is moved. When a violation is found *after* an
+irreversible action was committed, the response is **containment + disclosure**
+per §2 - state what was committed, what cannot be undone, and what compensating
+action exists - and the word "rollback" is not used for it. A protocol that
+claims to roll back an irreversible effect is lying to the Boss about the state
+of the world.
