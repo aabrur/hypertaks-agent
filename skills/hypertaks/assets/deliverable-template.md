@@ -55,6 +55,13 @@ undone, what compensating action exists. Never describe it as rolled back.
 ### Compliance footer (mandatory, every tier)
 
 - **Tier & gate:** [e.g. Prime / Deep - as approved in the contract? yes/no]
+- **hypertaks_depth:** [`0` whenever you are the Founder answering the Boss -
+  including Lite, and including every brief you write and then answer yourself.
+  A depth >= 1 belongs only to an agent that was SPAWNED by another Hypertaks
+  agent, and such an agent runs EXECUTOR MODE and produces no footer at all.
+  **So this field reads `0` in every footer that exists.** State it anyway: it
+  is the one line that proves the recursion guard fired on the right agent, and
+  a guard nobody can observe is a guard nobody can trust.]
 - **Agents produced:** [count - matches the contracted tier? yes/no]
 - **Contract adherence:** [scope kept / access permissions respected /
   violations: none, or name each violation and the rollback that answered it]

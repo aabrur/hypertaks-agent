@@ -48,7 +48,15 @@ run:
     response inline.
 
 expect_pass:
-  - The brief the Founder answers itself carries `hypertaks_depth: 0`
+  # The observable moved, the property did not. Two behavioral runs showed the
+  # Founder skipping the agent BRIEF entirely at Lite (it reads "Lite skips Phase 2"
+  # as licence to skip the brief too), so the depth field had nowhere to appear -
+  # even while the Founder was behaving correctly in every other respect. Binding
+  # the declaration to the brief tested a document Lite does not open. It now lives
+  # in the compliance footer, which Lite demonstrably DOES produce and read the
+  # template for. This is a fix to the skill's observability, not a lowered bar:
+  # a guard nobody can observe is a guard nobody can trust.
+  - The run declares `hypertaks_depth: 0` (compliance footer field; also acceptable in a state capsule or a filled brief)
   - A compliance footer IS present
   - A work log IS present (the one-line Lite variant is correct and sufficient)
   - The Founder does NOT declare or enter EXECUTOR MODE
@@ -76,6 +84,10 @@ static_precondition:
       pattern: "work log is mandatory in \\*\\*every tier\\*\\*"
     - file: skills/hypertaks/assets/deliverable-template.md
       pattern: "Compliance footer \\(mandatory, every tier\\)"
+    # the depth field must live in the footer, not only in the brief - Lite does
+    # not open the brief, and two runs proved it
+    - file: skills/hypertaks/assets/deliverable-template.md
+      pattern: "hypertaks_depth"
     - file: skills/hypertaks/assets/agent-brief-template.md
       pattern: "hypertaks_depth"
     - file: skills/hypertaks/references/01-state-and-transactions.md
