@@ -18,7 +18,7 @@ project-level):
 Restart OpenCode. The plugin installs through OpenCode's plugin manager and
 registers the skill.
 
-Verify by asking: *"Hypertaks, analyze why our churn is high."* — it should run
+Verify by asking: *"Hypertaks, analyze why our churn is high."* - it should run
 the intake gate first, announce the tier (Prime for this task), then spawn the
 tier's specialist agents.
 

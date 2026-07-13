@@ -1,10 +1,10 @@
 # Hypertaks Behavioral Eval Suite
 
 `scripts/validate_skill.py` tests the *shape of the files*. This suite tests the
-*behavior at runtime* — and it is the only ground on which any claim about
+*behavior at runtime* - and it is the only ground on which any claim about
 Hypertaks' behavior may ever stand.
 
-## The two methods — never mix them in a report
+## The two methods - never mix them in a report
 
 | | `method: static` | `method: behavioral` |
 |---|---|---|
@@ -19,8 +19,8 @@ counted as one.** Static proves the words are on disk. It cannot see which agent
 a rule fires on, whether a guard over-fires, or whether the model obeys at all.
 
 This is not a theoretical caution. **EV-16's static check was GREEN for the
-entire life of a real bug** — a depth rule that silently disabled the compliance
-footer on every Lite task — and stayed GREEN across the fix. A test whose output
+entire life of a real bug** - a depth rule that silently disabled the compliance
+footer on every Lite task - and stayed GREEN across the fix. A test whose output
 is identical on the broken and the working version carries zero information.
 That bug was caught by a human reading the files, not by this suite. `results.yaml`
 records `method:` per case for exactly this reason: so a static GREEN can never
@@ -30,8 +30,8 @@ be laundered into a behavioral PASS by a summary line.
 
 The cases below were written to catch *defects that were verified to exist*. That
 made them one-sided: nearly every case tests the branch where a guard **should
-fire**. A guard that fires on **everything** — refuses every instruction, answers
-`DATA UNAVAILABLE` to every question, never reads a reference, never rolls back —
+fire**. A guard that fires on **everything** - refuses every instruction, answers
+`DATA UNAVAILABLE` to every question, never reads a reference, never rolls back -
 would pass most of this suite while being useless.
 
 Cases marked **(complement)** exist to close that: they test the branch where the
@@ -77,7 +77,7 @@ python3 scripts/run_evals.py --report evals/results.yaml   # the real verdict
    harness, the date, the grader, and a transcript quote per bullet. **A verdict
    with no quote is an opinion.**
 
-## Grader independence — a known weakness, stated plainly
+## Grader independence - a known weakness, stated plainly
 
 A run graded by the same model family that produced it is **weak evidence**. It
 is better than a grep and worse than a human. `results.yaml` records `grader:`

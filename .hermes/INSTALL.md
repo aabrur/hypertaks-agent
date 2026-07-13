@@ -1,6 +1,6 @@
 # Installing Hypertaks for Hermes
 
-Hermes discovers skills from a **skills directory** it scans on startup — the
+Hermes discovers skills from a **skills directory** it scans on startup - the
 location is whatever *your* Hermes setup points at (everyone runs their own
 flow). There is no marketplace manifest to install; you just make the skill
 visible in that directory.
@@ -30,7 +30,7 @@ visible in that directory.
      New-Item -ItemType Junction -Path "<your-hermes-skills-dir>\hypertaks" -Target "<path>\hypertaks-agent\skills\hypertaks"
      ```
 
-3. Restart Hermes. Verify: *"Hypertaks, analyze why our churn is high."* — it
+3. Restart Hermes. Verify: *"Hypertaks, analyze why our churn is high."* - it
    should run the intake gate, announce the tier (Prime for this task), then
    spawn the tier's specialist agents.
 

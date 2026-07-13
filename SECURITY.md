@@ -3,7 +3,7 @@
 ## Supported Versions
 
 Hypertaks is a cross-agent **skill** (markdown instructions for AI coding
-agents) plus one Python validator script — it has no runtime service component.
+agents) plus one Python validator script - it has no runtime service component.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -15,8 +15,8 @@ agents) plus one Python validator script — it has no runtime service component
 
 This policy covers the contents of this repository only:
 
-- `skills/hypertaks/**` — the skill markdown and reference files.
-- `scripts/validate_skill.py` — the only executable code shipped here.
+- `skills/hypertaks/**` - the skill markdown and reference files.
+- `scripts/validate_skill.py` - the only executable code shipped here.
 - Plugin manifests under `.claude-plugin/`, `.codex-plugin/`,
   `.cursor-plugin/`, `.kimi-plugin/`, `.agents/`, `.pi/`.
 
@@ -29,7 +29,7 @@ Those have their own security policies.
 **Do not open a public GitHub issue for security reports.** Please report
 privately so a fix can ship before details are disclosed:
 
-- **Preferred:** GitHub Private Vulnerability Reporting —
+- **Preferred:** GitHub Private Vulnerability Reporting -
   [Report a vulnerability](https://github.com/aabrur/hypertaks-agent/security/advisories/new).
 - **Alternative:** email the maintainer at **abrur_nic@yahoo.com** with
   `[hypertaks-security]` in the subject line.
@@ -57,14 +57,14 @@ told why and pointed at the responsible party where possible.
 
 ## Threat Model (honest, given this is a skill repo)
 
-- **Prompt-injection in reference content** — the reference files are trusted
+- **Prompt-injection in reference content** - the reference files are trusted
   authoring, not user input. If you find instructions that could mislead an
   agent into exfiltrating data or running destructive commands, that is in
   scope; report it.
-- **Supply-chain via marketplace install** — install only from
+- **Supply-chain via marketplace install** - install only from
   `aabrur/hypertaks-agent` or the official marketplace entry. A third party
   republishing the skill under a similar name is not something this repo can
   prevent.
-- **The validator script** — it only reads local files and parses JSON/YAML
+- **The validator script** - it only reads local files and parses JSON/YAML
   frontmatter; it makes no network calls. If you find it does anything else,
   report it.

@@ -12,7 +12,7 @@
 ## Checklist
 
 - [ ] I read `skills/hypertaks/SKILL.md` and preserved the three hard rules
-      (sized intake gate first; the announced tier's agent count — Lite 1 /
+      (sized intake gate first; the announced tier's agent count - Lite 1 /
       Standard 3 / Prime 5 / Hyper 6–10+; no silent deviation).
 - [ ] All skill prose is in English, imperative voice.
 - [ ] If I bumped the version, every per-agent manifest and `package.json` are in

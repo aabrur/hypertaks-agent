@@ -4,7 +4,7 @@
 
 ### Founder/CEO-grade operating skill for AI coding agents
 
-**Turns your agent into the *Hypertaks Founder*** — a sized intake gate locks
+**Turns your agent into the *Hypertaks Founder*** - a sized intake gate locks
 the request, then a dynamically tiered team of specialist agents ships the
 work, each equipped with the right business frameworks plus whatever
 plugins/skills and MCP connectors your environment already has.
@@ -19,7 +19,7 @@ plugins/skills and MCP connectors your environment already has.
 
 > **Hypertaks** = *"A founder who owns a library of more than 1,400
 > books, knows exactly which book to consult for this issue, and has a
-> strict SOP: gate → frame → roles → equip → produce → integrate —
+> strict SOP: gate → frame → roles → equip → produce → integrate -
 > six phases (0–5)."*
 
 **Domains covered:** business strategy, full-spectrum engineering (web,
@@ -31,15 +31,15 @@ and IoT.
 
 ## 🏆 Why Hypertaks
 
-**Design intent — not measured.** The radar below shows what Hypertaks is
-*designed* to optimize — decision quality, cross-domain integration, and
+**Design intent - not measured.** The radar below shows what Hypertaks is
+*designed* to optimize - decision quality, cross-domain integration, and
 framework rigor, at real setup-complexity cost. It is a statement of goals,
 not a benchmark result: no head-to-head comparison has been run. The
 behavioral eval suite that will back any measured claim lives in
 [`evals/`](evals/).
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Design-intent radar — what Hypertaks optimizes for; not a measured benchmark" width="700">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Design-intent radar - what Hypertaks optimizes for; not a measured benchmark" width="700">
 </div>
 
 ---
@@ -55,14 +55,14 @@ any tool mix, and doubled validator coverage. Full detail in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.0.0 — measured defect repair and discipline coverage" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.0.0 - measured defect repair and discipline coverage" width="850">
 </div>
 
 ---
 
-## ⚙️ The Mandatory Loop — Six Phases (0–5)
+## ⚙️ The Mandatory Loop - Six Phases (0–5)
 
-Every task — Lite or Hyper — runs through the same six phases, from Phase 0
+Every task - Lite or Hyper - runs through the same six phases, from Phase 0
 (the intake gate) to Phase 5 (integrate & deliver). The loop never
 disappears, it only scales: light tasks move through it fast, heavy tasks
 spawn more agents inside it.
@@ -73,11 +73,11 @@ spawn more agents inside it.
 
 ## 🔒 Three hard rules
 
-1. **Intake gate first, sized to the task** — every task starts with a
+1. **Intake gate first, sized to the task** - every task starts with a
    verification round (Express for light tasks, Deep for heavy ones); no
    work begins until the request is unambiguous and confirmed. The gate is
    never skipped, only sized.
-2. **Dynamic Agent Allocation** — the gate assesses the task into a tier
+2. **Dynamic Agent Allocation** - the gate assesses the task into a tier
    that fixes the agent count:
 
    | Tier | Agents | Typical task |
@@ -93,10 +93,10 @@ spawn more agents inside it.
    *de-escalated* mid-run if the task proves smaller. The table in
    `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
 
-3. **No silent deviation** — tier, gate mode, and assumptions are announced
+3. **No silent deviation** - tier, gate mode, and assumptions are announced
    in the task contract; frameworks must be delivered in their defined
    output shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone
-   tree — not just the name); every deliverable ends with a compliance
+   tree - not just the name); every deliverable ends with a compliance
    footer and a work log.
 
 ---
@@ -106,7 +106,7 @@ spawn more agents inside it.
 The 1,400+ item knowledge base and reference docs are **grepped by keyword
 in Phase 3**, never loaded wholesale, and reference reading is conditional
 by tier. How much that saves versus loading everything up front is **not
-measured** — the figure this section used to quote compared Hypertaks
+measured** - the figure this section used to quote compared Hypertaks
 against a strawman that loaded the entire knowledge base, which nothing
 does. Measured numbers will come from [`evals/`](evals/), or they will not
 be claimed.
@@ -133,7 +133,7 @@ costs no context until needed.
 
 This repo is a cross-agent plugin. Every agent loads the single skill under
 [`skills/hypertaks`](skills/hypertaks); each agent just has its own way of
-discovering it. Install per agent below — everyone runs their own flow, so
+discovering it. Install per agent below - everyone runs their own flow, so
 no particular workspace layout is assumed.
 
 <details open>
@@ -178,7 +178,7 @@ Or open `/plugins` → Marketplace → Hypertaks.
 <details>
 <summary><strong>OpenCode</strong></summary>
 
-Follow [`.opencode/INSTALL.md`](.opencode/INSTALL.md) — add
+Follow [`.opencode/INSTALL.md`](.opencode/INSTALL.md) - add
 `"hypertaks@git+https://github.com/aabrur/hypertaks-agent.git"` to the
 `plugin` array in your `opencode.json`.
 </details>
@@ -194,7 +194,7 @@ pi install git:github.com/aabrur/hypertaks-agent
 <details>
 <summary><strong>OpenClaw / Hermes / any other agent</strong></summary>
 
-These agents load skills from a skills directory they scan on startup — the
+These agents load skills from a skills directory they scan on startup - the
 location depends on *your* setup. Clone this repo and make
 `skills/hypertaks` visible in that directory (copy or symlink/junction).
 See [`.openclaw/INSTALL.md`](.openclaw/INSTALL.md) and
