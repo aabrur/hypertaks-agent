@@ -142,33 +142,71 @@ def cmd_static():
 
 
 def cmd_report(results_path):
+    """The real verdict - and the one place static and behavioral must NEVER mix.
+
+    A static GREEN proves the words are on disk. It is not a PASS. This function
+    refuses to count one as the other: only `method: behavioral` rows can carry a
+    PASS, and the headline number is behavioral-only. Anything else is reported
+    separately, as ungraded.
+    """
     cases, errors = load_cases()
     if errors:
         print("fix the case files first (--check)", file=sys.stderr)
         return 2
-    results = yaml.safe_load(Path(results_path).read_text(encoding="utf-8")) or {}
+    doc = yaml.safe_load(Path(results_path).read_text(encoding="utf-8")) or {}
+    meta = doc.get("meta", {})
+    results = doc.get("results", doc)  # tolerate the old flat shape
     ids = {c["id"] for c in cases}
-    problems = [f"unknown case id in results: {k}" for k in results if k not in ids]
-    missing = sorted(ids - set(results))
+
+    def row(v):
+        return v if isinstance(v, dict) else {"verdict": v, "method": "unknown"}
+
+    rows = {k: row(v) for k, v in results.items() if k != "meta"}
+
+    problems = [f"unknown case id in results: {k}" for k in rows if k not in ids]
+    missing = sorted(ids - set(rows))
     if missing:
         problems.append(f"cases with no recorded result: {', '.join(missing)}")
-    problems += [f"{k}: invalid verdict {v!r}" for k, v in results.items()
-                 if str(v).split("(")[0] not in VERDICTS]
+    for k, r in rows.items():
+        if str(r.get("verdict")).split("(")[0] not in VERDICTS:
+            problems.append(f"{k}: invalid verdict {r.get('verdict')!r}")
+        if r.get("method") not in ("behavioral", "static", "unknown"):
+            problems.append(f"{k}: invalid method {r.get('method')!r}")
+        # The load-bearing rule of this whole suite.
+        if r.get("method") == "static" and str(r.get("verdict")).startswith("PASS"):
+            problems.append(
+                f"{k}: a static check may NEVER be recorded as PASS. Static proves "
+                f"the words exist in the files; it says nothing about conduct.")
     if problems:
         print("REPORT INVALID:")
         for p in problems:
             print("  -", p)
         return 1
-    fails = sorted(k for k, v in results.items() if v == "FAIL")
-    skips = sorted(k for k, v in results.items() if str(v).startswith("SKIPPED"))
-    passed = len(ids) - len(fails) - len(skips)
-    line = f"{passed}/{len(ids)} PASS"
+
+    beh = {k: r for k, r in rows.items() if r.get("method") == "behavioral"}
+    fails = sorted(k for k, r in beh.items() if r["verdict"] == "FAIL")
+    skips = sorted(k for k, r in beh.items()
+                   if str(r["verdict"]).startswith("SKIPPED"))
+    passed = sorted(k for k, r in beh.items() if r["verdict"] == "PASS")
+    ungraded = sorted(k for k, r in rows.items() if r.get("method") != "behavioral")
+
+    print("BEHAVIORAL VERDICT (graded from transcripts - the only real one)\n")
+    line = f"  {len(passed)}/{len(ids)} PASS"
     if fails:
         line += f", {len(fails)} FAIL: {', '.join(fails)}"
     if skips:
         line += f", {len(skips)} SKIPPED: {', '.join(skips)}"
     print(line)
-    return 1 if fails or skips else 0
+    print(f"  graded: {len(beh)} of {len(ids)} cases")
+    if ungraded:
+        print(f"\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
+        print("  These carry a static GREEN and nothing else. A static GREEN is not")
+        print("  a PASS. They block release claims for their group (evals/rubric.md).")
+    if meta.get("confirmed_by_boss") is False:
+        print(f"\n  grader: {meta.get('grader', 'unknown')}")
+        print("  confirmed_by_boss: FALSE - self-graded. Stronger than a grep,")
+        print("  weaker than a human. Release claims need human confirmation.")
+    return 1 if fails or skips or ungraded else 0
 
 
 def main():
