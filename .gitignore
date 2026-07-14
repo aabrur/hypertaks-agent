@@ -6,7 +6,12 @@ desktop.ini
 # Editors
 .vscode/
 .idea/
+.fleet/
+.history/
 *.swp
+*.swo
+*.code-workspace
+*~
 
 # Node / tooling
 node_modules/
@@ -17,18 +22,43 @@ dist/
 # Local env & secrets
 .env
 .env.*
+!.env.example
+!.env.template
 *.local
+.envrc
+.venv/
+venv/
+env/
 
-# Build artifacts
+# Build artifacts / archives
 *.zip
+*.tar
+*.tar.gz
+*.bundle
 
 # Local agent state (never part of the plugin)
 .claude/
+.codex/
 .remember/
-*.bundle
+
+# Python / test caches
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
 
-# Clones
+# Clones / scratch
 test-clone/
 *-clone/
+clones/
+.tmp/
+tmp/
+scratch/
+
+# Repomix output (configuration remains tracked)
+repomix-output.*
+repomix-*.xml

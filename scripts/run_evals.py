@@ -145,7 +145,7 @@ def cmd_static():
 
 def calc_skill_root_hash(commit):
     try:
-        out = subprocess.check_output(["git", "ls-tree", "-r", commit, "skills/hypertaks"], encoding="utf-8")
+        out = subprocess.check_output(git_args("ls-tree", "-r", commit, "skills/hypertaks"), encoding="utf-8")
         lines = sorted(out.strip().split("\n"))
         data_to_hash = ""
         for line in lines:
@@ -154,15 +154,106 @@ def calc_skill_root_hash(commit):
             if len(parts) == 4:
                 file_hash = parts[2]
                 file_path = parts[3]
-                file_content = subprocess.check_output(["git", "cat-file", "blob", file_hash])
+                file_content = subprocess.check_output(git_args("cat-file", "blob", file_hash))
                 data_to_hash += file_path + "\n" + file_content.decode("utf-8") + "\n"
         return hashlib.sha256(data_to_hash.encode("utf-8")).hexdigest()
     except Exception:
         return None
 
+def git_args(*args):
+    return ["git", f"-c", f"safe.directory={ROOT}", "-C", str(ROOT), *args]
+
+def current_head():
+    return subprocess.check_output(git_args("rev-parse", "HEAD"), encoding="utf-8").strip()
+
+def git_tree(commit):
+    return subprocess.check_output(git_args("show", "-s", "--format=%T", commit), encoding="utf-8").strip()
+
+def read_transcript(path):
+    """Parse every JSONL record; a JSONL file must not be treated as one string."""
+    records = []
+    for line_number, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            records.append(json.loads(line))
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"line {line_number}: invalid JSON: {exc}") from exc
+    return records
+
+def validate_transcript(case_id, result, case_data, transcript_path):
+    problems = []
+    path = Path(transcript_path)
+    if not path.exists():
+        return [f"{case_id}: transcript tidak ditemukan: {path}"]
+    try:
+        records = read_transcript(path)
+    except (OSError, ValueError) as exc:
+        return [f"{case_id}: transcript tidak dapat dibaca: {exc}"]
+    if len(records) != 1:
+        return [f"{case_id}: transcript harus memiliki tepat satu record JSONL"]
+    meta = records[0]
+    raw_prompt = meta.get("raw_prompt")
+    raw_response = meta.get("raw_response")
+    if not isinstance(raw_prompt, str) or not raw_prompt.strip() or raw_prompt.startswith("["):
+        problems.append(f"{case_id}: raw_prompt kosong atau bukan prompt nyata")
+    if not isinstance(raw_response, str) or not raw_response.strip() or raw_response.startswith("["):
+        problems.append(f"{case_id}: raw_response kosong atau bukan respons model verbatim")
+    if meta.get("case_id") != case_id:
+        problems.append(f"{case_id}: case_id transcript tidak cocok")
+    if meta.get("cold_session") is not True:
+        problems.append(f"{case_id}: transcript bukan cold session")
+    if not isinstance(meta.get("tool_calls"), list) or not meta["tool_calls"]:
+        problems.append(f"{case_id}: tool_calls kosong")
+    if not isinstance(meta.get("tool_results"), list) or not meta["tool_results"]:
+        problems.append(f"{case_id}: tool_results kosong")
+    placeholder = "abcdef0123456789abcdef0123456789abcdef01"
+    if any(meta.get(key) == placeholder for key in ("tested_commit", "tested_tree", "skill_root_hash")):
+        problems.append(f"{case_id}: Placeholder hash detected")
+    commit = meta.get("tested_commit", "")
+    if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+        problems.append(f"{case_id}: tested_commit bukan SHA penuh 40 karakter")
+    else:
+        try:
+            subprocess.run(git_args("cat-file", "-e", commit), check=True, capture_output=True)
+        except subprocess.CalledProcessError:
+            problems.append(f"{case_id}: tested_commit tidak dapat ditemukan")
+        else:
+            try:
+                branches = subprocess.check_output(git_args("branch", "--contains", commit), encoding="utf-8")
+                if "v4-kernel" not in branches:
+                    problems.append(f"{case_id}: tested_commit tidak reachable dari v4-kernel")
+            except subprocess.CalledProcessError:
+                problems.append(f"{case_id}: tested_commit tidak reachable")
+            try:
+                if meta.get("tested_tree") != git_tree(commit):
+                    problems.append(f"{case_id}: tested_tree tidak sama dengan git show -s --format=%T")
+            except Exception:
+                problems.append(f"{case_id}: tested_tree check failed")
+            skill_hash = calc_skill_root_hash(commit)
+            if not skill_hash or meta.get("skill_root_hash") != skill_hash:
+                problems.append(f"{case_id}: skill_root_hash tidak sama dengan hash aktual")
+    executor_name = str(meta.get("executor", "")).strip()
+    grader_name = re.sub(r"\s*\([^)]*\)", "", str(meta.get("grader", ""))).strip()
+    if executor_name and executor_name == grader_name:
+        problems.append(f"{case_id}: executor dan grader sama")
+    if "self-graded" in str(meta.get("grader", "")).lower():
+        problems.append(f"{case_id}: grader bertuliskan self-graded")
+    quotes = meta.get("evidence_quotes")
+    if not isinstance(quotes, list) or not quotes or any(str(q).lower() == "matches rubric." for q in quotes):
+        problems.append(f"{case_id}: evidence_quotes kosong atau generik")
+    if similar(raw_response or "", " ".join(map(str, case_data.get("expect_pass", [])))):
+        problems.append(f"{case_id}: raw_response identik atau sangat dekat dengan expect_pass")
+    prompt_lower = (raw_prompt or "").lower()
+    if any(term in prompt_lower for term in ("expect_pass", "expect_fail", "rubric", "case_id")):
+        problems.append(f"{case_id}: transcript mengandung expect_pass, expect_fail, rubric di prompt")
+    if meta.get("verdict") != result.get("verdict"):
+        problems.append(f"{case_id}: verdict transcript berbeda dari results.yaml")
+    return problems
+
 def similar(a, b):
-    a = re.sub(r'\\s+', ' ', a.lower())
-    b = re.sub(r'\\s+', ' ', b.lower())
+    a = re.sub(r'\s+', ' ', a.lower())
+    b = re.sub(r'\s+', ' ', b.lower())
     return a == b or (len(a)>20 and len(b)>20 and (a in b or b in a))
 
 def cmd_report(results_path):
@@ -209,89 +300,12 @@ def cmd_report(results_path):
 
         if r.get("method") == "behavioral" and str(r.get("verdict")) == "PASS":
             t_path = r.get("transcript")
-            # Guard 1, 2
-            if not t_path or not isinstance(t_path, str) or not Path(ROOT / t_path).exists():
-                problems.append(f"{k}: PASS tanpa transcript nyata / transcript path rusak")
+            case_data = next((c for c in cases if c["id"] == k), None)
+            if case_data is None:
+                problems.append(f"{k}: case definition missing")
                 continue
-
-            try:
-                lines = (ROOT / t_path).read_text(encoding="utf-8").strip().split('\\n')
-                t_meta = json.loads(lines[0])
-
-                # Guard 3
-                raw_prompt = t_meta.get("raw_prompt", "")
-                raw_response = t_meta.get("raw_response", "")
-                if not raw_prompt or not raw_response:
-                    problems.append(f"{k}: transcript tanpa raw_prompt dan raw_response")
-
-                # Guard 4
-                bad_hash = "abcdef0123456789abcdef0123456789abcdef01"
-                if t_meta.get("tested_tree") == bad_hash or t_meta.get("skill_root_hash") == bad_hash or t_meta.get("tested_commit") == bad_hash:
-                    problems.append(f"{k}: Placeholder hash detected")
-
-                # Guard 5
-                commit = t_meta.get("tested_commit", "")
-                if not commit or len(commit) != 40 or not re.match(r'^[0-9a-f]{40}$', commit):
-                    problems.append(f"{k}: tested_commit bukan SHA penuh 40 karakter")
-
-                # Guard 6
-                try:
-                    subprocess.run(["git", "cat-file", "-e", commit], check=True, capture_output=True)
-                except subprocess.CalledProcessError:
-                    problems.append(f"{k}: tested_commit tidak dapat ditemukan")
-
-                # Guard 7
-                try:
-                    branches = subprocess.check_output(["git", "branch", "--contains", commit], encoding="utf-8")
-                    if "v4-kernel" not in branches:
-                        problems.append(f"{k}: tested_commit tidak reachable dari v4-kernel")
-                except subprocess.CalledProcessError:
-                    problems.append(f"{k}: tested_commit tidak reachable")
-
-                # Guard 8
-                try:
-                    tree = subprocess.check_output(["git", "show", "-s", "--format=%T", commit], encoding="utf-8").strip()
-                    if t_meta.get("tested_tree") != tree:
-                        problems.append(f"{k}: tested_tree tidak sama dengan git show -s --format=%T")
-                except Exception:
-                    problems.append(f"{k}: tested_tree check failed")
-
-                # Guard 9
-                skill_hash = calc_skill_root_hash(commit)
-                if skill_hash and t_meta.get("skill_root_hash") != skill_hash:
-                    problems.append(f"{k}: skill_root_hash tidak sama dengan hash aktual")
-
-                # Guard 10
-                if t_meta.get("executor") == t_meta.get("grader"):
-                    problems.append(f"{k}: executor dan grader sama")
-
-                # Guard 11
-                if "self-graded" in str(t_meta.get("grader")).lower():
-                    problems.append(f"{k}: grader bertuliskan self-graded")
-
-                # Guard 12
-                quotes = t_meta.get("evidence_quotes", [])
-                if not quotes or any(q.lower() == "matches rubric." for q in quotes):
-                    problems.append(f"{k}: evidence_quotes kosong atau generik")
-
-                # Guard 13
-                case_data = next((c for c in cases if c["id"] == k), None)
-                if case_data:
-                    expect_pass_joined = " ".join([str(e) for e in case_data.get("expect_pass", [])])
-                    if similar(raw_response, expect_pass_joined):
-                        problems.append(f"{k}: raw_response identik atau sangat dekat dengan expect_pass")
-
-                # Guard 14
-                prompt_lower = raw_prompt.lower()
-                if "expect_pass" in prompt_lower or "expect_fail" in prompt_lower or "rubric" in prompt_lower or "case_id" in prompt_lower:
-                    problems.append(f"{k}: transcript mengandung expect_pass, expect_fail, rubric di prompt")
-
-                # Guard 15
-                if t_meta.get("verdict") != r.get("verdict"):
-                    problems.append(f"{k}: verdict transcript berbeda dari results.yaml")
-
-            except Exception as e:
-                problems.append(f"{k}: error memvalidasi transcript: {e}")
+            problems.extend(validate_transcript(k, r, case_data, ROOT / t_path if isinstance(t_path, str) else Path(t_path or "")))
+            continue
 
     if str(meta.get("confirmed_by_boss")).lower() != "false":
         problems.append("meta: confirmed_by_boss must be false without Boss auth")

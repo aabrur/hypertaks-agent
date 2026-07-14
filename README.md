@@ -33,31 +33,39 @@ and IoT.
 
 ## 🏆 Why Hypertaks
 
-**Design intent - not measured.** The radar below shows what Hypertaks is
-*designed* to optimize - decision quality, cross-domain integration, and
-framework rigor, at real setup-complexity cost. It is a statement of goals,
-not a benchmark result: no head-to-head comparison has been run. The
-behavioral eval suite that will back any measured claim lives in
-[`evals/`](evals/).
+The figure below is a repository inventory, generated from tracked files and
+defined entries. It is not a quality score or benchmark.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Design-intent radar - what Hypertaks optimizes for; not a measured benchmark" width="700">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.2.0 repository inventory" width="850">
 </div>
 
 ---
 
 ## 📈 What changed in 4.2.0
 
-A full audit of 3.0.0 found real structural defects; 4.2.0 repairs every one
-of them to zero (duplicate and fabricated knowledge-base entries, non-English
-residue, personal paths, and 108 named tools the skill assumed were installed)
-and raises the discipline layer: a binding task contract with six defined
-violations and mandatory rollback (proven via EV-07, EV-08), category-based tool binding that works with
-any tool mix, and doubled validator coverage. Full detail in the
+Version 4.2.0 adds the security kernel, state and transaction protocol,
+deterministic tier scoring, 12 routed domain packs, a CORE profile, and 38 eval
+case definitions. These are repository facts; runtime behavior is reported
+separately from structural presence. Full detail is in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
+### Behavioral evidence status
+
+The saved results record 26 PASS and 12 SKIPPED(harness). The tightened
+provenance checks find 14 PASS transcripts with complete cold-session, tool,
+hash, raw-response, and independent-grader fields (EV-25–EV-38). That is below
+the 24-EV release threshold. `confirmed_by_boss` remains `false` for all 38
+rows. Static GREEN is not a behavioral PASS.
+
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.2.0 - measured defect repair and discipline coverage" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">
+</div>
+
+The eval inventory contains seven declared groups:
+
+<div align="center">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Behavioral eval case distribution by group" width="850">
 </div>
 
 ---
@@ -75,10 +83,9 @@ spawn more agents inside it.
 
 ## 🔒 Three hard rules
 
-1. **Intake gate first, sized to the task** - every task starts with a
-   verification round (Express for light tasks, Deep for heavy ones); no
-   work begins until the request is unambiguous and confirmed. The gate is
-   never skipped, only sized.
+1. **Intake gate first, sized to the task** - Nano uses a zero-sized gate;
+   Lite/Standard use Express and Prime/Hyper use Deep. Build work begins only
+   after the request and permissions are explicit.
 2. **Dynamic Agent Allocation** - the gate assesses the task into a tier
    that fixes the agent count:
 
@@ -126,8 +133,8 @@ supply chain · Supply Chain Finance · ERP · Smart contracts · IoT.
 is a 1,400+ item encyclopedia of theories, methods, frameworks, and
 workflows across business, learning, science, and technology (JTBD, Kano,
 RICE, Cynefin, OKR, PESTLE, DDD, MLOps, EIP standards, sales methodologies,
-mental models, and more). Lazy-loaded: agents grep it by keyword, so it
-costs no context until needed.
+mental models, and more). Agents route to it by keyword instead of loading the
+whole catalog.
 
 ---
 

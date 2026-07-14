@@ -56,3 +56,10 @@ PASS / FAIL / SKIPPED(harness) per case, plus the list of failing ids:
 **No aggregate numeric score exists, and none may be invented.** A "78%
 compliance score" would be exactly the pseudo-precision this release removed
 from the skill itself.
+
+## Release gate
+
+The v4.2.0 gate requires at least 24 provenance-valid behavioral PASS cases.
+This is a count threshold, not a quality percentage. SKIPPED(harness), static
+GREEN, invalid provenance, and `confirmed_by_boss: false` never become stronger
+evidence by being aggregated.

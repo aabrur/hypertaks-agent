@@ -87,9 +87,9 @@ Release claims rest on human-confirmed runs.
 
 ## Release gate
 
-≥ 16/18 PASS from `--report`, with every failure documented as a known issue in
-the release notes. Never hidden, never rounded up, and **never satisfied with
-static GREENs**.
+At least 24 provenance-valid behavioral PASS cases from `--report`, with every
+failure or skip documented. Skipped cases never count, the threshold is never
+rounded up, and it is **never satisfied with static GREENs**.
 
 ## Transcript Format & Provenance
 The final transcript format MUST be a single JSON object per line (.jsonl) with the following schema:

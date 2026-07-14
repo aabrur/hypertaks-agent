@@ -257,7 +257,7 @@ phase (the Founder acts alone) but still picks its frameworks in Phase 3.
 
 **From Prime up, read `references/frameworks.md` and `references/plugins-and-mcp.md` now - and `references/engineering.md` for any build task.** At Standard and below, equipping these general frameworks from memory is permitted - **declare it** (`References read this session: none - equipped from memory; output shapes still mandatory`), per `references/token-discipline.md` §1. 
 
-**DOMAIN PACK LAW (MANDATORY EVERY TIER INCLUDING NANO):** When a task involves any of the 9 specific domains (quant, economics, data, research, logistics, operations, trade, finance, craft), you MUST read `references/domains/INDEX.md` and load the corresponding pack file. **Equipping domain formulas from memory is strictly forbidden at all tiers.** The constraints in a domain pack override general ambiguity/speed rules.
+**DOMAIN PACK LAW (MANDATORY EVERY TIER INCLUDING NANO):** When a task matches any of the 12 routed domain packs, you MUST read `references/domains/INDEX.md` and load the corresponding pack file. **Equipping domain formulas from memory is strictly forbidden at all tiers.** The constraints in a domain pack override general ambiguity/speed rules.
 
 If a reference cannot be read at all, follow the failure ladder in `references/plugins-and-mcp.md` - never pretend a file was read.
 For each agent, choose the frameworks it will apply, then bind each of its
