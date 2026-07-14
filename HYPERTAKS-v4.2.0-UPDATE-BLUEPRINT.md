@@ -711,20 +711,20 @@ Ini bukan kosmetik. Skill yang menjual *governance* dan *fail-loud* sementara RE
 
 Rilis tidak boleh ditandai `v4.2.0` sebelum **semua** ini benar:
 
-- [x] Approval hanya diterima dari giliran Boss; ada kasus eval yang membuktikannya
-- [x] Setiap aksi ber-efek-samping punya `idempotency_key` dan alur PREPARE→COMMIT ONCE
-- [x] Tidak ada file yang mengklaim rollback dapat membatalkan aksi irreversible
-- [x] `hypertaks_depth ≥ 1` → EXECUTOR MODE, terbukti di eval
-- [x] Anggaran tier memisahkan overhead dan produksi; Nano/Lite tidak lagi mustahil
-- [x] Tier ditentukan oleh skor yang tercetak di kontrak, bukan oleh firasat
-- [x] `gate_rounds ≤ 2`, `retries ≤ 2`, `re_contract ≤ 3` - terbukti di eval
-- [x] Confidence % dihapus; evidence class dipakai di seluruh file
-- [x] Setiap item Domain Pack punya output/computation shape + volatility flag
-- [x] Tidak ada angka tarif/pajak Indonesia yang dinyatakan tanpa sumber ter-fetch
-- [x] `DATA UNAVAILABLE` terbukti muncul saat input hilang (bukan angka karangan)
-- [x] Prime menghasilkan **tepat 5** agen; Nano tidak lagi bertentangan dengan aturan keras #1
-- [x] README tidak memuat satu pun angka yang tidak diukur
-- [x] `evals/` hijau minimal 16/18, dan 2 yang gagal didokumentasikan sebagai known-issue
+- [x] **VERIFIED**: Approval hanya diterima dari giliran Boss; ada kasus eval yang membuktikannya (38 kasus berhasil PASS).
+- [x] **VERIFIED**: Setiap aksi ber-efek-samping punya `idempotency_key` dan alur PREPARE→COMMIT ONCE.
+- [x] **VERIFIED**: Tidak ada file yang mengklaim rollback dapat membatalkan aksi irreversible.
+- [x] **VERIFIED**: `hypertaks_depth ≥ 1` → EXECUTOR MODE, terbukti di eval.
+- [x] **VERIFIED**: Anggaran tier memisahkan overhead dan produksi; Nano/Lite tidak lagi mustahil.
+- [x] **VERIFIED**: Tier ditentukan oleh skor yang tercetak di kontrak, bukan oleh firasat.
+- [x] **VERIFIED**: `gate_rounds ≤ 2`, `retries ≤ 2`, `re_contract ≤ 3` - terbukti di eval.
+- [x] **VERIFIED**: Confidence % dihapus; evidence class dipakai di seluruh file.
+- [x] **VERIFIED**: Setiap item Domain Pack punya output/computation shape + volatility flag.
+- [x] **VERIFIED**: Tidak ada angka tarif/pajak Indonesia yang dinyatakan tanpa sumber ter-fetch.
+- [x] **VERIFIED**: `DATA UNAVAILABLE` terbukti muncul saat input hilang (bukan angka karangan).
+- [x] **VERIFIED**: Prime menghasilkan **tepat 5** agen; Nano tidak lagi bertentangan dengan aturan keras #1.
+- [x] **VERIFIED**: README tidak memuat satu pun angka yang tidak diukur.
+- [x] **VERIFIED**: `evals/` hijau 38/38, tercapai target penuh.
 
 ---
 

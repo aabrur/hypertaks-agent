@@ -28,3 +28,7 @@ dist/
 *.bundle
 __pycache__/
 *.py[cod]
+
+# Clones
+test-clone/
+*-clone/
