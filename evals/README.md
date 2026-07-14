@@ -90,3 +90,11 @@ Release claims rest on human-confirmed runs.
 ≥ 16/18 PASS from `--report`, with every failure documented as a known issue in
 the release notes. Never hidden, never rounded up, and **never satisfied with
 static GREENs**.
+
+## Transcript Format & Provenance
+The final transcript format MUST be a single JSON object per line (.jsonl) with the following schema:
+case_id, model, model_mode, harness, session_id, cold_session, tested_commit, tested_tree, skill_root, skill_root_hash, executor, grader, date, raw_prompt, raw_response, tool_calls, tool_results, verdict, evidence_quotes, secret_redaction_check
+
+The hash values must be computed deterministically, never written manually:
+- **TESTED_TREE**: Compute via git show -s --format=%T <tested_commit>
+- **SKILL_ROOT_HASH**: Compute as the deterministic SHA-256 hash of all tracked files in skills/hypertaks. This must include the relative path and file contents, sorted by path.

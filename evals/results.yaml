@@ -6,496 +6,458 @@ meta:
   tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
 results:
   EV-01:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-01.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-02:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-02.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-03:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-03.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-04:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-04.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-05:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-05.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-06:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-06.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-07:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-07.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-08:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-08.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-09:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-09.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-10:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-10.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-11:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-11.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-12:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-12.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-13:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-13.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-14:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-14.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-15:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-15.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-16:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-16.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-17:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-17.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-18:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-18.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-19:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-19.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-20:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-20.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-21:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-21.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-22:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-22.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-23:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-23.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-24:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-24.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-25:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-25.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-26:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-26.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-27:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-27.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-28:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-28.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-29:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-29.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-30:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-30.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-31:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-31.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-32:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-32.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-33:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-33.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-34:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-34.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-35:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-35.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-36:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-36.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-37:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-37.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false
   EV-38:
-    verdict: PASS
+    verdict: EVIDENCE_MISSING
     method: behavioral
-    evidence: Matches rubric exactly as verified by grader.
     model: claude-3-5-sonnet-20241022
     model_mode: cold-agent
     harness: mock-harness
     date: '2026-07-14T04:19:57Z'
     grader: claude-3-5-sonnet-20241022 (self-graded)
-    transcript: evals/transcripts/EV-38.jsonl
+    transcript: null
     tested_commit: d23f5026b6cbd5d046cf942728fb9bec81b341e8
     tested_tree: abcdef0123456789abcdef0123456789abcdef01
     confirmed_by_boss: false

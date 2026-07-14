@@ -1,3 +1,13 @@
+
+**CURRENT STATUS: BEHAVIORAL EVIDENCE RESET — AWAITING CLINE RUN**
+
+- transcript sintetis telah dibuang;
+- 38 case saat ini EVIDENCE_MISSING;
+- static GREEN bukan behavioral PASS;
+- tested commit sedang disiapkan;
+- confirmed_by_boss tetap false;
+- belum siap publish.
+
 # CHECKPOINT - Hypertaks v4.2.0 completion run
 
 Written at each phase boundary so the work survives context compaction.

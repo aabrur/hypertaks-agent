@@ -1,3 +1,13 @@
+
+**CURRENT STATUS: BEHAVIORAL EVIDENCE RESET — AWAITING CLINE RUN**
+
+- transcript sintetis telah dibuang;
+- 38 case saat ini EVIDENCE_MISSING;
+- static GREEN bukan behavioral PASS;
+- tested commit sedang disiapkan;
+- confirmed_by_boss tetap false;
+- belum siap publish.
+
 # HYPERTAKS v4.2.0 - BLUEPRINT UPDATE REPO
 
 **Dari:** v3/v4 (governance naratif, KB kualitatif)
@@ -724,7 +734,8 @@ Rilis tidak boleh ditandai `v4.2.0` sebelum **semua** ini benar:
 - [x] **VERIFIED**: `DATA UNAVAILABLE` terbukti muncul saat input hilang (bukan angka karangan).
 - [x] **VERIFIED**: Prime menghasilkan **tepat 5** agen; Nano tidak lagi bertentangan dengan aturan keras #1.
 - [x] **VERIFIED**: README tidak memuat satu pun angka yang tidak diukur.
-- [x] **VERIFIED**: `evals/` hijau 38/38, tercapai target penuh.
+- [ ] **PENDING**: `evals/` behavioral evaluation for all cases (Currently EVIDENCE_MISSING).
+  - SUPERSEDED: `evals/` hijau 38/38, tercapai target penuh (synthetic transcripts removed).
 
 ---
 

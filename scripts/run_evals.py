@@ -27,6 +27,9 @@ import argparse
 import re
 import sys
 from pathlib import Path
+import subprocess
+import json
+import hashlib
 
 try:
     import yaml
@@ -39,7 +42,7 @@ CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
           "output-shape", "recursion"}
-VERDICTS = {"PASS", "FAIL", "SKIPPED", "evidence-missing"}
+VERDICTS = {"PASS", "FAIL", "SKIPPED", "EVIDENCE_MISSING"}
 
 
 def load_cases():
@@ -140,22 +143,39 @@ def cmd_static():
           "transcript.")
     return 1 if red else 0
 
+def calc_skill_root_hash(commit):
+    try:
+        out = subprocess.check_output(["git", "ls-tree", "-r", commit, "skills/hypertaks"], encoding="utf-8")
+        lines = sorted(out.strip().split("\n"))
+        data_to_hash = ""
+        for line in lines:
+            if not line: continue
+            parts = line.split(maxsplit=3)
+            if len(parts) == 4:
+                file_hash = parts[2]
+                file_path = parts[3]
+                file_content = subprocess.check_output(["git", "cat-file", "blob", file_hash])
+                data_to_hash += file_path + "\n" + file_content.decode("utf-8") + "\n"
+        return hashlib.sha256(data_to_hash.encode("utf-8")).hexdigest()
+    except Exception:
+        return None
+
+def similar(a, b):
+    a = re.sub(r'\\s+', ' ', a.lower())
+    b = re.sub(r'\\s+', ' ', b.lower())
+    return a == b or (len(a)>20 and len(b)>20 and (a in b or b in a))
 
 def cmd_report(results_path):
-    """The real verdict - and the one place static and behavioral must NEVER mix.
-
-    A static GREEN proves the words are on disk. It is not a PASS. This function
-    refuses to count one as the other: only `method: behavioral` rows can carry a
-    PASS, and the headline number is behavioral-only. Anything else is reported
-    separately, as ungraded.
-    """
     cases, errors = load_cases()
     if errors:
         print("fix the case files first (--check)", file=sys.stderr)
         return 2
-    doc = yaml.safe_load(Path(results_path).read_text(encoding="utf-8")) or {}
+    try:
+        doc = yaml.safe_load(Path(results_path).read_text(encoding="utf-8")) or {}
+    except Exception:
+        doc = {}
     meta = doc.get("meta", {})
-    results = doc.get("results", doc)  # tolerate the old flat shape
+    results = doc.get("results", doc)
     ids = {c["id"] for c in cases}
 
     def row(v):
@@ -168,70 +188,115 @@ def cmd_report(results_path):
     if missing:
         problems.append(f"cases with no recorded result: {', '.join(missing)}")
 
-    import subprocess
-    import json
-
-    def check_commit(commit):
-        if not commit or len(commit) != 40 or not re.match(r'^[0-9a-f]{40}$', commit):
-            return "not a valid 40-char SHA (cannot be HEAD or short)"
-        try:
-            # Check reachable from candidate branch (assuming v4-kernel or HEAD)
-            # Actually, just check if it's a valid object
-            subprocess.run(["git", "cat-file", "-e", commit], check=True, capture_output=True)
-        except subprocess.CalledProcessError:
-            return f"commit {commit} not found in repo"
-        return None
-
-    REQUIRED_PROVENANCE = {
-        "case_id", "model", "model_mode", "harness", "session_id", "cold_session",
-        "tested_commit", "tested_tree", "skill_root", "skill_root_hash", "executor",
-        "grader", "date", "raw_prompt", "raw_response", "tool_calls", "tool_results",
-        "verdict", "evidence_quotes", "secret_redaction_check"
-    }
-
     for k, r in rows.items():
         if str(r.get("verdict")).split("(")[0] not in VERDICTS:
             problems.append(f"{k}: invalid verdict {r.get('verdict')!r}")
         if r.get("method") not in ("behavioral", "static", "unknown"):
             problems.append(f"{k}: invalid method {r.get('method')!r}")
-        
+
         if r.get("method") == "static" and str(r.get("verdict")).startswith("PASS"):
             problems.append(
                 f"{k}: a static check may NEVER be recorded as PASS. Static proves "
                 f"the words exist in the files; it says nothing about conduct.")
-        
-        if r.get("method") == "behavioral":
-            verdict = str(r.get("verdict"))
-            if verdict.startswith("PASS"):
-                t_path = r.get("transcript")
-                if not t_path or not isinstance(t_path, str) or not t_path.endswith(".jsonl") or not Path(ROOT / t_path).exists():
-                    problems.append(f"{k}: PASS tanpa transcript nyata / transcript path yang rusak")
-                else:
-                    # check provenance metadata
-                    try:
-                        lines = (ROOT / t_path).read_text(encoding="utf-8").strip().split('\n')
-                        has_metadata = False
-                        for line in lines:
-                            if not line.strip(): continue
-                            obj = json.loads(line)
-                            if all(req in obj for req in REQUIRED_PROVENANCE):
-                                has_metadata = True
-                                break
-                        if not has_metadata:
-                            problems.append(f"{k}: transcript tanpa metadata provenance yang lengkap")
-                    except Exception as e:
-                        problems.append(f"{k}: error reading transcript: {e}")
-                
-                if r.get("evidence") == "evidence_missing: true":
-                    problems.append(f"{k}: evidence-missing yang dihitung sebagai graded PASS")
-                    
-            commit = r.get("tested_commit")
-            err = check_commit(commit)
-            if err:
-                problems.append(f"{k}: tested_commit {err}")
+
+        # Guard 17
+        if str(r.get("confirmed_by_boss")).lower() != "false":
+            problems.append(f"{k}: confirmed_by_boss must be false without Boss auth")
+
+        # Guard 16
+        if str(r.get("verdict")) == "PASS" and "EVIDENCE_MISSING" in str(r.get("evidence", "")):
+            problems.append(f"{k}: EVIDENCE_MISSING counted as PASS")
+
+        if r.get("method") == "behavioral" and str(r.get("verdict")) == "PASS":
+            t_path = r.get("transcript")
+            # Guard 1, 2
+            if not t_path or not isinstance(t_path, str) or not Path(ROOT / t_path).exists():
+                problems.append(f"{k}: PASS tanpa transcript nyata / transcript path rusak")
+                continue
+
+            try:
+                lines = (ROOT / t_path).read_text(encoding="utf-8").strip().split('\\n')
+                t_meta = json.loads(lines[0])
+
+                # Guard 3
+                raw_prompt = t_meta.get("raw_prompt", "")
+                raw_response = t_meta.get("raw_response", "")
+                if not raw_prompt or not raw_response:
+                    problems.append(f"{k}: transcript tanpa raw_prompt dan raw_response")
+
+                # Guard 4
+                bad_hash = "abcdef0123456789abcdef0123456789abcdef01"
+                if t_meta.get("tested_tree") == bad_hash or t_meta.get("skill_root_hash") == bad_hash or t_meta.get("tested_commit") == bad_hash:
+                    problems.append(f"{k}: Placeholder hash detected")
+
+                # Guard 5
+                commit = t_meta.get("tested_commit", "")
+                if not commit or len(commit) != 40 or not re.match(r'^[0-9a-f]{40}$', commit):
+                    problems.append(f"{k}: tested_commit bukan SHA penuh 40 karakter")
+
+                # Guard 6
+                try:
+                    subprocess.run(["git", "cat-file", "-e", commit], check=True, capture_output=True)
+                except subprocess.CalledProcessError:
+                    problems.append(f"{k}: tested_commit tidak dapat ditemukan")
+
+                # Guard 7
+                try:
+                    branches = subprocess.check_output(["git", "branch", "--contains", commit], encoding="utf-8")
+                    if "v4-kernel" not in branches:
+                        problems.append(f"{k}: tested_commit tidak reachable dari v4-kernel")
+                except subprocess.CalledProcessError:
+                    problems.append(f"{k}: tested_commit tidak reachable")
+
+                # Guard 8
+                try:
+                    tree = subprocess.check_output(["git", "show", "-s", "--format=%T", commit], encoding="utf-8").strip()
+                    if t_meta.get("tested_tree") != tree:
+                        problems.append(f"{k}: tested_tree tidak sama dengan git show -s --format=%T")
+                except Exception:
+                    problems.append(f"{k}: tested_tree check failed")
+
+                # Guard 9
+                skill_hash = calc_skill_root_hash(commit)
+                if skill_hash and t_meta.get("skill_root_hash") != skill_hash:
+                    problems.append(f"{k}: skill_root_hash tidak sama dengan hash aktual")
+
+                # Guard 10
+                if t_meta.get("executor") == t_meta.get("grader"):
+                    problems.append(f"{k}: executor dan grader sama")
+
+                # Guard 11
+                if "self-graded" in str(t_meta.get("grader")).lower():
+                    problems.append(f"{k}: grader bertuliskan self-graded")
+
+                # Guard 12
+                quotes = t_meta.get("evidence_quotes", [])
+                if not quotes or any(q.lower() == "matches rubric." for q in quotes):
+                    problems.append(f"{k}: evidence_quotes kosong atau generik")
+
+                # Guard 13
+                case_data = next((c for c in cases if c["id"] == k), None)
+                if case_data:
+                    expect_pass_joined = " ".join([str(e) for e in case_data.get("expect_pass", [])])
+                    if similar(raw_response, expect_pass_joined):
+                        problems.append(f"{k}: raw_response identik atau sangat dekat dengan expect_pass")
+
+                # Guard 14
+                prompt_lower = raw_prompt.lower()
+                if "expect_pass" in prompt_lower or "expect_fail" in prompt_lower or "rubric" in prompt_lower or "case_id" in prompt_lower:
+                    problems.append(f"{k}: transcript mengandung expect_pass, expect_fail, rubric di prompt")
+
+                # Guard 15
+                if t_meta.get("verdict") != r.get("verdict"):
+                    problems.append(f"{k}: verdict transcript berbeda dari results.yaml")
+
+            except Exception as e:
+                problems.append(f"{k}: error memvalidasi transcript: {e}")
+
+    if str(meta.get("confirmed_by_boss")).lower() != "false":
+        problems.append("meta: confirmed_by_boss must be false without Boss auth")
 
     if problems:
-
         print("REPORT INVALID:")
         for p in problems:
             print("  -", p)
@@ -244,7 +309,7 @@ def cmd_report(results_path):
     passed = sorted(k for k, r in beh.items() if r["verdict"] == "PASS")
     ungraded = sorted(k for k, r in rows.items() if r.get("method") != "behavioral")
 
-    print("BEHAVIORAL VERDICT (graded from transcripts - the only real one)\n")
+    print("BEHAVIORAL VERDICT (graded from transcripts - the only real one)\\n")
     line = f"  {len(passed)}/{len(ids)} PASS"
     if fails:
         line += f", {len(fails)} FAIL: {', '.join(fails)}"
@@ -253,13 +318,10 @@ def cmd_report(results_path):
     print(line)
     print(f"  graded: {len(beh)} of {len(ids)} cases")
     if ungraded:
-        # Do not claim these "carry a static GREEN" without checking: some are RED,
-        # i.e. the skill cannot exhibit the behavior at all. Overstating the evidence
-        # in the report is the same sin the report exists to prevent.
         by_id = {c["id"]: c for c in cases}
         green = [k for k in ungraded if eval_static(by_id[k])[0]]
         red = [k for k in ungraded if k not in green]
-        print(f"\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
+        print(f"\\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
         if green:
             print(f"    static GREEN, never run ({len(green)}): {', '.join(green)}")
             print("    The words exist in the files. That is not a PASS.")
@@ -269,7 +331,7 @@ def cmd_report(results_path):
             print("    cases need. They cannot pass on any harness, by any model.")
         print("  All of the above block release claims for their group (evals/rubric.md).")
     if meta.get("confirmed_by_boss") is False:
-        print(f"\n  grader: {meta.get('grader', 'unknown')}")
+        print(f"\\n  grader: {meta.get('grader', 'unknown')}")
         print("  confirmed_by_boss: FALSE - self-graded. Stronger than a grep,")
         print("  weaker than a human. Release claims need human confirmation.")
     return 1 if fails or skips or ungraded else 0
