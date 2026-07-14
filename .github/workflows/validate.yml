@@ -22,3 +22,9 @@ jobs:
 
       - name: Run static tests
         run: python3 scripts/run_evals.py --static
+
+      - name: Run evaluator unit tests
+        run: python3 -m unittest scripts.test_run_evals -v
+
+      - name: Compile Python scripts
+        run: python3 -m compileall scripts

@@ -98,3 +98,9 @@ case_id, model, model_mode, harness, session_id, cold_session, tested_commit, te
 The hash values must be computed deterministically, never written manually:
 - **TESTED_TREE**: Compute via git show -s --format=%T <tested_commit>
 - **SKILL_ROOT_HASH**: Compute as the deterministic SHA-256 hash of all tracked files in skills/hypertaks. This must include the relative path and file contents, sorted by path.
+
+For a release report, `tested_commit` must equal the current checkout HEAD and
+every behavioral row must match the report-level commit, tree, and skill-root
+hash. A saved legacy report may therefore be rejected by `--report`; that
+diagnostic failure is not converted into PASS and does not block structural CI
+when no fresh behavioral rerun is part of the change.

@@ -8,6 +8,21 @@ This release adds quantitative domain references, a Safety Kernel, and explicit
 runtime/provenance checks. These mechanisms improve structure and observability;
 their behavioral coverage remains bounded by the evidence status below.
 
+### 2026-07-15 audit remediation
+
+- Hardened `scripts/run_evals.py` against mixed commit/tree/hash provenance,
+  placeholder transcript fields, self-grading, and missing executor/grader
+  identities.
+- Cached the skill-root hash per tested commit so report validation does not
+  recompute the same Git blobs for every case.
+- Added regression coverage for JSONL parsing, unknown commits, tree/hash
+  mismatches, placeholder responses, and self-grading.
+- Extended CI with evaluator unit tests and Python compilation checks.
+- The saved behavioral bundle remains legacy and invalid under the canonical
+  report. No behavioral rerun was performed, `confirmed_by_boss` remains
+  `false`, and v4.2.0 remains a structural release with partial behavioral
+  evidence.
+
 ### Added
 - **Safety Kernel (P0)**: Introduced `references/00-security-kernel.md` for absolute authority binding (T0 > T1 > T2 > T3 > T4=T5=T6) and approval-source binding to close approval spoofing.
 - **State and Transactions**: Introduced `references/01-state-and-transactions.md` enforcing idempotency keys for external actions and PREPARE → PREVIEW → APPROVAL → COMMIT loop.
@@ -31,8 +46,8 @@ their behavioral coverage remains bounded by the evidence status below.
 ### Verification boundary
 
 - `evals/results.yaml` records 26 PASS and 12 SKIPPED(harness), all with `confirmed_by_boss: false`.
-- EV-25 through EV-38 provide 14 PASS records with complete cold-session, tool, hash, raw-response, and independent-grader fields.
-- The 24-EV behavioral release threshold is not met. Static GREEN and skipped cases do not count as behavioral PASS.
+- EV-25 through EV-38 provide 14 historical PASS records with complete cold-session, tool, hash, raw-response, and independent-grader fields; they do not target the current commit.
+- The canonical report is invalid for the legacy bundle. The current-HEAD provenance-valid PASS count is 0. Static GREEN and skipped cases do not count as behavioral PASS.
 - This finalization does not rerun the 38-case behavioral suite.
 
 ### Repository-generated figures

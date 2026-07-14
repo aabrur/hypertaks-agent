@@ -144,8 +144,9 @@ records rather than searched for the literal characters `\\n`.
 | CORE profile | 40 lines | VERIFIED on disk |
 | Eval inventory | 38 cases in seven declared groups | VERIFIED on disk |
 | Saved behavioral verdicts | 26 PASS, 12 SKIPPED(harness) | VERIFIED as saved records |
-| Complete independent PASS records | 14, EV-25–EV-38 | VERIFIED from saved JSONL fields |
-| 24-EV release threshold | Not met; 10 additional valid PASS cases required | VERIFIED arithmetic |
+| Complete historical PASS records | 14, EV-25–EV-38 | VERIFIED from saved JSONL fields; not current-HEAD evidence |
+| Current-HEAD provenance-valid PASS | 0; canonical `--report` is invalid | VERIFIED from report exit 1 |
+| 24-EV release threshold | Not met; fresh provenance-valid evidence is required | VERIFIED release boundary |
 | Boss confirmation | false for metadata and all 38 rows | VERIFIED on disk |
 
 ## 8. Finalization scope
@@ -154,3 +155,14 @@ The finalization commit may integrate the current code and documentation after
 the requested smoke checks pass. It must not claim that the 24-EV behavioral
 threshold, human confirmation, or full behavioral coverage has been achieved.
 No behavioral rerun, force-push, tag, or new audit is included.
+
+## 9. Six-agent audit remediation boundary
+
+The 2026-07-15 remediation validates the six audit reports against canonical
+`origin/main`. Accepted changes are limited to evaluator provenance guards,
+hash caching, regression tests, CI coverage, and documentation synchronization.
+Historical PASS rows remain recorded but are not promoted: the current
+`--report` result is invalid, skipped cases remain skipped, and
+`confirmed_by_boss: false` remains unchanged. v4.2.0 is therefore described as
+a structural release with partial behavioral evidence, not release-certified
+behavior.

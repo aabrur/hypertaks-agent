@@ -52,11 +52,15 @@ separately from structural presence. Full detail is in the
 
 ### Behavioral evidence status
 
-The saved results record 26 PASS and 12 SKIPPED(harness). The tightened
-provenance checks find 14 PASS transcripts with complete cold-session, tool,
-hash, raw-response, and independent-grader fields (EV-25–EV-38). That is below
-the 24-EV release threshold. `confirmed_by_boss` remains `false` for all 38
-rows. Static GREEN is not a behavioral PASS.
+The saved results are legacy records: 26 recorded PASS and 12
+SKIPPED(harness). The canonical report currently rejects them because the
+bundle mixes historical tested commits, placeholder/incomplete transcripts,
+self-grading, and malformed JSONL. Fourteen rows (EV-25 through EV-38) have
+complete fields relative to their historical run, but none count as
+current-release provenance-valid evidence until a clean rerun targets the
+current commit. `confirmed_by_boss` remains `false` for all 38 rows. Static
+GREEN is not a behavioral PASS, and v4.2.0 is a structural release with
+partial behavioral evidence, not a behavioral certification.
 
 <div align="center">
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">

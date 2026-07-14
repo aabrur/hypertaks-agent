@@ -1,21 +1,21 @@
 # CHECKPOINT — Hypertaks v4.2.0 finalization
 
-Date: 2026-07-14
-Working branch: `v4-kernel`
+Date: 2026-07-15
+Working branch: `main`
 
 This checkpoint records the current repository state without treating static
 checks, saved verdicts, or model grading as stronger evidence than they are.
 
-## Three-phase scope
+## Remediation scope
 
-1. **Minimal fix** — parse JSONL with `splitlines()`, remove empty test bodies,
-   and retain a minimum parser/provenance regression set.
-2. **Cleanup, documentation, and figures** — remove generated scratch output,
-   strengthen `.gitignore`, correct release documents, and regenerate four
-   factual figures from repository data.
-3. **Verification and integration** — run the five requested smoke checks,
-   create one release commit, merge into the synchronized `main`, and push
-   `origin/main`.
+1. **Evaluator integrity** — enforce current-HEAD, row/meta commit-tree-hash
+   consistency; reject placeholders and non-independent graders; cache skill
+   root hashes; retain focused regression coverage.
+2. **CI and documentation** — run validator, case check, static check, unit
+   tests, and compileall in CI; synchronize release wording with the invalid
+   legacy report.
+3. **Verification and integration** — run the required checks, commit one
+   remediation work item, and push `origin/main` without a force-push or tag.
 
 No 38-case behavioral rerun is part of this scope. No tag, force-push, or new
 audit is authorized.
@@ -26,13 +26,14 @@ audit is authorized.
 |---|---:|
 | Eval case definitions | 38 |
 | Saved result verdicts | 26 PASS, 12 SKIPPED(harness), 0 recorded FAIL |
-| PASS transcripts with complete cold-session, tool, hash, raw-response, and independent-grader fields | 14 (EV-25–EV-38) |
+| Historical PASS transcripts with complete cold-session, tool, hash, raw-response, and independent-grader fields | 14 (EV-25–EV-38) |
 | Release threshold | 24 provenance-valid behavioral PASS |
 | `confirmed_by_boss` | `false` in metadata and all 38 result rows |
 
-The 24-EV behavioral threshold is **not met** by the provenance-valid subset.
-The remaining saved PASS verdicts are not promoted to release evidence by a
-static check. `confirmed_by_boss` remains unchanged.
+The `--report` command currently exits 1, so the current-release
+provenance-valid PASS count is **0**. The 14 complete historical rows are not
+promoted across the current-HEAD boundary. The remaining saved PASS verdicts
+are not promoted by a static check. `confirmed_by_boss` remains unchanged.
 
 ## Structural state
 
@@ -50,7 +51,7 @@ static check. `confirmed_by_boss` remains unchanged.
 - No claim that repository history is secret-free or that runtime coverage is
   complete; those require evidence outside this scope.
 
-## Phase 3 verification gate
+## Verification gate
 
 Before commit, run and record fresh exit-zero results for:
 
@@ -62,11 +63,11 @@ python -m compileall scripts
 git diff --check
 ```
 
-The focused parser/provenance unit test is also run separately. Behavioral
-`--report` is intentionally excluded because it is not one of the authorized
-smoke checks and would not repair invalid legacy provenance.
+The focused parser/provenance unit tests are also run separately. Behavioral
+`--report` is diagnostic for this legacy bundle; its non-zero result is
+recorded and does not block structural CI because no behavioral rerun occurred.
 
-### Fresh results on 2026-07-14
+### Fresh results on 2026-07-15
 
 | Check | Result |
 |---|---|
@@ -75,4 +76,4 @@ smoke checks and would not repair invalid legacy provenance.
 | `python scripts/run_evals.py --static` | exit 0 — 38/38 GREEN; not behavioral PASS |
 | `python -m compileall scripts` | exit 0 |
 | `git diff --check` | exit 0 |
-| `python -m unittest scripts.test_run_evals -v` | exit 0 — 3 tests OK |
+| `python -m unittest scripts.test_run_evals -v` | exit 0 — 7 tests OK |

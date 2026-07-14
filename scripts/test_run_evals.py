@@ -57,6 +57,27 @@ class TestRunEvalsProvenance(unittest.TestCase):
         errors = self.validate(self.make_transcript(tested_tree="0" * 40))
         self.assertTrue(any("tested_tree" in error for error in errors))
 
+    def test_rejects_unknown_commit(self):
+        errors = self.validate(self.make_transcript(tested_commit="0" * 40))
+        self.assertTrue(any("tested_commit" in error for error in errors))
+
+    def test_rejects_invalid_skill_hash(self):
+        errors = self.validate(self.make_transcript(skill_root_hash="0" * 64))
+        self.assertTrue(any("skill_root_hash" in error for error in errors))
+
+    def test_rejects_placeholder_response(self):
+        errors = self.validate(self.make_transcript(raw_response="[placeholder response]"))
+        self.assertTrue(any("raw_response" in error for error in errors))
+
+    def test_rejects_self_grading(self):
+        errors = self.validate(
+            self.make_transcript(
+                grader="executor-agent (self-graded)",
+            )
+        )
+        self.assertTrue(any("self-graded" in error for error in errors))
+        self.assertTrue(any("executor dan grader sama" in error for error in errors))
+
     def test_parser_uses_jsonl_lines(self):
         first = self.make_transcript(session_id="first")
         second = self.make_transcript(session_id="second")

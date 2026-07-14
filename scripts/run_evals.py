@@ -30,6 +30,7 @@ from pathlib import Path
 import subprocess
 import json
 import hashlib
+from functools import lru_cache
 
 try:
     import yaml
@@ -143,6 +144,7 @@ def cmd_static():
           "transcript.")
     return 1 if red else 0
 
+@lru_cache(maxsize=None)
 def calc_skill_root_hash(commit):
     try:
         out = subprocess.check_output(git_args("ls-tree", "-r", commit, "skills/hypertaks"), encoding="utf-8")
@@ -195,9 +197,9 @@ def validate_transcript(case_id, result, case_data, transcript_path):
     meta = records[0]
     raw_prompt = meta.get("raw_prompt")
     raw_response = meta.get("raw_response")
-    if not isinstance(raw_prompt, str) or not raw_prompt.strip() or raw_prompt.startswith("["):
+    if not isinstance(raw_prompt, str) or not raw_prompt.strip() or raw_prompt.strip().startswith("["):
         problems.append(f"{case_id}: raw_prompt kosong atau bukan prompt nyata")
-    if not isinstance(raw_response, str) or not raw_response.strip() or raw_response.startswith("["):
+    if not isinstance(raw_response, str) or not raw_response.strip() or raw_response.strip().startswith("["):
         problems.append(f"{case_id}: raw_response kosong atau bukan respons model verbatim")
     if meta.get("case_id") != case_id:
         problems.append(f"{case_id}: case_id transcript tidak cocok")
@@ -235,6 +237,10 @@ def validate_transcript(case_id, result, case_data, transcript_path):
                 problems.append(f"{case_id}: skill_root_hash tidak sama dengan hash aktual")
     executor_name = str(meta.get("executor", "")).strip()
     grader_name = re.sub(r"\s*\([^)]*\)", "", str(meta.get("grader", ""))).strip()
+    if not executor_name:
+        problems.append(f"{case_id}: executor kosong")
+    if not grader_name:
+        problems.append(f"{case_id}: grader kosong")
     if executor_name and executor_name == grader_name:
         problems.append(f"{case_id}: executor dan grader sama")
     if "self-graded" in str(meta.get("grader", "")).lower():
@@ -274,7 +280,36 @@ def cmd_report(results_path):
 
     rows = {k: row(v) for k, v in results.items() if k != "meta"}
 
-    problems = [f"unknown case id in results: {k}" for k in rows if k not in ids]
+    problems = []
+    provenance_keys = ("tested_commit", "tested_tree", "skill_root_hash")
+    for key in provenance_keys:
+        value = meta.get(key)
+        if not isinstance(value, str) or not value.strip():
+            problems.append(f"meta: {key} kosong atau tidak ada")
+            break
+    else:
+        commit = meta["tested_commit"]
+        if not re.fullmatch(r"[0-9a-f]{40}", commit):
+            problems.append("meta: tested_commit bukan SHA penuh 40 karakter")
+        else:
+            try:
+                subprocess.run(git_args("cat-file", "-e", commit), check=True,
+                               capture_output=True)
+            except subprocess.CalledProcessError:
+                problems.append("meta: tested_commit tidak dapat ditemukan")
+            else:
+                if meta["tested_tree"] != git_tree(commit):
+                    problems.append("meta: tested_tree tidak sama dengan tested_commit")
+                skill_hash = calc_skill_root_hash(commit)
+                if meta["skill_root_hash"] != skill_hash:
+                    problems.append("meta: skill_root_hash tidak sama dengan tested_commit")
+                try:
+                    if commit != current_head():
+                        problems.append("meta: tested_commit tidak sama dengan current HEAD")
+                except subprocess.CalledProcessError:
+                    problems.append("meta: current HEAD tidak dapat dibaca")
+
+    problems.extend(f"unknown case id in results: {k}" for k in rows if k not in ids)
     missing = sorted(ids - set(rows))
     if missing:
         problems.append(f"cases with no recorded result: {', '.join(missing)}")
@@ -293,6 +328,11 @@ def cmd_report(results_path):
         # Guard 17
         if str(r.get("confirmed_by_boss")).lower() != "false":
             problems.append(f"{k}: confirmed_by_boss must be false without Boss auth")
+
+        if r.get("method") == "behavioral":
+            for key in provenance_keys:
+                if r.get(key) != meta.get(key):
+                    problems.append(f"{k}: {key} tidak sama dengan meta")
 
         # Guard 16
         if str(r.get("verdict")) == "PASS" and "EVIDENCE_MISSING" in str(r.get("evidence", "")):

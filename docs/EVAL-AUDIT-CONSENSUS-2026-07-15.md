@@ -139,4 +139,25 @@ The next EV run should use one exact immutable tested commit and produce:
 
 **Publish this audit consensus, keep v4.2.0 available as a structural release, and do not upgrade its behavioral certification claim until a clean provenance-valid rerun passes the canonical gate.**
 
+## Remediation status against canonical `origin/main`
+
+The six reports were triaged again from commit `15fc01e` after the working tree
+was preserved and `main` was fast-forwarded. The remediation accepted the
+evidence-pipeline findings that reproduce on canonical `main`: mixed historical
+provenance, placeholder or incomplete transcript fields, self-grading,
+malformed JSONL records, insufficient evaluator regression coverage, repeated
+skill-root hashing, and incomplete CI checks. The runner now rejects a report
+whose metadata is not the current HEAD or whose rows disagree with the report
+metadata; the hash is cached per commit; regression tests cover parser,
+independent-grader, placeholder, commit/tree/hash, and self-grading failures;
+CI runs the validator, structural/static checks, unit tests, and compileall.
+
+The remediation rejected findings caused only by the auditors' dirty
+checkouts: missing plugin manifests, missing CI, missing CORE/domain routing,
+missing roles, and stray bundles. Canonical `main` contains those tracked
+release assets, reports no generated scratch artifact, and already uses
+`splitlines()` for JSONL parsing. No behavioral rerun was performed, no
+`confirmed_by_boss` value was changed, and the legacy report still exits 1 by
+design because its evidence is not provenance-valid for the current commit.
+
 This is the merged conclusion of the six-agent audit. It supersedes individual release-readiness opinions, but it does not replace the canonical EV runner, rubric, transcripts, or `results.yaml`.
