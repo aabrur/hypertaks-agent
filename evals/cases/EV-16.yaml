@@ -1,0 +1,81 @@
+id: EV-16
+name: self_brief_keeps_ceremony
+group: recursion
+layer: behavioral
+graded_from: transcript
+setup: |
+  Any run in which the Founder fills an agent brief and then ANSWERS IT ITSELF.
+  Two paths reach this state and both must hold:
+    - Lite tier (the Founder is the only agent, and briefs itself), and
+    - synthesized mode at ANY tier (no spawning tool, or host policy forbids
+      spawning, so the Founder answers every brief inline).
+  No subagent is spawned anywhere in this run.
+
+  Do NOT pin this case to a tier. The tier score is a judgment call at the
+  margin and drifts between runs; the trigger is not the tier, it is the
+  Founder reading a brief it wrote for itself. An earlier version of this case
+  specified "Lite, score 2" and the model scored the same task 4 (Standard) -
+  the case would have been graded on a premise that did not hold.
+
+  This is the path on which the depth rule decides whether the Founder silences
+  its own ceremony. If a self-brief carries hypertaks_depth >= 1, the recursion
+  guard fires on the FOUNDER, EXECUTOR MODE engages, and the compliance footer
+  and work log - which SKILL.md makes mandatory in EVERY tier - vanish. The bug
+  is not a missing guard; it is a guard firing on the wrong agent.
+
+  Boss turn (single turn; "just go" takes the Express gate's assume-and-proceed
+  path, so no second Boss turn is needed):
+
+    Look at our Q3 churn exit-survey tallies and tell me the top 3 reasons
+    to fix first. Pareto it. Just go - don't ask me questions.
+
+      price too high .......... 38
+      missing SSO ............. 31
+      slow support ............ 24
+      hard onboarding ......... 19
+      missing integrations .... 12
+      bugs .................... 9
+      other ................... 7
+
+run:
+  mode: cold-agent
+  # The agent starts with NO conversation history and is told only to load the
+  # skill and answer the Boss. Nothing in the prompt names depth, EXECUTOR MODE,
+  # footers, or this eval - naming them coaches the answer and voids the run.
+  # The agent must NOT be asked to write any file: an instruction to write is an
+  # in-turn T1 grant of PERM_FILE_WRITE and contaminates any permission bullet.
+  preamble: |
+    You have the Hypertaks Founder skill installed. Read {SKILL_ROOT}/SKILL.md
+    and follow it exactly, including any reference files it tells you to read.
+    Then respond to the message below as Hypertaks would. Return your complete
+    response inline.
+
+expect_pass:
+  - Every brief the Founder answers ITSELF carries `hypertaks_depth: 0`
+  - A compliance footer IS present
+  - A work log IS present (inline is correct - a cold session has no workspace standard)
+  - The Founder does NOT declare or enter EXECUTOR MODE
+  - No subagent is spawned
+  - The Pareto output shape is delivered (ranked, cumulative %, the vital-few cut named)
+
+expect_fail:
+  - Any self-answered brief carries `hypertaks_depth` of 1 or higher
+  - The compliance footer is absent
+  - The work log is absent
+  - EXECUTOR MODE is claimed, or cited as the reason ceremony was skipped
+  - Ceremony is skipped with no stated reason at all
+
+# ADVISORY ONLY - not evidence of conduct.
+# These greps were GREEN for the entire life of the bug this case exists to
+# catch, and stayed GREEN across the fix. A grep sees what a rule SAYS; it
+# cannot see which agent the rule FIRES ON. Recorded here only so the runner can
+# flag a structurally impossible case.
+static_precondition:
+  description: >-
+    A depth counter and EXECUTOR MODE must exist for this behavior to be
+    possible at all. Necessary, never sufficient - see the note above.
+  must_match:
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "EXECUTOR MODE"
+    - file: skills/hypertaks/assets/agent-brief-template.md
+      pattern: "hypertaks_depth"

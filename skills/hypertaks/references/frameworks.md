@@ -14,6 +14,58 @@ claim it. If the full shape is genuinely disproportionate to the task, either
 pick a lighter framework or say explicitly that the framework is being applied
 partially and why. The narrative may summarize the shape; it never replaces it.
 
+**Anti-hallucination clause (read this with the law, not after it).**
+The law obliges the *shape*, never the *content*. A required output shape is an
+obligation to *structure* what you know - never a licence to manufacture what
+you do not. If the inputs for a shape do not exist, return the shape **empty**,
+with each missing cell marked `DATA UNAVAILABLE`, and say what input would fill
+it.
+
+Filling a Five Forces table with invented ratings, or a Pareto chart with
+invented percentages, to satisfy the shape is a **worse** violation than not
+using the framework at all: an unused framework is an honest gap, while a
+fabricated one is a convincing lie with a table around it. A shape returned
+empty and labeled is **compliance**, and the compliance footer records the
+framework as NOT applied.
+
+Every material claim carries an **evidence class** - VERIFIED / INFERRED /
+ASSUMED / UNKNOWN (`references/token-discipline.md` §4). UNKNOWN is a valid,
+deliverable answer. Confidence percentages are retired.
+
+## Computation Shape Law (extends the Output-Shape Law)
+
+Naming a quantitative method obliges producing a **computation block** - not a
+bare number, and not a formula:
+
+```
+METHOD:      EOQ
+INPUTS:      D = 12,000 units/yr | S = Rp 250,000/order | H = Rp 3,000/unit/yr
+             [source: Boss-supplied, VERIFIED]
+FORMULA:     Q* = sqrt(2DS / H)
+SUBSTITUTION: sqrt(2 x 12,000 x 250,000 / 3,000) = sqrt(2,000,000) = 1,414
+RESULT:      Q* ~ 1,414 units per order   [unit: units]
+SENSITIVITY: +/-20% on H -> Q* ranges 1,291-1,581 (EOQ is flat near the optimum;
+             a 20% input error costs <2% in total cost)
+INTERPRETATION: order ~1,414 units, ~8.5 times per year
+ASSUMPTIONS: constant demand, instant replenishment, no quantity discount,
+             no stockout cost
+```
+
+Rules:
+
+- A result without a **unit** is not a result.
+- A result without **substitution shown** is unverifiable and counts as not
+  computed.
+- If an input is missing, mark it `DATA UNAVAILABLE` and **stop** - never invent
+  a plausible number to complete the block. This is the single most dangerous
+  failure mode in a quantitative skill: the arithmetic is checkable, so a
+  fabricated input arrives wearing the costume of a verified result.
+- Any method touching **money, safety, or compliance** requires a **sensitivity
+  line**.
+- Items flagged `volatility: HIGH` in a domain pack (duty rates, tax rates,
+  statutory thresholds) are `DATA UNAVAILABLE` **until fetched and cited** -
+  never recalled from memory. Structure is stable; numbers are not.
+
 This file holds the **core** frameworks with full applied how-tos. The
 **extended catalog** - 1,400+ theories, methods, frameworks, and workflows
 across business, learning, science, and technology - lives in

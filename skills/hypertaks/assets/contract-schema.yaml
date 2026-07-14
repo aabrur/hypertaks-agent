@@ -1,0 +1,30 @@
+# Machine-readable mirror of the task contract (intake protocol, Step 3).
+# Field names match the hypertaks_state capsule in
+# references/01-state-and-transactions.md so a contract can be lifted into
+# the capsule without translation. Types are advisory for prose harnesses;
+# scripts/validate_skill.py checks this file parses and the enums are sane.
+contract:
+  contract_id:      {type: string, pattern: "HT-YYYYMMDD-AAA", required: true}
+  tier:             {type: enum, values: [Nano, Lite, Standard, Prime, Hyper, Omega], required: true}
+  tier_score:       {type: integer, min: 0, max: 14, required: true}   # printed, never a hunch
+  gate:             {type: enum, values: [none, Express, Deep], required: true}
+  agents_planned:   {type: integer, min: 0, required: true}
+  objective:        {type: string, required: true}
+  definition_of_done: {type: string, required: true}
+  scope:            {type: string, required: true}
+  out_of_scope:     {type: string, required: true}
+  constraints:      {type: list, required: true}
+  success_criteria: {type: list, required: true}
+  deliverable:      {type: string, required: true}
+  task_shape:       {type: enum, values: [analysis, execution, both], required: true}
+  permissions:
+    type: list
+    required: true
+    values: [PERM_READ_LOCAL, PERM_NET_READ, PERM_FILE_WRITE, PERM_SHELL,
+             PERM_SEND_MESSAGE, PERM_PUBLISH, PERM_SPEND, PERM_ONCHAIN_WRITE,
+             PERM_DELETE]
+  frameworks:       {type: list, note: "each entry: name -> promised output shape"}
+  budget_production: {type: integer, note: "tier production budget, tokens"}
+  assumptions:      {type: list}
+  alternative_readings: {type: list}
+  status:           {type: enum, values: [DRAFT, AWAITING_APPROVAL, ACTIVE, BLOCKED, ABORTED, CLOSED]}

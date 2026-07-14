@@ -4,14 +4,16 @@
 
 ### Founder/CEO-grade operating skill for AI coding agents
 
-**Turns your agent into the *Hypertaks Founder*** — a sized intake gate locks
+**Turns your agent into the *Hypertaks Founder*** - a sized intake gate locks
 the request, then a dynamically tiered team of specialist agents ships the
 work, each equipped with the right business frameworks plus whatever
 plugins/skills and MCP connectors your environment already has.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.0.0-blue)
+![Version](https://img.shields.io/badge/version-4.2.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
+
+**Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
 
 </div>
 
@@ -19,8 +21,8 @@ plugins/skills and MCP connectors your environment already has.
 
 > **Hypertaks** = *"A founder who owns a library of more than 1,400
 > books, knows exactly which book to consult for this issue, and has a
-> strict SOP: intake → formulation → implementation → integration →
-> documentation."*
+> strict SOP: gate → frame → roles → equip → produce → integrate -
+> six phases (0–5)."*
 
 **Domains covered:** business strategy, full-spectrum engineering (web,
 backend, mobile, data, and **deep Solidity/Web3 smart contracts**),
@@ -31,62 +33,79 @@ and IoT.
 
 ## 🏆 Why Hypertaks
 
-Benchmarked head-to-head against other agent operating protocols — Hypertaks
-2.0 leads on decision quality, cross-domain integration, and framework
-rigor, at real setup-complexity cost.
+The figure below is a repository inventory, generated from tracked files and
+defined entries. It is not a quality score or benchmark.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks 2.0 vs other agent protocols — radar benchmark" width="700">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.2.0 repository inventory" width="850">
 </div>
 
 ---
 
-## 📈 What changed in 4.0.0
+## 📈 What changed in 4.2.0
 
-A full audit of 3.0.0 found real structural defects; 4.0.0 repairs every one
-of them to zero (duplicate and fabricated knowledge-base entries, non-English
-residue, personal paths, and 108 named tools the skill assumed were installed)
-and raises the discipline layer: a binding task contract with six defined
-violations and mandatory rollback, category-based tool binding that works with
-any tool mix, and doubled validator coverage. Full detail in the
+Version 4.2.0 adds the security kernel, state and transaction protocol,
+deterministic tier scoring, 12 routed domain packs, a CORE profile, and 38 eval
+case definitions. These are repository facts; runtime behavior is reported
+separately from structural presence. Full detail is in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
+### Behavioral evidence status
+
+The saved results record 26 PASS and 12 SKIPPED(harness). The tightened
+provenance checks find 14 PASS transcripts with complete cold-session, tool,
+hash, raw-response, and independent-grader fields (EV-25–EV-38). That is below
+the 24-EV release threshold. `confirmed_by_boss` remains `false` for all 38
+rows. Static GREEN is not a behavioral PASS.
+
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Hypertaks 3.0.0 vs 4.0.0 — measured defect repair and discipline coverage" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">
+</div>
+
+The eval inventory contains seven declared groups:
+
+<div align="center">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Behavioral eval case distribution by group" width="850">
 </div>
 
 ---
 
-## ⚙️ The Mandatory 5-Phase Loop
+## ⚙️ The Mandatory Loop - Six Phases (0–5)
 
-Every task — Lite or Hyper — runs through the same five phases. The loop
-never disappears, it only scales: light tasks move through it fast, heavy
-tasks spawn more agents inside it.
+Every task - Lite or Hyper - runs through the same six phases, from Phase 0
+(the intake gate) to Phase 5 (integrate & deliver). The loop never
+disappears, it only scales: light tasks move through it fast, heavy tasks
+spawn more agents inside it.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks 2.0 mandatory 5-phase loop diagram" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks mandatory phase-loop diagram" width="850">
 </div>
 
 ## 🔒 Three hard rules
 
-1. **Intake gate first, sized to the task** — every task starts with a
-   verification round (Express for light tasks, Deep for heavy ones); no
-   work begins until the request is unambiguous and confirmed. The gate is
-   never skipped, only sized.
-2. **Dynamic Agent Allocation** — the gate assesses the task into a tier
+1. **Intake gate first, sized to the task** - Nano uses a zero-sized gate;
+   Lite/Standard use Express and Prime/Hyper use Deep. Build work begins only
+   after the request and permissions are explicit.
+2. **Dynamic Agent Allocation** - the gate assesses the task into a tier
    that fixes the agent count:
 
    | Tier | Agents | Typical task |
    |------|--------|--------------|
+   | ⚪ Nano | 0 | a single factual answer - no contract, no team (escalates the moment anything must be built or decided) |
    | 🟢 Lite | 1 | typo fix, one copy tweak, follow-up inside a confirmed contract |
    | 🔵 Standard | 3 | 2–3 domains, one deliverable |
    | 🟣 Prime | 5 | classic founder-shaped cross-domain work |
    | 🔴 Hyper | 6–10+ | multi-workstream programs (launches, company-wide diagnosis) |
+   | ⚫ Omega | 10+ | multi-quarter programs with human go/no-go gates (needs explicit framing at this scale) |
 
-3. **No silent deviation** — tier, gate mode, and assumptions are announced
+   The tier is set by a **printed 7-factor score**, not by a hunch, and it can be
+   *de-escalated* mid-run if the task proves smaller. The table in
+   `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
+
+3. **No silent deviation** - tier, gate mode, and assumptions are announced
    in the task contract; frameworks must be delivered in their defined
    output shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone
-   tree — not just the name); every deliverable ends with a compliance
+   tree - not just the name); every deliverable ends with a compliance
    footer and a work log.
 
 ---
@@ -94,13 +113,12 @@ tasks spawn more agents inside it.
 ## ⚡ Lazy-loaded, not bloated
 
 The 1,400+ item knowledge base and reference docs are **grepped by keyword
-in Phase 3**, never loaded wholesale. On Prime/Hyper-tier tasks that means
-roughly **70–80% fewer tokens** and **60–75% less execution time** versus
-loading everything up front.
-
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Token cost and execution time — naive vs smart integration" width="850">
-</div>
+in Phase 3**, never loaded wholesale, and reference reading is conditional
+by tier. How much that saves versus loading everything up front is **not
+measured** - the figure this section used to quote compared Hypertaks
+against a strawman that loaded the entire knowledge base, which nothing
+does. Measured numbers will come from [`evals/`](evals/), or they will not
+be claimed.
 
 ---
 
@@ -115,8 +133,8 @@ supply chain · Supply Chain Finance · ERP · Smart contracts · IoT.
 is a 1,400+ item encyclopedia of theories, methods, frameworks, and
 workflows across business, learning, science, and technology (JTBD, Kano,
 RICE, Cynefin, OKR, PESTLE, DDD, MLOps, EIP standards, sales methodologies,
-mental models, and more). Lazy-loaded: agents grep it by keyword, so it
-costs no context until needed.
+mental models, and more). Agents route to it by keyword instead of loading the
+whole catalog.
 
 ---
 
@@ -124,7 +142,7 @@ costs no context until needed.
 
 This repo is a cross-agent plugin. Every agent loads the single skill under
 [`skills/hypertaks`](skills/hypertaks); each agent just has its own way of
-discovering it. Install per agent below — everyone runs their own flow, so
+discovering it. Install per agent below - everyone runs their own flow, so
 no particular workspace layout is assumed.
 
 <details open>
@@ -169,7 +187,7 @@ Or open `/plugins` → Marketplace → Hypertaks.
 <details>
 <summary><strong>OpenCode</strong></summary>
 
-Follow [`.opencode/INSTALL.md`](.opencode/INSTALL.md) — add
+Follow [`.opencode/INSTALL.md`](.opencode/INSTALL.md) - add
 `"hypertaks@git+https://github.com/aabrur/hypertaks-agent.git"` to the
 `plugin` array in your `opencode.json`.
 </details>
@@ -185,7 +203,7 @@ pi install git:github.com/aabrur/hypertaks-agent
 <details>
 <summary><strong>OpenClaw / Hermes / any other agent</strong></summary>
 
-These agents load skills from a skills directory they scan on startup — the
+These agents load skills from a skills directory they scan on startup - the
 location depends on *your* setup. Clone this repo and make
 `skills/hypertaks` visible in that directory (copy or symlink/junction).
 See [`.openclaw/INSTALL.md`](.openclaw/INSTALL.md) and

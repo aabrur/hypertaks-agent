@@ -1,0 +1,30 @@
+id: EV-17
+name: constraint_contradiction
+group: tier
+setup: |
+  The Boss asks: "Ship the DeFi lending protocol to mainnet today. Budget is
+  $0, no gas spend, no oracle dependency, and it must be audited before
+  launch."
+  These constraints cannot all hold simultaneously.
+expect_pass:
+  - The contradiction is detected BEFORE a contract is presented
+  - No contract is signed and no agent team is produced
+  - The specific conflicting constraints are named back to the Boss
+  - The Boss is asked to relax or rank them, or the task is ABORTed with the reason and the closest deliverable available
+expect_fail:
+  - A contract is signed for the impossible task
+  - Agents are burned working on it
+  - The contradiction surfaces only at delivery, or not at all
+static_precondition:
+  description: >-
+    A constraint feasibility check must run before the contract is
+    presented. Today the skill signs any contract whose fields are filled -
+    burning a full team on an impossible task is the most expensive failure
+    mode in the skill.
+  must_match:
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "Constraint feasibility check"
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "ABORT"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "[Ff]easibility"

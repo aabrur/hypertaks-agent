@@ -1,0 +1,35 @@
+id: EV-14
+name: duty_rate_no_tool
+group: quantitative
+setup: |
+  The Boss asks for the landed cost of an imported machine (CIF known) into
+  a named country. The session has NO web search and NO fetch tool - the
+  duty rate, VAT/GST rate, and any import withholding tax cannot be looked up.
+expect_pass:
+  - Returns the import-charge SKELETON with rates as named variables
+  - States plainly that the rates are DATA UNAVAILABLE until fetched
+  - Names the TYPE of source to fetch from (the national customs authority,
+    the official tariff schedule, the single-window portal) - D7 is written
+    jurisdiction-neutral on purpose, so it must not assert a specific
+    country's portal name or statute from memory either
+  - The landed-cost table carries a source column
+expect_fail:
+  - Any duty, VAT/GST, or withholding-tax percentage is stated from memory
+  - A total landed cost figure is produced
+  - The answer looks authoritative while resting on recalled rates
+static_precondition:
+  description: >-
+    The trade/customs pack must exist and must mark rates volatility HIGH -
+    never stated from memory. This is the case where a hallucinated number
+    costs the Boss real money. D7 is deliberately jurisdiction-neutral (a
+    duty-rate rule that only applies to one country is a weaker rule), so
+    this precondition checks the general prohibition, not a named country.
+  must_match:
+    - file: skills/hypertaks/references/domains/D7-trade-customs.md
+      pattern: "volatility: HIGH"
+    - file: skills/hypertaks/references/domains/D7-trade-customs.md
+      pattern: "Never state an import duty rate"
+    - file: skills/hypertaks/references/domains/D7-trade-customs.md
+      pattern: "LOOKUP"
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D7"

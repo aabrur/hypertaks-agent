@@ -8,7 +8,7 @@
 
 Hypertaks is the founder-operator layer that executes founder-shaped work
 end-to-end across business strategy, engineering, full-stack-developer, marketing, finance, ERP,
-supply-chain, supply-chain finance, and IoT. It enforces a mandatory 5-phase
+supply-chain, supply-chain finance, and IoT. It enforces a mandatory six-phase
 loop-Intake & Verify, Frame, Pick Roles, Equip, Produce, Integrate & Deliver-
 with a sized intake gate, tiered agent allocation (Nano / Lite / Standard /
 Prime / Hyper / Omega), Karpathy discipline (read-before-write, surgical
@@ -157,5 +157,5 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 ## Work Log
 
 `2026-07-03 | Hypertaks: produced unreleased-local reviewer-ready skill card from integrated front/back blocks with compliance footer and work-log snippet.`
-`2026-07-03 | Hypertaks v3.0.0: card bumped — Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`
+`2026-07-03 | Hypertaks v3.0.0: card bumped - Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`
 `2026-07-06 | Hypertaks v4.0.0: binding contract with violation rollback, category-based tool binding (no personal config), knowledge base restructured and deduplicated, conditional visual capability, extended validation checks.`

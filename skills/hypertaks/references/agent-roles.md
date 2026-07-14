@@ -28,6 +28,11 @@ the session's actual tools per `references/plugins-and-mcp.md`.
 | 13 | **UX / UI & Product Design** | Interfaces, flows, usability | Design heuristics, journey mapping | Visual design & creative; web browsing & testing |
 | 14 | **Founder / Integrator** | Synthesis, decision, trade-offs | Systems Thinking, Cynefin, decision matrices, all frameworks | Notes & knowledge base (owns the work log); communication; scheduling |
 | 15 | **QA / Red-Team / Verifier** | Break it before the Boss does | Verification-before-completion, audit checklists, adversarial review | Web browsing & testing; data & analytics execution |
+| 16 | **Quantitative/OR Analyst** | Optimization, queuing, simulation | LP, Simplex, Monte Carlo, Markov | Data & analytics execution |
+| 17 | **Freight & Customs Specialist** | Incoterms, landed cost, routing | Landed cost, HS code classification | Spreadsheets; web search |
+| 18 | **Quality & Lean Engineer** | Variation reduction, defect control | Six Sigma, DMAIC, control charts | Data & analytics execution; spreadsheets |
+| 19 | **Research Methodologist** | Study design, sampling, validity | Slovin, statistical power, triangulation | Notes & knowledge base; data & analytics execution |
+| 20 | **Asset & Maintenance Engineer** | Reliability, LCC, replacement | RCM, engineering economy (PW/EAC) | Spreadsheets; data & analytics execution |
 
 ## Pick the tier's count - heuristics
 
@@ -38,10 +43,13 @@ the session's actual tools per `references/plugins-and-mcp.md`.
    - **Standard (3)** - the 2 most load-bearing specialists for the task +
      **Founder/Integrator**. Example: Engineer + Copywriting + Integrator for a
      small landing tweak with copy.
-   - **Prime (5)** - the classic lineup. Analysis/strategy → bias toward roles
-     1, 2, 3, 8, 12 + Integrator. Execution/build → bias toward 5, 6, 4, 13
-     plus one domain specialist (2, 9, 10, 11). Both → blend: 1–2 analysis,
-     2–3 build, + Integrator.
+   - **Prime (5)** - select **exactly FOUR specialists** from the pool, chosen
+     for the four most load-bearing uncertainties in the task, then add
+     **exactly ONE Founder/Integrator**. Never five specialists plus an
+     Integrator - that is six agents in a five-agent tier.
+     Analysis/strategy → draw the four from {1, 2, 3, 7, 8, 12, 16, 19, 20}.
+     Execution/build → draw from {4, 5, 6, 13} plus one domain specialist
+     (2, 9, 10, 11, 17, 18, 20). Both → blend: 2 analysis, 2 build, + Integrator.
    - **Hyper (6–10+)** - count the distinct workstreams that each need their
      own deliverable; assign one specialist per workstream, **split** heavy
      roles (frontend vs. backend engineer, per-chain Web3 engineers, per-market
@@ -59,6 +67,45 @@ the session's actual tools per `references/plugins-and-mcp.md`.
    allows → merge the weakest two or escalate the tier via a re-stated contract
    (never silently). Fewer seem needed → the tier was assessed too high; that is
    also a contract re-statement, not a silent shrink.
+
+## Shared-tool rule
+
+Some frameworks are **tools**, not lenses: Pareto, cohort analysis, sensitivity
+analysis, Little's Law, regression. A lens is a way of seeing, and two roles
+looking through different lenses at the same data produce two findings. A tool is
+a way of computing, and two roles running the same tool on the same data produce
+**the same number, twice**.
+
+So when more than one role needs the same tool, **exactly one role runs it**
+(default: Data/Analytics, else Finance, else Quantitative/OR) and hands the result
+to the others, who then interpret it through their own lens. Name the owner in the
+brief.
+
+Four Pareto charts of the same complaints table are not four perspectives. They are
+one chart, three times wasted - and worse, they read to the Boss like four
+independent confirmations of a finding that was only ever computed once.
+
+## Role interface contracts
+
+Roles collide at their boundaries, and the collisions are predictable. Each row
+says what a role **owns** and what it must **hand off** rather than produce. When
+two roles both reach for the same artifact, this table decides it.
+
+| Boundary | Owns | Never produces |
+|---|---|---|
+| **Marketing & Growth** | *what to say* - audience, channel, funnel mechanics, the offer | final headlines, final CTA copy |
+| **Copywriting & Brand** | *how to say it* - voice, tone, structure, the actual words | channel strategy, budget allocation |
+| **Supply Chain & Operations** | physical flow, throughput, the constraint | ERP module mapping, the master-data model |
+| **ERP / Process Architect** | process-to-module mapping, data ownership | physical routing, vehicle loading |
+| **Strategy** | positioning, competitive structure, the *why* of a price | the unit-economics model itself |
+| **Finance & Unit-Economics** | the model, the margins, the *number* of a price | the positioning narrative |
+| **Data / ML & Analytics** | the measurement, the shared computational tools | the business decision the number implies |
+| **QA / Red-Team** | adversarial review, the case against shipping | the fix (it names the defect; the owning role repairs it) |
+
+The two that leak most often in practice are Strategy/Finance (both want to own
+price) and Marketing/Copywriting (both want to own the headline). Price is *decided*
+by Strategy and *computed* by Finance; the headline is *briefed* by Marketing and
+*written* by Copywriting.
 
 ## Runtime tool detection
 

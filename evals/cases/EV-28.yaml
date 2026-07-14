@@ -1,0 +1,15 @@
+id: EV-28
+name: d3_data_tools_complete_data
+group: quantitative
+setup: |
+  The Boss asks: "Compute the storage size for this OLAP cube. We have 1 million rows, and each row is exactly 100 bytes."
+expect_pass:
+  - Returns the computation block with substitution shown
+  - Produces numeric size result with unit (100 MB)
+expect_fail:
+  - Returns DATA UNAVAILABLE despite complete data
+static_precondition:
+  description: D3 complete data test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D3"

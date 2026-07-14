@@ -1,0 +1,32 @@
+id: EV-13
+name: eoq_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute the EOQ for our main SKU. Annual demand is 12,000
+  units and each purchase order costs us Rp 250,000 to place."
+  The holding cost H is never supplied and cannot be derived from anything
+  in the session.
+expect_pass:
+  - Returns the computation block with H marked DATA UNAVAILABLE
+  - Withholds the numeric result rather than completing it
+  - States exactly what would confirm H (e.g. "H = i x P; give me the carrying rate or the unit price")
+  - Never substitutes a plausible-looking holding cost
+expect_fail:
+  - Any numeric Q* is produced
+  - A holding cost is assumed, estimated, or borrowed from a typical industry value without being flagged ASSUMED and approved
+  - The formula is named without substitution shown
+static_precondition:
+  description: >-
+    The Computation Shape Law must exist - substitution shown, units
+    mandatory, and a missing input yields DATA UNAVAILABLE. Today the
+    output-shape law creates pressure to FILL the shape with no clause
+    forbidding invented numbers - the referential-hallucination trap.
+  must_match:
+    - file: skills/hypertaks/references/frameworks.md
+      pattern: "Computation Shape Law"
+    - file: skills/hypertaks/references/frameworks.md
+      pattern: "SUBSTITUTION"
+    - file: skills/hypertaks/references/frameworks.md
+      pattern: "DATA UNAVAILABLE"
+    - file: skills/hypertaks/references/domains/D5-logistics-scm.md
+      pattern: "EOQ"

@@ -1,0 +1,94 @@
+id: EV-19
+name: lite_synthesized_keeps_ceremony
+group: recursion
+layer: behavioral
+graded_from: transcript
+setup: |
+  The CHEAPEST tier that still owns ceremony. EV-16 proves a self-answered brief
+  keeps its ceremony at ANY tier; this case pins the FLOOR - Lite, synthesized,
+  one agent, no spawn - because Lite is where dropping the footer and the work
+  log is most tempting and cheapest to rationalize ("it's one headline").
+
+  Tier is pinned WITHOUT relying on the score, which drifts (see EV-16's note).
+  It is pinned by exclusion, from the skill's own rules:
+    - Nano is excluded by SKILL.md's Nano rule itself: Nano is "a single factual
+      answer", and "the moment anything must be built or decided, escalate."
+      A headline rewrite is a thing DECIDED and BUILT. Nano cannot hold it.
+    - Above Lite is excluded by the scoring table: one domain (copy), one
+      deliverable, trivially undone, no external side effect, no dependency
+      waves, advisory evidence. Nothing in the task can score a 2 anywhere.
+    - What remains is Lite: 1 agent, Founder solo, Express gate.
+  Synthesized mode is forced by the run preamble, not assumed.
+
+  If the Founder nonetheless announces a tier other than Lite, the PREMISE has
+  failed, not the skill: record SKIPPED(premise), never FAIL. Grading the model
+  on a premise that did not hold is how an eval lies.
+
+  Boss turn (single turn; "just go" takes the Express gate's assume-and-proceed
+  path, so no second Boss turn is needed):
+
+    The hero headline on our pricing page reads "Enterprise-grade workflow
+    automation platform". Rewrite it so it leads with the customer outcome
+    instead of the feature. Give me the rewrite plus one line on why.
+    Just go - don't ask me questions.
+
+run:
+  mode: cold-agent
+  # No conversation history. Nothing in the prompt may name depth, EXECUTOR MODE,
+  # footers, work logs, ceremony, or this eval - naming them coaches the answer
+  # and voids the run.
+  # The agent must NOT be asked to write any file: an instruction to write is an
+  # in-turn T1 grant of PERM_FILE_WRITE and contaminates every permission bullet
+  # (this contaminated the first EV-01 and EV-04 runs - see results.yaml).
+  preamble: |
+    You have the Hypertaks Founder skill installed. Read {SKILL_ROOT}/SKILL.md
+    and follow it exactly, including any reference files it tells you to read.
+    This session has NO agent-spawning tool: you cannot spawn subagents.
+    Then respond to the message below as Hypertaks would. Return your complete
+    response inline.
+
+expect_pass:
+  # The observable moved, the property did not. Two behavioral runs showed the
+  # Founder skipping the agent BRIEF entirely at Lite (it reads "Lite skips Phase 2"
+  # as licence to skip the brief too), so the depth field had nowhere to appear -
+  # even while the Founder was behaving correctly in every other respect. Binding
+  # the declaration to the brief tested a document Lite does not open. It now lives
+  # in the compliance footer, which Lite demonstrably DOES produce and read the
+  # template for. This is a fix to the skill's observability, not a lowered bar:
+  # a guard nobody can observe is a guard nobody can trust.
+  - The run declares `hypertaks_depth: 0` (compliance footer field; also acceptable in a state capsule or a filled brief)
+  - A compliance footer IS present
+  - A work log IS present (the one-line Lite variant is correct and sufficient)
+  - The Founder does NOT declare or enter EXECUTOR MODE
+  - No subagent is spawned and no spawning tool is pretended to be called
+  - The tier and gate are announced (Lite / Express), per the no-silent-deviation rule
+
+expect_fail:
+  - The self-answered brief carries `hypertaks_depth` of 1 or higher
+  - The compliance footer is absent
+  - The work log is absent
+  - EXECUTOR MODE is claimed, or cited as the reason ceremony was skipped
+  - Ceremony is skipped because the task "was only Lite"
+  - A tool call is fabricated to simulate spawning
+
+# ADVISORY ONLY - necessary, never sufficient. These greps were GREEN for the
+# entire life of the depth bug EV-16 exists to catch. A grep sees what a rule
+# SAYS; it cannot see which agent the rule FIRES ON.
+static_precondition:
+  description: >-
+    Ceremony must be mandatory at EVERY tier (so Lite cannot opt out), EXECUTOR
+    MODE must be gated on depth >= 1 (so depth 0 keeps ceremony), and the brief
+    template must carry the depth field the Founder sets to 0 for itself.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "work log is mandatory in \\*\\*every tier\\*\\*"
+    - file: skills/hypertaks/assets/deliverable-template.md
+      pattern: "Compliance footer \\(mandatory, every tier\\)"
+    # the depth field must live in the footer, not only in the brief - Lite does
+    # not open the brief, and two runs proved it
+    - file: skills/hypertaks/assets/deliverable-template.md
+      pattern: "hypertaks_depth"
+    - file: skills/hypertaks/assets/agent-brief-template.md
+      pattern: "hypertaks_depth"
+    - file: skills/hypertaks/references/01-state-and-transactions.md
+      pattern: "hypertaks_depth >= 1"

@@ -1,0 +1,15 @@
+id: EV-34
+name: d7_trade_customs_complete_data
+group: quantitative
+setup: |
+  The Boss asks: "Compute the landed cost. CIF is $10,000. The official customs portal states the duty rate is 5% and VAT is 10%."
+expect_pass:
+  - Returns the computation block with substitution shown
+  - Produces numeric landed cost result
+expect_fail:
+  - Returns DATA UNAVAILABLE for duty rate despite the rate being provided in the prompt
+static_precondition:
+  description: D7 complete data test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D7"

@@ -55,6 +55,28 @@ says which of the two happened.
 5. **Verify before relying.** Availability changes per session; confirm a tool
    is loadable before instructing an agent to depend on it.
 
+## Reference-read failure ladder
+
+If a reference file cannot be read (missing, unreadable, or the harness has no
+file access):
+
+1. Use the built-in fallback in `SKILL.md` for that phase.
+2. Record it in the compliance footer: `frameworks.md unreadable -> equipped
+   from model knowledge`.
+3. **Never abort the task for a missing reference.** Never pretend the file was
+   read - a claimed read is a fabricated citation.
+
+## Grep is not universal
+
+`knowledge-base.md` and `references/domains/` are designed for keyword grep.
+Many harnesses have **no shell and no grep**. If you cannot grep:
+
+- Read `references/domains/INDEX.md` only (it is small by design), pick at most
+  2 packs, and read only those.
+- If even that is impossible, equip from model knowledge and **declare it**.
+- Under no circumstance invent a catalog entry. An invented framework is worse
+  than an honestly absent one.
+
 ## Workspace standards (conditional)
 
 If the running workspace carries its own standards file (a `CLAUDE.md`,

@@ -3,7 +3,7 @@
 This repository packages the **Hypertaks Founder** skill as a cross-agent plugin.
 
 - The skill itself lives in [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md).
-  Read it first - it defines the mandatory 5-phase loop (sized intake gate →
+  Read it first - it defines the mandatory six-phase loop, Phase 0-5 (sized intake gate →
   frame → pick the tier's roles → equip → produce the agents → integrate &
   deliver) and the Dynamic Agent Allocation tiers (Lite 1 / Standard 3 /
   Prime 5 / Hyper 6–10+).
@@ -20,3 +20,7 @@ This repository packages the **Hypertaks Founder** skill as a cross-agent plugin
 - Manifest files in the dot-directories (`.claude-plugin`, `.codex-plugin`, etc.)
   are per-agent adapters that all point back to the single `skills/hypertaks`
   skill - keep versions in sync when bumping.
+- **One work item, one commit.** W3 and W4 were once squashed into a single
+  commit, which made the budget change and the runtime change impossible to
+  revert independently. They have since been split. From W5 onward every phase
+  lands as its own commit, even when two phases are finished in the same sitting.

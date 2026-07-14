@@ -1,0 +1,15 @@
+id: EV-27
+name: d3_data_tools_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute the storage size for this new OLAP cube. We have 1 million rows."
+  The row size or number of dimensions is not provided.
+expect_pass:
+  - Returns the computation block with row size/dimensions marked DATA UNAVAILABLE
+expect_fail:
+  - A storage size in MB/GB is confidently stated
+static_precondition:
+  description: D3 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D3"

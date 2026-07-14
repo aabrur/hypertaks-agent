@@ -2,11 +2,57 @@
 
 # Release Notes
 
+## v4.2.0 - Safety Kernel, Deterministic Runtime, and Quantitative Domain Packs
+
+This release adds quantitative domain references, a Safety Kernel, and explicit
+runtime/provenance checks. These mechanisms improve structure and observability;
+their behavioral coverage remains bounded by the evidence status below.
+
+### Added
+- **Safety Kernel (P0)**: Introduced `references/00-security-kernel.md` for absolute authority binding (T0 > T1 > T2 > T3 > T4=T5=T6) and approval-source binding to close approval spoofing.
+- **State and Transactions**: Introduced `references/01-state-and-transactions.md` enforcing idempotency keys for external actions and PREPARE → PREVIEW → APPROVAL → COMMIT loop.
+- **Domain Packs (Quantitative expansion)**: Added 12 routed domain packs (`D1` through `D12`) covering quantitative methods, economics, data, research, logistics, operations, trade, finance, software engineering, design/UX, engineering economy, and soft skills.
+- **CORE Execution Profile**: Added the 40-line `SKILL-core.md`, a reduced profile intended for smaller context windows.
+- **Behavioral Evals**: Expanded the suite to 38 case definitions, including missing-input (`DATA UNAVAILABLE`) complements.
+- **Validation**: Added `scripts/run_evals.py --check` and `PyYAML` to GitHub Actions CI workflow to catch regressions early.
+
+### Changed
+- **Budget Model**: Split overhead and production budgets. Reference reading is now conditional per tier. Nano and Lite equip from memory natively and declare it.
+- **Tier Scoring**: Tier assignment is now strictly deterministic based on 7 factors (Domain count, Deliverables, Reversibility, Side effects, Ambiguity, Dependency depth, Evidence required).
+- **Evidence Class**: Replaced confidence percentages (pseudo-precision) with strict evidence classes: VERIFIED, INFERRED, ASSUMED, and UNKNOWN.
+- **Role Interfaces**: Added 5 new specialists (Quant, Freight/Customs, Quality/Lean, Research, Asset/Maintenance) for precise routing, avoiding repetitive generic analysis.
+- **Evidence Reporting**: Separated structural GREEN, saved behavioral verdicts, provenance-valid records, and Boss confirmation.
+
+### Fixed
+- Fixed recursion loop (executor mode) causing fork bombs. Subagents at `hypertaks_depth >= 1` now bypass the intake gate and compliance ceremony entirely.
+- Resolved contradiction in Prime tier count rule, enforcing exactly 4 specialists + 1 Founder.
+- Addressed known-deviation: Budget (W3) and Runtime (W4) commits were temporarily squashed together during integration, leading to combined tracking for conditionally-loaded reference mechanics.
+
+### Verification boundary
+
+- `evals/results.yaml` records 26 PASS and 12 SKIPPED(harness), all with `confirmed_by_boss: false`.
+- EV-25 through EV-38 provide 14 PASS records with complete cold-session, tool, hash, raw-response, and independent-grader fields.
+- The 24-EV behavioral release threshold is not met. Static GREEN and skipped cases do not count as behavioral PASS.
+- This finalization does not rerun the 38-case behavioral suite.
+
+### Repository-generated figures
+
+![Repository inventory](../../Figure_1.png)
+
+![Behavioral evidence boundary](../../Figure_2.png)
+
+![Six-phase runtime loop](../../Figure_3.png)
+
+![Eval case distribution](../../Figure_4.png)
+
+---
+
 ## v4.0.0 - Binding contracts, universal tooling, knowledge-base repair
 
-This release fixes structural defects that had been present since v2.0.0 and
-removes every dependency on one person's local setup. It also makes the Phase 0
-approval gate genuinely binding instead of narrative.
+This release fixes documented structural defects, replaces a hard-coded tool
+inventory with runtime categories, and removes the personal setup paths found
+by the repository checks. It also defines explicit consequences for violating
+the Phase 0 contract.
 
 ### Fixed (defects, stated plainly)
 
@@ -77,14 +123,14 @@ approval gate genuinely binding instead of narrative.
 
 - Versions bumped in lockstep across all manifests, package.json, the
   marketplace record, the README badge, and the skill card.
-- The 5-phase loop, tier sizes, and gate modes are unchanged; what changed is
+- The six-phase loop (Phase 0–5), tier sizes, and gate modes are unchanged; what changed is
   that deviating from them now has a defined, mandatory consequence.
 
 ---
 
 ## v3.0.0 - Karpathy discipline, TDD/verify gates, token discipline
 
-Behavioral upgrade, not a workflow rewrite. The 5-phase loop and tiered
+Behavioral upgrade, not a workflow rewrite. The six-phase loop (Phase 0–5) and tiered
 allocation are unchanged; v3.0 layers founder-grade engineering hygiene and
 token economics on top.
 
@@ -125,7 +171,7 @@ token economics on top.
 
 - Versions bumped in lockstep across all 7 manifests (Claude, Codex, Cursor,
   Kimi, OpenCode, Pi, cross-agent catalog) + the skill card.
-- No change to the 5-phase loop, the gate modes, or the existing four tier
+- No change to the six-phase loop (Phase 0–5), the gate modes, or the existing four tier
   sizes - only additions around them.
 - Deferred (honest scope): physical 9-way split of `knowledge-base.md` and a
   runtime cache/cost-routing model - these are harness-level concerns a
@@ -137,14 +183,15 @@ token economics on top.
 ## v2.0.0 - Extended knowledge base
 
 Adds the **Encyclopedia of Applied Knowledge** as
-`references/knowledge-base.md` - a 1,600+ item catalog of theories, methods,
+`references/knowledge-base.md` - a catalog originally advertised as 1,600+ items;
+the current verified catalog is described conservatively as 1,400+ theories, methods,
 frameworks, and workflows across business, learning, science, and technology
 (JTBD, Kano, RICE, Cynefin, OKR, PESTLE, DDD, MLOps, distributed-systems
 consistency models, EIP standards, sales methodologies, mental models, and
 far more).
 
 - **Lazy-loaded by design** - the catalog is grepped by keyword/domain in
-  Phase 3, never loaded whole, so it adds zero context cost on any AI surface.
+  Phase 3 instead of being loaded whole.
 - **Same output-shape law** - items pulled from the catalog must define the
   shape their application returns, just like the core frameworks.
 - **Integrator lens** - Phase 5 reconciliation now explicitly uses Systems
@@ -155,11 +202,7 @@ far more).
   Treat item names as the lookup key. Sections 5–10 promised by its index are
   folded into the section-4 catalog.
 
-<img width="1200" height="764" alt="Figure_1" src="https://github.com/user-attachments/assets/3a98d406-520c-43a0-838d-76d5802b5c7a" />
-
 ## v2.0.0 - Hypertaks: dynamic tiering & enforcement
-
-<img width="1442" height="700" alt="Figure_2" src="https://github.com/user-attachments/assets/0d0fe09a-e625-478e-864b-b5e0221e77ac" />
 
 Breaking behavior change, driven by two independent AI reviews that found the
 same failure pattern: the protocol was well-designed but easy to abandon
@@ -167,8 +210,6 @@ silently (references unread, frameworks name-dropped without their output
 shapes, "exactly 5" quietly dropped after the first turn, work logs omitted).
 
 ### Highlights
-
-<img width="1442" height="764" alt="Figure_3" src="https://github.com/user-attachments/assets/4bfea23a-6175-48cf-8356-77b990f0f814" />
 
 - **Dynamic Agent Allocation replaces "exactly 5, always"** - the intake gate
   now assesses every task into a tier that fixes the agent count: **Lite** (1,
@@ -222,7 +263,7 @@ Makes the skill run correctly on AI surfaces with no agent/task-spawning tool
 - **Optional vault logging** - Phase 5's Daily-note log now only writes to
   the local Obsidian vault when filesystem/MCP access exists; otherwise the
   same log snippet is included inline in the deliverable for manual pasting.
-- No change to the 5-phase loop's discipline: intake gate, exactly 5 roles,
+- No change to the six-phase loop's discipline (Phase 0–5): intake gate, exactly 5 roles,
   auto-detected equipping, and integrated deliverable all still apply on
   every surface.
 
@@ -248,7 +289,7 @@ skill packaged as a cross-agent plugin.
 
 ### Skill contents
 
-- `skills/hypertaks/SKILL.md` - the 5-phase orchestrator loop.
+- `skills/hypertaks/SKILL.md` - the six-phase orchestrator loop (Phase 0–5).
 - `references/intake-protocol.md` - the Phase 0 verification gate.
 - `references/agent-roles.md` - 14-role pool, the "pick exactly 5" heuristics,
   and plugin/MCP auto-detection.

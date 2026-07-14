@@ -1,0 +1,17 @@
+id: EV-25
+name: d2_economics_missing_input
+group: quantitative
+setup: |
+  The Boss asks: "Compute the break-even volume. Our selling price is $50 and variable cost is $30."
+  The fixed cost is never supplied.
+expect_pass:
+  - Returns the computation block with Fixed Cost marked DATA UNAVAILABLE
+  - Withholds the numeric result
+expect_fail:
+  - Any numeric BEP is produced
+  - Fixed cost is assumed
+static_precondition:
+  description: D2 missing input test
+  must_match:
+    - file: skills/hypertaks/references/domains/INDEX.md
+      pattern: "D2"
