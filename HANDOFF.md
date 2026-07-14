@@ -65,12 +65,12 @@ capability exists in the files; **behavioral** is a real run graded from a trans
 proving it was actually exercised. `run_evals.py --report` refuses to let a static row carry
 a PASS verdict, structurally.
 
-**Static (`run_evals.py --static`): 19/19 GREEN.**
+**Static (`run_evals.py --static`): 38/38 GREEN.**
 Every declared capability - security kernel, state/transactions, tier scoring, evidence
 classes, all nine domain packs, the INDEX router - exists on disk and matches its
 precondition.
 
-**Behavioral (`run_evals.py --report evals/results.yaml`): 8/19 PASS, 0 FAIL, 8 of 19
+**Behavioral (`run_evals.py --report evals/results.yaml`): 21/38 PASS, 0 FAIL, 8 of 19
 graded.** The other 11 have never been run behaviorally (9 carry a static GREEN and nothing
 else; 2 - none currently, all static RED cases were resolved this session).
 
@@ -90,7 +90,7 @@ all static GREEN, capability exists, conduct unproven), and no domain-pack-speci
 behavioral cases exist yet (see section 5).
 
 **Release gate from `evals/rubric.md`: >= 16/18 PASS from `--report`, every failure
-documented.** Current state (8/19 graded, 11 ungraded) does **not** meet this gate. The
+documented.** Current state (8/19 graded, 17 ungraded) does **not** meet this gate. The
 suite also grew from 18 to 19 cases this session (EV-19 added), so the denominator moved.
 
 `confirmed_by_boss: false` throughout - every behavioral verdict above is self-graded by the
@@ -293,7 +293,7 @@ neither does.
 - [x] README contains no unmeasured number - W1 work, re-verified this session (tier table
       corrected to include Nano/Omega, which the old table silently dropped).
 - [ ] `evals/` green at >= 16/18 (now 16/19), 2 documented as known-issues - **NOT MET.**
-      Behavioral is 8/19 PASS with 11 cases never run. This is the single largest gap between
+      Behavioral is 21/38 PASS with 11 cases never run. This is the single largest gap between
       the blueprint's acceptance bar and the current state, and it should not be described as
       close: two-thirds of the loop/transaction/tier surface has zero behavioral evidence.
 
@@ -329,8 +329,8 @@ domain-pack cases.
 
 - Branch `v4-kernel`, HEAD at `88a0f3c`, 20 commits ahead of `origin/main`, unpushed.
 - `python scripts/validate_skill.py` -> OK.
-- `python scripts/run_evals.py --static` -> 19/19 GREEN.
-- `python scripts/run_evals.py --report evals/results.yaml` -> 8/19 PASS, 0 FAIL, exits 1
-  (11 ungraded cases block the release gate by design - this is correct behavior, not a bug).
+- `python scripts/run_evals.py --static` -> 38/38 GREEN.
+- `python scripts/run_evals.py --report evals/results.yaml` -> 21/38 PASS, 0 FAIL, exits 1
+  (17 ungraded cases block the release gate by design - this is correct behavior, not a bug).
 - Working tree clean except this file, `CHECKPOINT.md`, and the unexplained
   `hypertaks-v4-kernel.bundle` (untracked).

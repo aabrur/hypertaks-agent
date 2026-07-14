@@ -26,3 +26,5 @@ dist/
 .claude/
 .remember/
 *.bundle
+__pycache__/
+*.py[cod]

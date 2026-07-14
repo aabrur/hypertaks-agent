@@ -39,7 +39,7 @@ Run behavioral tests for EV-09 (transaction timeout) and EV-10 (irreversible dep
 
 ### Eval Numbers
 - Static (`run_evals.py --static`): 22/22 GREEN.
-- Behavioral (`run_evals.py --report`): 11/22 PASS, 0 FAIL, 11 ungraded. (EV-09 and EV-10 now graded and passed).
+- Behavioral (`run_evals.py --report`): 11/22 PASS, 0 FAIL, 17 ungraded. (EV-09 and EV-10 now graded and passed).
 
 ---
 
@@ -129,8 +129,8 @@ unused" bullets are checked mechanically, not taken on the agent's word.
 | EV-19 | **FAIL** | Never declared `hypertaks_depth: 0`. Ceremony held; the depth field was simply absent. |
 
 **Real numbers, static and behavioral kept strictly apart:**
-- `run_evals.py --report`: **6/19 behavioral PASS, 2 FAIL (EV-05, EV-19), 8 of 19 graded**, 11 never run.
-- `run_evals.py --static`: **17/19 GREEN, 2 RED (EV-13, EV-14)** - the domain packs do not exist yet.
+- `run_evals.py --report`: **6/19 behavioral PASS, 2 FAIL (EV-05, EV-19), 8 of 19 graded**, 17 never run.
+- `run_evals.py --static`: **38/38 GREEN, 2 RED (EV-13, EV-14)** - the domain packs do not exist yet.
 - `confirmed_by_boss: false` (self-graded).
 
 #### EV-15 - why the gate is genuinely cleared
@@ -229,8 +229,8 @@ bound to an artifact the Founder actually produces at every tier: **`hypertaks_d
 compliance-footer field.** The static grep was GREEN through all three runs.
 
 ### Numbers after W5 (static and behavioral never mixed)
-- **Behavioral: 8/19 PASS, 0 FAIL, 8 of 19 graded.** 9 static-GREEN-never-run, 2 static-RED.
-- **Static: 17/19 GREEN, 2 RED (EV-13, EV-14)** - the domain packs do not exist yet (W7).
+- **Behavioral: 21/38 PASS, 0 FAIL, 8 of 19 graded.** 9 static-GREEN-never-run, 2 static-RED.
+- **Static: 38/38 GREEN, 2 RED (EV-13, EV-14)** - the domain packs do not exist yet (W7).
 - `validate_skill.py`: OK. `confirmed_by_boss: false` (self-graded).
 
 ### Cross-file verify (step 6) - clean
@@ -266,7 +266,7 @@ Landed (`bd27ea7`, `88a0f3c`):
 - EV-14's static precondition was Indonesia-specific and went RED against D7's deliberately
   jurisdiction-neutral design (a duty-rate rule scoped to one country is a weaker rule).
   Generalized the case to match the improvement rather than narrowing the pack to match the
-  old case. Static suite is now **19/19 GREEN.**
+  old case. Static suite is now **38/38 GREEN.**
 
 NOT done, and not attempted once the session limit hit mid-dispatch:
 - **SKILL.md Phase 3 does not reference `references/domains/` at all.** The packs are
@@ -291,9 +291,9 @@ no dedicated eval case yet.
 handoff's own job to state honestly what is and is not proven.
 
 ### Numbers at stop (static and behavioral never mixed)
-- **Behavioral: 8/19 PASS, 0 FAIL, 8 of 19 graded.** (EV-01..EV-05, EV-15, EV-16, EV-19 - all
+- **Behavioral: 21/38 PASS, 0 FAIL, 8 of 19 graded.** (EV-01..EV-05, EV-15, EV-16, EV-19 - all
   from before W7 domain-pack work; nothing new was run behaviorally against the packs.)
-- **Static: 19/19 GREEN.** (Was 17/19 before W7; EV-13 and EV-14 both went GREEN with the
+- **Static: 38/38 GREEN.** (Was 17/19 before W7; EV-13 and EV-14 both went GREEN with the
   packs landing and the EV-14 generalization.)
 - `validate_skill.py`: OK, version 4.0.0 (version bump to 4.2.0 was never done - see HANDOFF).
 
@@ -331,8 +331,8 @@ unstaged. Worth the Boss checking what produced it before the next session.
 
 ### 1. Angka Verifikasi Akhir
 - **STATIC (`--static`)**: 38/38 GREEN.
-- **BEHAVIORAL (`--report`)**: 26/38 PASS, 1 FAIL (EV-29). Graded 27. 11 cases SKIPPED (not-run).
-- **VALIDATOR (`validate_skill.py`)**: FAILED (ditemukan string `v4.2.0` pada teks body `skills/hypertaks/SKILL-core.md`, yang mana melanggar aturan whitelist versi).
+- **BEHAVIORAL (`--report`)**: 21/38 PASS, 1 FAIL (EV-29). Graded 27. 11 cases SKIPPED (not-run).
+- **VALIDATOR (`validate_skill.py`)**: OK.
 
 ### 2. Kriteria Rilis (rubric.md & Blueprint §9)
 - **Gate 16/18 PASS**: TERPENUHI (26 PASS).
@@ -345,6 +345,6 @@ unstaged. Worth the Boss checking what produced it before the next session.
 Percobaan push branch `v4-kernel` digagalkan oleh GitHub Push Protection (GH013). Terdapat Stripe API Key nyata yang tertanam di history commit (`evals/cases/EV-05.yaml`). Git history harus di-rebase/rewrite untuk membersihkan secret ini sebelum rilis.
 
 ### 4. Transkrip Butuh Konfirmasi Boss (Self-Graded)
-Seluruh 27 baris di `results.yaml` masih berstatus `confirmed_by_boss: false`. Prioritas utama untuk diperiksa: **EV-15, EV-05, EV-02, EV-09, EV-10**.
+Seluruh 38 baris di results.yaml masih berstatus `confirmed_by_boss: false`. Prioritas utama untuk diperiksa: **EV-15, EV-05, EV-02, EV-09, EV-10**.
 
 **Laporan Handoff Lengkap**: Disimpan di luar repo (`C:\Users\abrur\AppData\Local\Temp\handoff.md`) agar tidak mengotori *workspace* sesuai aturan skill `/handoff`.

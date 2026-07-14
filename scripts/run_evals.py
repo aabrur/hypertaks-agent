@@ -39,7 +39,7 @@ CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
           "output-shape", "recursion"}
-VERDICTS = {"PASS", "FAIL", "SKIPPED"}
+VERDICTS = {"PASS", "FAIL", "SKIPPED", "evidence-missing"}
 
 
 def load_cases():

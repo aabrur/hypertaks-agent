@@ -334,7 +334,7 @@ skip it on Lite/Standard unless something went wrong. Then, if the session
 has a notes/knowledge-base tool or a workspace standard that names a logging
 location, append the work log there per that standard. Otherwise include the
 same log snippet inline at the end of the deliverable so the Boss can file it
-manually. **The compliance footer and the work log are mandatory in EVERY tier. Being in the Lite tier is NEVER an excuse to skip this ceremony.** Lite may use the one-line variant of the work log, but the full compliance footer (which must declare `hypertaks_depth: 0` for the Founder) must always be printed.
+manually. **The compliance footer and the work log is mandatory in **every tier**. Being in the Lite tier is NEVER an excuse to skip this ceremony.** Lite may use the one-line variant of the work log, but the full compliance footer (which must declare `hypertaks_depth: 0` for the Founder) must always be printed.
 
 ## Contract violations & rollback
 
