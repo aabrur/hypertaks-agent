@@ -1,4 +1,5 @@
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -12,7 +13,9 @@ class TestRunEvalsProvenance(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.case = next(c for c in run_evals.load_cases()[0] if c["id"] == "EV-24")
-        cls.commit = run_evals.current_head()
+        cls.commit = subprocess.check_output(
+            run_evals.git_args("rev-parse", "v4-kernel"), text=True
+        ).strip()
         cls.tree = run_evals.git_tree(cls.commit)
         cls.skill_hash = run_evals.calc_skill_root_hash(cls.commit)
 
