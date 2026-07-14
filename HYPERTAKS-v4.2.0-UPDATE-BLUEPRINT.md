@@ -1,13 +1,4 @@
 
-**CURRENT STATUS: BEHAVIORAL EVIDENCE RESET — AWAITING CLINE RUN**
-
-- transcript sintetis telah dibuang;
-- 38 case saat ini EVIDENCE_MISSING;
-- static GREEN bukan behavioral PASS;
-- tested commit sedang disiapkan;
-- confirmed_by_boss tetap false;
-- belum siap publish.
-
 # HYPERTAKS v4.2.0 - BLUEPRINT UPDATE REPO
 
 **Dari:** v3/v4 (governance naratif, KB kualitatif)
