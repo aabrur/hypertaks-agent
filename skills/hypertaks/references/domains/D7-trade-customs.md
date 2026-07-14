@@ -7,7 +7,7 @@ This pack computes numbers that land on a real customs declaration. A wrong numb
 
 1. **Never state an import duty rate, VAT/GST rate, withholding-tax rate, excise rate, or de-minimis threshold from memory. Do not estimate them, even if the Boss asks for a rough number or claims a tight deadline.** Every one is `DATA UNAVAILABLE` until fetched from an authoritative source and cited with a retrieval date.
 2. **If a web/search/fetch tool is present**, fetch from the authoritative national source (customs authority, single-window portal, official tariff schedule). Cite the source and retrieval date.
-3. **If no tool is present**, return the **formula skeleton with every rate as a named variable**, tell the Boss exactly which numbers to fill and where to get them, and **STOP**. Do not give a final estimated landed cost.
+3. **If no tool is present**, return the **formula skeleton with every rate as a named variable**, tell the Boss exactly which numbers to fill and explicitly name the **TYPE of source** to fetch them from (e.g., the national customs authority, the official tariff schedule, or the single-window portal), and **STOP**. Do not give a final estimated landed cost.
 4. **Structure is stable; numbers are not.** The order of the charge stack and the base each charge is applied to is `volatility: LOW`. Every rate and threshold is `volatility: HIGH`.
 5. **A landed-cost figure without a `source` column is not a deliverable.**
 

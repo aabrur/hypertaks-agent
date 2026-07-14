@@ -711,20 +711,20 @@ Ini bukan kosmetik. Skill yang menjual *governance* dan *fail-loud* sementara RE
 
 Rilis tidak boleh ditandai `v4.2.0` sebelum **semua** ini benar:
 
-- [ ] Approval hanya diterima dari giliran Boss; ada kasus eval yang membuktikannya
-- [ ] Setiap aksi ber-efek-samping punya `idempotency_key` dan alur PREPARE→COMMIT ONCE
-- [ ] Tidak ada file yang mengklaim rollback dapat membatalkan aksi irreversible
-- [ ] `hypertaks_depth ≥ 1` → EXECUTOR MODE, terbukti di eval
-- [ ] Anggaran tier memisahkan overhead dan produksi; Nano/Lite tidak lagi mustahil
-- [ ] Tier ditentukan oleh skor yang tercetak di kontrak, bukan oleh firasat
-- [ ] `gate_rounds ≤ 2`, `retries ≤ 2`, `re_contract ≤ 3` - terbukti di eval
-- [ ] Confidence % dihapus; evidence class dipakai di seluruh file
-- [ ] Setiap item Domain Pack punya output/computation shape + volatility flag
-- [ ] Tidak ada angka tarif/pajak Indonesia yang dinyatakan tanpa sumber ter-fetch
-- [ ] `DATA UNAVAILABLE` terbukti muncul saat input hilang (bukan angka karangan)
-- [ ] Prime menghasilkan **tepat 5** agen; Nano tidak lagi bertentangan dengan aturan keras #1
-- [ ] README tidak memuat satu pun angka yang tidak diukur
-- [ ] `evals/` hijau minimal 16/18, dan 2 yang gagal didokumentasikan sebagai known-issue
+- [x] Approval hanya diterima dari giliran Boss; ada kasus eval yang membuktikannya
+- [x] Setiap aksi ber-efek-samping punya `idempotency_key` dan alur PREPARE→COMMIT ONCE
+- [x] Tidak ada file yang mengklaim rollback dapat membatalkan aksi irreversible
+- [x] `hypertaks_depth ≥ 1` → EXECUTOR MODE, terbukti di eval
+- [x] Anggaran tier memisahkan overhead dan produksi; Nano/Lite tidak lagi mustahil
+- [x] Tier ditentukan oleh skor yang tercetak di kontrak, bukan oleh firasat
+- [x] `gate_rounds ≤ 2`, `retries ≤ 2`, `re_contract ≤ 3` - terbukti di eval
+- [x] Confidence % dihapus; evidence class dipakai di seluruh file
+- [x] Setiap item Domain Pack punya output/computation shape + volatility flag
+- [x] Tidak ada angka tarif/pajak Indonesia yang dinyatakan tanpa sumber ter-fetch
+- [x] `DATA UNAVAILABLE` terbukti muncul saat input hilang (bukan angka karangan)
+- [x] Prime menghasilkan **tepat 5** agen; Nano tidak lagi bertentangan dengan aturan keras #1
+- [x] README tidak memuat satu pun angka yang tidak diukur
+- [x] `evals/` hijau minimal 16/18, dan 2 yang gagal didokumentasikan sebagai known-issue
 
 ---
 

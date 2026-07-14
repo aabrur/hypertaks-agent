@@ -46,6 +46,7 @@ Flow - **never skip a state**:
 `PREPARE → PREVIEW to Boss → T1 APPROVAL → COMMIT ONCE → RECONCILE (read-after-write)`
 
 Hard rules:
+- **Contract approval is NOT per-action approval.** An approved contract in Phase 0 never grants permission to skip the PREVIEW and T1 APPROVAL steps for an action. Every spend, publish, delete, or on-chain write demands its own fresh T1 approval right before COMMIT.
 - **A timeout is not evidence of failure.** Before retrying, perform a
   read-after-write against `idempotency_key`. Retrying without reconciling is
   how one email becomes two and one payment becomes two.

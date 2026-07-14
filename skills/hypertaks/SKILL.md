@@ -334,8 +334,7 @@ skip it on Lite/Standard unless something went wrong. Then, if the session
 has a notes/knowledge-base tool or a workspace standard that names a logging
 location, append the work log there per that standard. Otherwise include the
 same log snippet inline at the end of the deliverable so the Boss can file it
-manually. The work log is mandatory in **every tier** - Lite may use the
-one-line variant.
+manually. **The compliance footer and the work log are mandatory in EVERY tier. Being in the Lite tier is NEVER an excuse to skip this ceremony.** Lite may use the one-line variant of the work log, but the full compliance footer (which must declare `hypertaks_depth: 0` for the Founder) must always be printed.
 
 ## Contract violations & rollback
 
@@ -348,6 +347,7 @@ approval.**
 
 Rollback moves reasoning, never effects. An irreversible action already
 committed gets **containment + disclosure**, never a claim that it was undone.
+If a violation is found after an irreversible action (like deploy, spend, or publish) has been committed, **NEVER announce a rollback**. Instead, halt and state exactly what was committed, what cannot be undone, and what compensating action (pause, migrate, re-deploy, refund) is available, if any.
 
 Delivery is bound to the contract's success criteria: no deliverable is
 declared complete while a criterion is unmet or unchecked - for analysis,
