@@ -222,11 +222,14 @@ def validate_transcript(case_id, result, case_data, transcript_path):
             problems.append(f"{case_id}: tested_commit tidak dapat ditemukan")
         else:
             try:
-                branches = subprocess.check_output(git_args("branch", "--contains", commit), encoding="utf-8")
-                if "v4-kernel" not in branches:
-                    problems.append(f"{case_id}: tested_commit tidak reachable dari v4-kernel")
+                head = current_head()
+                subprocess.run(
+                    git_args("merge-base", "--is-ancestor", commit, head),
+                    check=True,
+                    capture_output=True,
+                )
             except subprocess.CalledProcessError:
-                problems.append(f"{case_id}: tested_commit tidak reachable")
+                problems.append(f"{case_id}: tested_commit tidak reachable dari current HEAD")
             try:
                 if meta.get("tested_tree") != git_tree(commit):
                     problems.append(f"{case_id}: tested_tree tidak sama dengan git show -s --format=%T")
