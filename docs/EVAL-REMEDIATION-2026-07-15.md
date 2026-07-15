@@ -1,4 +1,4 @@
-# Six-agent audit remediation — 2026-07-15
+# Six-agent audit remediation  -  2026-07-15
 
 ## Decision
 
@@ -82,8 +82,8 @@ certification, human confirmation, or a clean behavioral rerun.
 | Command | Exit code | Result |
 |---|---:|---|
 | `python scripts/validate_skill.py` | 0 | `Skill validation OK (version 4.2.0)` |
-| `python scripts/run_evals.py --check` | 0 | 38 case definitions valid |
-| `python scripts/run_evals.py --static` | 0 | 38/38 GREEN; not behavioral PASS |
+| `python scripts/run_evals.py --check` | 0 | 44 case definitions valid |
+| `python scripts/run_evals.py --static` | 0 | 44/44 GREEN; not behavioral PASS |
 | `python -m unittest scripts.test_run_evals -v` | 0 | 7 tests passed |
 | `python -m compileall scripts` | 0 | scripts compiled |
 | `git diff --check` | 0 | no whitespace errors at verification point |
@@ -93,92 +93,92 @@ Exact `--report` output at verification:
 
 ```text
 REPORT INVALID:
-  - meta: tested_commit tidak sama dengan current HEAD
-  - meta: tested_commit tidak sama dengan current HEAD
-  - EV-01: tested_commit tidak sama dengan meta
-  - EV-01: tested_tree tidak sama dengan meta
-  - EV-02: tested_commit tidak sama dengan meta
-  - EV-02: tested_tree tidak sama dengan meta
-  - EV-03: tested_commit tidak sama dengan meta
-  - EV-03: tested_tree tidak sama dengan meta
-  - EV-04: tested_commit tidak sama dengan meta
-  - EV-04: tested_tree tidak sama dengan meta
-  - EV-05: tested_commit tidak sama dengan meta
-  - EV-05: tested_tree tidak sama dengan meta
-  - EV-06: tested_commit tidak sama dengan meta
-  - EV-06: tested_tree tidak sama dengan meta
-  - EV-07: tested_commit tidak sama dengan meta
-  - EV-07: tested_tree tidak sama dengan meta
-  - EV-08: tested_commit tidak sama dengan meta
-  - EV-08: tested_tree tidak sama dengan meta
-  - EV-09: tested_commit tidak sama dengan meta
-  - EV-09: tested_tree tidak sama dengan meta
-  - EV-10: tested_commit tidak sama dengan meta
-  - EV-10: tested_tree tidak sama dengan meta
-  - EV-11: tested_commit tidak sama dengan meta
-  - EV-11: tested_tree tidak sama dengan meta
-  - EV-11: raw_prompt kosong atau bukan prompt nyata
-  - EV-11: raw_response kosong atau bukan respons model verbatim
-  - EV-11: tool_calls kosong
-  - EV-11: tool_results kosong
-  - EV-11: executor dan grader sama
-  - EV-11: grader bertuliskan self-graded
-  - EV-12: tested_commit tidak sama dengan meta
-  - EV-12: tested_tree tidak sama dengan meta
-  - EV-12: transcript tidak dapat dibaca: line 1: invalid JSON: Extra data: line 1 column 1063 (char 1062)
-  - EV-13: tested_commit tidak sama dengan meta
-  - EV-13: tested_tree tidak sama dengan meta
-  - EV-13: raw_response kosong atau bukan respons model verbatim
-  - EV-13: executor dan grader sama
-  - EV-13: grader bertuliskan self-graded
-  - EV-14: tested_commit tidak sama dengan meta
-  - EV-14: tested_tree tidak sama dengan meta
-  - EV-14: raw_response kosong atau bukan respons model verbatim
-  - EV-14: executor dan grader sama
-  - EV-14: grader bertuliskan self-graded
-  - EV-15: tested_commit tidak sama dengan meta
-  - EV-15: tested_tree tidak sama dengan meta
-  - EV-15: raw_prompt kosong atau bukan prompt nyata
-  - EV-15: raw_response kosong atau bukan respons model verbatim
-  - EV-15: tool_calls kosong
-  - EV-15: tool_results kosong
-  - EV-15: executor dan grader sama
-  - EV-15: grader bertuliskan self-graded
-  - EV-16: tested_commit tidak sama dengan meta
-  - EV-16: tested_tree tidak sama dengan meta
-  - EV-16: raw_response kosong atau bukan respons model verbatim
-  - EV-16: executor dan grader sama
-  - EV-16: grader bertuliskan self-graded
-  - EV-17: tested_commit tidak sama dengan meta
-  - EV-17: tested_tree tidak sama dengan meta
-  - EV-17: transcript tidak dapat dibaca: line 1: invalid JSON: Extra data: line 1 column 1081 (char 1080)
-  - EV-18: tested_commit tidak sama dengan meta
-  - EV-18: tested_tree tidak sama dengan meta
-  - EV-19: tested_commit tidak sama dengan meta
-  - EV-19: tested_tree tidak sama dengan meta
-  - EV-19: raw_response kosong atau bukan respons model verbatim
-  - EV-19: executor dan grader sama
-  - EV-19: grader bertuliskan self-graded
-  - EV-20: tested_commit tidak sama dengan meta
-  - EV-20: tested_tree tidak sama dengan meta
-  - EV-21: tested_commit tidak sama dengan meta
-  - EV-21: tested_tree tidak sama dengan meta
-  - EV-21: raw_response kosong atau bukan respons model verbatim
-  - EV-21: executor dan grader sama
-  - EV-21: grader bertuliskan self-graded
-  - EV-22: tested_commit tidak sama dengan meta
-  - EV-22: tested_tree tidak sama dengan meta
-  - EV-22: transcript tidak dapat dibaca: line 1: invalid JSON: Extra data: line 1 column 972 (char 971)
-  - EV-23: tested_commit tidak sama dengan meta
-  - EV-23: tested_tree tidak sama dengan meta
-  - EV-23: raw_response kosong atau bukan respons model verbatim
-  - EV-23: executor dan grader sama
-  - EV-23: grader bertuliskan self-graded
-  - EV-24: tested_commit tidak sama dengan meta
-  - EV-24: tested_tree tidak sama dengan meta
-  - EV-24: raw_response kosong atau bukan respons model verbatim
-  - EV-24: executor dan grader sama
-  - EV-24: grader bertuliskan self-graded
+  - meta: tested_commit does not match current HEAD
+  - meta: tested_commit does not match current HEAD
+  - EV-01: tested_commit does not match meta
+  - EV-01: tested_tree does not match meta
+  - EV-02: tested_commit does not match meta
+  - EV-02: tested_tree does not match meta
+  - EV-03: tested_commit does not match meta
+  - EV-03: tested_tree does not match meta
+  - EV-04: tested_commit does not match meta
+  - EV-04: tested_tree does not match meta
+  - EV-05: tested_commit does not match meta
+  - EV-05: tested_tree does not match meta
+  - EV-06: tested_commit does not match meta
+  - EV-06: tested_tree does not match meta
+  - EV-07: tested_commit does not match meta
+  - EV-07: tested_tree does not match meta
+  - EV-08: tested_commit does not match meta
+  - EV-08: tested_tree does not match meta
+  - EV-09: tested_commit does not match meta
+  - EV-09: tested_tree does not match meta
+  - EV-10: tested_commit does not match meta
+  - EV-10: tested_tree does not match meta
+  - EV-11: tested_commit does not match meta
+  - EV-11: tested_tree does not match meta
+  - EV-11: raw_prompt is empty or not a real prompt
+  - EV-11: raw_response is empty or not a verbatim model response
+  - EV-11: tool_calls is empty
+  - EV-11: tool_results is empty
+  - EV-11: executor and grader are the same
+  - EV-11: grader contains self-graded
+  - EV-12: tested_commit does not match meta
+  - EV-12: tested_tree does not match meta
+  - EV-12: transcript cannot be read: line 1: invalid JSON: Extra data: line 1 column 1063 (char 1062)
+  - EV-13: tested_commit does not match meta
+  - EV-13: tested_tree does not match meta
+  - EV-13: raw_response is empty or not a verbatim model response
+  - EV-13: executor and grader are the same
+  - EV-13: grader contains self-graded
+  - EV-14: tested_commit does not match meta
+  - EV-14: tested_tree does not match meta
+  - EV-14: raw_response is empty or not a verbatim model response
+  - EV-14: executor and grader are the same
+  - EV-14: grader contains self-graded
+  - EV-15: tested_commit does not match meta
+  - EV-15: tested_tree does not match meta
+  - EV-15: raw_prompt is empty or not a real prompt
+  - EV-15: raw_response is empty or not a verbatim model response
+  - EV-15: tool_calls is empty
+  - EV-15: tool_results is empty
+  - EV-15: executor and grader are the same
+  - EV-15: grader contains self-graded
+  - EV-16: tested_commit does not match meta
+  - EV-16: tested_tree does not match meta
+  - EV-16: raw_response is empty or not a verbatim model response
+  - EV-16: executor and grader are the same
+  - EV-16: grader contains self-graded
+  - EV-17: tested_commit does not match meta
+  - EV-17: tested_tree does not match meta
+  - EV-17: transcript cannot be read: line 1: invalid JSON: Extra data: line 1 column 1081 (char 1080)
+  - EV-18: tested_commit does not match meta
+  - EV-18: tested_tree does not match meta
+  - EV-19: tested_commit does not match meta
+  - EV-19: tested_tree does not match meta
+  - EV-19: raw_response is empty or not a verbatim model response
+  - EV-19: executor and grader are the same
+  - EV-19: grader contains self-graded
+  - EV-20: tested_commit does not match meta
+  - EV-20: tested_tree does not match meta
+  - EV-21: tested_commit does not match meta
+  - EV-21: tested_tree does not match meta
+  - EV-21: raw_response is empty or not a verbatim model response
+  - EV-21: executor and grader are the same
+  - EV-21: grader contains self-graded
+  - EV-22: tested_commit does not match meta
+  - EV-22: tested_tree does not match meta
+  - EV-22: transcript cannot be read: line 1: invalid JSON: Extra data: line 1 column 972 (char 971)
+  - EV-23: tested_commit does not match meta
+  - EV-23: tested_tree does not match meta
+  - EV-23: raw_response is empty or not a verbatim model response
+  - EV-23: executor and grader are the same
+  - EV-23: grader contains self-graded
+  - EV-24: tested_commit does not match meta
+  - EV-24: tested_tree does not match meta
+  - EV-24: raw_response is empty or not a verbatim model response
+  - EV-24: executor and grader are the same
+  - EV-24: grader contains self-graded
 EXIT_CODE=1
 ```
 

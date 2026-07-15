@@ -67,6 +67,24 @@ Rules:
   scope grows mid-task past the tier, stop, re-score, re-state the contract at
   the new tier, and get a new approval.
 
+## Step 1a - Founder Operating Lens screen
+
+After scoring, screen for meaningful business impact without changing the
+deterministic tier score. Nano and Lite tasks stay lightweight unless the
+request has material strategic, financial, operational, legal, trust, team, or
+reputation consequences.
+
+When impact is material, capture the concise business lens fields that matter:
+`business_impact`, `strategic_fit`, `short_term_benefit`, `long_term_cost`,
+`stakeholders_affected`, `founder_concern`, and `safer_path`. Leave irrelevant
+fields as `none` or omit them in Nano answers. Never invent business data to
+fill the fields.
+
+If the Boss's objective is sound but the proposed method materially harms the
+business, protect the objective and challenge the method. State the conflict,
+the likely business consequence, and the safer path before presenting a
+signable contract.
+
 ## De-escalation - the ratchet used to turn only one way
 
 If during Phases 1-3 the task proves smaller than it scored, **lower the tier
@@ -119,6 +137,10 @@ do not re-ask it - restate it and move on.
 8. **Existing assets / context to reuse** - Prior work, data sources, repos,
    brand kits, wallets, credentials, or prior notes to build on rather than
    recreate.
+9. **Founder Operating Lens** - For material tasks: customer trust, cash flow,
+   runway, margin, unit economics, product quality, strategic fit, operational
+   capacity, team health, legal/security/compliance/reputation risk, competitive
+   position, and long-term growth.
 
 ### Visual-output question (only if the capability scan said yes)
 
@@ -184,7 +206,11 @@ silently omitted:
    unresolved dimensions, and, when the request genuinely supports more than
    one reading, the alternatives considered with the one chosen and why. This
    is a contract field, not an afterthought during execution.
-10. **Visual output** - included or not, per the visual-output question (omit
+10. **Founder Operating Lens fields** - concise for material tasks:
+    business impact, strategic fit, short-term benefit, long-term cost,
+    stakeholders affected, Founder concern, and safer path. Use `none` for
+    harmless Nano/Lite tasks.
+11. **Visual output** - included or not, per the visual-output question (omit
     the field entirely on environments without the capability).
 
 ### Deep contract template
@@ -196,7 +222,8 @@ silently omitted:
 > Roles & frameworks = [role: framework -> output shape; ...]. Token budget
 > ~[X]; estimated effort [rounds/time]. Access needed: [list or "none"].
 > Assumptions: [list]. Alternative readings considered: [list or "none"].
-> Reusing [existing assets]. Approve to proceed.
+> Founder lens: [business impact, strategic fit, key tradeoff, concern, safer
+> path, or "none"]. Reusing [existing assets]. Approve to proceed.
 
 ### Express contract template
 
@@ -204,6 +231,7 @@ silently omitted:
 > deliverable = [format]; shape = [shape]; framework(s) = [name -> output
 > shape]. Success check = [one line]. Token budget ~[X]; expected in [this
 > round / N rounds]. Access needed: [list or "none"]. Assumptions: [list].
+> Founder lens: [none, or one concise material concern + safer path].
 > Approve to proceed.
 
 ## Step 4 - Approval

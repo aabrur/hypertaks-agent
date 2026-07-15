@@ -1,8 +1,8 @@
-# Hypertaks v4.2.0 — Six-Agent Audit Consensus
+# Hypertaks v4.2.0  -  Six-Agent Audit Consensus
 
-**Published:** 2026-07-15  
-**Repository:** `aabrur/hypertaks-agent`  
-**Current publication branch:** `main`  
+**Published:** 2026-07-15
+**Repository:** `aabrur/hypertaks-agent`
+**Current publication branch:** `main`
 **Main commit before this report:** `3f411ee5c76c0b4c0dc7de8056a325033a0775fc`
 
 ## Scope
@@ -25,8 +25,8 @@ Hypertaks v4.2.0 is structurally published and installable, but its behavioral r
 | Area | Consensus status | Basis |
 |---|---|---|
 | Structural validator | PASS | All six auditors reported validator success. |
-| Eval case structure | PASS | The suite contains 38 declared cases and passes structural checks. |
-| Static preconditions | 38/38 GREEN | All six auditors agreed that the required capability text exists on disk. |
+| Eval case structure | PASS | The current suite contains 44 declared cases and passes structural checks. The historical six-agent audit covered 38 declared cases before EV-39 through EV-44 were added. |
+| Static preconditions | 44/44 GREEN | Current repository state. The historical six-agent audit covered 38/38 before EV-39 through EV-44 were added. |
 | Behavioral evidence | PARTIAL / NOT RELEASE-CERTIFIED | Saved rows exist, but the audit set consistently identified self-grading, skipped harness cases, provenance disagreement, or report-validation failure. |
 | Security source scan | PASS WITH CAVEAT | No live secret leakage was found; runtime security guards remain incompletely proven because core security cases are skipped by the recorded harness. |
 | Evidence pipeline | NOT CERTIFIED | Multiple agents reported invalid or non-reproducible report validation, stale commit references, self-grading, or malformed historical transcript artifacts. |
@@ -37,7 +37,7 @@ Hypertaks v4.2.0 is structurally published and installable, but its behavioral r
 
 ### 1. Structural quality is strong
 
-Every agent reported that the repository-level validator passed and that all 38 static preconditions were GREEN. This proves the required files, rules, domain-pack routes, kernel references, and declared guards exist in the repository.
+Every agent reported that the repository-level validator passed and that the historical 38 static preconditions were GREEN. Current main now has 44/44 GREEN after adding the Founder Operating Lens cases. This proves the required files, rules, domain-pack routes, kernel references, declared guards, and Founder Operating Lens hooks exist in the repository.
 
 Static GREEN is not behavioral PASS. It proves capability presence, not runtime obedience.
 
@@ -95,8 +95,8 @@ Cline, Pi, Antigravity, Hermes, and OpenClaw observed missing manifests and CI f
 Hypertaks v4.2.0 may be described as:
 
 - a published structural release;
-- containing a Safety Kernel, deterministic tiering, state/transaction protocol, CORE profile, domain packs, and 38 eval definitions;
-- structurally validated with 38/38 static preconditions GREEN;
+- containing a Safety Kernel, deterministic tiering, state/transaction protocol, CORE profile, domain packs, Founder Operating Lens, and 44 eval definitions;
+- structurally validated with 44/44 static preconditions GREEN;
 - carrying partial behavioral evidence;
 - not yet meeting the full provenance-valid behavioral release gate;
 - not Boss-confirmed.

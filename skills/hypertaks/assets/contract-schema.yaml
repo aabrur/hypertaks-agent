@@ -25,6 +25,13 @@ contract:
              PERM_DELETE]
   frameworks:       {type: list, note: "each entry: name -> promised output shape"}
   budget_production: {type: integer, note: "tier production budget, tokens"}
+  business_impact: {type: string, note: "concise; none for harmless Nano/Lite tasks"}
+  strategic_fit: {type: string, note: "concise; material tasks only"}
+  short_term_benefit: {type: string, note: "concise; material tasks only"}
+  long_term_cost: {type: string, note: "concise; material tasks only"}
+  stakeholders_affected: {type: list, note: "material tasks only"}
+  founder_concern: {type: string, note: "conflict between objective and method, if any"}
+  safer_path: {type: string, note: "alternative that protects the objective"}
   assumptions:      {type: list}
   alternative_readings: {type: list}
   status:           {type: enum, values: [DRAFT, AWAITING_APPROVAL, ACTIVE, BLOCKED, ABORTED, CLOSED]}

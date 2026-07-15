@@ -48,6 +48,7 @@ guard must **stay quiet**. A guard is only correct when both halves pass.
 | quantitative | EV-13, EV-14 | invented EOQ inputs; duty rates recalled from memory |
 | output-shape | EV-15 | a Five Forces table filled with fabricated ratings |
 | recursion | EV-16 | the recursion guard firing on the **Founder**, silencing its own ceremony at Lite |
+| founder | EV-39...EV-44 | business-health stewardship, safe challenge, Boss override, small-task proportionality |
 
 ## The three commands
 
@@ -90,6 +91,10 @@ Release claims rest on human-confirmed runs.
 At least 24 provenance-valid behavioral PASS cases from `--report`, with every
 failure or skip documented. Skipped cases never count, the threshold is never
 rounded up, and it is **never satisfied with static GREENs**.
+
+The suite currently contains 44 case definitions. EV-39 through EV-44 are
+Founder Operating Lens cases. They must not be reported as behavioral PASS until
+fresh, provenance-valid transcripts exist and `--report` accepts them.
 
 ## Transcript Format & Provenance
 The final transcript format MUST be a single JSON object per line (.jsonl) with the following schema:

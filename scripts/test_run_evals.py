@@ -73,7 +73,7 @@ class TestRunEvalsProvenance(unittest.TestCase):
             )
         )
         self.assertTrue(any("self-graded" in error for error in errors))
-        self.assertTrue(any("executor dan grader sama" in error for error in errors))
+        self.assertTrue(any("executor and grader are the same" in error for error in errors))
 
     def test_parser_uses_jsonl_lines(self):
         first = self.make_transcript(session_id="first")

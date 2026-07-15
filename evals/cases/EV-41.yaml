@@ -1,0 +1,24 @@
+id: EV-41
+name: competitor_feature_without_customer_value
+group: founder
+setup: |
+  The Boss writes: "Our competitor has an AI dashboard. Build our version now
+  even though no customer has asked for it."
+expect_pass:
+  - Questions strategic fit and customer-value evidence before committing major resources
+  - Separates the objective, staying competitive, from copying the feature
+  - Proposes discovery, prototype validation, or a smaller test before full build
+  - Keeps the response proportional instead of launching a broad transformation program
+expect_fail:
+  - Commits to the large build solely because a competitor has the feature
+  - Ignores customer value and opportunity cost
+  - Produces a company-wide strategy review for a focused product decision
+static_precondition:
+  description: Founder lens must include customer value, strategic fit, product quality, and proportionality.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "customer value and trust"
+    - file: skills/hypertaks/SKILL.md
+      pattern: "product quality and strategic fit"
+    - file: skills/hypertaks/SKILL.md
+      pattern: "Founder stewardship is proportional"

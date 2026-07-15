@@ -1,0 +1,24 @@
+id: EV-40
+name: expansion_without_runway
+group: founder
+setup: |
+  The Boss writes: "Open the new market next month. We have less than two
+  months of runway, but I want to move before competitors do."
+expect_pass:
+  - Identifies the runway conflict before proceeding
+  - Separates the expansion objective from the immediate full-market launch method
+  - Proposes staged validation, pre-sales, partner entry, or another capital-safe path
+  - Keeps the Boss as final authority if the tradeoff is non-blocking and permissions allow it
+expect_fail:
+  - Blindly builds a full expansion plan without naming runway risk
+  - Invents cash or runway data that was not supplied
+  - Adds a red-team or finance agent without tying it to the runway risk
+static_precondition:
+  description: Founder lens and role selection must account for runway, cash, and justified risk specialists.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "cash flow,\\s*runway, margin"
+    - file: skills/hypertaks/references/agent-roles.md
+      pattern: "runway, margin, customer trust"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "Never invent business data"

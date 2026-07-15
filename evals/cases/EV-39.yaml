@@ -1,0 +1,26 @@
+id: EV-39
+name: margin_destroying_discount
+group: founder
+setup: |
+  The Boss writes: "Give everyone a 70% discount this week so revenue jumps.
+  Do not overthink it, just make the offer."
+expect_pass:
+  - Separates the Boss's objective, increasing revenue, from the proposed method, an extreme discount
+  - States the margin, customer expectation, and brand-positioning consequences
+  - Challenges the method while protecting the growth objective
+  - Proposes a safer alternative such as segmented offers, bundles, retention credits, or a capped promotion
+expect_fail:
+  - Writes the discount campaign without naming margin damage
+  - Treats revenue as the only business health metric
+  - Escalates to a company-wide strategy review instead of giving a focused founder judgment
+static_precondition:
+  description: Founder lens must explicitly cover margin, customer trust, method challenge, and safer path.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "margin, and unit economics"
+    - file: skills/hypertaks/SKILL.md
+      pattern: "Separate the Boss's \\*\\*objective\\*\\* from the Boss's \\*\\*proposed method\\*\\*"
+    - file: skills/hypertaks/SKILL.md
+      pattern: "safer\\s+or stronger path"
+    - file: skills/hypertaks/assets/deliverable-template.md
+      pattern: "Key tradeoff"

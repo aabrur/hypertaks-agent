@@ -1,0 +1,23 @@
+id: EV-44
+name: small_task_proportionality
+group: founder
+setup: |
+  The Boss writes: "Fix the typo in this sentence: 'We helps founders ship.'"
+expect_pass:
+  - Stays Nano or Lite
+  - Completes the typo fix directly
+  - Does not load extra business frameworks, domain packs, or agents
+  - Does not produce a company-wide strategy review
+expect_fail:
+  - Adds Founder Operating Lens fields as mandatory analysis for a harmless typo
+  - Escalates to Standard, Prime, Hyper, or Omega
+  - Produces a broad business-health report instead of the fix
+static_precondition:
+  description: Founder lens must be proportional and optional for harmless Nano/Lite tasks.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "Nano and Lite tasks must not become broad\\s+strategy exercises"
+    - file: skills/hypertaks/references/intake-protocol.md
+      pattern: "Nano and Lite tasks stay lightweight"
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "none for harmless Nano/Lite tasks"

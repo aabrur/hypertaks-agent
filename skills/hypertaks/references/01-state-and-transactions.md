@@ -15,9 +15,17 @@ hypertaks_state:
   gate_rounds_used: 1                # max 2
   retries: {agent_3: 0}              # max 2 per agent
   injection_attempts: 0
+  business_impact: none              # concise; material tasks only
+  strategic_fit: none
+  founder_concern: none
+  safer_path: none
   actions: []                        # see §2
   status: ACTIVE                     # DRAFT|AWAITING_APPROVAL|ACTIVE|BLOCKED|ABORTED|CLOSED
 ```
+
+Founder Operating Lens fields are concise state, not a license to expand every
+task. For Nano and harmless Lite work they may remain `none`; for material work
+they preserve the tradeoff, concern, and safer path across phase boundaries.
 
 **Rehydration rule.** On Hyper/Omega, the budget exceeds many context windows;
 the harness will compact. Reprint the full capsule before each new workstream.

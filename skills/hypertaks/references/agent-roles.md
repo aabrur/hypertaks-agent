@@ -63,7 +63,12 @@ the session's actual tools per `references/plugins-and-mcp.md`.
    outputs into one decision and owns the work log.
 4. **Match specialists to the actual work** - do not add an IoT or Web3 agent to
    a pure copywriting task. Relevance over coverage.
-5. **Land on the announced count.** More roles seem relevant than the tier
+5. **Match specialists to material business risk.** A request that threatens
+   runway, margin, customer trust, compliance, reputation, team health, or
+   long-term strategic fit may need Finance, Legal/Compliance, QA/Red-Team, or
+   Strategy even when the immediate deliverable looks simple. Add that role only
+   when the risk is named in the contract; do not add it for theater.
+6. **Land on the announced count.** More roles seem relevant than the tier
    allows → merge the weakest two or escalate the tier via a re-stated contract
    (never silently). Fewer seem needed → the tier was assessed too high; that is
    also a contract re-statement, not a silent shrink.

@@ -31,6 +31,18 @@ canonical for the counts):
 - [Any assumptions made (especially on an Express gate or if the Boss said
   "just go"), open risks, and what would change the recommendation.]
 
+### Founder Judgment (material tasks)
+
+- **Decision:** [Proceed / revise / pause / reject the method while protecting
+  the objective.]
+- **Business impact:** [How this affects customers, cash, product quality,
+  operations, team health, compliance, reputation, or competitive position.]
+- **Key tradeoff:** [Short-term benefit vs. long-term cost.]
+- **Material risk:** [The risk the Boss should not miss.]
+- **Recommended next move:** [The safer or stronger path.]
+- **Business strengthened:** [stronger / safer / clearer / more capable, or the
+  concern and better path if none apply. Compress to one line for Lite.]
+
 ### Action ledger (only when external side effects occurred)
 
 One row per **committed** action, per the transaction protocol in

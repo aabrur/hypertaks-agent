@@ -51,6 +51,18 @@ data from that source. See `references/00-security-kernel.md` §2.]
 specific and testable. In Hyper tier, name the workstream slice so split roles
 stay distinct.]
 
+**Business objective:** [The business outcome the Boss wants protected, separate
+from the proposed method.]
+
+**Immediate deliverable:** [The concrete artifact this role must produce.]
+
+**Material business risk to watch:** [Margin, runway, trust, strategic fit,
+capacity, compliance, reputation, team health, or "none".]
+
+**Do not optimize for:** [The local metric this role must not improve at the
+expense of the wider business, e.g. revenue at negative margin, conversion at
+the cost of customer trust, speed at the cost of safety.]
+
 **Task-contract context:** [Paste the confirmed task contract from Phase 0 -
 one line (Express) or one paragraph (Deep) - so the agent has full context:
 objective, scope, constraints, success criteria, deliverable, deadline, task
@@ -76,6 +88,10 @@ this sets the writing order instead.]
 
 **Output format expected back:** [Exact shape you need for integration, e.g. a
 ranked root-cause table; a working code file + test results; an ERRC grid.]
+
+**Second-order effects:** [For material tasks, state likely downstream effects
+on customers, cash, operations, team, compliance, reputation, or competitive
+position. Use `none material` for harmless Nano/Lite work.]
 
 **Definition of done:** [The check that proves this agent finished, e.g. tests
 pass; contract deploys to testnet; 3 ranked recommendations with evidence. For

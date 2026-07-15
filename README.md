@@ -2,12 +2,12 @@
 
 # 🧭 Hypertaks
 
-### Founder/CEO-grade operating skill for AI coding agents
+### Founder Operating System for AI coding agents
 
-**Turns your agent into the *Hypertaks Founder*** - a sized intake gate locks
-the request, then a dynamically tiered team of specialist agents ships the
-work, each equipped with the right business frameworks plus whatever
-plugins/skills and MCP connectors your environment already has.
+**Turns your agent into the *Hypertaks Founder*** - an accountable operating
+protocol that evaluates requests against business health, protects the Boss's
+objective when a proposed method is harmful, and leads a dynamically tiered
+team of specialist agents to ship the work.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.2.0-blue)
@@ -29,6 +29,11 @@ backend, mobile, data, and **deep Solidity/Web3 smart contracts**),
 marketing, copywriting, finance, ERP, supply chain, supply chain finance,
 and IoT.
 
+Hypertaks is an operating protocol and decision discipline. The Boss owns the
+business and remains the final human authority. The Hypertaks Founder owns the
+quality, integration, risk awareness, and long-term reasoning of the work, and
+manages specialist agents as an internal team.
+
 ---
 
 ## 🏆 Why Hypertaks
@@ -45,8 +50,10 @@ defined entries. It is not a quality score or benchmark.
 ## 📈 What changed in 4.2.0
 
 Version 4.2.0 adds the security kernel, state and transaction protocol,
-deterministic tier scoring, 12 routed domain packs, a CORE profile, and 38 eval
-case definitions. These are repository facts; runtime behavior is reported
+deterministic tier scoring, 12 routed domain packs, a CORE profile, and 44 eval
+case definitions. It also adds the Founder Operating Lens: the Founder separates
+the Boss's objective from the proposed method, challenges methods that harm the
+business, and preserves small-task proportionality. These are repository facts; runtime behavior is reported
 separately from structural presence. Full detail is in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
@@ -58,7 +65,9 @@ bundle mixes historical tested commits, placeholder/incomplete transcripts,
 self-grading, and malformed JSONL. Fourteen rows (EV-25 through EV-38) have
 complete fields relative to their historical run, but none count as
 current-release provenance-valid evidence until a clean rerun targets the
-current commit. `confirmed_by_boss` remains `false` for all 38 rows. Static
+current commit. EV-39 through EV-44 are new Founder Operating Lens cases and do
+not have behavioral PASS records. `confirmed_by_boss` remains `false` for all
+saved rows. Static
 GREEN is not a behavioral PASS, and v4.2.0 is a structural release with
 partial behavioral evidence, not a behavioral certification.
 
@@ -66,7 +75,7 @@ partial behavioral evidence, not a behavioral certification.
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">
 </div>
 
-The eval inventory contains seven declared groups:
+The eval inventory contains eight declared groups:
 
 <div align="center">
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Behavioral eval case distribution by group" width="850">

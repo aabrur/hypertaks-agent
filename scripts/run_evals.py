@@ -42,7 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
-          "output-shape", "recursion"}
+          "output-shape", "recursion", "founder"}
 VERDICTS = {"PASS", "FAIL", "SKIPPED", "EVIDENCE_MISSING"}
 
 
@@ -187,39 +187,39 @@ def validate_transcript(case_id, result, case_data, transcript_path):
     problems = []
     path = Path(transcript_path)
     if not path.exists():
-        return [f"{case_id}: transcript tidak ditemukan: {path}"]
+        return [f"{case_id}: transcript not found: {path}"]
     try:
         records = read_transcript(path)
     except (OSError, ValueError) as exc:
-        return [f"{case_id}: transcript tidak dapat dibaca: {exc}"]
+        return [f"{case_id}: transcript cannot be read: {exc}"]
     if len(records) != 1:
-        return [f"{case_id}: transcript harus memiliki tepat satu record JSONL"]
+        return [f"{case_id}: transcript must contain exactly one JSONL record"]
     meta = records[0]
     raw_prompt = meta.get("raw_prompt")
     raw_response = meta.get("raw_response")
     if not isinstance(raw_prompt, str) or not raw_prompt.strip() or raw_prompt.strip().startswith("["):
-        problems.append(f"{case_id}: raw_prompt kosong atau bukan prompt nyata")
+        problems.append(f"{case_id}: raw_prompt is empty or not a real prompt")
     if not isinstance(raw_response, str) or not raw_response.strip() or raw_response.strip().startswith("["):
-        problems.append(f"{case_id}: raw_response kosong atau bukan respons model verbatim")
+        problems.append(f"{case_id}: raw_response is empty or not a verbatim model response")
     if meta.get("case_id") != case_id:
-        problems.append(f"{case_id}: case_id transcript tidak cocok")
+        problems.append(f"{case_id}: transcript case_id does not match")
     if meta.get("cold_session") is not True:
-        problems.append(f"{case_id}: transcript bukan cold session")
+        problems.append(f"{case_id}: transcript is not a cold session")
     if not isinstance(meta.get("tool_calls"), list) or not meta["tool_calls"]:
-        problems.append(f"{case_id}: tool_calls kosong")
+        problems.append(f"{case_id}: tool_calls is empty")
     if not isinstance(meta.get("tool_results"), list) or not meta["tool_results"]:
-        problems.append(f"{case_id}: tool_results kosong")
+        problems.append(f"{case_id}: tool_results is empty")
     placeholder = "abcdef0123456789abcdef0123456789abcdef01"
     if any(meta.get(key) == placeholder for key in ("tested_commit", "tested_tree", "skill_root_hash")):
         problems.append(f"{case_id}: Placeholder hash detected")
     commit = meta.get("tested_commit", "")
     if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
-        problems.append(f"{case_id}: tested_commit bukan SHA penuh 40 karakter")
+        problems.append(f"{case_id}: tested_commit is not a full 40-character SHA")
     else:
         try:
             subprocess.run(git_args("cat-file", "-e", commit), check=True, capture_output=True)
         except subprocess.CalledProcessError:
-            problems.append(f"{case_id}: tested_commit tidak dapat ditemukan")
+            problems.append(f"{case_id}: tested_commit cannot be found")
         else:
             try:
                 head = current_head()
@@ -229,35 +229,35 @@ def validate_transcript(case_id, result, case_data, transcript_path):
                     capture_output=True,
                 )
             except subprocess.CalledProcessError:
-                problems.append(f"{case_id}: tested_commit tidak reachable dari current HEAD")
+                problems.append(f"{case_id}: tested_commit is not reachable from current HEAD")
             try:
                 if meta.get("tested_tree") != git_tree(commit):
-                    problems.append(f"{case_id}: tested_tree tidak sama dengan git show -s --format=%T")
+                    problems.append(f"{case_id}: tested_tree does not match git show -s --format=%T")
             except Exception:
                 problems.append(f"{case_id}: tested_tree check failed")
             skill_hash = calc_skill_root_hash(commit)
             if not skill_hash or meta.get("skill_root_hash") != skill_hash:
-                problems.append(f"{case_id}: skill_root_hash tidak sama dengan hash aktual")
+                problems.append(f"{case_id}: skill_root_hash does not match actual hash")
     executor_name = str(meta.get("executor", "")).strip()
     grader_name = re.sub(r"\s*\([^)]*\)", "", str(meta.get("grader", ""))).strip()
     if not executor_name:
-        problems.append(f"{case_id}: executor kosong")
+        problems.append(f"{case_id}: executor is empty")
     if not grader_name:
-        problems.append(f"{case_id}: grader kosong")
+        problems.append(f"{case_id}: grader is empty")
     if executor_name and executor_name == grader_name:
-        problems.append(f"{case_id}: executor dan grader sama")
+        problems.append(f"{case_id}: executor and grader are the same")
     if "self-graded" in str(meta.get("grader", "")).lower():
-        problems.append(f"{case_id}: grader bertuliskan self-graded")
+        problems.append(f"{case_id}: grader contains self-graded")
     quotes = meta.get("evidence_quotes")
     if not isinstance(quotes, list) or not quotes or any(str(q).lower() == "matches rubric." for q in quotes):
-        problems.append(f"{case_id}: evidence_quotes kosong atau generik")
+        problems.append(f"{case_id}: evidence_quotes is empty or generic")
     if similar(raw_response or "", " ".join(map(str, case_data.get("expect_pass", [])))):
-        problems.append(f"{case_id}: raw_response identik atau sangat dekat dengan expect_pass")
+        problems.append(f"{case_id}: raw_response is identical or very close to expect_pass")
     prompt_lower = (raw_prompt or "").lower()
     if any(term in prompt_lower for term in ("expect_pass", "expect_fail", "rubric", "case_id")):
-        problems.append(f"{case_id}: transcript mengandung expect_pass, expect_fail, rubric di prompt")
+        problems.append(f"{case_id}: transcript prompt contains expect_pass, expect_fail, or rubric")
     if meta.get("verdict") != result.get("verdict"):
-        problems.append(f"{case_id}: verdict transcript berbeda dari results.yaml")
+        problems.append(f"{case_id}: transcript verdict differs from results.yaml")
     return problems
 
 def similar(a, b):
@@ -288,29 +288,29 @@ def cmd_report(results_path):
     for key in provenance_keys:
         value = meta.get(key)
         if not isinstance(value, str) or not value.strip():
-            problems.append(f"meta: {key} kosong atau tidak ada")
+            problems.append(f"meta: {key} is empty or missing")
             break
     else:
         commit = meta["tested_commit"]
         if not re.fullmatch(r"[0-9a-f]{40}", commit):
-            problems.append("meta: tested_commit bukan SHA penuh 40 karakter")
+            problems.append("meta: tested_commit is not a full 40-character SHA")
         else:
             try:
                 subprocess.run(git_args("cat-file", "-e", commit), check=True,
                                capture_output=True)
             except subprocess.CalledProcessError:
-                problems.append("meta: tested_commit tidak dapat ditemukan")
+                problems.append("meta: tested_commit cannot be found")
             else:
                 if meta["tested_tree"] != git_tree(commit):
-                    problems.append("meta: tested_tree tidak sama dengan tested_commit")
+                    problems.append("meta: tested_tree does not match tested_commit")
                 skill_hash = calc_skill_root_hash(commit)
                 if meta["skill_root_hash"] != skill_hash:
-                    problems.append("meta: skill_root_hash tidak sama dengan tested_commit")
+                    problems.append("meta: skill_root_hash does not match tested_commit")
                 try:
                     if commit != current_head():
-                        problems.append("meta: tested_commit tidak sama dengan current HEAD")
+                        problems.append("meta: tested_commit does not match current HEAD")
                 except subprocess.CalledProcessError:
-                    problems.append("meta: current HEAD tidak dapat dibaca")
+                    problems.append("meta: current HEAD cannot be read")
 
     problems.extend(f"unknown case id in results: {k}" for k in rows if k not in ids)
     missing = sorted(ids - set(rows))
@@ -335,7 +335,7 @@ def cmd_report(results_path):
         if r.get("method") == "behavioral":
             for key in provenance_keys:
                 if r.get(key) != meta.get(key):
-                    problems.append(f"{k}: {key} tidak sama dengan meta")
+                    problems.append(f"{k}: {key} does not match meta")
 
         # Guard 16
         if str(r.get("verdict")) == "PASS" and "EVIDENCE_MISSING" in str(r.get("evidence", "")):

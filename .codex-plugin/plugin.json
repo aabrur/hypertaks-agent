@@ -1,42 +1,42 @@
 {
-  "name": "hypertaks",
-  "version": "4.2.0",
-  "description": "Hypertaks Founder operating mode - sized intake gate, then a dynamically tiered team of specialist agents (1 / 3 / 5 / 6-10+) across strategy, engineering (incl. Solidity/Web3), marketing, finance, ERP, supply chain, and IoT.",
-  "author": {
-    "name": "abrur",
-    "email": "abrur_nic@yahoo.com",
-    "url": "https://github.com/aabrur"
-  },
-  "homepage": "https://github.com/aabrur/hypertaks-agent",
-  "repository": "https://github.com/aabrur/hypertaks-agent",
-  "license": "MIT",
-  "keywords": [
-    "founder",
-    "strategy",
-    "multi-agent",
-    "solidity",
-    "web3",
-    "marketing",
-    "finance",
-    "supply-chain",
-    "iot"
-  ],
-  "skills": "./skills/",
-  "interface": {
-    "displayName": "Hypertaks Founder",
-    "shortDescription": "Founder/CEO operating mode: sized intake gate, then a dynamically tiered agent team.",
-    "longDescription": "Turns your agent into the Hypertaks Founder. It runs a sized intake/verification gate (Express or Deep) to lock the request, then spawns a dynamically tiered team of specialist agents (Lite 1 / Standard 3 / Prime 5 / Hyper 6-10+) for the task across business strategy, full-spectrum engineering (incl. Solidity/Web3), marketing, copywriting, finance, ERP, supply chain, supply chain finance, and IoT.",
-    "developerName": "abrur",
-    "category": "Coding",
-    "capabilities": [
-      "Interactive",
-      "Read",
-      "Write"
-    ],
-    "defaultPrompt": [
-      "Hypertaks, analyze why our churn is high.",
-      "Hypertaks, build a landing page and a smart contract for a new product."
-    ],
-    "websiteURL": "https://github.com/aabrur/hypertaks-agent"
-  }
+    "name":  "hypertaks",
+    "version":  "4.2.0",
+    "description":  "Hypertaks Founder Operating System - sized intake gate, business-health judgment, and a dynamically tiered specialist-agent team across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+    "author":  {
+                   "name":  "abrur",
+                   "email":  "abrur_nic@yahoo.com",
+                   "url":  "https://github.com/aabrur"
+               },
+    "homepage":  "https://github.com/aabrur/hypertaks-agent",
+    "repository":  "https://github.com/aabrur/hypertaks-agent",
+    "license":  "MIT",
+    "keywords":  [
+                     "founder",
+                     "strategy",
+                     "multi-agent",
+                     "solidity",
+                     "web3",
+                     "marketing",
+                     "finance",
+                     "supply-chain",
+                     "iot"
+                 ],
+    "skills":  "./skills/",
+    "interface":  {
+                      "displayName":  "Hypertaks Founder",
+                      "shortDescription":  "Founder Operating System: business-health judgment plus tiered specialist agents.",
+                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that separates the Boss objective from the proposed method, protects business health, runs a sized intake gate, and leads a dynamically tiered team of specialist agents across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+                      "developerName":  "abrur",
+                      "category":  "Coding",
+                      "capabilities":  [
+                                           "Interactive",
+                                           "Read",
+                                           "Write"
+                                       ],
+                      "defaultPrompt":  [
+                                            "Hypertaks, analyze why our churn is high.",
+                                            "Hypertaks, build a landing page and a smart contract for a new product."
+                                        ],
+                      "websiteURL":  "https://github.com/aabrur/hypertaks-agent"
+                  }
 }

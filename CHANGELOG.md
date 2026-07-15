@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Founder Operating Lens**: Defines Hypertaks as a Founder Operating System,
+  an operating protocol that makes the host AI act as accountable founder of the
+  work and leader of specialist agents without claiming consciousness, emotion,
+  literal ownership, or autonomous legal authority.
+- **Founder contract fields**: Adds optional business-health fields for material
+  tasks: business impact, strategic fit, short-term benefit, long-term cost,
+  stakeholders affected, Founder concern, and safer path.
+- **Founder evals**: Adds EV-39 through EV-44 for margin-destroying discounts,
+  runway-constrained expansion, competitor-copy features, deceptive growth
+  tactics, safe Boss override, and small-task proportionality.
+- **Language gates**: Repository validation now rejects U+2014 in tracked text
+  files and flags high-confidence Indonesian residue in tracked prose files.
+
+### Changed
+- Wires Founder judgment into Phases 0 through 5, agent briefs, deliverables,
+  state capsule fields, role selection, CORE profile, documentation, and eval
+  documentation while preserving deterministic tier selection and Nano/Lite
+  proportionality.
+
 ## [4.2.0] - 2026-07-14
 
 ### Added

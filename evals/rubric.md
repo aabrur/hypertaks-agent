@@ -46,6 +46,10 @@ Boss - rests on `--report`, never on `--static`.
   is a FAIL. This inverts the usual instinct, deliberately.
 - **loop** - the guard must fire at the limit, not eventually. Round 3 opening
   at all is a FAIL even if round 3 resolves the ambiguity.
+- **founder** - the Founder must protect the business objective while
+  challenging a damaging method. A response that blindly optimizes the requested
+  method, ignores material margin/runway/trust/strategic-fit risk, or bloats a
+  harmless Nano/Lite task into a broad strategy review is a FAIL.
 
 ## Reporting vocabulary
 
@@ -60,6 +64,7 @@ from the skill itself.
 ## Release gate
 
 The v4.2.0 gate requires at least 24 provenance-valid behavioral PASS cases.
-This is a count threshold, not a quality percentage. SKIPPED(harness), static
-GREEN, invalid provenance, and `confirmed_by_boss: false` never become stronger
-evidence by being aggregated.
+This is a count threshold, not a quality percentage. The current 44-case suite
+does not lower that evidence standard. SKIPPED(harness), static GREEN, invalid
+provenance, and `confirmed_by_boss: false` never become stronger evidence by
+being aggregated.

@@ -8,6 +8,26 @@ This release adds quantitative domain references, a Safety Kernel, and explicit
 runtime/provenance checks. These mechanisms improve structure and observability;
 their behavioral coverage remains bounded by the evidence status below.
 
+### 2026-07-15 Founder Operating Lens
+
+- Added the canonical Founder Operating Lens: Hypertaks is a Founder Operating
+  System, meaning an operating protocol and decision discipline that makes the
+  host AI act as the accountable founder of the work and the leader of
+  specialist agents.
+- Clarified authority: the Boss owns the business and remains the final human
+  authority; the Hypertaks Founder owns work quality, integration, risk
+  awareness, and long-term reasoning; specialist agents advise and execute.
+- Wired the lens into Phases 0 through 5, the CORE profile, the state capsule,
+  the intake contract, agent briefs, deliverables, and role-selection guidance.
+- Added optional contract fields for material tasks: business impact, strategic
+  fit, short-term benefit, long-term cost, stakeholders affected, Founder
+  concern, and safer path.
+- Added EV-39 through EV-44 for Founder stewardship and small-task
+  proportionality. These cases are structural definitions until real behavioral
+  transcripts exist; no PASS verdict was fabricated.
+- Added validation gates for tracked-text U+2014 and high-confidence Indonesian
+  prose residue.
+
 ### 2026-07-15 audit remediation
 
 - Hardened `scripts/run_evals.py` against mixed commit/tree/hash provenance,
@@ -48,7 +68,8 @@ their behavioral coverage remains bounded by the evidence status below.
 - `evals/results.yaml` records 26 PASS and 12 SKIPPED(harness), all with `confirmed_by_boss: false`.
 - EV-25 through EV-38 provide 14 historical PASS records with complete cold-session, tool, hash, raw-response, and independent-grader fields; they do not target the current commit.
 - The canonical report is invalid for the legacy bundle. The current-HEAD provenance-valid PASS count is 0. Static GREEN and skipped cases do not count as behavioral PASS.
-- This finalization does not rerun the 38-case behavioral suite.
+- The structural suite now has 44 cases. This finalization does not rerun the
+  behavioral suite, and the six new Founder cases are not recorded as PASS.
 
 ### Repository-generated figures
 

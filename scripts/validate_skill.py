@@ -30,6 +30,7 @@ still proves only what the files SAY. Conduct is graded in evals/.
 """
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -41,6 +42,39 @@ errors = []
 def check(condition, message):
     if not condition:
         errors.append(message)
+
+
+def git_tracked_files():
+    try:
+        out = subprocess.check_output(
+            ["git", "-c", f"safe.directory={ROOT}", "-C", str(ROOT), "ls-files"],
+            encoding="utf-8",
+        )
+    except Exception as exc:  # noqa: BLE001
+        errors.append(f"git ls-files failed: {exc}")
+        return []
+    return [ROOT / line for line in out.splitlines() if line.strip()]
+
+
+TEXT_EXTENSIONS = {
+    ".md", ".txt", ".yaml", ".yml", ".json", ".py", ".toml", ".sh",
+    ".cfg", ".ini",
+}
+PROSE_EXTENSIONS = {".md", ".txt", ".yaml", ".yml", ".json"}
+
+
+def iter_tracked_text_files():
+    for path in git_tracked_files():
+        if path.suffix.lower() not in TEXT_EXTENSIONS:
+            continue
+        try:
+            yield path, path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+
+
+def relpath(path):
+    return path.relative_to(ROOT)
 
 
 # 1. SKILL.md frontmatter
@@ -94,25 +128,29 @@ distinct = set(versions.values())
 check(len(distinct) <= 1,
       f"Manifest versions out of sync: {versions}")
 
-# --- content checks over the skill's markdown files ---
-SKILL_MD = sorted(SKILL_DIR.rglob("*.md"))
-
-# 5. Indonesian-language residue. Common Indonesian function words that do
-# not occur as English words; word-boundary matched, case-insensitive.
+# 4a. Repository text policy: tracked text only, ignored/generated files out.
 INDONESIAN = re.compile(
     r"\b(yang|untuk|dengan|dari|dalam|adalah|atau|pada|tidak|bisa|akan|"
     r"harus|sudah|setiap|kalau|tanpa|sebelum|setelah|menjadi|secara|"
     r"terhadap|sebagai|karena|belum|sebuah|tersebut|melalui|antara|"
-    r"berdasarkan|seluruh|lainnya)\b",
+    r"berdasarkan|seluruh|lainnya|laporan|temuan|gagal|lulus|kasus|"
+    r"perubahan|selesai|mulai|ditulis|catatan|aman|bersih|terbukti|"
+    r"terverifikasi|dijalankan|ditemukan|mengasumsikan|memperbaiki)\b",
     re.IGNORECASE,
 )
-for p in SKILL_MD:
-    for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
-        m = INDONESIAN.search(line)
-        if m:
-            errors.append(
-                f"Indonesian residue in {p.relative_to(ROOT)}:{i} "
-                f"(word: {m.group(0)!r})")
+for p, text in iter_tracked_text_files():
+    for i, line in enumerate(text.splitlines(), 1):
+        if "\u2014" in line:
+            errors.append(f"Forbidden em dash in {relpath(p)}:{i}")
+        if p.suffix.lower() in PROSE_EXTENSIONS:
+            m = INDONESIAN.search(line)
+            if m:
+                errors.append(
+                    f"Indonesian residue in {relpath(p)}:{i} "
+                    f"(word: {m.group(0)!r})")
+
+# --- content checks over the skill's markdown files ---
+SKILL_MD = sorted(SKILL_DIR.rglob("*.md"))
 
 # 6. Personal absolute paths (Windows user profiles, Unix home dirs).
 PERSONAL_PATH = re.compile(
@@ -170,6 +208,16 @@ if schema.exists():
         data = yaml.safe_load(raw)
         check(isinstance(data, dict) and "contract" in data,
               "contract-schema.yaml: top-level 'contract' key missing")
+        if isinstance(data, dict) and isinstance(data.get("contract"), dict):
+            expected = {
+                "business_impact", "strategic_fit", "short_term_benefit",
+                "long_term_cost", "stakeholders_affected", "founder_concern",
+                "safer_path",
+            }
+            missing = sorted(expected - set(data["contract"]))
+            check(not missing,
+                  "contract-schema.yaml: missing Founder Operating Lens "
+                  f"fields: {', '.join(missing)}")
     except ImportError:
         print("note: PyYAML absent - contract-schema.yaml checked "
               "syntactically only (CI runs the full check)")
