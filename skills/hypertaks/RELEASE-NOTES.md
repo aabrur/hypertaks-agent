@@ -38,12 +38,14 @@ literal ownership, or autonomous legal authority.
 ### Evidence boundary
 
 - The structural suite contains 49 case definitions across nine groups.
-- EV-39 through EV-49 have no fresh behavioral transcripts and are not
-  recorded as behavioral PASS.
-- The saved behavioral bundle remains legacy evidence. No behavioral rerun was
-  performed, no verdict was upgraded, and `confirmed_by_boss` remains `false`.
-- Static GREEN demonstrates only that the rules exist in tracked files. It is
-  not behavioral certification.
+- The Boss-confirmed final ledger records 43/49 Behavioral PASS and 6
+  documented non-PASS cases (EV-01 through EV-05 and EV-20).
+- Static coverage is 49/49 GREEN and remains separate from behavioral PASS.
+- The release threshold is 24, the margin is +19, and canonical metadata records
+  `confirmed_by_boss: true`.
+- v4.3.0 is **Behaviorally Certified** under the repository release gate. This
+  is not formal third-party certification and does not guarantee security or
+  outcomes.
 
 ---
 

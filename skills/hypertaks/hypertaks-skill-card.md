@@ -4,6 +4,22 @@
 
 ---
 
+## Certification Status
+
+**Behaviorally Certified** under the Hypertaks repository release gate.
+
+- Behavioral PASS: 43/49
+- Documented non-PASS: 6
+- Static GREEN: 49/49
+- Release threshold: 24
+- Threshold margin: +19
+- `confirmed_by_boss: true`
+
+This is a project release status, not formal third-party certification. It does
+not claim 49/49 behavioral PASS, absolute security, or guaranteed outcomes.
+
+---
+
 ## Description
 
 Hypertaks is a Founder Operating System: an operating protocol and decision
@@ -179,3 +195,4 @@ mode without fabricated tool output.
 `2026-07-03 | Hypertaks v3.0.0: card bumped - Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`
 `2026-07-06 | Hypertaks v4.0.0: binding contract with violation rollback, category-based tool binding (no personal config), knowledge base restructured and deduplicated, conditional visual capability, extended validation checks.`
 `2026-07-15 | Hypertaks v4.3.0: Founder Operating Lens plus deterministic capability relevance routing, safe update policy, synchronized plugin metadata, and EV-45 through EV-49.`
+`2026-07-16 | Hypertaks v4.3.0: Boss-confirmed 43/49 Behavioral PASS, 6 documented non-PASS, 49/49 Static GREEN, and Behaviorally Certified release-gate status.`

@@ -40,6 +40,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extends version synchronization checks to package metadata, the cross-agent
   catalog, all tracked plugin manifests, and both Claude marketplace records.
 
+### Certification
+- Passed the project behavioral release gate with 43/49 Behavioral PASS and 6
+  documented non-PASS cases. The threshold is 24, for a margin of +19.
+- Recorded 49/49 Static GREEN separately from behavioral results and set
+  canonical `confirmed_by_boss` metadata to `true`.
+- Designated v4.3.0 as **Behaviorally Certified** under the repository's own
+  evaluation policy. This is not formal third-party certification and does not
+  guarantee security or outcomes.
+
 ## [4.2.0] - 2026-07-14
 
 ### Added

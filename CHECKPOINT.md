@@ -1,13 +1,13 @@
 # CHECKPOINT - Hypertaks v4.3.0
 
-Date: 2026-07-15
+Date: 2026-07-16
 Working branch: `founder-operating-system`
 Target branch: `origin/main`
-Start commit: `d878d3166e870b7d5ffcd114c0213e2d3cbc75f3`
+Certified commit: `bf989f4d425c3801136c20f09a1111af8e5c1e47`
 
-This checkpoint records the v4.3.0 Founder Operating System and Capability
-Relevance Router update. Static checks, saved verdicts, and model grading are
-not treated as stronger evidence than they are.
+This checkpoint records the v4.3.0 Founder Operating System, Capability
+Relevance Router, and Boss-confirmed behavioral certification status. Static
+and behavioral results remain separate evidence classes.
 
 ## Release scope
 
@@ -17,26 +17,43 @@ not treated as stronger evidence than they are.
    contract, state capsule, agent brief, deliverable, and install guidance.
 3. Preserve deterministic tier selection, Nano and Lite proportionality,
    zero-agent execution, conditional reference loading, and production budgets.
-4. Add EV-45 through EV-49 without creating behavioral transcripts or changing
-   saved verdicts.
+4. Maintain 49 behavioral case definitions across nine declared groups.
 5. Synchronize every live plugin and package record on `4.3.0`.
 6. Define safe update discovery without background or unapproved code changes.
 
-## Behavioral evidence boundary
+## Certification status
 
-| Evidence | Current repository record |
+**BEHAVIORALLY CERTIFIED** under the repository release gate.
+
+| Evidence | Final repository record |
 |---|---:|
-| Eval case definitions | 49 |
-| Saved result verdicts | 26 PASS, 12 SKIPPED(harness), 0 recorded FAIL |
-| Historical PASS transcripts with complete cold-session, tool, hash, raw-response, and independent-grader fields | 14 (EV-25 through EV-38) |
-| Current-HEAD provenance-valid PASS | 0 |
-| Release threshold | 24 provenance-valid behavioral PASS |
-| `confirmed_by_boss` | `false` in metadata and all 38 saved result rows |
+| Total EV cases | 49 |
+| Behavioral PASS | 43 |
+| Documented non-PASS | 6 |
+| Static GREEN | 49/49 |
+| Release threshold | 24 Behavioral PASS |
+| Threshold margin | +19 |
+| `confirmed_by_boss` | `true` |
 
-`python scripts/run_evals.py --report evals/results.yaml` exits 1. The saved
-bundle has commit and tree mismatches, malformed or incomplete legacy
-transcripts, self-grading records, and no results for EV-39 through EV-49. No
-behavioral rerun was performed, and no verdict was upgraded.
+The six non-PASS cases are EV-01 through EV-05 and EV-20. They remain
+explicitly documented and are not counted as PASS. The final per-case verdicts
+validated by the main agent and confirmed by the Boss are canonical. Spawned
+agent output, generated summaries, temporary fragments, and intermediate grader
+drafts do not override that final verdict.
+
+"Behaviorally Certified" is a project release-gate status. It is not formal
+third-party certification and does not claim absolute security or guaranteed
+outcomes.
+
+## Evidence preservation
+
+- Raw transcripts under `evals/transcripts/` remain unchanged.
+- The pre-certification `evals/results.yaml` is preserved byte-for-byte at
+  `evals/archive/results-pre-certification-2026-07-16.yaml`.
+- The ten cited EV source reports are preserved byte-for-byte in the hashed
+  `evals/archive/final-ev-source-reports-2026-07-16.zip` archive.
+- Historical audit reports remain unchanged.
+- Canonical certification metadata now lives in `evals/results.yaml`.
 
 ## Structural state
 
@@ -47,20 +64,24 @@ behavioral rerun was performed, and no verdict was upgraded.
   protocol, state capsule, contract schema, and agent brief.
 - Live version synchronization covers `package.json`, the cross-agent catalog,
   Claude, Codex, Cursor, Kimi, and both Claude marketplace version records.
-- The repository contains 49 eval definitions, 38 saved transcripts, 12 domain
-  packs, 20 specialist roles, and four generated figures.
+- The repository contains 49 eval definitions, 12 domain packs, 20 specialist
+  roles, and four generated figures.
 - No MCP server, background updater, credential, cache, bundle, temporary clone,
   or local agent state is included.
 
-## Language and punctuation
+## Verification commands
 
-- Starting-commit U+2014 matches: 0.
-- Current-tree U+2014 matches: 0.
-- EV-33 test prose, the D7 customs reference, and the archived Hermes report
-  were translated into professional English.
-- EV-33's saved `raw_prompt` remains verbatim because changing historical raw
-  evidence would fabricate a transcript.
-- The validator's Indonesian word list is executable policy data, not prose.
+Final verification must run all of the following after the documentation and
+figures are updated:
+
+- `python scripts/validate_skill.py`
+- `python scripts/run_evals.py --check`
+- `python scripts/run_evals.py --static`
+- `python scripts/run_evals.py --report evals/results.yaml`
+- `python -m unittest scripts.test_run_evals -v`
+- `python -m compileall scripts`
+- `python scripts/generate_figures.py`
+- `git diff --check`
 
 ## Verification results
 
@@ -68,20 +89,17 @@ behavioral rerun was performed, and no verdict was upgraded.
 |---|---|
 | `python scripts/validate_skill.py` | exit 0, version 4.3.0 |
 | `python scripts/run_evals.py --check` | exit 0, 49 case definitions OK |
-| `python scripts/run_evals.py --static` | exit 0, 49/49 GREEN; not behavioral PASS |
-| `python -m unittest scripts.test_run_evals -v` | exit 0, 9 tests OK |
+| `python scripts/run_evals.py --static` | exit 0, 49/49 GREEN |
+| `python scripts/run_evals.py --report evals/results.yaml` | exit 0, 43/49 PASS, 6 documented non-PASS, gate passed |
+| `python -m unittest scripts.test_run_evals -v` | exit 0, 18 tests OK |
 | `python -m compileall scripts` | exit 0 |
-| `python scripts/generate_figures.py` | exit 0 |
-| Skill Creator `quick_validate.py` | exit 0 under UTF-8 mode |
-| Plugin Creator `validate_plugin.py` | exit 0 under UTF-8 mode |
+| `python scripts/generate_figures.py` | exit 0, four figures regenerated |
 | `git diff --check` | exit 0 |
-| Behavioral report | exit 1, legacy evidence invalid; no rerun claimed |
 
 ## Claims deliberately not made
 
+- The project does not claim 49/49 behavioral PASS.
 - Static GREEN is not described as behavioral PASS.
-- The 24-case behavioral release threshold is not described as met.
-- No saved transcript, tool call, tool result, grader decision, or Boss
-  confirmation was created or modified to improve a verdict.
-- Host-native update discovery is not described as universal automatic update
-  support.
+- The six documented non-PASS cases are not hidden or upgraded.
+- The project does not claim formal third-party certification.
+- The project does not claim absolute security or guaranteed outcomes.
