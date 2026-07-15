@@ -10,7 +10,7 @@ objective when a proposed method is harmful, and leads a dynamically tiered
 team of specialist agents to ship the work.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.2.0-blue)
+![Version](https://img.shields.io/badge/version-4.3.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
 
 **Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
@@ -42,19 +42,20 @@ The figure below is a repository inventory, generated from tracked files and
 defined entries. It is not a quality score or benchmark.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.2.0 repository inventory" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.3.0 repository inventory" width="850">
 </div>
 
 ---
 
-## 📈 What changed in 4.2.0
+## 📈 What changed in 4.3.0
 
-Version 4.2.0 adds the security kernel, state and transaction protocol,
-deterministic tier scoring, 12 routed domain packs, a CORE profile, and 44 eval
-case definitions. It also adds the Founder Operating Lens: the Founder separates
-the Boss's objective from the proposed method, challenges methods that harm the
-business, and preserves small-task proportionality. These are repository facts; runtime behavior is reported
-separately from structural presence. Full detail is in the
+Version 4.3.0 adds the Founder Operating Lens and the Capability Relevance
+Router. The Founder separates the Boss's objective from the proposed method,
+protects business health, and binds only the smallest sufficient set of
+verified skills, native tools, MCP tools, and connectors. Nano and Lite remain
+proportional, and the structural suite now contains 49 case definitions. These
+are repository facts; runtime behavior is reported separately from structural
+presence. Full detail is in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
 ### Behavioral evidence status
@@ -65,17 +66,16 @@ bundle mixes historical tested commits, placeholder/incomplete transcripts,
 self-grading, and malformed JSONL. Fourteen rows (EV-25 through EV-38) have
 complete fields relative to their historical run, but none count as
 current-release provenance-valid evidence until a clean rerun targets the
-current commit. EV-39 through EV-44 are new Founder Operating Lens cases and do
-not have behavioral PASS records. `confirmed_by_boss` remains `false` for all
-saved rows. Static
-GREEN is not a behavioral PASS, and v4.2.0 is a structural release with
+current commit. EV-39 through EV-49 have no behavioral PASS records.
+`confirmed_by_boss` remains `false` for all saved rows. Static GREEN is not a
+behavioral PASS, and v4.3.0 is a structural release with
 partial behavioral evidence, not a behavioral certification.
 
 <div align="center">
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">
 </div>
 
-The eval inventory contains eight declared groups:
+The eval inventory contains nine declared groups:
 
 <div align="center">
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Behavioral eval case distribution by group" width="850">
@@ -94,7 +94,7 @@ spawn more agents inside it.
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks mandatory phase-loop diagram" width="850">
 </div>
 
-## 🔒 Three hard rules
+## 🔒 Four hard rules
 
 1. **Intake gate first, sized to the task** - Nano uses a zero-sized gate;
    Lite/Standard use Express and Prime/Hyper use Deep. Build work begins only
@@ -115,7 +115,12 @@ spawn more agents inside it.
    *de-escalated* mid-run if the task proves smaller. The table in
    `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
 
-3. **No silent deviation** - tier, gate mode, and assumptions are announced
+3. **Capability relevance** - Hypertaks derives need before discovery, rejects
+   irrelevant or over-privileged capabilities, and binds only verified host
+   skills, native tools, MCP tools, and connectors needed by the approved work.
+   Nano performs no registry scan or update check for harmless local work.
+
+4. **No silent deviation** - tier, gate mode, and assumptions are announced
    in the task contract; frameworks must be delivered in their defined
    output shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone
    tree - not just the name); every deliverable ends with a compliance
@@ -223,6 +228,14 @@ See [`.openclaw/INSTALL.md`](.openclaw/INSTALL.md) and
 [`.hermes/INSTALL.md`](.hermes/INSTALL.md) for exact commands. The same
 generic approach works for any agent with a scanned skills folder.
 </details>
+
+### Updating safely
+
+Hypertaks never replaces its own code in the background. A trusted host
+marketplace or plugin manager may surface update metadata, but applying the
+update requires explicit approval. For a clean Git clone, use
+`git pull --ff-only` after approval. Archive and copied-directory installations
+must be reinstalled from a trusted release source.
 
 ### Manifest map
 

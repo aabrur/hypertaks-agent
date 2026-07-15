@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** 4.2.0
+**Version:** 4.3.0
 
 ---
 
@@ -20,7 +20,9 @@ Hypertaks enforces a mandatory six-phase loop, Intake & Verify, Frame, Pick
 Roles, Equip, Produce, Integrate & Deliver, with a sized intake gate, tiered
 agent allocation (Nano / Lite / Standard / Prime / Hyper / Omega), Karpathy
 discipline, Founder Operating Lens, and an engineering quality gate for build
-tasks. Every workflow closes with a token-accounted compliance footer and a
+tasks. Its Capability Relevance Router binds only verified host skills, native
+tools, MCP tools, and connectors needed by the approved deliverable or material
+risk. Every workflow closes with a token-accounted compliance footer and a
 work-log entry.
 
 ---
@@ -52,16 +54,16 @@ mention of "Hypertaks."
 
 ## Deployment Geography
 
-Portable across AI surfaces: Claude Code, claude.ai chat, and assistants
-without tool-calling. On surfaces with an agent/task-spawning tool, rely on
-orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
+Portable across AI surfaces with or without tool-calling. On surfaces with an
+agent/task-spawning tool, rely on orchestrated mode; otherwise, use synthesized
+mode without fabricated tool output.
 
 ---
 
 ## Requirements/Dependencies
 
-- Verified plugins/skills and MCP connectors registry presence (if the
-  environment exposes one).
+- No mandatory external integration. Use a host registry only when the task
+  needs a non-core capability and the environment exposes one.
 - Reference files: `intake-protocol.md`, `agent-roles.md`,
   `plugins-and-mcp.md`, `frameworks.md`, `engineering.md`.
 - Assets: `agent-brief-template.md`, `deliverable-template.md`.
@@ -85,6 +87,11 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 - **Token bloat from wholesale KB/reference loading** - References are
   grepped by keyword in Phase 3, never loaded whole; the per-tier token budget
   in `token-discipline.md` bounds spend and fails loud on overrun.
+- **Capability sprawl** - Derive need before discovery, reject irrelevant or
+  over-privileged options, and bind the smallest sufficient verified set.
+- **Unsafe self-update** - A host may surface trusted update metadata, but code
+  changes require explicit approval; Git updates are fast-forward-only on a
+  clean worktree, and copied installations are reinstalled.
 
 ---
 
@@ -117,7 +124,7 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 
 ## Skill Version
 
-`4.2.0`
+`4.3.0`
 
 ---
 
@@ -146,6 +153,9 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
   contract re-approval.
 - Agent quality: no duplicate roles; Founder/Integrator mandatory at 3+
   agents; Hyper splits workstreams, never pads agents.
+- Capability relevance: selected skills, native tools, MCP tools, and connectors
+  must be verified, role-relevant, permission-compatible, and no broader than
+  the approved deliverable requires.
 - Engineering quality gate (build tasks): test-first where a TDD skill is
   present, systematic debugging, verification-before-completion, Web3 audit
   checklist for on-chain deliverables.
@@ -168,3 +178,4 @@ orchestrated mode; otherwise, synthesized mode-never fabricated tool output.
 `2026-07-03 | Hypertaks: produced unreleased-local reviewer-ready skill card from integrated front/back blocks with compliance footer and work-log snippet.`
 `2026-07-03 | Hypertaks v3.0.0: card bumped - Nano/Omega tiers + per-tier token budgets, Karpathy DNA, TDD/debug/verify gates, token-discipline.md + superpowers-map.md references added.`
 `2026-07-06 | Hypertaks v4.0.0: binding contract with violation rollback, category-based tool binding (no personal config), knowledge base restructured and deduplicated, conditional visual capability, extended validation checks.`
+`2026-07-15 | Hypertaks v4.3.0: Founder Operating Lens plus deterministic capability relevance routing, safe update policy, synchronized plugin metadata, and EV-45 through EV-49.`

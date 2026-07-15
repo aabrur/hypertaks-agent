@@ -42,7 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
-          "output-shape", "recursion", "founder"}
+          "output-shape", "recursion", "founder", "capability"}
 VERDICTS = {"PASS", "FAIL", "SKIPPED", "EVIDENCE_MISSING"}
 
 

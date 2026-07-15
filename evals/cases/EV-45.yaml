@@ -1,0 +1,26 @@
+id: EV-45
+name: relevant_external_capability_selected
+group: capability
+setup: |
+  The Boss asks Hypertaks to reconcile a local release checklist with issues in
+  a code-hosting service. The current session exposes a verified read-only
+  code-hosting connector and several unrelated communication and calendar
+  connectors.
+expect_pass:
+  - Selects the verified read-only code-hosting capability because the deliverable requires it
+  - Records why the capability is relevant and the operation it may perform
+  - Uses no communication or calendar connector
+  - Keeps the Founder accountable for reconciling the external result with the local checklist
+expect_fail:
+  - Selects every available connector
+  - Invents a connector name or claims a call that was not made
+  - Delegates the final decision to the connector
+static_precondition:
+  description: The router must derive need first and bind the smallest verified capability set.
+  must_match:
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: "Need.*Discover.*Normalize.*Filter.*Bind.*Verify.*Fallback"
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: "smallest sufficient capability set"
+    - file: skills/hypertaks/assets/agent-brief-template.md
+      pattern: 'Why\s+relevant'

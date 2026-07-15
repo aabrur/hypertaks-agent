@@ -105,7 +105,7 @@ def figure_1() -> None:
     ]
     bar_chart(
         "Figure_1.png",
-        "Hypertaks v4.2.0 - repository inventory",
+        "Hypertaks v4.3.0 - repository inventory",
         "Counts are derived from the current repository tree.",
         counts,
         "Sources: evals/cases, evals/transcripts, skills/hypertaks/references, assets, agent-roles.md",

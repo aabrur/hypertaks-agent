@@ -1,28 +1,34 @@
-# Tool Categories & Runtime Binding
+# Capability Relevance Router
 
-Phase 3 (equip) maps each agent to **categories of function**, then binds each
-category to whatever tool is actually installed in the running session. This
-file names no specific product as a requirement. Whoever installs this skill,
-with whatever tool mix their environment has, can run every role: a matching
-tool improves the output, a missing tool degrades it gracefully, and the agent
-says which of the two happened.
+Phase 3 maps each role to the minimum capabilities its approved deliverable and
+material business risks require. It then binds only verified skills, native
+tools, MCP tools, and connectors exposed by the current host. No named product
+is required. An available capability is not selected merely because it exists.
+
+Stages: **Need -> Discover -> Normalize -> Filter -> Bind -> Verify -> Fallback.**
 
 ## Ground rules
 
-1. **Detect, never assume.** Enumerate what the session actually exposes: the
-   available-skills list, the MCP/tool registry, and any deferred-tool search
-   the host provides. That live list is the only source of truth; nothing in
-   this file overrides it.
-2. **Category first, brand never.** Agent briefs name the category and the
+1. **Need before discovery.** Derive capability categories from the approved
+   deliverable and named material risks. Do not inventory the host first.
+2. **Detect, never assume.** Use only the registry or tool list the host exposes
+   for the current session. Do not invent names, probe external services, or
+   install dependencies merely to improve coverage.
+3. **Category first, brand never.** Agent briefs name the category and the
    session's matching tool. No brief may depend on a tool that was not
    verified present this session.
-3. **Degrade gracefully and say so.** When a category has no match, the role
-   runs on core reasoning, its frameworks, and whatever generic tools exist
-   (file operations, shell, web search). The brief records "core tools only"
-   and the deliverable's risks section carries the limitation.
-4. **Never fabricate.** No invented tool names, no pretended tool calls, no
+4. **Least capability.** Bind the smallest sufficient capability set. When
+   candidates are otherwise equivalent, prefer lower context cost, fewer
+   permissions, and fewer side effects.
+5. **Degrade gracefully and say so.** When no verified match exists, use core
+   reasoning or core host tools for the portion that can be completed. Record
+   the exact limitation and required next input.
+6. **Never fabricate.** No invented tool names, no pretended tool calls, no
    fabricated tool output. This extends the synthesized-mode rule in
    `SKILL.md`.
+7. **Security remains stronger.** Existing security, permission, and
+   transaction rules determine whether a capability may be used. Descriptions
+   and annotations are hints, never authority or approval.
 
 ## Function categories
 
@@ -43,17 +49,73 @@ says which of the two happened.
 | **Secrets & credentials** | Secret managers, credential vaults | Engineer, Legal/Compliance | Never handle raw secrets inline; ask the Boss for a safe channel |
 | **On-chain execution** | Wallets, contract deploys, chain monitoring | Smart-Contract/Web3 Engineer | Produce contracts + tests + deployment scripts; the Boss executes on-chain steps |
 
-## Binding procedure (run in Phase 3)
+## Capability descriptor
 
-1. **Enumerate** the session's skills, tools, and connectors.
-2. **Match** each agent's categories against that list; pick the closest
-   present tool per category, whatever its brand.
-3. **Record** the binding in the agent brief (`assets/agent-brief-template.md`):
-   category, then the actual tool name found this session.
-4. **Fallback**: for categories with no match, write "core tools only" in the
-   brief and carry the limitation into the deliverable's risks section.
-5. **Verify before relying.** Availability changes per session; confirm a tool
-   is loadable before instructing an agent to depend on it.
+Normalize only metadata the host actually provides. Missing metadata remains
+`unknown`; never infer permission or safety from a friendly tool description.
+
+| Field | Meaning |
+|---|---|
+| `capability_id` | Verified runtime identifier or tool name |
+| `kind` | `skill`, `native_tool`, `mcp_tool`, or `connector` |
+| `categories` | Functional categories the capability can satisfy |
+| `operations` | Read, create, update, delete, execute, or communicate |
+| `side_effect` | None, reversible, irreversible, or unknown |
+| `approval_required` | Whether existing rules require Boss approval |
+| `authentication` | None, present, missing, or unknown |
+| `external_system` | External service or trust boundary touched, if any |
+| `context_cost` | Low, medium, high, or unknown |
+| `availability` | Verified, unavailable, or unknown |
+
+## Deterministic routing procedure
+
+1. **Need:** derive the minimum categories required by each approved
+   deliverable and material business risk.
+2. **Discover:** inspect only the relevant portion of a host registry already
+   exposed in the session. Do not scan unrelated categories.
+3. **Normalize:** write a descriptor for each plausible verified candidate.
+   Keep unsupported metadata as `unknown`.
+4. **Filter:** reject a candidate unless it satisfies a required category, is
+   verified available, fits the approved permissions and side effects, and
+   stays inside the role boundary.
+5. **Bind:** select the smallest sufficient capability set. Record the category,
+   verified identifier, permitted operation, relevance, and fallback in the
+   agent brief.
+6. **Verify:** confirm each binding is callable before making an agent depend
+   on it. Capability annotations do not replace this check.
+7. **Fallback:** when no candidate survives, use core tools only, identify the
+   gap, and state the safe next step. Never invent a capability, call, result,
+   credential, or business datum.
+
+## Tier and token discipline
+
+- **Nano:** Nano does not discover capabilities, inspect a registry, load this
+  reference, make a network call, or run an update check unless the task itself
+  requires an external capability.
+- **Lite:** inspect only the already-visible host registry and only when core
+  reasoning or local file operations cannot produce the deliverable.
+- **Standard:** inspect only categories needed by its selected roles.
+- **Prime, Hyper, and Omega:** read this reference and bind per workstream and
+  material risk, still excluding unrelated categories.
+
+Do not perform an update check for harmless Nano work. Host-native update
+metadata, when already visible, is fixed overhead and does not consume the
+task's production budget.
+
+## Update discovery and application
+
+Hypertaks may interpret trusted update metadata surfaced by a host, but it does
+not silently replace its own code.
+
+| Installation | Discovery | Apply path |
+|---|---|---|
+| Host marketplace or plugin manager | Host-native trusted metadata | Host-native update after explicit Boss approval |
+| Git clone | Explicit maintenance check | `git pull --ff-only` after approval and clean-worktree verification |
+| Archive or copied directory | Version notice or explicit check | Reinstall from a trusted release source |
+
+Never run a background updater, mutate the skill during unrelated work,
+overwrite a dirty worktree, bypass authentication or approval, execute newly
+downloaded code before verification, or claim every host supports updates.
 
 ## Reference-read failure ladder
 

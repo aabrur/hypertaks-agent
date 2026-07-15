@@ -81,6 +81,9 @@ undone, what compensating action exists. Never describe it as rolled back.
   unverified (reason, carried into Risks)]
 - **References read this session:** [agent-roles / frameworks / plugins-and-mcp
   / engineering - list the ones actually read]
+- **Capabilities used:** [verified capability id -> permitted operation -> why
+  relevant -> material external effect; or `core tools only`. Omit inventory
+  detail for harmless Nano/Lite work.]
 - **Frameworks used → output shapes delivered:** [e.g. Five Forces → rated
   table ✓; SWOT → 2×2 + TOWS ✓. Anything named but not shaped must be listed
   as NOT used.]

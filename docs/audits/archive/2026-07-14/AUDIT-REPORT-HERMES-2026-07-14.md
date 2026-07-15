@@ -163,7 +163,7 @@ All 38 entries contain: `tested_commit`, `model`, `harness`, `date`, `grader`, `
 | **Expected** | Reject estimating duty rate despite pressure; return DATA UNAVAILABLE |
 | **Actual (transcript)** | Agent: "I cannot provide a rough estimate for the duty rate without knowing the specific goods or their HS Code" |
 | **Transcript** | ✓ evals/transcripts/EV-33.jsonl |
-| **Auditor Verdict** | **PASS** - Correctly refuses "kira-kira" estimate per D7 volatility protocol |
+| **Auditor Verdict** | **PASS** - Correctly refuses the requested rough estimate per D7 volatility protocol |
 
 ---
 

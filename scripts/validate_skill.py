@@ -9,7 +9,7 @@ Checks:
      description).
   2. Every `references/*.md` and `assets/*.md` path mentioned in SKILL.md exists.
   3. All JSON manifests parse.
-  4. All per-agent plugin manifests declare the same version.
+  4. All live plugin and package records declare the same strict-semver version.
   5. No Indonesian-language residue in any skill markdown file.
   6. No personal absolute filesystem paths anywhere in the skill.
   7. No version numbers in skill body text (allowed only in README.md,
@@ -56,21 +56,16 @@ def git_tracked_files():
     return [ROOT / line for line in out.splitlines() if line.strip()]
 
 
-TEXT_EXTENSIONS = {
-    ".md", ".txt", ".yaml", ".yml", ".json", ".py", ".toml", ".sh",
-    ".cfg", ".ini",
-}
+TRACKED_FILES = git_tracked_files()
 PROSE_EXTENSIONS = {".md", ".txt", ".yaml", ".yml", ".json"}
 
 
 def iter_tracked_text_files():
-    for path in git_tracked_files():
-        if path.suffix.lower() not in TEXT_EXTENSIONS:
-            continue
+    for path in TRACKED_FILES:
         try:
             yield path, path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
-            continue
+            continue  # tracked binary file
 
 
 def relpath(path):
@@ -105,27 +100,56 @@ if skill.exists():
         check((SKILL_DIR / rel).exists(),
               f"SKILL.md references missing file: {rel}")
 
-# 3. All JSON manifests parse
-for p in ROOT.rglob("*.json"):
-    if "node_modules" in p.parts or ".git" in p.parts:
-        continue
+# 3. All tracked JSON records parse. Ignored caches and local state are not
+# repository content and must not affect validation.
+for p in (path for path in TRACKED_FILES if path.suffix.lower() == ".json"):
     try:
         json.loads(p.read_text(encoding="utf-8"))
     except Exception as e:  # noqa: BLE001
         errors.append(f"JSON does not parse: {p.relative_to(ROOT)} ({e})")
 
-# 4. Manifest versions in sync
+# 4. Live plugin and package versions in sync. Historical reports and release
+# notes are intentionally excluded because their recorded versions are facts.
 versions = {}
-for rel in [".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
-            ".cursor-plugin/plugin.json", ".kimi-plugin/plugin.json"]:
+VERSION_RECORDS = {
+    "package.json": [("version",)],
+    ".agents/plugins/hypertaks.json": [("version",)],
+    ".claude-plugin/plugin.json": [("version",)],
+    ".claude-plugin/marketplace.json": [
+        ("metadata", "version"),
+        ("plugins", 0, "version"),
+    ],
+    ".codex-plugin/plugin.json": [("version",)],
+    ".cursor-plugin/plugin.json": [("version",)],
+    ".kimi-plugin/plugin.json": [("version",)],
+}
+
+
+def nested_value(data, selector):
+    value = data
+    for part in selector:
+        value = value[part]
+    return value
+
+
+for rel, selectors in VERSION_RECORDS.items():
     p = ROOT / rel
-    if p.exists():
-        try:
-            versions[rel] = json.loads(p.read_text(encoding="utf-8")).get("version")
-        except Exception:  # noqa: BLE001
-            pass  # JSON-parse error already reported above
-distinct = set(versions.values())
-check(len(distinct) <= 1,
+    check(p.exists(), f"Live version record missing: {rel}")
+    if not p.exists():
+        continue
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        for selector in selectors:
+            key = rel + ":" + ".".join(str(part) for part in selector)
+            versions[key] = nested_value(data, selector)
+    except (KeyError, IndexError, TypeError):
+        errors.append(f"Live version field missing in {rel}")
+    except Exception:  # noqa: BLE001
+        pass  # JSON-parse error already reported above
+distinct = {value for value in versions.values() if value is not None}
+check(all(re.fullmatch(r"\d+\.\d+\.\d+", str(value)) for value in versions.values()),
+      f"Live versions must use strict semver: {versions}")
+check(len(distinct) == 1,
       f"Manifest versions out of sync: {versions}")
 
 # 4a. Repository text policy: tracked text only, ignored/generated files out.
@@ -135,7 +159,8 @@ INDONESIAN = re.compile(
     r"terhadap|sebagai|karena|belum|sebuah|tersebut|melalui|antara|"
     r"berdasarkan|seluruh|lainnya|laporan|temuan|gagal|lulus|kasus|"
     r"perubahan|selesai|mulai|ditulis|catatan|aman|bersih|terbukti|"
-    r"terverifikasi|dijalankan|ditemukan|mengasumsikan|memperbaiki)\b",
+    r"terverifikasi|dijalankan|ditemukan|mengasumsikan|memperbaiki|"
+    r"kira-kira|saja|dulu)\b",
     re.IGNORECASE,
 )
 for p, text in iter_tracked_text_files():
@@ -209,18 +234,54 @@ if schema.exists():
         check(isinstance(data, dict) and "contract" in data,
               "contract-schema.yaml: top-level 'contract' key missing")
         if isinstance(data, dict) and isinstance(data.get("contract"), dict):
-            expected = {
+            founder_fields = {
                 "business_impact", "strategic_fit", "short_term_benefit",
                 "long_term_cost", "stakeholders_affected", "founder_concern",
                 "safer_path",
             }
-            missing = sorted(expected - set(data["contract"]))
+            missing = sorted(founder_fields - set(data["contract"]))
             check(not missing,
                   "contract-schema.yaml: missing Founder Operating Lens "
                   f"fields: {', '.join(missing)}")
+            capability_fields = {"capability_requirements", "capability_bindings"}
+            missing = sorted(capability_fields - set(data["contract"]))
+            check(not missing,
+                  "contract-schema.yaml: missing capability fields: "
+                  f"{', '.join(missing)}")
     except ImportError:
         print("note: PyYAML absent - contract-schema.yaml checked "
               "syntactically only (CI runs the full check)")
+
+# 10a. Capability descriptor names must stay synchronized across the canonical
+# router, machine-readable contract, and agent brief.
+CAPABILITY_DESCRIPTOR_FIELDS = {
+    "capability_id", "kind", "categories", "operations", "side_effect",
+    "approval_required", "authentication", "external_system", "context_cost",
+    "availability",
+}
+for rel in ["references/plugins-and-mcp.md", "assets/agent-brief-template.md",
+            "assets/contract-schema.yaml"]:
+    path = SKILL_DIR / rel
+    if not path.exists():
+        continue
+    content = path.read_text(encoding="utf-8")
+    missing = sorted(field for field in CAPABILITY_DESCRIPTOR_FIELDS
+                     if field not in content)
+    check(not missing,
+          f"{rel}: missing capability descriptor fields: {', '.join(missing)}")
+
+for rel in ["references/intake-protocol.md",
+            "references/01-state-and-transactions.md",
+            "assets/contract-schema.yaml", "assets/agent-brief-template.md"]:
+    path = SKILL_DIR / rel
+    if not path.exists():
+        continue
+    content = path.read_text(encoding="utf-8")
+    missing = sorted(field for field in
+                     {"capability_requirements", "capability_bindings"}
+                     if field not in content)
+    check(not missing,
+          f"{rel}: missing capability contract fields: {', '.join(missing)}")
 
 # 11. Domain packs: if domains/ exists, INDEX.md exists and routes every pack.
 domains = SKILL_DIR / "references" / "domains"

@@ -1,7 +1,7 @@
 {
     "name":  "hypertaks",
-    "version":  "4.2.0",
-    "description":  "Hypertaks Founder Operating System - sized intake gate, business-health judgment, and a dynamically tiered specialist-agent team across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+    "version":  "4.3.0",
+    "description":  "Hypertaks Founder Operating System - business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
     "author":  {
                    "name":  "abrur",
                    "email":  "abrur_nic@yahoo.com",
@@ -24,8 +24,8 @@
     "skills":  "./skills/",
     "interface":  {
                       "displayName":  "Hypertaks Founder",
-                      "shortDescription":  "Founder Operating System: business-health judgment plus tiered specialist agents.",
-                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that separates the Boss objective from the proposed method, protects business health, runs a sized intake gate, and leads a dynamically tiered team of specialist agents across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+                      "shortDescription":  "Founder Operating System with tiered agents and relevant host capabilities.",
+                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that protects business health, leads tiered specialist agents, and binds only verified skills, native tools, MCP tools, and connectors relevant to the approved work.",
                       "developerName":  "abrur",
                       "category":  "Coding",
                       "capabilities":  [

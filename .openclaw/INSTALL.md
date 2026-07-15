@@ -34,5 +34,12 @@ visible in that directory.
    should run the intake gate, announce the tier (Prime for this task), then
    spawn the tier's specialist agents.
 
+## Updating safely
+
+Hypertaks does not update itself in the background. For a symlink or junction
+pointing at a clean Git clone, review the update and run `git pull --ff-only`
+only after explicit approval. For a copied skill directory, reinstall it from
+a trusted release source, then restart OpenClaw. Never overwrite local changes.
+
 > Replace `<your-openclaw-skills-dir>` with your own path. This repo does not
 > assume any particular workspace layout.

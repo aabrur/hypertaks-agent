@@ -1,7 +1,7 @@
 {
     "name":  "hypertaks",
-    "version":  "4.2.0",
-    "description":  "Hypertaks Founder Operating System - sized intake gate, business-health judgment, and a dynamically tiered specialist-agent team across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+    "version":  "4.3.0",
+    "description":  "Hypertaks Founder Operating System - business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
     "author":  {
                    "name":  "abrur",
                    "email":  "abrur_nic@yahoo.com"
@@ -24,8 +24,8 @@
     "skillInstructions":  "Kimi Code tool mapping for the Hypertaks skill:\n\n- When the skill\u0027s Phase 0 intake gate says to ask the user clarifying/verification questions, call Kimi Code\u0027s `AskUserQuestion` tool (1 question, 2-4 concrete options, recommended option first suffixed with `(Recommended)`). Do not render those choices as plain assistant text unless `AskUserQuestion` is unavailable.\n- When the skill says to spawn the specialist agents (Phase 4, count set by the tier), use Kimi Code\u0027s `Agent` tool. Use a Kimi subagent type such as `coder` for build/engineering roles and `explore`/`plan` for research/strategy roles; do not pass `general-purpose`. Paste each filled agent brief into `prompt` with a short `description`. Keep dependent steps sequential; use `run_in_background: true` only for independent work.\n- When the skill refers to the `Skill` tool, use Kimi Code\u0027s native `Skill` tool. When it refers to `TodoWrite`, use `TodoList`.\n- Use Kimi Code\u0027s `Read`, `Write`, `Edit`, `Bash`, `Grep`, `Glob`, `FetchURL`, `WebSearch`, and MCP tools by their actual exposed names. For file-content search use `Grep`; for finding files by path use `Glob`; to fetch a URL use `FetchURL`.",
     "interface":  {
                       "displayName":  "Hypertaks Founder",
-                      "shortDescription":  "Founder Operating System: business-health judgment plus tiered specialist agents.",
-                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that separates the Boss objective from the proposed method, protects business health, runs a sized intake gate, and leads a dynamically tiered team of specialist agents across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
+                      "shortDescription":  "Founder Operating System with tiered agents and relevant host capabilities.",
+                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that protects business health, leads tiered specialist agents, and binds only verified skills, native tools, MCP tools, and connectors relevant to the approved work.",
                       "developerName":  "abrur",
                       "capabilities":  [
                                            "Interactive",

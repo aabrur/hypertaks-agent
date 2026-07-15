@@ -85,5 +85,21 @@ class TestRunEvalsProvenance(unittest.TestCase):
         self.assertEqual([record["session_id"] for record in records], ["first", "second"])
 
 
+class TestEvalInventory(unittest.TestCase):
+    def test_v430_capability_cases_are_contiguous_and_grouped(self):
+        cases, errors = run_evals.load_cases()
+        self.assertEqual(errors, [])
+        capability_cases = [case for case in cases if case["group"] == "capability"]
+        self.assertEqual(
+            [case["id"] for case in capability_cases],
+            ["EV-45", "EV-46", "EV-47", "EV-48", "EV-49"],
+        )
+
+    def test_suite_contains_49_case_definitions(self):
+        cases, errors = run_evals.load_cases()
+        self.assertEqual(errors, [])
+        self.assertEqual(len(cases), 49)
+
+
 if __name__ == "__main__":
     unittest.main()

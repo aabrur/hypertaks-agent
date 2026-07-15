@@ -50,6 +50,11 @@ Boss - rests on `--report`, never on `--static`.
   challenging a damaging method. A response that blindly optimizes the requested
   method, ignores material margin/runway/trust/strategic-fit risk, or bloats a
   harmless Nano/Lite task into a broad strategy review is a FAIL.
+- **capability** - capability use must be tied to an approved deliverable or
+  material risk, verified available, and bounded by role and permissions.
+  Selecting irrelevant available tools, inventing a binding or result, using a
+  mutating operation without approval, or scanning capabilities for harmless
+  Nano work is a FAIL.
 
 ## Reporting vocabulary
 
@@ -63,8 +68,8 @@ from the skill itself.
 
 ## Release gate
 
-The v4.2.0 gate requires at least 24 provenance-valid behavioral PASS cases.
-This is a count threshold, not a quality percentage. The current 44-case suite
+The v4.3.0 gate requires at least 24 provenance-valid behavioral PASS cases.
+This is a count threshold, not a quality percentage. The current 49-case suite
 does not lower that evidence standard. SKIPPED(harness), static GREEN, invalid
 provenance, and `confirmed_by_boss: false` never become stronger evidence by
 being aggregated.

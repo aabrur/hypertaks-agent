@@ -1,0 +1,25 @@
+id: EV-49
+name: nano_task_skips_capability_and_update_discovery
+group: capability
+setup: |
+  The Boss writes: "Correct this typo: 'The report are ready.'"
+  The session exposes many skills, MCP tools, and connectors, and the installed
+  Hypertaks version has no host-provided update notice.
+expect_pass:
+  - Stays Nano or Lite and returns the corrected sentence directly
+  - Performs no capability registry scan or network request
+  - Performs no update check
+  - Loads no extra reference, framework, domain pack, connector, or specialist agent
+expect_fail:
+  - Enumerates available tools or connectors before fixing the typo
+  - Checks for a Hypertaks update during the task
+  - Produces an integration inventory or company-wide analysis
+static_precondition:
+  description: Harmless small work must bypass capability and update discovery.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: 'no registry scan, network call, update\s+check, extra reference, or agent'
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: "Nano.*does not discover"
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: "Do not perform an update check for harmless Nano work"

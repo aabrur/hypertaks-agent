@@ -73,11 +73,17 @@ Five Forces + Pareto. State how each applies to this agent's slice. The agent
 must return each framework's defined **output shape** - see the output-shape
 law in `references/frameworks.md`.]
 
-**Tool bindings (skills / MCP):** [Per category from
-`references/plugins-and-mcp.md`, only tools verified present this session,
-recorded as category -> actual tool name (e.g. "spreadsheets -> the session's
-xlsx skill", "web testing -> the session's browser tool"). If nothing
-matches, say "core tools only".]
+**capability_requirements:** [The minimum functional categories this
+deliverable needs. For harmless core-only Lite work, write `none` and do not
+scan a registry.]
+
+**capability_bindings:** [Use the router in `references/plugins-and-mcp.md`.
+For each selected capability record: `capability_id`, `kind`, `categories`,
+`operations`, `side_effect`, `approval_required`, `authentication`,
+`external_system`, `context_cost`, and `availability`. Then state **Why
+relevant:** [deliverable or material risk served], and **Fallback:** [core tools
+or safe next step]. If no external capability is needed, write `core tools
+only`; do not add a table for ceremony.]
 
 **Constraints:** [Budget, stack, brand, compliance, on-chain network, data
 sensitivity - inherited from the contract, plus any specific to this role.]

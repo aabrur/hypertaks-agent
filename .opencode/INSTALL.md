@@ -18,6 +18,13 @@ project-level):
 Restart OpenCode. The plugin installs through OpenCode's plugin manager and
 registers the skill.
 
+## Updating safely
+
+Use OpenCode's native plugin update or reinstall flow only after explicit user
+approval. Hypertaks may report trusted update metadata already surfaced by the
+host, but it never replaces its own code in the background or during unrelated
+work.
+
 Verify by asking: *"Hypertaks, analyze why our churn is high."* - it should run
 the intake gate first, announce the tier (Prime for this task), then spawn the
 tier's specialist agents.

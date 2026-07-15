@@ -6,14 +6,14 @@
               },
     "metadata":  {
                      "description":  "Hypertaks Founder Operating System - multi-agent founder protocol.",
-                     "version":  "4.2.0"
+                     "version":  "4.3.0"
                  },
     "plugins":  [
                     {
                         "name":  "hypertaks",
                         "source":  ".",
-                        "description":  "Founder Operating System: sized intake gate, business-health judgment, and a dynamically tiered specialist-agent team across strategy, engineering, marketing, finance, ERP, supply chain, and IoT.",
-                        "version":  "4.2.0",
+                        "description":  "Founder Operating System: business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
+                        "version":  "4.3.0",
                         "license":  "MIT",
                         "keywords":  [
                                          "founder",

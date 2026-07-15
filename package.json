@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "4.2.0",
-  "description": "Hypertaks Founder Operating System - cross-agent plugin with business-health judgment, a sized intake gate, and a tiered specialist-agent team.",
+  "version": "4.3.0",
+  "description": "Hypertaks Founder Operating System - cross-agent plugin with business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
   "homepage": "https://github.com/aabrur/hypertaks-agent#readme",

@@ -19,6 +19,8 @@ hypertaks_state:
   strategic_fit: none
   founder_concern: none
   safer_path: none
+  capability_requirements: []       # minimum categories; omit for Nano
+  capability_bindings: []           # verified Phase 3 descriptor records
   actions: []                        # see §2
   status: ACTIVE                     # DRAFT|AWAITING_APPROVAL|ACTIVE|BLOCKED|ABORTED|CLOSED
 ```
@@ -26,6 +28,8 @@ hypertaks_state:
 Founder Operating Lens fields are concise state, not a license to expand every
 task. For Nano and harmless Lite work they may remain `none`; for material work
 they preserve the tradeoff, concern, and safer path across phase boundaries.
+Capability fields follow the same proportionality rule. Keep both lists empty
+when core reasoning or local tools suffice; never scan a registry to fill them.
 
 **Rehydration rule.** On Hyper/Omega, the budget exceeds many context windows;
 the harness will compact. Reprint the full capsule before each new workstream.

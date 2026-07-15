@@ -85,6 +85,14 @@ business, protect the objective and challenge the method. State the conflict,
 the likely business consequence, and the safer path before presenting a
 signable contract.
 
+## Step 1b - Capability need screen
+
+Decide whether the approved deliverable needs anything beyond core reasoning or
+local file operations. When it does, record only the minimum functional
+categories in `capability_requirements`. Do not enumerate tools during intake,
+and do not add this field for harmless Nano work. Phase 3 records verified
+`capability_bindings` after running the canonical router.
+
 ## De-escalation - the ratchet used to turn only one way
 
 If during Phases 1-3 the task proves smaller than it scored, **lower the tier
@@ -210,7 +218,9 @@ silently omitted:
     business impact, strategic fit, short-term benefit, long-term cost,
     stakeholders affected, Founder concern, and safer path. Use `none` for
     harmless Nano/Lite tasks.
-11. **Visual output** - included or not, per the visual-output question (omit
+11. **Capability requirements** - the minimum functional categories needed by
+    the deliverable, or omitted when core reasoning and local tools suffice.
+12. **Visual output** - included or not, per the visual-output question (omit
     the field entirely on environments without the capability).
 
 ### Deep contract template
@@ -223,7 +233,8 @@ silently omitted:
 > ~[X]; estimated effort [rounds/time]. Access needed: [list or "none"].
 > Assumptions: [list]. Alternative readings considered: [list or "none"].
 > Founder lens: [business impact, strategic fit, key tradeoff, concern, safer
-> path, or "none"]. Reusing [existing assets]. Approve to proceed.
+> path, or "none"]. Capability requirements: [minimum categories or "none"].
+> Reusing [existing assets]. Approve to proceed.
 
 ### Express contract template
 
@@ -232,6 +243,7 @@ silently omitted:
 > shape]. Success check = [one line]. Token budget ~[X]; expected in [this
 > round / N rounds]. Access needed: [list or "none"]. Assumptions: [list].
 > Founder lens: [none, or one concise material concern + safer path].
+> Capability requirements: [minimum categories or "none"].
 > Approve to proceed.
 
 ## Step 4 - Approval

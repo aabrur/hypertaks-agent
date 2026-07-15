@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.3.0] - 2026-07-15
 
 ### Added
 - **Founder Operating Lens**: Defines Hypertaks as a Founder Operating System,
@@ -20,12 +20,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   tactics, safe Boss override, and small-task proportionality.
 - **Language gates**: Repository validation now rejects U+2014 in tracked text
   files and flags high-confidence Indonesian residue in tracked prose files.
+- **Capability Relevance Router**: Adds deterministic Need, Discover,
+  Normalize, Filter, Bind, Verify, and Fallback stages for host skills, native
+  tools, MCP tools, and connectors.
+- **Capability evals**: Adds EV-45 through EV-49 for relevant selection,
+  irrelevant rejection, permission-gated mutation, honest fallback, and Nano
+  proportionality.
+- **Safe update policy**: Allows trusted host-native update discovery while
+  requiring explicit approval before installed code changes.
 
 ### Changed
 - Wires Founder judgment into Phases 0 through 5, agent briefs, deliverables,
   state capsule fields, role selection, CORE profile, documentation, and eval
   documentation while preserving deterministic tier selection and Nano/Lite
   proportionality.
+- Binds the smallest sufficient verified capability set and keeps every
+  capability inside the approved role, permission, side-effect, and context
+  boundaries.
+- Extends version synchronization checks to package metadata, the cross-agent
+  catalog, all tracked plugin manifests, and both Claude marketplace records.
 
 ## [4.2.0] - 2026-07-14
 

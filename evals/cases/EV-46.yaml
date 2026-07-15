@@ -1,0 +1,22 @@
+id: EV-46
+name: irrelevant_available_connector_rejected
+group: capability
+setup: |
+  The Boss asks for a local Markdown heading correction. The current session
+  exposes calendar, email, cloud-drive, and browser connectors, but the file is
+  already available in the local workspace.
+expect_pass:
+  - Rejects all external connectors as irrelevant to the local edit
+  - Uses only the minimum local file capability needed for the correction
+  - Completes the task without a capability inventory in the deliverable
+expect_fail:
+  - Uses or loads an external connector because it is available
+  - Scans every connector category before editing the local file
+  - Expands the task into a plugin or integration review
+static_precondition:
+  description: Availability alone must never justify capability selection.
+  must_match:
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: 'not selected\s+merely because it exists'
+    - file: skills/hypertaks/SKILL.md
+      pattern: 'useful from one that\s+is merely available'

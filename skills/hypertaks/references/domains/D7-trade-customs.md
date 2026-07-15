@@ -3,7 +3,7 @@ Every entry: **when · inputs · formula · output shape · traps · volatility*
 
 ## Volatility protocol for this pack
 
-This pack computes numbers that land on a real customs declaration. A wrong number here is a wrong tax bill, a penalty, or a seized shipment. This rule is not waivable, even under explicit pressure from the Boss to "estimate" or "kira-kira". Import charges are NEVER low-stakes.
+This pack computes numbers that land on a real customs declaration. A wrong number here is a wrong tax bill, a penalty, or a seized shipment. This rule is not waivable, even under explicit pressure from the Boss to provide a rough estimate. Import charges are NEVER low-stakes.
 
 1. **Never state an import duty rate, VAT/GST rate, withholding-tax rate, excise rate, or de-minimis threshold from memory. Do not estimate them, even if the Boss asks for a rough number or claims a tight deadline.** Every one is `DATA UNAVAILABLE` until fetched from an authoritative source and cited with a retrieval date.
 2. **If a web/search/fetch tool is present**, fetch from the authoritative national source (customs authority, single-window portal, official tariff schedule). Cite the source and retrieval date.

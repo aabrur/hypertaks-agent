@@ -1,85 +1,87 @@
-# CHECKPOINT  -  Hypertaks v4.2.0 finalization
+# CHECKPOINT - Hypertaks v4.3.0
 
 Date: 2026-07-15
-Working branch: `main`
+Working branch: `founder-operating-system`
+Target branch: `origin/main`
+Start commit: `d878d3166e870b7d5ffcd114c0213e2d3cbc75f3`
 
-This checkpoint records the current repository state without treating static
-checks, saved verdicts, or model grading as stronger evidence than they are.
-The 2026-07-15 Founder Operating Lens update extends the structural suite to 44
-case definitions; the saved behavioral results file still contains legacy rows
-only and is not upgraded by this documentation.
+This checkpoint records the v4.3.0 Founder Operating System and Capability
+Relevance Router update. Static checks, saved verdicts, and model grading are
+not treated as stronger evidence than they are.
 
-## Remediation scope
+## Release scope
 
-1. **Evaluator integrity**  -  enforce current-HEAD, row/meta commit-tree-hash
-   consistency; reject placeholders and non-independent graders; cache skill
-   root hashes; retain focused regression coverage.
-2. **CI and documentation**  -  run validator, case check, static check, unit
-   tests, and compileall in CI; synchronize release wording with the invalid
-   legacy report.
-3. **Verification and integration**  -  run the required checks, commit one
-   remediation work item, and push `origin/main` without a force-push or tag.
-
-No 38-case behavioral rerun is part of this scope. No tag, force-push, or new
-audit is authorized.
+1. Add the deterministic Need, Discover, Normalize, Filter, Bind, Verify, and
+   Fallback router for host skills, native tools, MCP tools, and connectors.
+2. Wire relevance decisions into Phases 0 through 5, the CORE profile, task
+   contract, state capsule, agent brief, deliverable, and install guidance.
+3. Preserve deterministic tier selection, Nano and Lite proportionality,
+   zero-agent execution, conditional reference loading, and production budgets.
+4. Add EV-45 through EV-49 without creating behavioral transcripts or changing
+   saved verdicts.
+5. Synchronize every live plugin and package record on `4.3.0`.
+6. Define safe update discovery without background or unapproved code changes.
 
 ## Behavioral evidence boundary
 
 | Evidence | Current repository record |
 |---|---:|
-| Eval case definitions | 44 |
+| Eval case definitions | 49 |
 | Saved result verdicts | 26 PASS, 12 SKIPPED(harness), 0 recorded FAIL |
-| Historical PASS transcripts with complete cold-session, tool, hash, raw-response, and independent-grader fields | 14 (EV-25–EV-38) |
+| Historical PASS transcripts with complete cold-session, tool, hash, raw-response, and independent-grader fields | 14 (EV-25 through EV-38) |
+| Current-HEAD provenance-valid PASS | 0 |
 | Release threshold | 24 provenance-valid behavioral PASS |
-| `confirmed_by_boss` | `false` in metadata and all 38 result rows |
+| `confirmed_by_boss` | `false` in metadata and all 38 saved result rows |
 
-The `--report` command currently exits 1, so the current-release
-provenance-valid PASS count is **0**. The 14 complete historical rows are not
-promoted across the current-HEAD boundary. The remaining saved PASS verdicts
-are not promoted by a static check. `confirmed_by_boss` remains unchanged.
+`python scripts/run_evals.py --report evals/results.yaml` exits 1. The saved
+bundle has commit and tree mismatches, malformed or incomplete legacy
+transcripts, self-grading records, and no results for EV-39 through EV-49. No
+behavioral rerun was performed, and no verdict was upgraded.
 
 ## Structural state
 
-- The skill defines six phases, Phase 0 through Phase 5.
-- The repository contains 12 domain packs, 20 specialist roles, 44 eval case
-  definitions, 38 saved transcript files, and a 40-line CORE profile.
-- Founder Operating Lens rules are wired into the main skill, CORE profile,
-  intake protocol, state capsule, agent briefs, deliverable template, and role
-  selection guidance.
-- All versioned plugin manifests and `package.json` declare `4.2.0`.
-- Figure data and generation logic live in `scripts/generate_figures.py`.
+- The main skill remains below 500 lines and defines the canonical six phases.
+- The canonical router lives in `references/plugins-and-mcp.md`; the main and
+  CORE skills carry only the proportional execution summary.
+- Capability requirements and bindings use consistent names across the intake
+  protocol, state capsule, contract schema, and agent brief.
+- Live version synchronization covers `package.json`, the cross-agent catalog,
+  Claude, Codex, Cursor, Kimi, and both Claude marketplace version records.
+- The repository contains 49 eval definitions, 38 saved transcripts, 12 domain
+  packs, 20 specialist roles, and four generated figures.
+- No MCP server, background updater, credential, cache, bundle, temporary clone,
+  or local agent state is included.
 
-## Claims deliberately not made
+## Language and punctuation
 
-- No claim that all 38 cases passed behaviorally.
-- No claim that skipped cases passed.
-- No claim that the behavioral release threshold is met.
-- No claim that repository history is secret-free or that runtime coverage is
-  complete; those require evidence outside this scope.
+- Starting-commit U+2014 matches: 0.
+- Current-tree U+2014 matches: 0.
+- EV-33 test prose, the D7 customs reference, and the archived Hermes report
+  were translated into professional English.
+- EV-33's saved `raw_prompt` remains verbatim because changing historical raw
+  evidence would fabricate a transcript.
+- The validator's Indonesian word list is executable policy data, not prose.
 
-## Verification gate
-
-Before commit, run and record fresh exit-zero results for:
-
-```text
-python scripts/validate_skill.py
-python scripts/run_evals.py --check
-python scripts/run_evals.py --static
-python -m compileall scripts
-git diff --check
-```
-
-The focused parser/provenance unit tests are also run separately. Behavioral
-`--report` is diagnostic for this legacy bundle; its non-zero result is
-recorded and does not block structural CI because no behavioral rerun occurred.
-
-### Fresh results on 2026-07-15
+## Verification results
 
 | Check | Result |
 |---|---|
-| `python scripts/validate_skill.py` | exit 0  -  `Skill validation OK (version 4.2.0)` |
-| `python scripts/run_evals.py --check` | exit 0  -  44 case definitions OK |
-| `python scripts/run_evals.py --static` | exit 0  -  44/44 GREEN; not behavioral PASS |
+| `python scripts/validate_skill.py` | exit 0, version 4.3.0 |
+| `python scripts/run_evals.py --check` | exit 0, 49 case definitions OK |
+| `python scripts/run_evals.py --static` | exit 0, 49/49 GREEN; not behavioral PASS |
+| `python -m unittest scripts.test_run_evals -v` | exit 0, 9 tests OK |
 | `python -m compileall scripts` | exit 0 |
+| `python scripts/generate_figures.py` | exit 0 |
+| Skill Creator `quick_validate.py` | exit 0 under UTF-8 mode |
+| Plugin Creator `validate_plugin.py` | exit 0 under UTF-8 mode |
 | `git diff --check` | exit 0 |
-| `python -m unittest scripts.test_run_evals -v` | exit 0  -  7 tests OK |
+| Behavioral report | exit 1, legacy evidence invalid; no rerun claimed |
+
+## Claims deliberately not made
+
+- Static GREEN is not described as behavioral PASS.
+- The 24-case behavioral release threshold is not described as met.
+- No saved transcript, tool call, tool result, grader decision, or Boss
+  confirmation was created or modified to improve a verdict.
+- Host-native update discovery is not described as universal automatic update
+  support.

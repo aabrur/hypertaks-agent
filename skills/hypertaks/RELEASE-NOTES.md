@@ -2,6 +2,51 @@
 
 # Release Notes
 
+## v4.3.0 - Founder Operating Lens and Capability Relevance Router
+
+Hypertaks is a Founder Operating System: an operating protocol and decision
+discipline that makes the host AI operate as the accountable founder of the
+work and leader of its specialist agents. The Boss owns the business and
+retains final human authority. The Founder owns decision quality, integration,
+risk awareness, and long-term reasoning without claiming consciousness,
+literal ownership, or autonomous legal authority.
+
+### Added
+
+- Added the deterministic Capability Relevance Router: Need, Discover,
+  Normalize, Filter, Bind, Verify, and Fallback.
+- Added conditional contract and brief fields for capability requirements and
+  verified bindings, including operations, side effects, approval,
+  authentication, external boundaries, context cost, and availability.
+- Added EV-45 through EV-49 for relevant selection, irrelevant rejection,
+  permission-gated mutation, honest fallback, and Nano proportionality.
+- Added safe update guidance for host marketplaces, clean Git clones, and
+  archive or copied-directory installations.
+
+### Changed
+
+- Wired capability relevance into Phases 0 through 5 and the CORE profile.
+- Preserved deterministic tier selection, fixed production budgets,
+  zero-agent Nano execution, conditional reference reading, and honest token
+  accounting. Harmless Nano work performs no registry scan or update check.
+- Expanded live-version synchronization validation to package metadata, the
+  cross-agent catalog, every tracked plugin manifest, and both Claude
+  marketplace version records.
+- Updated all live plugin records to `4.3.0` without rewriting historical
+  reports or release evidence.
+
+### Evidence boundary
+
+- The structural suite contains 49 case definitions across nine groups.
+- EV-39 through EV-49 have no fresh behavioral transcripts and are not
+  recorded as behavioral PASS.
+- The saved behavioral bundle remains legacy evidence. No behavioral rerun was
+  performed, no verdict was upgraded, and `confirmed_by_boss` remains `false`.
+- Static GREEN demonstrates only that the rules exist in tracked files. It is
+  not behavioral certification.
+
+---
+
 ## v4.2.0 - Safety Kernel, Deterministic Runtime, and Quantitative Domain Packs
 
 This release adds quantitative domain references, a Safety Kernel, and explicit
