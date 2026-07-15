@@ -56,7 +56,7 @@ guard must **stay quiet**. A guard is only correct when both halves pass.
 ```bash
 python3 scripts/run_evals.py --check     # case files well-formed (runs in CI)
 python3 scripts/run_evals.py --static    # can the skill exhibit the behavior?
-python3 scripts/run_evals.py --report evals/results.yaml   # the real verdict
+python3 scripts/run_evals.py --report evals/results.yaml   # final per-case verdict ledger
 ```
 
 ## Running a behavioral case
@@ -75,28 +75,38 @@ python3 scripts/run_evals.py --report evals/results.yaml   # the real verdict
 4. Grade the transcript against `expect_pass` / `expect_fail` per
    [`rubric.md`](rubric.md). Every `expect_pass` must hold and no `expect_fail`
    may occur, else the case FAILS. **No partial credit.**
-5. Record the verdict in `evals/results.yaml` with `method: behavioral`, the
-   harness, the date, the grader, and a transcript quote per bullet. **A verdict
-   with no quote is an opinion.**
+5. For a transcript-graded run, record the verdict in `evals/results.yaml` with
+   `method: behavioral`, the harness, the date, the grader, and a transcript
+   quote per bullet. **A transcript verdict with no quote is an opinion.** For a
+   Boss-confirmed main-agent final ledger, record `source_report` and
+   `final_verdict_source` instead, preserve the cited reports in the hashed
+   source-report archive, and do not fabricate transcript quotes. Every non-PASS
+   row still requires a documented evidence quote.
 
 ## Grader independence - a known weakness, stated plainly
 
 A run graded by the same model family that produced it is **weak evidence**. It
-is better than a grep and worse than a human. `results.yaml` records `grader:`
-for every case so the strength of each verdict is legible, and any run graded by
-the model itself carries `confirmed_by_boss: false` until a human confirms it.
-Release claims rest on human-confirmed runs.
+is better than a grep and worse than a human. `results.yaml` records the final
+verdict source for every case so the authority of each decision is legible.
+For the v4.3.0 certification, the main agent reviewed the final EV reports and
+the Boss confirmed the resulting ledger. Spawned-agent output, generated
+summaries, temporary fragments, and intermediate grader drafts do not override
+that final verdict.
 
 ## Release gate
 
-At least 24 provenance-valid behavioral PASS cases from `--report`, with every
-failure or skip documented. Skipped cases never count, the threshold is never
-rounded up, and it is **never satisfied with static GREENs**.
+At least 24 behavioral PASS cases from `--report`, with every failure or skip
+documented and final verdict authority recorded. Skipped cases never count, the
+threshold is never rounded up, and it is **never satisfied with static GREENs**.
+`EVIDENCE_MISSING` never counts and blocks the release gate.
 
-The suite currently contains 49 case definitions. EV-39 through EV-44 are
-Founder Operating Lens cases, and EV-45 through EV-49 are Capability Relevance
-Router cases. They must not be reported as behavioral PASS until fresh,
-provenance-valid transcripts exist and `--report` accepts them.
+The v4.3.0 suite contains 49 case definitions. The Boss-confirmed canonical
+ledger records 43 Behavioral PASS and 6 documented non-PASS cases, so the gate
+passes with a +19 margin. Static coverage is 49/49 GREEN and remains a separate
+structural result. `confirmed_by_boss: true` records the human confirmation.
+
+"Behaviorally Certified" is the repository release-gate status. It is not
+formal third-party certification and does not guarantee security or outcomes.
 
 ## Transcript Format & Provenance
 The final transcript format MUST be a single JSON object per line (.jsonl) with the following schema:
@@ -106,8 +116,11 @@ The hash values must be computed deterministically, never written manually:
 - **TESTED_TREE**: Compute via git show -s --format=%T <tested_commit>
 - **SKILL_ROOT_HASH**: Compute as the deterministic SHA-256 hash of all tracked files in skills/hypertaks. This must include the relative path and file contents, sorted by path.
 
-For a release report, `tested_commit` must equal the current checkout HEAD and
-every behavioral row must match the report-level commit, tree, and skill-root
-hash. A saved legacy report may therefore be rejected by `--report`; that
-diagnostic failure is not converted into PASS and does not block structural CI
-when no fresh behavioral rerun is part of the change.
+For a release report, `tested_commit` must be the current checkout HEAD or an
+ancestor of it, and its package version must match the report version. This lets
+a committed attestation identify the exact certified parent without requiring a
+commit to contain its own SHA. Transcript-graded rows must match the report-level
+commit, tree, and skill-root hash. A saved legacy report may therefore be
+rejected by `--report`; that diagnostic failure is not converted into PASS and
+does not block structural CI when no fresh behavioral rerun is part of the
+change.

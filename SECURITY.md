@@ -3,10 +3,12 @@
 ## Supported Versions
 
 Hypertaks is a cross-agent **skill** (markdown instructions for AI coding
-agents) plus one Python validator script - it has no runtime service component.
+agents) plus repository-local Python validation, evaluation, test, and figure
+generation tooling. It has no runtime service component.
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 4.3.x   | :white_check_mark: |
 | 3.0.x   | :white_check_mark: |
 | 2.x     | :white_check_mark: (security fixes only) |
 | < 2.0   | :x:                |
@@ -16,13 +18,26 @@ agents) plus one Python validator script - it has no runtime service component.
 This policy covers the contents of this repository only:
 
 - `skills/hypertaks/**` - the skill markdown and reference files.
-- `scripts/validate_skill.py` - the only executable code shipped here.
+- `scripts/*.py` - repository-local validation, evaluation, test, and figure
+  generation tooling.
 - Plugin manifests under `.claude-plugin/`, `.codex-plugin/`,
   `.cursor-plugin/`, `.kimi-plugin/`, `.agents/`, `.pi/`.
 
 It does **not** cover the behavior of any AI agent that loads the skill, nor
 any third-party framework, plugin, or MCP connector the skill names or invokes.
 Those have their own security policies.
+
+## Behavioral Certification Boundary
+
+Hypertaks v4.3.0 is **Behaviorally Certified** under this repository's release
+gate: 43/49 behavioral cases PASS, 6 non-PASS cases remain documented, the
+threshold is 24, and the margin is +19. Static coverage is 49/49 GREEN and is
+reported separately because static GREEN is not behavioral PASS.
+
+This project status is not formal third-party certification. It does not claim
+absolute security, eliminate the documented non-PASS cases, or guarantee any
+agent action or business outcome. Security-sensitive deployments still require
+their own threat model, authorization controls, testing, and review.
 
 ## Reporting a Vulnerability
 

@@ -1,21 +1,28 @@
 """Regenerate the four release figures from facts in this repository.
 
-The script intentionally uses Pillow, which is available in the repo's current
-Python environment, instead of requiring matplotlib.
+Rendering dependencies are pinned in scripts/requirements-figures.txt. The
+bundled Roboto variable font and its SHA-256 remove host-font drift; its OFL
+license is preserved under assets/fonts/.
 """
 
 from __future__ import annotations
 
-import json
+import contextlib
+import hashlib
+import io
 import re
 from collections import Counter
 from pathlib import Path
 
+import yaml
 from PIL import Image, ImageDraw, ImageFont
+from run_evals import cmd_report, eval_static, load_cases
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / "skills" / "hypertaks"
+FONT_PATH = ROOT / "assets" / "fonts" / "Roboto-Variable.ttf"
+FONT_SHA256 = "d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134"
 W, H = 1600, 1000
 INK = "#172033"
 BLUE = "#2f6fed"
@@ -28,16 +35,14 @@ BG = "white"
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
-    candidates = [
-        "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf",
-        "C:/Windows/Fonts/segoeuib.ttf" if bold else "C:/Windows/Fonts/segoeui.ttf",
-    ]
-    for candidate in candidates:
-        try:
-            return ImageFont.truetype(candidate, size)
-        except OSError:
-            pass
-    return ImageFont.load_default()
+    if not FONT_PATH.is_file():
+        raise FileNotFoundError(f"pinned figure font is missing: {FONT_PATH}")
+    actual_hash = hashlib.sha256(FONT_PATH.read_bytes()).hexdigest()
+    if actual_hash != FONT_SHA256:
+        raise ValueError("pinned figure font SHA-256 mismatch")
+    face = ImageFont.truetype(str(FONT_PATH), size)
+    face.set_variation_by_name(b"Bold" if bold else b"Regular")
+    return face
 
 
 F_TITLE = font(42, True)
@@ -112,51 +117,118 @@ def figure_1() -> None:
     )
 
 
-def transcript_has_complete_independent_record(path: Path) -> bool:
-    try:
-        records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    except (OSError, json.JSONDecodeError):
-        return False
-    if len(records) != 1:
-        return False
-    row = records[0]
-    grader = re.sub(r"\s*\([^)]*\)", "", str(row.get("grader", ""))).strip()
-    return all([
-        row.get("verdict") == "PASS",
-        row.get("cold_session") is True,
-        isinstance(row.get("tool_calls"), list) and bool(row["tool_calls"]),
-        isinstance(row.get("tool_results"), list) and bool(row["tool_results"]),
-        bool(str(row.get("raw_prompt", "")).strip()),
-        bool(str(row.get("raw_response", "")).strip()),
-        bool(re.fullmatch(r"[0-9a-f]{40}", str(row.get("tested_commit", "")))),
-        bool(re.fullmatch(r"[0-9a-f]{40}", str(row.get("tested_tree", "")))),
-        bool(re.fullmatch(r"[0-9a-f]{64}", str(row.get("skill_root_hash", "")))),
-        bool(str(row.get("executor", "")).strip()),
-        bool(grader),
-        str(row.get("executor", "")).strip() != grader,
-        "self-graded" not in str(row.get("grader", "")).lower(),
-    ])
-
-
 def figure_2() -> None:
-    results_text = (ROOT / "evals" / "results.yaml").read_text(encoding="utf-8")
-    transcripts = (ROOT / "evals" / "transcripts").glob("EV-*.jsonl")
-    complete = sum(transcript_has_complete_independent_record(path) for path in transcripts)
-    recorded_pass = len(re.findall(r"^    verdict: PASS\s*$", results_text, re.MULTILINE))
-    skipped = len(re.findall(r"^    verdict: SKIPPED", results_text, re.MULTILINE))
-    legacy_pass = recorded_pass - complete
-    bar_chart(
-        "Figure_2.png",
-        "Behavioral evidence recorded in evals/results.yaml",
-        "This figure reads saved evidence; it does not rerun the behavioral suite.",
-        [
-            ("PASS + complete independent record", complete),
-            ("Other recorded PASS", legacy_pass),
-            ("SKIPPED (not a PASS)", skipped),
-        ],
-        "Complete record = cold-session, tool, hash, raw prompt/response, and independent-grader fields.",
-        threshold=24,
+    results_path = ROOT / "evals" / "results.yaml"
+    report_output = io.StringIO()
+    with contextlib.redirect_stdout(report_output):
+        report_status = cmd_report(results_path)
+    if report_status != 0:
+        raise ValueError(
+            "cannot render certification figure from an invalid report:\n"
+            + report_output.getvalue())
+    data = yaml.safe_load(results_path.read_text(encoding="utf-8"))
+    meta = data["meta"]
+    results = data["results"]
+    passed = sum(row["verdict"] == "PASS" for row in results.values())
+    non_pass = len(results) - passed
+    total = len(results)
+    threshold = int(meta["release_threshold"])
+    margin = passed - threshold
+    confirmed = meta["confirmed_by_boss"] is True
+    archive_rel = Path(meta["source_report_archive"])
+    archive_path = (results_path.parent / archive_rel).resolve()
+    archive_hash = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    if archive_hash != meta["source_report_archive_sha256"]:
+        raise ValueError("source report archive hash does not match results.yaml")
+    cases, case_problems = load_cases()
+    if case_problems:
+        raise ValueError("invalid eval inventory: " + "; ".join(case_problems))
+    static_green = sum(eval_static(case)[0] for case in cases)
+    non_pass_rows = [row for row in results.values() if row["verdict"] != "PASS"]
+    evidence_missing = any(
+        row["verdict"] == "EVIDENCE_MISSING" for row in results.values())
+    documented = all(
+        isinstance(row.get("evidence_quotes"), list)
+        and any(str(quote).strip() for quote in row["evidence_quotes"])
+        for row in non_pass_rows
     )
+    gate_passed = (
+        confirmed and passed >= threshold and documented
+        and not evidence_missing and static_green == total
+    )
+    expected = {
+        "total_ev": total,
+        "behavioral_pass": passed,
+        "behavioral_non_pass": non_pass,
+        "static_green": static_green,
+        "threshold_margin": margin,
+    }
+    for key, value in expected.items():
+        if int(meta[key]) != value:
+            raise ValueError(f"results.yaml meta.{key}={meta[key]!r}, derived value is {value}")
+
+    image, draw = canvas()
+    banner_color = "#e9f8f1" if gate_passed else "#fff5dd"
+    status_color = GREEN if gate_passed else AMBER
+    status_text = "Release Gate Passed" if gate_passed else "Release Gate Not Passed"
+    draw.rounded_rectangle((70, 45, 1530, 180), radius=24, fill=banner_color)
+    text(draw, (105, 68), status_text, fill=status_color, fnt=F_TITLE)
+    text(
+        draw,
+        (105, 125),
+        f"Hypertaks behavioral certification | Version {meta['version']}",
+        fill=INK,
+        fnt=F_SUB,
+    )
+
+    cards = [
+        ("Behavioral PASS", f"{passed}/{total}", GREEN),
+        ("Documented non-PASS", str(non_pass), AMBER),
+        ("Static GREEN", f"{static_green}/{total}", BLUE),
+        ("Release threshold", str(threshold), INK),
+        ("Threshold margin", f"{margin:+d}", GREEN),
+        ("Boss Confirmed", "true" if confirmed else "false", "#6956b8"),
+    ]
+    card_w, card_h = 430, 230
+    x_positions = [90, 585, 1080]
+    y_positions = [245, 530]
+    for index, (label, value, color) in enumerate(cards):
+        x = x_positions[index % 3]
+        y = y_positions[index // 3]
+        draw.rounded_rectangle(
+            (x, y, x + card_w, y + card_h),
+            radius=22,
+            fill="white",
+            outline=GRID,
+            width=3,
+        )
+        draw.rounded_rectangle((x, y, x + 12, y + card_h), radius=6, fill=color)
+        text(draw, (x + 38, y + 42), label, fill=MUTED, fnt=F_LABEL_BOLD)
+        text(draw, (x + 38, y + 105), value, fill=color, fnt=font(58, True))
+
+    text(
+        draw,
+        (90, 830),
+        f"confirmed_by_boss: {str(confirmed).lower()} | "
+        f"{meta['certification_status'].title()} under the repository release gate",
+        fill=INK,
+        fnt=F_LABEL_BOLD,
+    )
+    text(
+        draw,
+        (90, 885),
+        f"{non_pass} non-PASS cases remain documented. Static GREEN is not behavioral PASS.",
+        fill=MUTED,
+        fnt=F_SUB,
+    )
+    text(
+        draw,
+        (90, 930),
+        f"Source: evals/results.yaml | report archive SHA-256 {archive_hash[:12]}",
+        fill=MUTED,
+        fnt=F_SMALL,
+    )
+    save(image, "Figure_2.png")
 
 
 def figure_3() -> None:

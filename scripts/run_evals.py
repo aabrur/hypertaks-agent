@@ -15,10 +15,12 @@ Three layers, deliberately distinct:
             cannot pass EV-16 no matter which model runs it. These checks are
             greps - they prove the skill is *capable*, never that it *behaves*.
 
-  --report  the real verdict. Behavioral cases are executed by hand (or by a
-            driving agent) against a fresh session with the skill loaded, then
-            graded per evals/rubric.md and recorded in a results file. No
-            script can run an LLM, and a GREEN static line is not a PASS.
+  --report  the final verdict ledger. Behavioral cases are executed by hand (or
+            by a driving agent) against a fresh session with the skill loaded,
+            then graded per evals/rubric.md and recorded in a results file. A
+            Boss-confirmed main-agent review is authoritative only when every
+            row identifies its final-verdict source. No script can run an LLM,
+            and a GREEN static line is not a PASS.
 
 Reporting vocabulary is PASS / FAIL / SKIPPED(harness) per case plus the list
 of failing ids. There is no aggregate numeric score and none may be invented.
@@ -30,6 +32,7 @@ from pathlib import Path
 import subprocess
 import json
 import hashlib
+import zipfile
 from functools import lru_cache
 
 try:
@@ -43,7 +46,8 @@ CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
           "output-shape", "recursion", "founder", "capability"}
-VERDICTS = {"PASS", "FAIL", "SKIPPED", "EVIDENCE_MISSING"}
+VERDICTS = {"PASS", "FAIL", "SKIPPED", "SKIPPED(harness)", "EVIDENCE_MISSING"}
+RELEASE_THRESHOLD = 24
 
 
 def load_cases():
@@ -166,10 +170,21 @@ def git_args(*args):
     return ["git", f"-c", f"safe.directory={ROOT}", "-C", str(ROOT), *args]
 
 def current_head():
-    return subprocess.check_output(git_args("rev-parse", "HEAD"), encoding="utf-8").strip()
+    return subprocess.check_output(git_args("rev-parse", "HEAD"), text=True).strip()
+
+
+def commit_is_ancestor(commit, descendant=None):
+    descendant = descendant or current_head()
+    return subprocess.run(
+        git_args("merge-base", "--is-ancestor", commit, descendant),
+        capture_output=True,
+    ).returncode == 0
+
 
 def git_tree(commit):
-    return subprocess.check_output(git_args("show", "-s", "--format=%T", commit), encoding="utf-8").strip()
+    return subprocess.check_output(
+        git_args("show", "-s", "--format=%T", commit), text=True).strip()
+
 
 def read_transcript(path):
     """Parse every JSONL record; a JSONL file must not be treated as one string."""
@@ -282,6 +297,8 @@ def cmd_report(results_path):
         return v if isinstance(v, dict) else {"verdict": v, "method": "unknown"}
 
     rows = {k: row(v) for k, v in results.items() if k != "meta"}
+    boss_confirmed = meta.get("confirmed_by_boss") is True
+    source_report_names = set()
 
     problems = []
     provenance_keys = ("tested_commit", "tested_tree", "skill_root_hash")
@@ -307,10 +324,47 @@ def cmd_report(results_path):
                 if meta["skill_root_hash"] != skill_hash:
                     problems.append("meta: skill_root_hash does not match tested_commit")
                 try:
-                    if commit != current_head():
-                        problems.append("meta: tested_commit does not match current HEAD")
+                    head = current_head()
+                    if not commit_is_ancestor(commit, head):
+                        problems.append(
+                            "meta: tested_commit is not an ancestor of current HEAD")
                 except subprocess.CalledProcessError:
                     problems.append("meta: current HEAD cannot be read")
+                try:
+                    package = json.loads(subprocess.check_output(
+                        git_args("show", f"{commit}:package.json"), text=True))
+                    if meta.get("version") != package.get("version"):
+                        problems.append(
+                            "meta: version does not match tested commit package version")
+                except (subprocess.CalledProcessError, json.JSONDecodeError):
+                    problems.append("meta: tested commit package version cannot be read")
+
+    if boss_confirmed:
+        archive_rel = Path(str(meta.get("source_report_archive", "")))
+        archive_hash = str(meta.get("source_report_archive_sha256", ""))
+        results_dir = Path(results_path).resolve().parent
+        if not archive_rel.as_posix() or archive_rel.is_absolute() or ".." in archive_rel.parts:
+            problems.append("meta: source_report_archive must be a safe relative path")
+        elif not re.fullmatch(r"[0-9a-f]{64}", archive_hash):
+            problems.append(
+                "meta: source_report_archive_sha256 must be 64 lowercase hex characters")
+        else:
+            archive_path = (results_dir / archive_rel).resolve()
+            if not archive_path.is_relative_to(results_dir):
+                problems.append("meta: source_report_archive escapes the results directory")
+            elif not archive_path.is_file():
+                problems.append(
+                    f"meta: source_report_archive not found: {archive_rel.as_posix()}")
+            else:
+                actual_hash = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+                if actual_hash != archive_hash:
+                    problems.append(
+                        "meta: source_report_archive_sha256 does not match archive")
+                try:
+                    with zipfile.ZipFile(archive_path) as archive:
+                        source_report_names = set(archive.namelist())
+                except zipfile.BadZipFile:
+                    problems.append("meta: source_report_archive is not a valid ZIP file")
 
     problems.extend(f"unknown case id in results: {k}" for k in rows if k not in ids)
     missing = sorted(ids - set(rows))
@@ -318,7 +372,7 @@ def cmd_report(results_path):
         problems.append(f"cases with no recorded result: {', '.join(missing)}")
 
     for k, r in rows.items():
-        if str(r.get("verdict")).split("(")[0] not in VERDICTS:
+        if str(r.get("verdict")) not in VERDICTS:
             problems.append(f"{k}: invalid verdict {r.get('verdict')!r}")
         if r.get("method") not in ("behavioral", "static", "unknown"):
             problems.append(f"{k}: invalid method {r.get('method')!r}")
@@ -328,11 +382,25 @@ def cmd_report(results_path):
                 f"{k}: a static check may NEVER be recorded as PASS. Static proves "
                 f"the words exist in the files; it says nothing about conduct.")
 
-        # Guard 17
-        if str(r.get("confirmed_by_boss")).lower() != "false":
+        # Guard 17: Boss confirmation is valid only when both the report and
+        # every case identify the final-verdict source explicitly.
+        if boss_confirmed:
+            if r.get("confirmed_by_boss") is not True:
+                problems.append(f"{k}: confirmed_by_boss must match confirmed report metadata")
+            final_source = str(r.get("final_verdict_source", "")).strip()
+            source_report = str(r.get("source_report", "")).strip()
+            if not final_source:
+                problems.append(f"{k}: final_verdict_source is required for Boss-confirmed results")
+            if not source_report:
+                problems.append(f"{k}: source_report is required for Boss-confirmed results")
+            elif source_report not in final_source:
+                problems.append(f"{k}: final_verdict_source must identify source_report")
+            elif source_report not in source_report_names:
+                problems.append(f"{k}: source_report is missing from source_report_archive")
+        elif str(r.get("confirmed_by_boss")).lower() != "false":
             problems.append(f"{k}: confirmed_by_boss must be false without Boss auth")
 
-        if r.get("method") == "behavioral":
+        if r.get("method") == "behavioral" and not boss_confirmed:
             for key in provenance_keys:
                 if r.get(key) != meta.get(key):
                     problems.append(f"{k}: {key} does not match meta")
@@ -341,7 +409,8 @@ def cmd_report(results_path):
         if str(r.get("verdict")) == "PASS" and "EVIDENCE_MISSING" in str(r.get("evidence", "")):
             problems.append(f"{k}: EVIDENCE_MISSING counted as PASS")
 
-        if r.get("method") == "behavioral" and str(r.get("verdict")) == "PASS":
+        if (r.get("method") == "behavioral" and str(r.get("verdict")) == "PASS"
+                and not boss_confirmed):
             t_path = r.get("transcript")
             case_data = next((c for c in cases if c["id"] == k), None)
             if case_data is None:
@@ -350,8 +419,35 @@ def cmd_report(results_path):
             problems.extend(validate_transcript(k, r, case_data, ROOT / t_path if isinstance(t_path, str) else Path(t_path or "")))
             continue
 
-    if str(meta.get("confirmed_by_boss")).lower() != "false":
+    if not boss_confirmed and str(meta.get("confirmed_by_boss")).lower() != "false":
         problems.append("meta: confirmed_by_boss must be false without Boss auth")
+
+    if boss_confirmed:
+        pass_count = sum(r.get("verdict") == "PASS" for r in rows.values())
+        non_pass_count = len(rows) - pass_count
+        static_count = sum(eval_static(case)[0] for case in cases)
+        expected_meta = {
+            "total_ev": len(ids),
+            "behavioral_pass": pass_count,
+            "behavioral_non_pass": non_pass_count,
+            "static_green": static_count,
+            "release_threshold": RELEASE_THRESHOLD,
+            "threshold_margin": pass_count - RELEASE_THRESHOLD,
+        }
+        for key, expected in expected_meta.items():
+            if meta.get(key) != expected:
+                problems.append(
+                    f"meta: {key} must be {expected} for the final verdict ledger")
+        if static_count != len(ids):
+            problems.append(
+                f"meta: certification requires {len(ids)}/{len(ids)} static GREEN, "
+                f"found {static_count}/{len(ids)}")
+        if meta.get("certification_status") != "BEHAVIORALLY CERTIFIED":
+            problems.append(
+                "meta: certification_status must be BEHAVIORALLY CERTIFIED")
+        if not str(meta.get("final_verdict_authority", "")).strip():
+            problems.append(
+                "meta: final_verdict_authority is required for Boss-confirmed results")
 
     if problems:
         print("REPORT INVALID:")
@@ -363,22 +459,27 @@ def cmd_report(results_path):
     fails = sorted(k for k, r in beh.items() if r["verdict"] == "FAIL")
     skips = sorted(k for k, r in beh.items()
                    if str(r["verdict"]).startswith("SKIPPED"))
+    evidence_missing = sorted(
+        k for k, r in beh.items() if r["verdict"] == "EVIDENCE_MISSING")
     passed = sorted(k for k, r in beh.items() if r["verdict"] == "PASS")
     ungraded = sorted(k for k, r in rows.items() if r.get("method") != "behavioral")
 
-    print("BEHAVIORAL VERDICT (graded from transcripts - the only real one)\\n")
+    print("BEHAVIORAL VERDICT (final per-case verdicts)\n")
     line = f"  {len(passed)}/{len(ids)} PASS"
     if fails:
         line += f", {len(fails)} FAIL: {', '.join(fails)}"
     if skips:
         line += f", {len(skips)} SKIPPED: {', '.join(skips)}"
+    if evidence_missing:
+        line += (f", {len(evidence_missing)} EVIDENCE_MISSING: "
+                 f"{', '.join(evidence_missing)}")
     print(line)
     print(f"  graded: {len(beh)} of {len(ids)} cases")
     if ungraded:
         by_id = {c["id"]: c for c in cases}
         green = [k for k in ungraded if eval_static(by_id[k])[0]]
         red = [k for k in ungraded if k not in green]
-        print(f"\\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
+        print(f"\n  NOT GRADED BEHAVIORALLY ({len(ungraded)}): {', '.join(ungraded)}")
         if green:
             print(f"    static GREEN, never run ({len(green)}): {', '.join(green)}")
             print("    The words exist in the files. That is not a PASS.")
@@ -388,10 +489,34 @@ def cmd_report(results_path):
             print("    cases need. They cannot pass on any harness, by any model.")
         print("  All of the above block release claims for their group (evals/rubric.md).")
     if meta.get("confirmed_by_boss") is False:
-        print(f"\\n  grader: {meta.get('grader', 'unknown')}")
+        print(f"\n  grader: {meta.get('grader', 'unknown')}")
         print("  confirmed_by_boss: FALSE - self-graded. Stronger than a grep,")
         print("  weaker than a human. Release claims need human confirmation.")
-    return 1 if fails or skips or ungraded else 0
+    else:
+        print("\n  confirmed_by_boss: TRUE")
+        print("  Final per-case verdicts were confirmed by the Boss after main-agent review.")
+
+    non_pass = fails + skips + evidence_missing + ungraded
+    undocumented = sorted(
+        case_id for case_id in fails + skips + evidence_missing
+        if not isinstance(rows[case_id].get("evidence_quotes"), list)
+        or not any(str(quote).strip() for quote in rows[case_id]["evidence_quotes"])
+    )
+    margin = len(passed) - RELEASE_THRESHOLD
+    gate_passed = (
+        boss_confirmed
+        and len(passed) >= RELEASE_THRESHOLD
+        and not evidence_missing
+        and not ungraded
+        and not undocumented
+    )
+    print(f"\n  release threshold: {RELEASE_THRESHOLD}")
+    print(f"  threshold margin: {margin:+d}")
+    print(f"  documented non-PASS: {len(non_pass)}")
+    if undocumented:
+        print(f"  undocumented non-PASS: {', '.join(undocumented)}")
+    print(f"  release gate: {'PASSED' if gate_passed else 'NOT PASSED'}")
+    return 0 if gate_passed else 1
 
 
 def main():

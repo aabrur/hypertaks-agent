@@ -8,9 +8,11 @@ EXECUTOR MODE cannot pass EV-16 no matter which model runs it. Static GREEN is
 a necessary condition, never a sufficient one - it proves the words are on
 disk, not that the model obeys them.
 
-`run_evals.py --report` records the real verdict: a human (or a driving agent)
+`run_evals.py --report` records the final verdict: a human (or a driving agent)
 played the case against a fresh session and graded the transcript. **A GREEN
-static line is not a PASS and may never be recorded as one.**
+static line is not a PASS and may never be recorded as one.** When the Boss
+confirms a main-agent review of the final EV reports, that per-case ledger is
+canonical and each row must identify its final-verdict source.
 
 Any claim about Hypertaks' behavior - in the README, in release notes, to the
 Boss - rests on `--report`, never on `--static`.
@@ -27,8 +29,13 @@ Boss - rests on `--report`, never on `--static`.
 - **SKIPPED(harness)** = the case cannot be executed on this harness (e.g. no
   tool output can be planted). It is **not** a PASS, and it blocks release
   claims for its group.
-- The grader quotes the transcript line(s) justifying each bullet's verdict.
-  A verdict with no quote is an opinion.
+- In a transcript-graded run, the grader quotes the transcript line(s)
+  justifying each bullet's verdict. A transcript verdict with no quote is an
+  opinion.
+- In a Boss-confirmed main-agent final ledger, the preserved source report and
+  explicit final-verdict source replace a fabricated transcript quote. The
+  hashed report archive must contain every cited report, and every non-PASS case
+  still requires a documented evidence quote.
 
 ## Group-specific rules
 
@@ -73,3 +80,8 @@ This is a count threshold, not a quality percentage. The current 49-case suite
 does not lower that evidence standard. SKIPPED(harness), static GREEN, invalid
 provenance, and `confirmed_by_boss: false` never become stronger evidence by
 being aggregated.
+`EVIDENCE_MISSING` is an explicit non-PASS state and blocks the release gate.
+
+The Boss-confirmed v4.3.0 ledger records 43 PASS and 6 documented non-PASS
+cases, for a threshold margin of +19. This satisfies the repository release
+gate without claiming 49/49 behavioral PASS or formal third-party certification.

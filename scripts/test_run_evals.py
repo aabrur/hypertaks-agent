@@ -1,7 +1,12 @@
 import json
+import io
+import hashlib
+import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
+from contextlib import redirect_stdout
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -84,6 +89,13 @@ class TestRunEvalsProvenance(unittest.TestCase):
             records = run_evals.read_transcript(path)
         self.assertEqual([record["session_id"] for record in records], ["first", "second"])
 
+    def test_certified_commit_may_be_current_head_ancestor(self):
+        parent = subprocess.check_output(
+            run_evals.git_args("rev-parse", "HEAD^"), text=True).strip()
+        self.assertTrue(run_evals.commit_is_ancestor(parent, self.commit))
+        self.assertTrue(run_evals.commit_is_ancestor(self.commit))
+        self.assertFalse(run_evals.commit_is_ancestor("0" * 40))
+
 
 class TestEvalInventory(unittest.TestCase):
     def test_v430_capability_cases_are_contiguous_and_grouped(self):
@@ -99,6 +111,140 @@ class TestEvalInventory(unittest.TestCase):
         cases, errors = run_evals.load_cases()
         self.assertEqual(errors, [])
         self.assertEqual(len(cases), 49)
+
+
+class TestBossConfirmedReport(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.commit = run_evals.current_head()
+        cls.tree = run_evals.git_tree(cls.commit)
+        cls.skill_hash = run_evals.calc_skill_root_hash(cls.commit)
+        cls.case_ids = [case["id"] for case in run_evals.load_cases()[0]]
+
+    def make_report(self, missing_source=None):
+        non_pass = {"EV-01", "EV-02", "EV-03", "EV-04", "EV-05", "EV-20"}
+        results = {}
+        for case_id in self.case_ids:
+            source_report = "Final-EV-Report.md"
+            row = {
+                "verdict": "SKIPPED(harness)" if case_id in non_pass else "PASS",
+                "method": "behavioral",
+                "confirmed_by_boss": True,
+                "final_verdict_source": f"Boss-confirmed main-agent review of {source_report}",
+                "source_report": source_report,
+                "evidence_quotes": ["Harness limitation documented"] if case_id in non_pass else [],
+            }
+            if case_id == missing_source:
+                row.pop("final_verdict_source")
+            results[case_id] = row
+        return {
+            "meta": {
+                "version": "4.3.0",
+                "confirmed_by_boss": True,
+                "final_verdict_authority": "Boss-confirmed main-agent review",
+                "certification_status": "BEHAVIORALLY CERTIFIED",
+                "total_ev": 49,
+                "behavioral_pass": 43,
+                "behavioral_non_pass": 6,
+                "static_green": 49,
+                "release_threshold": 24,
+                "threshold_margin": 19,
+                "tested_commit": self.commit,
+                "tested_tree": self.tree,
+                "skill_root_hash": self.skill_hash,
+            },
+            "results": results,
+        }
+
+    def run_report(
+            self, report, exclude_archive_report=None,
+            bad_archive_hash=False, invalid_archive=False):
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            archive_path = directory / "source-reports.zip"
+            source_reports = sorted({
+                row.get("source_report") for row in report["results"].values()
+                if row.get("source_report")
+                and row.get("source_report") != exclude_archive_report
+            })
+            with zipfile.ZipFile(archive_path, "w") as archive:
+                for source_report in source_reports:
+                    archive.writestr(source_report, "preserved raw report evidence")
+            if invalid_archive:
+                archive_path.write_bytes(b"not a zip file")
+            report["meta"]["source_report_archive"] = archive_path.name
+            report["meta"]["source_report_archive_sha256"] = hashlib.sha256(
+                archive_path.read_bytes()).hexdigest()
+            if bad_archive_hash:
+                report["meta"]["source_report_archive_sha256"] = "0" * 64
+            path = directory / "results.yaml"
+            path.write_text(run_evals.yaml.safe_dump(report, sort_keys=False), encoding="utf-8")
+            output = io.StringIO()
+            with redirect_stdout(output):
+                status = run_evals.cmd_report(path)
+        return status, output.getvalue()
+
+    def test_accepts_boss_confirmed_43_pass_release_gate(self):
+        status, output = self.run_report(self.make_report())
+        self.assertEqual(status, 0)
+        self.assertIn("43/49 PASS", output)
+        self.assertIn("documented non-PASS: 6", output)
+        self.assertIn("threshold margin: +19", output)
+        self.assertIn("release gate: PASSED", output)
+
+    def test_rejects_boss_confirmed_row_without_final_verdict_source(self):
+        status, output = self.run_report(self.make_report(missing_source="EV-49"))
+        self.assertEqual(status, 1)
+        self.assertIn("EV-49: final_verdict_source is required", output)
+
+    def test_rejects_source_report_missing_from_archive(self):
+        report = self.make_report()
+        source_report = report["results"]["EV-49"]["source_report"]
+        status, output = self.run_report(
+            report, exclude_archive_report=source_report)
+        self.assertEqual(status, 1)
+        self.assertIn("source_report is missing from source_report_archive", output)
+
+    def test_rejects_source_report_archive_hash_mismatch(self):
+        status, output = self.run_report(
+            self.make_report(), bad_archive_hash=True)
+        self.assertEqual(status, 1)
+        self.assertIn("source_report_archive_sha256 does not match", output)
+
+    def test_rejects_invalid_source_report_archive(self):
+        status, output = self.run_report(
+            self.make_report(), invalid_archive=True)
+        self.assertEqual(status, 1)
+        self.assertIn("source_report_archive is not a valid ZIP file", output)
+
+    def test_evidence_missing_blocks_release_gate(self):
+        report = self.make_report()
+        report["results"]["EV-06"]["verdict"] = "EVIDENCE_MISSING"
+        report["results"]["EV-06"]["evidence_quotes"] = ["Evidence unavailable"]
+        report["meta"]["behavioral_pass"] = 42
+        report["meta"]["behavioral_non_pass"] = 7
+        report["meta"]["threshold_margin"] = 18
+        status, output = self.run_report(report)
+        self.assertEqual(status, 1)
+        self.assertIn("1 EVIDENCE_MISSING: EV-06", output)
+        self.assertIn("release gate: NOT PASSED", output)
+
+    def test_rejects_stale_static_green_metadata(self):
+        report = self.make_report()
+        report["meta"]["static_green"] = 0
+        status, output = self.run_report(report)
+        self.assertEqual(status, 1)
+        self.assertIn("meta: static_green must be 49", output)
+
+    def test_rejects_malformed_verdict_suffix(self):
+        report = self.make_report()
+        report["results"]["EV-49"]["verdict"] = "PASS(fake)"
+        report["meta"]["behavioral_pass"] = 42
+        report["meta"]["behavioral_non_pass"] = 7
+        report["meta"]["threshold_margin"] = 18
+        status, output = self.run_report(report)
+        self.assertEqual(status, 1)
+        self.assertIn("EV-49: invalid verdict 'PASS(fake)'", output)
 
 
 if __name__ == "__main__":

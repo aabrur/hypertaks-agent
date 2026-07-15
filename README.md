@@ -12,6 +12,7 @@ team of specialist agents to ship the work.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.3.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
+![Behaviorally Certified](https://img.shields.io/badge/status-Behaviorally%20Certified-19a974)
 
 **Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
 
@@ -58,21 +59,21 @@ are repository facts; runtime behavior is reported separately from structural
 presence. Full detail is in the
 [release notes](skills/hypertaks/RELEASE-NOTES.md).
 
-### Behavioral evidence status
+### Behaviorally Certified
 
-The saved results are legacy records: 26 recorded PASS and 12
-SKIPPED(harness). The canonical report currently rejects them because the
-bundle mixes historical tested commits, placeholder/incomplete transcripts,
-self-grading, and malformed JSONL. Fourteen rows (EV-25 through EV-38) have
-complete fields relative to their historical run, but none count as
-current-release provenance-valid evidence until a clean rerun targets the
-current commit. EV-39 through EV-49 have no behavioral PASS records.
-`confirmed_by_boss` remains `false` for all saved rows. Static GREEN is not a
-behavioral PASS, and v4.3.0 is a structural release with
-partial behavioral evidence, not a behavioral certification.
+Hypertaks v4.3.0 passed its repository behavioral release gate. The
+Boss-confirmed final verdict is **43/49 Behavioral PASS**, with **6 documented
+non-PASS cases** (EV-01 through EV-05 and EV-20). The static suite is **49/49
+GREEN**. The behavioral threshold is **24 PASS**, so the release margin is
+**+19**, and canonical metadata records `confirmed_by_boss: true`.
+
+"Behaviorally Certified" is this project's release-gate status. It is not a
+formal third-party certification, does not convert static GREEN into behavioral
+PASS, and does not guarantee security or outcomes. The six non-PASS cases remain
+documented and are not reported as PASS.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Behavioral evidence recorded in evals/results.yaml" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Hypertaks v4.3.0 behavioral release gate status" width="850">
 </div>
 
 The eval inventory contains nine declared groups:
