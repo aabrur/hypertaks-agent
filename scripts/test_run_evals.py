@@ -8,6 +8,7 @@ import unittest
 import zipfile
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).parent))
 import run_evals
@@ -90,11 +91,39 @@ class TestRunEvalsProvenance(unittest.TestCase):
         self.assertEqual([record["session_id"] for record in records], ["first", "second"])
 
     def test_certified_commit_may_be_current_head_ancestor(self):
-        parent = subprocess.check_output(
-            run_evals.git_args("rev-parse", "HEAD^"), text=True).strip()
-        self.assertTrue(run_evals.commit_is_ancestor(parent, self.commit))
-        self.assertTrue(run_evals.commit_is_ancestor(self.commit))
-        self.assertFalse(run_evals.commit_is_ancestor("0" * 40))
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            subprocess.run(
+                ["git", "-C", str(repo), "config", "user.name", "Test Runner"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(repo), "config", "user.email", "runner@example.invalid"],
+                check=True,
+            )
+            marker = repo / "marker.txt"
+            marker.write_text("parent\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repo), "add", "marker.txt"], check=True)
+            subprocess.run(
+                ["git", "-C", str(repo), "commit", "-q", "-m", "parent"],
+                check=True,
+            )
+            parent = subprocess.check_output(
+                ["git", "-C", str(repo), "rev-parse", "HEAD"], text=True).strip()
+            marker.write_text("child\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repo), "add", "marker.txt"], check=True)
+            subprocess.run(
+                ["git", "-C", str(repo), "commit", "-q", "-m", "child"],
+                check=True,
+            )
+            child = subprocess.check_output(
+                ["git", "-C", str(repo), "rev-parse", "HEAD"], text=True).strip()
+
+            with mock.patch.object(run_evals, "ROOT", repo):
+                self.assertTrue(run_evals.commit_is_ancestor(parent, child))
+                self.assertTrue(run_evals.commit_is_ancestor(child))
+                self.assertFalse(run_evals.commit_is_ancestor("0" * 40, child))
 
 
 class TestEvalInventory(unittest.TestCase):
