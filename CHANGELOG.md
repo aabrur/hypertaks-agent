@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.4.0] - 2026-07-22
+
+### Added
+- Retrieval Intelligence Router with exact, semantic, mixed, structured,
+  small-corpus, and unavailable query classes.
+- Metadata scoping, exact-match protection, rank fusion, conditional reranking,
+  independent retrieval metrics, and evidence packs.
+- Contract Integrity fields for request, outcome, method, evidence, missing
+  data, process, destination, validation, and approval mode.
+- Python, Matplotlib, TypeScript, UI/UX, and image-generation execution profiles.
+- Visual Necessity Router with required, recommended, optional, and not-needed
+  status.
+- Strict TypeScript reference router and runtime tests.
+- Python retrieval evaluator and Matplotlib report generator.
+- EV-50 through EV-65 across retrieval, contract, execution, visual, capability,
+  and token-proportionality behavior.
+
+### Changed
+- Build, mutation, and external-effect contracts require a T1 approval that
+  identifies the contract ID.
+- Capability binding now follows retrieval and execution need rather than tool
+  inventory.
+- Token budgets are separated into gate, retrieval, production, and
+  verification envelopes.
+- Agent briefs and final deliverables include retrieval, execution, and visual
+  evidence.
+- CI validates the expanded Python and TypeScript runtime surface.
+
+### Release evidence
+- The 4.3.0 Boss-confirmed behavioral ledger remains historical evidence only.
+- 4.4.0 is a release candidate pending fresh independent behavioral runs for
+  the changed and newly added behaviors.
+
 ## [4.3.0] - 2026-07-15
 
 ### Added

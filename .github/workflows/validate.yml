@@ -11,8 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pip install PyYAML
+      - name: Install Python dependencies
+        run: pip install -r scripts/requirements-figures.txt
+
+      - name: Install TypeScript toolchain
+        run: npm install --ignore-scripts
 
       - name: Run skill validation
         run: python3 scripts/validate_skill.py
@@ -24,7 +27,17 @@ jobs:
         run: python3 scripts/run_evals.py --static
 
       - name: Run evaluator unit tests
-        run: python3 -m unittest scripts.test_run_evals -v
+        run: python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
+
+      - name: Validate retrieval utilities
+        run: |
+          python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output /tmp/retrieval-report.json
+          python3 scripts/plot_retrieval_eval.py /tmp/retrieval-report.json /tmp/retrieval-quality
+          test -s /tmp/retrieval-quality.png
+          test -s /tmp/retrieval-quality.svg
+
+      - name: Validate TypeScript runtime
+        run: npm test
 
       - name: Compile Python scripts
         run: python3 -m compileall scripts

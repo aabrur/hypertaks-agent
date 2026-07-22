@@ -1,42 +1,42 @@
 {
-    "name":  "hypertaks",
-    "version":  "4.3.0",
-    "description":  "Hypertaks Founder Operating System - business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
-    "author":  {
-                   "name":  "abrur",
-                   "email":  "abrur_nic@yahoo.com",
-                   "url":  "https://github.com/aabrur"
-               },
-    "homepage":  "https://github.com/aabrur/hypertaks-agent",
-    "repository":  "https://github.com/aabrur/hypertaks-agent",
-    "license":  "MIT",
-    "keywords":  [
-                     "founder",
-                     "strategy",
-                     "multi-agent",
-                     "solidity",
-                     "web3",
-                     "marketing",
-                     "finance",
-                     "supply-chain",
-                     "iot"
-                 ],
-    "skills":  "./skills/",
-    "interface":  {
-                      "displayName":  "Hypertaks Founder",
-                      "shortDescription":  "Founder Operating System with tiered agents and relevant host capabilities.",
-                      "longDescription":  "Turns your agent into the Hypertaks Founder: an operating protocol that protects business health, leads tiered specialist agents, and binds only verified skills, native tools, MCP tools, and connectors relevant to the approved work.",
-                      "developerName":  "abrur",
-                      "category":  "Coding",
-                      "capabilities":  [
-                                           "Interactive",
-                                           "Read",
-                                           "Write"
-                                       ],
-                      "defaultPrompt":  [
-                                            "Hypertaks, analyze why our churn is high.",
-                                            "Hypertaks, build a landing page and a smart contract for a new product."
-                                        ],
-                      "websiteURL":  "https://github.com/aabrur/hypertaks-agent"
-                  }
+  "name": "hypertaks",
+  "version": "4.4.0",
+  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
+  "author": {
+    "name": "abrur",
+    "email": "abrur_nic@yahoo.com",
+    "url": "https://github.com/aabrur"
+  },
+  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "repository": "https://github.com/aabrur/hypertaks-agent",
+  "license": "MIT",
+  "keywords": [
+    "founder",
+    "strategy",
+    "multi-agent",
+    "solidity",
+    "web3",
+    "marketing",
+    "finance",
+    "supply-chain",
+    "iot"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Hypertaks Founder",
+    "shortDescription": "Founder OS with retrieval intelligence and targeted execution.",
+    "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that protects business health, routes retrieval by query need, binds only relevant verified capabilities, and verifies professional code and visual deliverables.",
+    "developerName": "abrur",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Hypertaks, analyze why our churn is high.",
+      "Hypertaks, build a landing page and a smart contract for a new product."
+    ],
+    "websiteURL": "https://github.com/aabrur/hypertaks-agent"
+  }
 }

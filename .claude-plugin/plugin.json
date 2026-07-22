@@ -1,26 +1,26 @@
 {
-    "name":  "hypertaks",
-    "version":  "4.3.0",
-    "description":  "Hypertaks Founder Operating System - business-health judgment, tiered specialist agents, and relevance-bound host capabilities.",
-    "author":  {
-                   "name":  "abrur",
-                   "email":  "abrur_nic@yahoo.com"
-               },
-    "homepage":  "https://github.com/aabrur/hypertaks-agent",
-    "repository":  "https://github.com/aabrur/hypertaks-agent",
-    "license":  "MIT",
-    "keywords":  [
-                     "founder",
-                     "strategy",
-                     "multi-agent",
-                     "solidity",
-                     "web3",
-                     "marketing",
-                     "finance",
-                     "supply-chain",
-                     "iot",
-                     "porter",
-                     "swot",
-                     "blue-ocean"
-                 ]
+  "name": "hypertaks",
+  "version": "4.4.0",
+  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
+  "author": {
+    "name": "abrur",
+    "email": "abrur_nic@yahoo.com"
+  },
+  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "repository": "https://github.com/aabrur/hypertaks-agent",
+  "license": "MIT",
+  "keywords": [
+    "founder",
+    "strategy",
+    "multi-agent",
+    "solidity",
+    "web3",
+    "marketing",
+    "finance",
+    "supply-chain",
+    "iot",
+    "porter",
+    "swot",
+    "blue-ocean"
+  ]
 }

@@ -1,0 +1,2 @@
+{"query_id":"exact-code","relevant":{"doc-err-2048":3},"ranked":["doc-err-2048","doc-err-2049","doc-guide"],"exact_id":"doc-err-2048","latency_ms":8.4,"cost":0.0001}
+{"query_id":"semantic-renewal","relevant":{"doc-cancel-subscription":3,"doc-billing-policy":1},"ranked":["doc-billing-overview","doc-cancel-subscription","doc-billing-policy"],"latency_ms":14.2,"cost":0.0003}

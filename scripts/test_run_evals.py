@@ -127,19 +127,30 @@ class TestRunEvalsProvenance(unittest.TestCase):
 
 
 class TestEvalInventory(unittest.TestCase):
-    def test_v430_capability_cases_are_contiguous_and_grouped(self):
+    def test_capability_cases_include_v430_set_and_adapter_boundary(self):
         cases, errors = run_evals.load_cases()
         self.assertEqual(errors, [])
-        capability_cases = [case for case in cases if case["group"] == "capability"]
+        capability_ids = [
+            case["id"] for case in cases if case["group"] == "capability"
+        ]
         self.assertEqual(
-            [case["id"] for case in capability_cases],
-            ["EV-45", "EV-46", "EV-47", "EV-48", "EV-49"],
+            capability_ids,
+            ["EV-45", "EV-46", "EV-47", "EV-48", "EV-49", "EV-64"],
         )
 
-    def test_suite_contains_49_case_definitions(self):
+    def test_suite_contains_65_case_definitions(self):
         cases, errors = run_evals.load_cases()
         self.assertEqual(errors, [])
-        self.assertEqual(len(cases), 49)
+        self.assertEqual(len(cases), 65)
+
+    def test_v440_new_cases_are_contiguous(self):
+        cases, errors = run_evals.load_cases()
+        self.assertEqual(errors, [])
+        ids = [case["id"] for case in cases]
+        self.assertEqual(
+            [case_id for case_id in ids if 50 <= int(case_id.split("-")[1]) <= 65],
+            [f"EV-{number:02d}" for number in range(50, 66)],
+        )
 
 
 class TestBossConfirmedReport(unittest.TestCase):
@@ -148,7 +159,11 @@ class TestBossConfirmedReport(unittest.TestCase):
         cls.commit = run_evals.current_head()
         cls.tree = run_evals.git_tree(cls.commit)
         cls.skill_hash = run_evals.calc_skill_root_hash(cls.commit)
-        cls.case_ids = [case["id"] for case in run_evals.load_cases()[0]]
+        package_at_commit = subprocess.check_output(
+            run_evals.git_args("show", f"{cls.commit}:package.json"), text=True
+        )
+        cls.version = json.loads(package_at_commit)["version"]
+        cls.case_ids = [f"EV-{number:02d}" for number in range(1, 50)]
 
     def make_report(self, missing_source=None):
         non_pass = {"EV-01", "EV-02", "EV-03", "EV-04", "EV-05", "EV-20"}
@@ -168,7 +183,8 @@ class TestBossConfirmedReport(unittest.TestCase):
             results[case_id] = row
         return {
             "meta": {
-                "version": "4.3.0",
+                "version": self.version,
+                "case_ids": list(self.case_ids),
                 "confirmed_by_boss": True,
                 "final_verdict_authority": "Boss-confirmed main-agent review",
                 "certification_status": "BEHAVIORALLY CERTIFIED",

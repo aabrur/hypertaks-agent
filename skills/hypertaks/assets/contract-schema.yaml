@@ -1,34 +1,88 @@
-# Machine-readable mirror of the task contract (intake protocol, Step 3).
-# Field names match the hypertaks_state capsule in
-# references/01-state-and-transactions.md so a contract can be lifted into
-# the capsule without translation. Types are advisory for prose harnesses;
-# scripts/validate_skill.py checks this file parses and the enums are sane.
+# Machine-readable mirror of the task contract.
+# Field names align with the state capsule and agent brief where applicable.
+# Types are advisory for prose harnesses; scripts/validate_skill.py enforces
+# structural presence and selected enums.
 contract:
-  contract_id:      {type: string, pattern: "HT-YYYYMMDD-AAA", required: true}
-  tier:             {type: enum, values: [Nano, Lite, Standard, Prime, Hyper, Omega], required: true}
-  tier_score:       {type: integer, min: 0, max: 14, required: true}   # printed, never a hunch
-  gate:             {type: enum, values: [none, Express, Deep], required: true}
-  agents_planned:   {type: integer, min: 0, required: true}
-  objective:        {type: string, required: true}
+  contract_id: {type: string, pattern: "HT-YYYYMMDD-AAA", required: true}
+  status: {type: enum, values: [DRAFT, AWAITING_APPROVAL, ACTIVE, BLOCKED, ABORTED, CLOSED], required: true}
+  approval_mode: {type: enum, values: [advisory_affirmative, contract_id_signature], required: true}
+  approval_evidence: {type: string, note: "T1 Boss turn; contract ID required for build, mutation, or external effects"}
+
+  original_request: {type: string, required: true}
+  desired_outcome: {type: string, required: true}
+  proposed_method: {type: string, required: true}
+  user_priority: {type: string, required: true}
+
+  supplied_inputs: {type: list, required: true}
+  supporting_sources: {type: list, required: true}
+  freshness_requirement: {type: string, required: true}
+  missing_critical_data: {type: list, required: true}
+  evidence_requirement: {type: enum, values: [advisory, measured, audit_grade], required: true}
+
+  objective: {type: string, required: true}
   definition_of_done: {type: string, required: true}
-  scope:            {type: string, required: true}
-  out_of_scope:     {type: string, required: true}
-  constraints:      {type: list, required: true}
-  success_criteria: {type: list, required: true}
-  deliverable:      {type: string, required: true}
-  task_shape:       {type: enum, values: [analysis, execution, both], required: true}
+  scope: {type: string, required: true}
+  out_of_scope: {type: string, required: true}
+  planned_process: {type: list, required: true}
+  deliverables: {type: list, required: true}
+  destination: {type: string, required: true}
+  task_shape: {type: enum, values: [analysis, execution, both], required: true}
+
+  tier: {type: enum, values: [Nano, Lite, Standard, Prime, Hyper, Omega], required: true}
+  tier_score: {type: integer, min: 0, max: 14, required: true}
+  gate: {type: enum, values: [none, Express, Deep], required: true}
+  agents_planned: {type: integer, min: 0, required: true}
+  budget_gate: {type: integer, note: "working token estimate"}
+  budget_retrieval: {type: integer, note: "working token estimate"}
+  budget_production: {type: integer, note: "tier production budget, tokens"}
+  budget_verification: {type: integer, note: "working token estimate"}
+  estimated_effort: {type: string, required: true}
+
+  constraints: {type: list, required: true}
   permissions:
     type: list
     required: true
     values: [PERM_READ_LOCAL, PERM_NET_READ, PERM_FILE_WRITE, PERM_SHELL,
              PERM_SEND_MESSAGE, PERM_PUBLISH, PERM_SPEND, PERM_ONCHAIN_WRITE,
              PERM_DELETE]
-  frameworks:       {type: list, note: "each entry: name -> promised output shape"}
-  budget_production: {type: integer, note: "tier production budget, tokens"}
-  capability_requirements: {type: list, note: "optional; minimum categories only when non-core capabilities are needed"}
+  irreversible_actions: {type: list, required: true}
+
+  frameworks: {type: list, note: "each entry: name -> promised output shape"}
+  execution_profiles:
+    type: list
+    values: [python, matplotlib, typescript, ui_ux, image_generation]
+    note: "each profile must serve a named deliverable"
+
+  retrieval_need:
+    type: enum
+    values: [none, exact, semantic, mixed, structured, small_corpus, unavailable]
+  retrieval_route:
+    type: enum
+    values: [none, direct, keyword, vector, hybrid, fallback]
+  corpus_scope: {type: string, note: "collection, metadata filters, freshness, and trust boundary"}
+  retrieval_fusion: {type: enum, values: [none, rank_fusion, score_fusion]}
+  retrieval_rerank: {type: string, note: "verified capability identifier or none"}
+  retrieval_metrics: {type: list, note: "Recall@k, HitRate@k, MRR, nDCG@k, ExactMatch@k, latency, cost as applicable"}
+  retrieval_evidence_required: {type: boolean}
+  retrieval_fallback: {type: string}
+
+  capability_requirements: {type: list, note: "minimum categories only when non-core capabilities are needed"}
   capability_bindings:
     type: list
     note: "optional Phase 3 records; capability_id, kind, categories, operations, side_effect, approval_required, authentication, external_system, context_cost, availability"
+
+  visual_status: {type: enum, values: [required, recommended, optional, not_needed]}
+  visual_type:
+    type: enum
+    values: [none, table, chart, process_diagram, architecture_diagram, erd,
+             timeline, decision_tree, ui_mockup, generated_image]
+  visual_purpose: {type: string}
+  visual_owner: {type: string}
+  visual_capability: {type: string, note: "verified tool or core-code path"}
+  visual_data_source: {type: string}
+  visual_validation: {type: string}
+  visual_exports: {type: list}
+
   business_impact: {type: string, note: "concise; none for harmless Nano/Lite tasks"}
   strategic_fit: {type: string, note: "concise; material tasks only"}
   short_term_benefit: {type: string, note: "concise; material tasks only"}
@@ -36,6 +90,8 @@ contract:
   stakeholders_affected: {type: list, note: "material tasks only"}
   founder_concern: {type: string, note: "conflict between objective and method, if any"}
   safer_path: {type: string, note: "alternative that protects the objective"}
-  assumptions:      {type: list}
-  alternative_readings: {type: list}
-  status:           {type: enum, values: [DRAFT, AWAITING_APPROVAL, ACTIVE, BLOCKED, ABORTED, CLOSED]}
+
+  success_criteria: {type: list, required: true}
+  validation_evidence: {type: list, required: true}
+  assumptions: {type: list, required: true}
+  alternative_readings: {type: list, required: true}

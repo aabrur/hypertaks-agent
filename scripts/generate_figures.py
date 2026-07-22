@@ -10,6 +10,7 @@ from __future__ import annotations
 import contextlib
 import hashlib
 import io
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -108,9 +109,10 @@ def figure_1() -> None:
         ("Reference documents", len(list((SKILL / "references").rglob("*.md")))),
         ("Skill assets", len(list((SKILL / "assets").glob("*")))),
     ]
+    version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
     bar_chart(
         "Figure_1.png",
-        "Hypertaks v4.3.0 - repository inventory",
+        f"Hypertaks v{version} - repository inventory",
         "Counts are derived from the current repository tree.",
         counts,
         "Sources: evals/cases, evals/transcripts, skills/hypertaks/references, assets, agent-roles.md",
@@ -143,7 +145,11 @@ def figure_2() -> None:
     cases, case_problems = load_cases()
     if case_problems:
         raise ValueError("invalid eval inventory: " + "; ".join(case_problems))
-    static_green = sum(eval_static(case)[0] for case in cases)
+    case_by_id = {case["id"]: case for case in cases}
+    missing_case_ids = sorted(set(results) - set(case_by_id))
+    if missing_case_ids:
+        raise ValueError("certification results reference missing cases: " + ", ".join(missing_case_ids))
+    static_green = sum(eval_static(case_by_id[case_id])[0] for case_id in results)
     non_pass_rows = [row for row in results.values() if row["verdict"] != "PASS"]
     evidence_missing = any(
         row["verdict"] == "EVIDENCE_MISSING" for row in results.values())

@@ -16,10 +16,15 @@ This repository packages the **Hypertaks Founder** skill as a cross-agent plugin
   agent's tooling.
 - All prose stays in **English**.
 - When editing the skill, re-validate it (see `.github/workflows/validate.yml`)
-  before committing.
+  before committing. Retrieval or runtime changes also require the Python
+  retrieval tests and `npm test`.
 - Manifest files in the dot-directories (`.Codex-plugin`, `.codex-plugin`, etc.)
   are per-agent adapters that all point back to the single `skills/hypertaks`
   skill - keep versions in sync when bumping.
+- Keep the Retrieval Intelligence Router in
+  `skills/hypertaks/references/02-retrieval-and-evidence.md`, professional
+  execution profiles in `03-professional-execution.md`, and visual routing in
+  `04-visual-delivery.md`. Do not duplicate their canonical rules across files.
 - **One work item, one commit.** W3 and W4 were once squashed into a single
   commit, which made the budget change and the runtime change impossible to
   revert independently. They have since been split. From W5 onward every phase

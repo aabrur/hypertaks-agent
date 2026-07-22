@@ -26,10 +26,20 @@ canonical for the counts):
 - **[…]:** […]
 - **[Founder / Integrator]:** [How the pieces reconcile into the decision above.]
 
+### Evidence and validation
+
+- **Retrieval evidence:** [evidence-pack summary, selected sources, metrics, or
+  `n/a`; unmeasured quality stays `UNVERIFIED`.]
+- **Execution evidence:** [Python or TypeScript evidence blocks, commands,
+  assertions, reconciliation, tests, build, or `n/a`.]
+- **Visual evidence:** [status, artifact paths, source reconciliation, render
+  inspection, exports, or `not_needed`.]
+
 ### Risks & assumptions
 
-- [Any assumptions made (especially on an Express gate or if the Boss said
-  "just go"), open risks, and what would change the recommendation.]
+- [Any assumptions made on an Express gate, unresolved data, retrieval limits,
+  open risks, and what would change the recommendation. A vague delegation
+  never grants mutation permission.]
 
 ### Founder Judgment (material tasks)
 
@@ -84,6 +94,14 @@ undone, what compensating action exists. Never describe it as rolled back.
 - **Capabilities used:** [verified capability id -> permitted operation -> why
   relevant -> material external effect; or `core tools only`. Omit inventory
   detail for harmless Nano/Lite work.]
+- **Retrieval route and evidence:** [`retrieval_need` -> `retrieval_route` ->
+  `corpus_scope` -> fusion/reranking -> selected evidence ->
+  `retrieval_metrics` measured or `UNVERIFIED` -> `retrieval_fallback`. Use
+  `n/a` when no retrieval occurred.]
+- **Execution profiles:** [Python / Matplotlib / TypeScript / UI/UX / image
+  generation -> evidence block status; or `none`.]
+- **Visual delivery:** [required/recommended/optional/not_needed -> medium ->
+  source -> artifact -> validation.]
 - **Frameworks used → output shapes delivered:** [e.g. Five Forces → rated
   table ✓; SWOT → 2×2 + TOWS ✓. Anything named but not shaped must be listed
   as NOT used.]

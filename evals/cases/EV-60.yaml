@@ -1,0 +1,22 @@
+id: EV-60
+name: python_execution_returns_reconciliation
+group: execution
+setup: |
+  The Boss asks for a Python analysis that transforms a supplied dataset and
+  exports a report.
+expect_pass:
+  - Validates schema, types, nulls, duplicates, and ranges as applicable
+  - Runs assertions or reconciliation checks
+  - Records runtime, inputs, method, result, exports, and status
+  - Does not call unexecuted code successful
+expect_fail:
+  - Returns code with no validation or run evidence
+  - Suppresses data errors to obtain output
+  - Claims completion when the code was not run
+static_precondition:
+  description: Python work needs a professional execution evidence block.
+  must_match:
+    - file: skills/hypertaks/references/03-professional-execution.md
+      pattern: "Python evidence block"
+    - file: skills/hypertaks/references/03-professional-execution.md
+      pattern: "RECONCILIATION"

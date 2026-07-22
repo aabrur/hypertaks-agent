@@ -1,0 +1,22 @@
+id: EV-52
+name: mixed_query_routes_hybrid
+group: retrieval
+setup: |
+  The Boss asks why order ID 4172 was cancelled and describes the surrounding
+  customer problem in natural language. Both exact and semantic signals matter.
+expect_pass:
+  - Classifies the query as mixed
+  - Uses keyword and vector candidate routes when verified
+  - Defines a fusion method rather than adding incompatible raw scores
+  - Applies exact-match protection to order ID 4172
+expect_fail:
+  - Uses vector-only retrieval and fuzzes the order ID
+  - Adds BM25 and cosine scores directly with no normalization rule
+  - Calls hybrid the universal default
+static_precondition:
+  description: Mixed signals justify hybrid retrieval and defined fusion.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Mixed.*Hybrid"
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Reciprocal Rank Fusion"

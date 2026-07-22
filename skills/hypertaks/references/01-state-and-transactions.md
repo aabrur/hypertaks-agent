@@ -19,17 +19,42 @@ hypertaks_state:
   strategic_fit: none
   founder_concern: none
   safer_path: none
-  capability_requirements: []       # minimum categories; omit for Nano
-  capability_bindings: []           # verified Phase 3 descriptor records
-  actions: []                        # see §2
+  original_request: ""              # raw Boss ask, preserved
+  desired_outcome: ""
+  proposed_method: ""
+  supplied_inputs: []
+  missing_critical_data: []
+  planned_process: []
+  destination: ""
+  approval_mode: contract_id_signature
+  approval_evidence: ""              # T1 turn; contract ID for build/effects
+  budget_gate: 0
+  budget_retrieval: 0
+  budget_production: 25000
+  budget_verification: 0
+  retrieval_need: none               # none|exact|semantic|mixed|structured|small_corpus|unavailable
+  retrieval_route: none              # none|direct|keyword|vector|hybrid|fallback
+  corpus_scope: none
+  retrieval_metrics: []
+  retrieval_fallback: none
+  visual_status: not_needed          # required|recommended|optional|not_needed
+  visual_type: none
+  visual_validation: none
+  execution_profiles: []
+  capability_requirements: []        # minimum categories; omit for Nano
+  capability_bindings: []            # verified Phase 3 descriptor records
+  actions: []                         # see §2
   status: ACTIVE                     # DRAFT|AWAITING_APPROVAL|ACTIVE|BLOCKED|ABORTED|CLOSED
 ```
 
 Founder Operating Lens fields are concise state, not a license to expand every
 task. For Nano and harmless Lite work they may remain `none`; for material work
 they preserve the tradeoff, concern, and safer path across phase boundaries.
-Capability fields follow the same proportionality rule. Keep both lists empty
-when core reasoning or local tools suffice; never scan a registry to fill them.
+Capability, retrieval, execution, and visual fields follow the same
+proportionality rule. Keep them empty or `none` when supplied context and core
+reasoning suffice; never scan a registry, run retrieval, or create a visual to
+fill state for ceremony. Build and external-effect state remains `DRAFT` or
+`AWAITING_APPROVAL` until a T1 approval identifies the contract ID.
 
 **Rehydration rule.** On Hyper/Omega, the budget exceeds many context windows;
 the harness will compact. Reprint the full capsule before each new workstream.

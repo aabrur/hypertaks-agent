@@ -1,0 +1,24 @@
+id: EV-58
+name: contract_captures_request_evidence_process
+group: contract
+setup: |
+  The Boss asks for a production plugin upgrade and supplies an idea, reference
+  screenshots, desired outcome, and constraints.
+expect_pass:
+  - Preserves the original request and desired outcome separately
+  - Records the proposed method as a proposal rather than a fixed truth
+  - Records supplied evidence and missing critical data
+  - Defines process, destination, deliverables, and validation evidence
+expect_fail:
+  - Rewrites the request into a narrower objective without disclosure
+  - Omits the supplied evidence or missing data
+  - Starts building before the contract is active
+static_precondition:
+  description: The contract must preserve request, evidence, process, and proof.
+  must_match:
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "original_request"
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "planned_process"
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "validation_evidence"

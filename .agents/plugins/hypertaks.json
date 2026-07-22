@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "4.3.0",
-  "description": "Hypertaks Founder Operating System - business-health judgment, tiered specialist agents, and deterministic relevance binding for verified host skills, tools, MCP tools, and connectors.",
+  "version": "4.4.0",
+  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com",
@@ -10,7 +10,26 @@
   "homepage": "https://github.com/aabrur/hypertaks-agent",
   "repository": "https://github.com/aabrur/hypertaks-agent",
   "license": "MIT",
-  "keywords": ["founder", "strategy", "multi-agent", "solidity", "web3", "marketing", "finance", "supply-chain", "iot"],
+  "keywords": [
+    "founder",
+    "strategy",
+    "multi-agent",
+    "solidity",
+    "web3",
+    "marketing",
+    "finance",
+    "supply-chain",
+    "iot"
+  ],
   "skills": "./skills/",
-  "supportedAgents": ["claude-code", "codex", "cursor", "kimi-code", "openclaw", "hermes", "opencode", "pi"]
+  "supportedAgents": [
+    "claude-code",
+    "codex",
+    "cursor",
+    "kimi-code",
+    "openclaw",
+    "hermes",
+    "opencode",
+    "pi"
+  ]
 }

@@ -156,3 +156,24 @@ back to the agent (max 2 rejection cycles per layer, then escalate to the Boss):
    claim.
 4. **Human** (the Boss) - deliverable matches the contract, decision is
    actionable, risks and assumptions are transparent.
+
+## Professional execution profile binding
+
+For build tasks, also read `references/03-professional-execution.md` and bind
+only the profiles required by the artifact:
+
+- Python work returns the Python evidence block with input validation,
+  assertions, reconciliation, exports, and run status.
+- Matplotlib work reconciles every plotted value to source data, exports the
+  required formats, and inspects the rendered artifact.
+- TypeScript work uses strict mode, validates untrusted boundaries at runtime,
+  demonstrates exhaustive routing, and returns type-check, test, build, and
+  runtime evidence.
+- UI/UX work includes hierarchy, flow, responsive behavior, all material states,
+  accessibility, implementation constraints, and a validation plan.
+- Image generation is reserved for image-native creative output and never
+  substitutes for precise charts, tables, or technical diagrams.
+
+A compiler success, successful tool call, or exported file is only one layer of
+evidence. Completion still requires the contract's acceptance criteria and the
+four-layer validation stack above.

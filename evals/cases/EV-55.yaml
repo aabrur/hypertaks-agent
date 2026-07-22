@@ -1,0 +1,22 @@
+id: EV-55
+name: reranker_handles_close_but_wrong
+group: retrieval
+setup: |
+  First-stage semantic retrieval returns fifty topically similar chunks, but
+  several do not answer the question. A verified reranker is available.
+expect_pass:
+  - Binds reranking as a separate optional stage
+  - Reranks only the bounded candidate set
+  - Measures the result against a reviewed query set
+  - Records latency or cost when available
+expect_fail:
+  - Runs the reranker across the entire corpus
+  - Treats reranker availability as automatic permission
+  - Claims quality improved without evaluation
+static_precondition:
+  description: Reranking must be conditional, bounded, and evaluated.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Reranking is justified when"
+    - file: skills/hypertaks/references/plugins-and-mcp.md
+      pattern: "Reranking is a distinct optional binding"

@@ -15,7 +15,7 @@ Checks:
   7. No version numbers in skill body text (allowed only in README.md,
      RELEASE-NOTES.md, hypertaks-skill-card.md, and JSON manifest fields).
   8. No duplicate section headers in references/knowledge-base.md.
-  9. The two mandatory kernel references exist.
+  9. Mandatory kernel and canonical router references exist.
  10. assets/contract-schema.yaml exists and parses.
  11. Domain packs: if domains/ exists, INDEX.md routes every pack in it.
  12. Contradiction guard: no file suppresses an element SKILL.md marks
@@ -217,9 +217,12 @@ if kb.exists():
             else:
                 seen[header] = i
 
-# 9. Mandatory kernel references exist.
+# 9. Mandatory kernel and canonical router references exist.
 for rel in ["references/00-security-kernel.md",
-            "references/01-state-and-transactions.md"]:
+            "references/01-state-and-transactions.md",
+            "references/02-retrieval-and-evidence.md",
+            "references/03-professional-execution.md",
+            "references/04-visual-delivery.md"]:
     check((SKILL_DIR / rel).exists(), f"kernel file missing: {rel}")
 
 # 10. Contract schema parses.
@@ -248,6 +251,37 @@ if schema.exists():
             check(not missing,
                   "contract-schema.yaml: missing capability fields: "
                   f"{', '.join(missing)}")
+            integrity_fields = {
+                "original_request", "desired_outcome", "proposed_method",
+                "supplied_inputs", "missing_critical_data", "planned_process",
+                "deliverables", "destination", "validation_evidence",
+                "approval_mode", "approval_evidence", "budget_gate",
+                "budget_retrieval", "budget_verification",
+            }
+            missing = sorted(integrity_fields - set(data["contract"]))
+            check(not missing,
+                  "contract-schema.yaml: missing contract-integrity fields: "
+                  f"{', '.join(missing)}")
+            retrieval_fields = {
+                "retrieval_need", "retrieval_route", "corpus_scope",
+                "retrieval_fusion", "retrieval_rerank", "retrieval_metrics",
+                "retrieval_evidence_required", "retrieval_fallback",
+            }
+            missing = sorted(retrieval_fields - set(data["contract"]))
+            check(not missing,
+                  "contract-schema.yaml: missing retrieval fields: "
+                  f"{', '.join(missing)}")
+            visual_fields = {
+                "visual_status", "visual_type", "visual_purpose",
+                "visual_owner", "visual_capability", "visual_data_source",
+                "visual_validation", "visual_exports",
+            }
+            missing = sorted(visual_fields - set(data["contract"]))
+            check(not missing,
+                  "contract-schema.yaml: missing visual fields: "
+                  f"{', '.join(missing)}")
+            check("execution_profiles" in data["contract"],
+                  "contract-schema.yaml: missing execution_profiles")
     except ImportError:
         print("note: PyYAML absent - contract-schema.yaml checked "
               "syntactically only (CI runs the full check)")
@@ -282,6 +316,49 @@ for rel in ["references/intake-protocol.md",
                      if field not in content)
     check(not missing,
           f"{rel}: missing capability contract fields: {', '.join(missing)}")
+
+# 10b. Retrieval, visual, execution, and activation field names must remain
+# synchronized across their canonical references and task artifacts.
+RETRIEVAL_FIELDS = {
+    "retrieval_need", "retrieval_route", "corpus_scope",
+    "retrieval_metrics", "retrieval_fallback",
+}
+for rel in ["references/02-retrieval-and-evidence.md",
+            "assets/contract-schema.yaml", "assets/agent-brief-template.md",
+            "assets/deliverable-template.md"]:
+    path = SKILL_DIR / rel
+    content = path.read_text(encoding="utf-8")
+    missing = sorted(field for field in RETRIEVAL_FIELDS if field not in content)
+    check(not missing,
+          f"{rel}: missing retrieval fields: {', '.join(missing)}")
+
+VISUAL_FIELDS = {
+    "visual_status", "visual_type", "visual_purpose", "visual_owner",
+    "visual_data_source", "visual_validation", "visual_exports",
+}
+for rel in ["references/04-visual-delivery.md", "assets/contract-schema.yaml",
+            "assets/agent-brief-template.md"]:
+    path = SKILL_DIR / rel
+    content = path.read_text(encoding="utf-8")
+    missing = sorted(field for field in VISUAL_FIELDS if field not in content)
+    check(not missing,
+          f"{rel}: missing visual fields: {', '.join(missing)}")
+
+for rel in ["references/03-professional-execution.md",
+            "assets/contract-schema.yaml", "assets/agent-brief-template.md",
+            "assets/deliverable-template.md"]:
+    path = SKILL_DIR / rel
+    content = path.read_text(encoding="utf-8")
+    check("execution profile" in content.lower() or
+          "execution_profiles" in content,
+          f"{rel}: missing execution profile binding")
+
+for rel in ["references/intake-protocol.md", "assets/contract-schema.yaml"]:
+    path = SKILL_DIR / rel
+    content = path.read_text(encoding="utf-8")
+    for field in ("approval_mode", "approval_evidence"):
+        check(field in content,
+              f"{rel}: missing contract activation field {field}")
 
 # 11. Domain packs: if domains/ exists, INDEX.md exists and routes every pack.
 domains = SKILL_DIR / "references" / "domains"

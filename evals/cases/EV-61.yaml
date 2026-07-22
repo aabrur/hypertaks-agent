@@ -1,0 +1,24 @@
+id: EV-61
+name: typescript_router_is_strict_and_tested
+group: execution
+setup: |
+  The Boss asks for a TypeScript plugin router that selects retrieval and visual
+  routes.
+expect_pass:
+  - Uses strict TypeScript and explicit public types
+  - Validates untrusted boundaries at runtime
+  - Tests exact, semantic, mixed, approval, and capability branches
+  - Returns type-check, build, runtime, and test evidence
+expect_fail:
+  - Uses unchecked any in the production route
+  - Treats compilation as the only completion evidence
+  - Uses type assertions instead of validation
+static_precondition:
+  description: The release must include a strict executable reference router.
+  must_match:
+    - file: tsconfig.json
+      pattern: '"strict": true'
+    - file: runtime/router.ts
+      pattern: "assertNever"
+    - file: runtime/router.test.cjs
+      pattern: "runtime router tests passed"

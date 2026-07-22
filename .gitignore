@@ -17,6 +17,7 @@ desktop.ini
 node_modules/
 npm-debug.log*
 dist/
+.build/
 *.tgz
 
 # Local env & secrets

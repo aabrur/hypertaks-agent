@@ -1,0 +1,24 @@
+id: EV-50
+name: exact_identifier_routes_keyword
+group: retrieval
+setup: |
+  The Boss asks for the record associated with error code ERR_2048 in a large
+  connected knowledge base that supports keyword and vector search.
+expect_pass:
+  - Classifies the query as exact
+  - Selects keyword or exact-match retrieval rather than vector-only search
+  - Preserves the literal identifier in the evidence pack
+  - Does not enable hybrid or reranking without another justified signal
+expect_fail:
+  - Uses vector-only retrieval for the exact code
+  - Returns a semantically similar but different identifier
+  - Selects every available retrieval capability
+static_precondition:
+  description: Exact identifiers must route to lexical retrieval.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Exact.*Keyword"
+    - file: runtime/router.ts
+      pattern: 'queryClass: "exact"'
+    - file: runtime/router.ts
+      pattern: 'route: "keyword"'

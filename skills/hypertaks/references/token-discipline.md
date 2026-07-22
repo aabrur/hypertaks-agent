@@ -31,9 +31,32 @@ that could never be satisfied. They are now separate.
 | **Hyper** | ~60,000 | + engineering, domain packs | + per workstream |
 | **Omega** | ~120,000 | as needed, logged | + human check-in |
 
-Allocation within the production budget (rough): Intake 5% · Frame 5% · Roles
-5% · Equip 10% · Produce 60% · Integrate 15%. Produce is where it goes; keep
-the ceremony phases lean.
+Every contract divides its working budget into four envelopes:
+
+| Envelope | Purpose |
+|---|---|
+| **Gate** | clarify request, objective, evidence, permissions, and acceptance |
+| **Retrieval** | search, candidate processing, fusion, reranking, and evidence packing |
+| **Production** | analysis, code, documents, tables, diagrams, and creative work |
+| **Verification** | tests, reconciliation, render inspection, citations, and final integration |
+
+The tier table above remains the total production guidance. Allocate within it
+proportionally. A common starting shape is Gate 5%, Retrieval 0-20%, Production
+55-75%, Verification 15-25%. Retrieval is zero when supplied context is enough.
+Never pretend these are metered counts unless the host exposes real usage.
+
+Routing limits:
+
+- Nano: no retrieval discovery or extra execution profile unless explicitly
+  required by the task.
+- Lite: one focused route and one execution profile at most.
+- Standard: one primary retrieval route plus focused verification.
+- Prime: hybrid or reranking only when mixed need or measured failure justifies
+  them.
+- Hyper and Omega: reuse one evidence pack across workstreams; do not duplicate
+  source text or visual generation.
+
+Produce is where most tokens should go; keep ceremony concise but complete.
 
 **Conditional reference reading - replaces "never equip from memory".**
 The mandate to read references applies **from Prime up**. At Standard and below,
@@ -63,6 +86,12 @@ going:
 - **Redundant validation** - the same check repeated with no new information.
 - **Context pollution** - a reference or KB section loaded that the task did not
   need (e.g. loading the whole knowledge-base instead of grepping).
+- **Retrieval inflation** - hybrid, reranking, or a large candidate set used
+  without a mixed query, measured failure, or evidence requirement.
+- **Visual duplication** - several agents generate competing visuals when one
+  validated visual owner is sufficient.
+- **Tool inventory drift** - capability listings included in the deliverable
+  even though only one or no external capability served the task.
 
 ## 3. Recovery protocol - when waste is detected
 

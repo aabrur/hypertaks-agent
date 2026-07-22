@@ -21,8 +21,12 @@ loads the same skill.
 4. Keep every per-agent manifest's `version` in sync with
    `.claude-plugin/plugin.json` and `package.json`.
 5. Validate the skill before committing (`.github/workflows/validate.yml` runs
-   the same check in CI).
-6. Disclose your authoring environment and target agent in any PR.
+   the same checks in CI), including retrieval utility tests and `npm test` for
+   TypeScript runtime changes.
+6. Retrieval, execution, and visual behavior stays canonical in references
+   `02`, `03`, and `04`; adapters may translate host tools but may not weaken
+   those rules.
+7. Disclose your authoring environment and target agent in any PR.
 
 ## Contributing
 

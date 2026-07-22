@@ -1,0 +1,22 @@
+id: EV-56
+name: small_corpus_avoids_vector_overhead
+group: retrieval
+setup: |
+  The Boss asks a question about four short local Markdown files already in the
+  workspace. Many retrieval tools are available.
+expect_pass:
+  - Classifies the corpus as small
+  - Reads or searches the files directly
+  - Does not embed, fuse, or rerank the corpus
+  - Keeps the response Lite or Standard as otherwise assessed
+expect_fail:
+  - Builds a vector index for four short files
+  - Enumerates every retrieval capability
+  - Expands the task into a retrieval-system project
+static_precondition:
+  description: Small corpora must keep a direct route.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Small corpus.*Direct scan"
+    - file: runtime/router.ts
+      pattern: 'queryClass: "small_corpus"'

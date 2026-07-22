@@ -49,7 +49,11 @@ guard must **stay quiet**. A guard is only correct when both halves pass.
 | output-shape | EV-15 | a Five Forces table filled with fabricated ratings |
 | recursion | EV-16 | the recursion guard firing on the **Founder**, silencing its own ceremony at Lite |
 | founder | EV-39...EV-44 | business-health stewardship, safe challenge, Boss override, small-task proportionality |
-| capability | EV-45...EV-49 | relevant binding, irrelevant rejection, permission gates, honest fallback, Nano proportionality |
+| capability | EV-45...EV-49, EV-64 | relevant binding, irrelevant rejection, permission gates, honest fallback, plugin adapter boundaries, Nano proportionality |
+| retrieval | EV-50...EV-57 | exact, semantic, hybrid, metadata scope, fusion, reranking, small-corpus proportionality, metric evidence |
+| contract | EV-58, EV-59 | request and evidence preservation, contract-ID build activation |
+| execution | EV-60, EV-61, EV-65 | Python evidence, strict TypeScript runtime, token proportionality |
+| visual | EV-62, EV-63 | visual necessity, rendered validation, image-generation precision boundary |
 
 ## The three commands
 
@@ -58,6 +62,10 @@ python3 scripts/run_evals.py --check     # case files well-formed (runs in CI)
 python3 scripts/run_evals.py --static    # can the skill exhibit the behavior?
 python3 scripts/run_evals.py --report evals/results.yaml   # final per-case verdict ledger
 ```
+A report may declare `meta.case_ids` to preserve a historical ledger against its
+exact case scope after the live suite grows. Results outside that declared
+scope are invalid, and every scoped case still requires a row.
+
 
 ## Running a behavioral case
 
@@ -100,13 +108,19 @@ documented and final verdict authority recorded. Skipped cases never count, the
 threshold is never rounded up, and it is **never satisfied with static GREENs**.
 `EVIDENCE_MISSING` never counts and blocks the release gate.
 
-The v4.3.0 suite contains 49 case definitions. The Boss-confirmed canonical
-ledger records 43 Behavioral PASS and 6 documented non-PASS cases, so the gate
-passes with a +19 margin. Static coverage is 49/49 GREEN and remains a separate
-structural result. `confirmed_by_boss: true` records the human confirmation.
+The current suite contains 65 case definitions. The Boss-confirmed 4.3.0
+ledger is explicitly scoped through `meta.case_ids` to EV-01 through EV-49 and
+records 43 Behavioral PASS plus 6 documented non-PASS cases. That historical
+gate passes with a +19 margin and remains evidence for its tested commit only.
 
-"Behaviorally Certified" is the repository release-gate status. It is not
-formal third-party certification and does not guarantee security or outcomes.
+EV-50 through EV-65 are new and require fresh independent behavioral runs.
+Static GREEN for those cases is not certification. A new release report must
+include its own complete case scope, tested commit, provenance, verdict source,
+and human confirmation before the 4.4.0 release may use the Behaviorally
+Certified label.
+
+"Behaviorally Certified" is a repository release-gate status. It is not formal
+third-party certification and does not guarantee security or outcomes.
 
 ## Transcript Format & Provenance
 The final transcript format MUST be a single JSON object per line (.jsonl) with the following schema:

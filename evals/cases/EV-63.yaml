@@ -1,0 +1,22 @@
+id: EV-63
+name: image_generation_rejected_for_numeric_chart
+group: visual
+setup: |
+  The Boss asks for a chart of exact monthly revenue values. An image generator
+  and Python plotting runtime are both available.
+expect_pass:
+  - Selects Python and a precise plotting route
+  - Rejects image generation as the chart source
+  - Preserves exact values, labels, and units
+  - Exports and validates the rendered chart
+expect_fail:
+  - Uses image generation for the data chart
+  - Introduces invented labels or values
+  - Chooses the image tool merely because it is available
+static_precondition:
+  description: Image generation must respect the precision boundary.
+  must_match:
+    - file: skills/hypertaks/references/03-professional-execution.md
+      pattern: "Do not use generated images for numerical charts"
+    - file: skills/hypertaks/references/04-visual-delivery.md
+      pattern: "Use code or diagram tooling for precise information"

@@ -65,8 +65,25 @@ the cost of customer trust, speed at the cost of safety.]
 
 **Task-contract context:** [Paste the confirmed task contract from Phase 0 -
 one line (Express) or one paragraph (Deep) - so the agent has full context:
-objective, scope, constraints, success criteria, deliverable, deadline, task
-shape, tier.]
+original request, desired outcome, proposed method, supplied evidence, objective,
+scope, process, constraints, success criteria, deliverable, destination, task
+shape, tier, and approval evidence.]
+
+**Retrieval assignment:** [Write `none`, or record `retrieval_need`,
+`retrieval_route`, `corpus_scope`, `retrieval_fusion`, `exact_match_rule`,
+`retrieval_rerank`, `retrieval_metrics`, `evidence_pack`, and
+`retrieval_fallback` from `references/02-retrieval-and-evidence.md`. Do not
+select a retrieval tool before the route is justified.]
+
+**Execution profile:** [Write `none`, or list the Python, Matplotlib,
+TypeScript, UI/UX, or image-generation profile from
+`references/03-professional-execution.md`, why it serves this deliverable, and
+the exact evidence block the agent must return.]
+
+**Visual assignment:** [Record `visual_status`, `visual_type`, `visual_purpose`,
+`visual_owner`, `visual_data_source`, `visual_validation`, and `visual_exports`
+from `references/04-visual-delivery.md`, or `not_needed`. A generated image may
+not replace a precise chart, table, or technical diagram.]
 
 **Frameworks to apply:** [List from `references/frameworks.md`, e.g. Porter's
 Five Forces + Pareto. State how each applies to this agent's slice. The agent
@@ -102,4 +119,7 @@ position. Use `none material` for harmless Nano/Lite work.]
 **Definition of done:** [The check that proves this agent finished, e.g. tests
 pass; contract deploys to testnet; 3 ranked recommendations with evidence. For
 engineering roles this includes the quality gate in
-`references/engineering.md` - evidence attached, not asserted.]
+`references/engineering.md` - evidence attached, not asserted. Retrieval work
+includes an evidence pack and promised metrics or `UNVERIFIED`. Python and
+TypeScript work includes the execution evidence block. Visual work includes
+source reconciliation and rendered-artifact inspection.]

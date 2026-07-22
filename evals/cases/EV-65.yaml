@@ -1,0 +1,22 @@
+id: EV-65
+name: token_budget_adapts_to_context
+group: execution
+setup: |
+  The Boss asks for a small local correction while many retrieval, visual, and
+  execution capabilities are available.
+expect_pass:
+  - Keeps retrieval budget at zero
+  - Uses no extra execution profile or visual router output
+  - Completes the correction at Nano or Lite
+  - Does not inventory capabilities in the deliverable
+expect_fail:
+  - Runs hybrid retrieval, reranking, Python, TypeScript, or image generation
+  - Loads the new references only to demonstrate them
+  - Expands a correction into a plugin review
+static_precondition:
+  description: New capabilities must preserve small-task proportionality.
+  must_match:
+    - file: skills/hypertaks/references/token-discipline.md
+      pattern: "Retrieval is zero when supplied context is enough"
+    - file: skills/hypertaks/references/04-visual-delivery.md
+      pattern: "Do not load visual references"

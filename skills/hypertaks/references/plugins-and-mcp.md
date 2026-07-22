@@ -44,7 +44,11 @@ Stages: **Need -> Discover -> Normalize -> Filter -> Bind -> Verify -> Fallback.
 | **Spreadsheets & financial modeling** | Workbook/spreadsheet skills, financial data sources | Finance, Supply Chain Finance, Data | Deliver markdown tables with formulas stated |
 | **Presentations & formal documents** | Slide, document, and PDF generation | Any role with a formal deliverable | Deliver structured markdown instead |
 | **Media generation** | Image, audio, video generation services | Marketing, UX/UI, Copywriting/Brand | Skip media output and state the limitation |
-| **Data & analytics execution** | Code execution, notebooks, query engines | Data/ML, Engineer, Finance | Reason analytically; no computed charts (see the visual-capability check in `SKILL.md`) |
+| **Local text and exact search** | Focused grep, literal search, regex, full-text indexes | Research, Engineer, Founder/Integrator | Read the small corpus directly and state the limit |
+| **Semantic retrieval** | Embedding and vector search over a verified corpus | Research, Data/ML, Founder/Integrator | Use keyword or direct search; mark semantic recall unverified |
+| **Hybrid fusion and reranking** | Rank fusion, score fusion, exact-match boosting, cross-candidate reranking | Data/ML, Research, Engineer | Deliver separate candidate lists or use the best single route and state the limitation |
+| **Structured data query** | SQL, metadata filters, record search, analytics stores | Data/ML, Finance, Ops, Engineer | Use supplied exports or request a safe read-only extract |
+| **Data & analytics execution** | Code execution, notebooks, query engines | Data/ML, Engineer, Finance | Reason analytically; no computed charts unless a precise execution route exists |
 | **Deployment & hosting** | Cloud deploy, serverless, app hosting | Engineer, IoT | Hand over a runnable artifact plus deploy instructions |
 | **Secrets & credentials** | Secret managers, credential vaults | Engineer, Legal/Compliance | Never handle raw secrets inline; ask the Boss for a safe channel |
 | **On-chain execution** | Wallets, contract deploys, chain monitoring | Smart-Contract/Web3 Engineer | Produce contracts + tests + deployment scripts; the Boss executes on-chain steps |
@@ -86,6 +90,31 @@ Normalize only metadata the host actually provides. Missing metadata remains
 7. **Fallback:** when no candidate survives, use core tools only, identify the
    gap, and state the safe next step. Never invent a capability, call, result,
    credential, or business datum.
+
+## Retrieval integration
+
+Run `references/02-retrieval-and-evidence.md` before binding retrieval tools.
+The query class and corpus scope determine the minimum capability category:
+
+- exact -> local text or indexed keyword search;
+- semantic -> verified semantic retrieval;
+- mixed -> keyword plus vector plus a defined fusion route;
+- structured -> metadata or database query before ranking;
+- small-corpus -> direct read or focused local search;
+- unavailable -> no invented binding; use fallback.
+
+A hybrid route does not authorize every retrieval capability. Bind each stage
+separately and record its operation, side effect, authentication, context cost,
+and fallback. Reranking is a distinct optional binding. Evaluation is a named
+operation with a labeled query set, not a claim inferred from fluent output.
+
+## Plugin adapter boundary
+
+Per-agent manifests and optional runtime adapters may expose Hypertaks to a
+host, but the skill remains canonical. An adapter may translate host-specific
+tool names into capability descriptors. It must not weaken contract activation,
+permissions, transaction rules, retrieval evidence requirements, or visual
+validation. Host annotations never grant approval.
 
 ## Tier and token discipline
 

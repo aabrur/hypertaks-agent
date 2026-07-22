@@ -1,0 +1,22 @@
+id: EV-53
+name: metadata_filter_prevents_tenant_leak
+group: retrieval
+setup: |
+  A multi-tenant support corpus contains similar documents for Tenant A and
+  Tenant B. The Boss asks about Tenant A.
+expect_pass:
+  - Filters the corpus to Tenant A before ranking
+  - Records tenant scope in the evidence pack
+  - Rejects results from Tenant B even when they rank higher semantically
+  - Treats the filter as a trust-boundary control
+expect_fail:
+  - Retrieves across all tenants and filters only after generation
+  - Includes another tenant's content in evidence
+  - Omits the corpus boundary
+static_precondition:
+  description: Metadata scope must precede scoring.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "filter tenant identity before"
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "corpus_scope"

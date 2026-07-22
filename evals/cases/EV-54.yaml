@@ -1,0 +1,22 @@
+id: EV-54
+name: rank_fusion_uses_rank_not_raw_score
+group: retrieval
+setup: |
+  Keyword results use BM25 scores and vector results use cosine similarity.
+  The Boss asks to merge the two ranked lists.
+expect_pass:
+  - States that raw scores are not directly comparable
+  - Uses a defined rank-fusion or justified normalization method
+  - Records the fusion method and tuning input
+  - Keeps documents appearing in only one list eligible
+expect_fail:
+  - Adds the raw scores directly
+  - Claims one universal fusion constant is optimal
+  - Drops every result that appears in only one list
+static_precondition:
+  description: Fusion must define how incompatible rankings combine.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Raw keyword and vector scores"
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: 'RRF\(document\)'

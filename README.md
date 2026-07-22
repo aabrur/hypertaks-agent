@@ -10,9 +10,9 @@ objective when a proposed method is harmful, and leads a dynamically tiered
 team of specialist agents to ship the work.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.3.0-blue)
+![Version](https://img.shields.io/badge/version-4.4.0-blue)
 ![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
-![Behaviorally Certified](https://img.shields.io/badge/status-Behaviorally%20Certified-19a974)
+![Release Candidate](https://img.shields.io/badge/status-Release%20Candidate-f3a712)
 
 **Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
 
@@ -43,43 +43,57 @@ The figure below is a repository inventory, generated from tracked files and
 defined entries. It is not a quality score or benchmark.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.3.0 repository inventory" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.4.0 repository inventory" width="850">
 </div>
 
 ---
 
-## 📈 What changed in 4.3.0
+## 📈 What changed in 4.4.0
 
-Version 4.3.0 adds the Founder Operating Lens and the Capability Relevance
-Router. The Founder separates the Boss's objective from the proposed method,
-protects business health, and binds only the smallest sufficient set of
-verified skills, native tools, MCP tools, and connectors. Nano and Lite remain
-proportional, and the structural suite now contains 49 case definitions. These
-are repository facts; runtime behavior is reported separately from structural
-presence. Full detail is in the
-[release notes](skills/hypertaks/RELEASE-NOTES.md).
+Version 4.4.0 adds four coordinated layers:
 
-### Behaviorally Certified
+1. **Retrieval Intelligence Router** - exact, semantic, mixed, structured,
+   small-corpus, and unavailable query classes route to direct, keyword,
+   vector, hybrid, or fallback paths. Metadata scope, exact-match protection,
+   fusion, reranking, independent metrics, and evidence packs are explicit.
+2. **Contract Integrity Gate** - the contract preserves the original request,
+   desired outcome, proposed method, supplied evidence, missing data, process,
+   destination, validation evidence, and approval mode. Build and external
+   effects require a T1 approval that identifies the contract ID.
+3. **Professional Execution Profiles** - Python, Matplotlib, TypeScript, UI/UX,
+   and image generation have separate evidence requirements and precision
+   boundaries.
+4. **Visual Necessity Router** - visuals are classified as required,
+   recommended, optional, or not needed, then validated against source data or
+   the approved creative brief.
 
-Hypertaks v4.3.0 passed its repository behavioral release gate. The
-Boss-confirmed final verdict is **43/49 Behavioral PASS**, with **6 documented
-non-PASS cases** (EV-01 through EV-05 and EV-20). The static suite is **49/49
-GREEN**. The behavioral threshold is **24 PASS**, so the release margin is
-**+19**, and canonical metadata records `confirmed_by_boss: true`.
+The plugin also ships a strict TypeScript reference router, a standard-library
+Python retrieval evaluator, a Matplotlib report generator, and EV-50 through
+EV-65. The structural inventory now contains 65 case definitions. Static GREEN
+still proves only that a behavior is represented in the files.
 
-"Behaviorally Certified" is this project's release-gate status. It is not a
-formal third-party certification, does not convert static GREEN into behavioral
-PASS, and does not guarantee security or outcomes. The six non-PASS cases remain
-documented and are not reported as PASS.
+### Release evidence status
+
+The last Boss-confirmed behavioral certification remains the 4.3.0 ledger:
+**43/49 Behavioral PASS**, **6 documented non-PASS**, and **49/49 Static
+GREEN**. Version 4.4.0 changes behavior and adds 16 cases, so that historical
+ledger is not presented as certification of this release. The 4.4.0 package is
+a release candidate until fresh independent behavioral runs are recorded.
+
+"Behaviorally Certified" remains the historical repository release-gate label
+for the exact certified commit. It is not a formal third-party certification
+and does not guarantee security or outcomes.
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Hypertaks v4.3.0 behavioral release gate status" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Historical Hypertaks 4.3.0 behavioral release gate status" width="850">
 </div>
 
-The eval inventory contains nine declared groups:
+The current eval inventory includes retrieval, contract, execution, and visual
+groups in addition to the previous security, transaction, quantitative,
+Founder, and capability coverage:
 
 <div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Behavioral eval case distribution by group" width="850">
+<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Current behavioral eval case distribution by group" width="850">
 </div>
 
 ---
@@ -95,7 +109,7 @@ spawn more agents inside it.
 <img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks mandatory phase-loop diagram" width="850">
 </div>
 
-## 🔒 Four hard rules
+## 🔒 Five hard rules
 
 1. **Intake gate first, sized to the task** - Nano uses a zero-sized gate;
    Lite/Standard use Express and Prime/Hyper use Deep. Build work begins only
@@ -116,12 +130,17 @@ spawn more agents inside it.
    *de-escalated* mid-run if the task proves smaller. The table in
    `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
 
-3. **Capability relevance** - Hypertaks derives need before discovery, rejects
+3. **Retrieval and evidence relevance** - Hypertaks classifies the information
+   need before selecting direct, keyword, vector, hybrid, fusion, or reranking.
+   Retrieval quality is measured independently from generation and every
+   material route returns an evidence pack.
+
+4. **Capability relevance** - Hypertaks derives need before discovery, rejects
    irrelevant or over-privileged capabilities, and binds only verified host
    skills, native tools, MCP tools, and connectors needed by the approved work.
    Nano performs no registry scan or update check for harmless local work.
 
-4. **No silent deviation** - tier, gate mode, and assumptions are announced
+5. **No silent deviation** - tier, gate mode, and assumptions are announced
    in the task contract; frameworks must be delivered in their defined
    output shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone
    tree - not just the name); every deliverable ends with a compliance
@@ -154,6 +173,14 @@ workflows across business, learning, science, and technology (JTBD, Kano,
 RICE, Cynefin, OKR, PESTLE, DDD, MLOps, EIP standards, sales methodologies,
 mental models, and more). Agents route to it by keyword instead of loading the
 whole catalog.
+
+**Retrieval and execution:**
+[`02-retrieval-and-evidence.md`](skills/hypertaks/references/02-retrieval-and-evidence.md)
+selects direct, keyword, vector, hybrid, fusion, reranking, metrics, and fallback.
+[`03-professional-execution.md`](skills/hypertaks/references/03-professional-execution.md)
+defines Python, Matplotlib, TypeScript, UI/UX, and image-generation evidence.
+[`04-visual-delivery.md`](skills/hypertaks/references/04-visual-delivery.md)
+routes required, recommended, optional, and unnecessary visuals.
 
 ---
 

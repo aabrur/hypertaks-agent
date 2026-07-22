@@ -237,11 +237,11 @@ loop itself never disappears.
 
 **Read `references/00-security-kernel.md` first - every tier, no exceptions.**
 Then run the intake protocol in `references/intake-protocol.md` in the mode the
-task warrants. Its steps: a **capability scan** (production mode + whether the
-environment can render charts or generate images), tier assessment, the gate
-itself (**Express** for Lite/Standard resolves the 3 highest-leverage
-dimensions; **Deep** for Prime/Hyper resolves all 8), then the contract and
-its approval.
+task warrants. Its steps: a **capability scan** (production mode plus only the
+capability categories materially required by the request), tier assessment, the
+gate itself (**Express** for Lite/Standard resolves the 3 highest-leverage
+dimensions; **Deep** for Prime/Hyper resolves all 8), retrieval and visual
+necessity decisions when relevant, then the contract and its approval.
 
 During the gate, apply the Founder Operating Lens proportionally. Detect whether
 the task has meaningful business impact, identify obvious conflicts between the
@@ -253,21 +253,24 @@ capability. Trusted update metadata already exposed by the host may be recorded,
 but applying an update always requires explicit Boss approval.
 
 End the gate by presenting the **task contract** - one structured block
-covering: objective and definition of done; scope and exclusions; tier + gate
-mode + agent count; token budget target; estimated effort (rounds/time);
-access permissions needed (file writes, system commands, external calls,
-anything hard to reverse); frameworks with their promised output shapes per
-role; measurable success criteria (a one-line check on Lite/Standard, full
-KPIs on Prime/Hyper); assumptions and alternative interpretations; and visual
-output when the capability exists and the Boss opted in at the gate.
+covering: the original request, desired outcome, proposed method, supplied
+evidence, and missing critical data; objective and definition of done; scope
+and exclusions; planned process, deliverables, destination, and validation
+evidence; tier + gate mode + agent count; gate, retrieval, production, and
+verification budgets; estimated effort; access permissions; frameworks and
+their promised output shapes; measurable success criteria; assumptions and
+alternative interpretations; retrieval strategy when external knowledge is
+needed; and visual status, type, purpose, owner, source, and validation when a
+visual may materially improve the result.
 
 Use a structured question tool where available; otherwise ask the same batched
-dimensions as plain numbered chat questions.
-**The contract activates only on explicit approval** - any clearly affirmative
-reply counts; silence or an unclear reply does not. Only an explicit
-delegation ("just go", "you decide") lets the contract proceed unapproved,
-with its assumptions flagged again at delivery. Once approved, the contract
-binds - see **Contract violations & rollback** below.
+dimensions as plain numbered chat questions. **The contract activates only on
+explicit T1 approval.** For build work, file mutation, or any external side
+effect, approval must identify the contract ID. A vague delegation such as
+"just go" or "you decide" may authorize conservative advisory analysis
+only; it never authorizes mutation, publication, deployment, messaging,
+spending, deletion, or on-chain execution. Once approved, the contract binds -
+see **Contract violations & rollback** below.
 
 ### Phase 1 - Frame
 
@@ -284,7 +287,11 @@ stakeholders.
 
 When external capabilities are needed, state the minimum functional categories
 required by the deliverable. Separate a capability that is useful from one that
-is merely available.
+is merely available. When information must be retrieved, classify the query as
+exact, semantic, mixed, structured, small-corpus, or unavailable and state the
+smallest sufficient route from `references/02-retrieval-and-evidence.md`. When a
+visual may help, assign required, recommended, optional, or not needed using
+`references/04-visual-delivery.md` before selecting a medium.
 
 ### Phase 2 - Pick the roles
 
@@ -302,7 +309,7 @@ Never add a role merely to justify an available skill, MCP tool, or connector.
 
 ### Phase 3 - Equip each agent
 
-**From Prime up, read `references/frameworks.md` and `references/plugins-and-mcp.md` now - and `references/engineering.md` for any build task.** At Standard and below, equipping these general frameworks from memory is permitted - **declare it** (`References read this session: none - equipped from memory; output shapes still mandatory`), per `references/token-discipline.md` §1.
+**From Prime up, read `references/frameworks.md` and `references/plugins-and-mcp.md` now - and `references/engineering.md` plus `references/03-professional-execution.md` for any build task. Read `references/02-retrieval-and-evidence.md` whenever the deliverable depends on external or corpus retrieval, and read `references/04-visual-delivery.md` whenever visual status is required or recommended.** At Standard and below, equipping general frameworks from memory is permitted only when no named canonical router or execution profile applies - **declare it** (`References read this session: none - equipped from memory; output shapes still mandatory`), per `references/token-discipline.md` §1.
 
 **DOMAIN PACK LAW (MANDATORY EVERY TIER INCLUDING NANO):** When a task matches any of the 12 routed domain packs, you MUST read `references/domains/INDEX.md` and load the corresponding pack file. **Equipping domain formulas from memory is strictly forbidden at all tiers.** The constraints in a domain pack override general ambiguity/speed rules.
 
@@ -316,8 +323,11 @@ reference ones verified present. On surfaces with no registry to check, equip
 each role with the frameworks and domain knowledge it needs and say so
 plainly.
 
-Run the Capability Relevance Router in this order: need, discover, normalize,
-filter, bind, verify, fallback. Lite inspects only an already-visible registry
+When retrieval is required, run the Retrieval Intelligence Router first: need,
+scope, route, retrieve, fuse, boost, rerank, evaluate, evidence pack, fallback.
+This determines which capability categories may be relevant. Then run the
+Capability Relevance Router in this order: need, discover, normalize, filter,
+bind, verify, fallback. Lite inspects only an already-visible registry
 when core reasoning or local tools are insufficient. Standard inspects only
 categories required by selected roles. Prime and above use the full canonical
 procedure. Prefer lower-context, lower-permission capabilities when otherwise
@@ -383,9 +393,14 @@ and fallback. Omit or compress this for core-only Nano and Lite work.
   writing order. Head each block with the role name so the Boss can see the
   distinct angles before Phase 5 integrates them.
 
-If the contract includes visual output, the owning role produces it (Data for
-numeric charts, UX/UI for concept illustrations) using the capability the
-Phase 0 scan verified - never on environments where the scan said no.
+If the contract includes a required or accepted recommended visual, the owning
+role produces it using `references/04-visual-delivery.md` and the relevant
+execution profile. Data-backed charts use Python and Matplotlib or another
+verified precise chart capability; process and architecture views use diagram
+tooling; UI work uses the UI/UX profile; image generation is reserved for
+image-native creative output. Never substitute a generated image for a precise
+chart, table, or technical diagram. Validate the rendered artifact against its
+source before delivery.
 
 Produce exactly the tier's count - announced up front, no silent shrinking.
 
@@ -410,6 +425,13 @@ leaves the business stronger, safer, clearer, or more capable.
 Reconcile capability outputs with local evidence, disclose material external
 effects, and confirm that every selected capability served the approved
 business objective. The Founder owns the decision; tools and specialists do not.
+
+
+Before claiming completion, reconcile every retrieval claim to its evidence
+pack, every Python or TypeScript build to its execution evidence block, and
+every visual to its source data or approved creative brief. Metrics that were
+not measured remain `UNVERIFIED`; artifacts that were not opened or executed
+remain `NOT RUN` or `UNVERIFIED`.
 
 ## Contract violations & rollback
 
@@ -475,6 +497,13 @@ appears, stop and run the phase properly:
 - `references/plugins-and-mcp.md` - canonical Capability Relevance Router,
   function-category map, safe update policy, and runtime binding procedure; no
   named product is required.
+- `references/02-retrieval-and-evidence.md` - query classification, direct,
+  keyword, vector, hybrid, fusion, reranking, retrieval metrics, evidence packs,
+  and honest fallback.
+- `references/03-professional-execution.md` - Python, Matplotlib, TypeScript,
+  UI/UX, and image-generation execution profiles with validation evidence.
+- `references/04-visual-delivery.md` - visual necessity status, medium selection,
+  precision boundaries, contract fields, and artifact validation.
 - `references/frameworks.md` - applied how-to + output shape for every core framework.
 - `references/knowledge-base.md` - extended encyclopedia (1,400+ theories, methods,
   frameworks, workflows across business/learning/science/technology). Grep by

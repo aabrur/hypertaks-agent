@@ -45,7 +45,8 @@ ROOT = Path(__file__).resolve().parent.parent
 CASES_DIR = ROOT / "evals" / "cases"
 REQUIRED = ("id", "name", "group", "setup", "expect_pass", "expect_fail")
 GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
-          "output-shape", "recursion", "founder", "capability"}
+          "output-shape", "recursion", "founder", "capability", "retrieval",
+          "contract", "execution", "visual"}
 VERDICTS = {"PASS", "FAIL", "SKIPPED", "SKIPPED(harness)", "EVIDENCE_MISSING"}
 RELEASE_THRESHOLD = 24
 
@@ -291,7 +292,17 @@ def cmd_report(results_path):
         doc = {}
     meta = doc.get("meta", {})
     results = doc.get("results", doc)
-    ids = {c["id"] for c in cases}
+    all_ids = {c["id"] for c in cases}
+    declared_case_ids = meta.get("case_ids")
+    if declared_case_ids is None:
+        ids = all_ids
+    elif (not isinstance(declared_case_ids, list)
+          or not declared_case_ids
+          or any(not isinstance(case_id, str) for case_id in declared_case_ids)
+          or len(set(declared_case_ids)) != len(declared_case_ids)):
+        ids = all_ids
+    else:
+        ids = set(declared_case_ids)
 
     def row(v):
         return v if isinstance(v, dict) else {"verdict": v, "method": "unknown"}
@@ -301,6 +312,17 @@ def cmd_report(results_path):
     source_report_names = set()
 
     problems = []
+    if declared_case_ids is not None:
+        if (not isinstance(declared_case_ids, list)
+                or not declared_case_ids
+                or any(not isinstance(case_id, str) for case_id in declared_case_ids)
+                or len(set(declared_case_ids)) != len(declared_case_ids)):
+            problems.append("meta: case_ids must be a non-empty unique string list")
+        else:
+            unknown_scoped = sorted(set(declared_case_ids) - all_ids)
+            if unknown_scoped:
+                problems.append(
+                    "meta: case_ids reference unknown cases: " + ", ".join(unknown_scoped))
     provenance_keys = ("tested_commit", "tested_tree", "skill_root_hash")
     for key in provenance_keys:
         value = meta.get(key)
@@ -366,7 +388,8 @@ def cmd_report(results_path):
                 except zipfile.BadZipFile:
                     problems.append("meta: source_report_archive is not a valid ZIP file")
 
-    problems.extend(f"unknown case id in results: {k}" for k in rows if k not in ids)
+    problems.extend(f"unknown case id in results: {k}" for k in rows if k not in all_ids)
+    problems.extend(f"result outside declared case scope: {k}" for k in rows if k not in ids)
     missing = sorted(ids - set(rows))
     if missing:
         problems.append(f"cases with no recorded result: {', '.join(missing)}")
@@ -425,7 +448,8 @@ def cmd_report(results_path):
     if boss_confirmed:
         pass_count = sum(r.get("verdict") == "PASS" for r in rows.values())
         non_pass_count = len(rows) - pass_count
-        static_count = sum(eval_static(case)[0] for case in cases)
+        static_count = sum(
+            eval_static(case)[0] for case in cases if case["id"] in ids)
         expected_meta = {
             "total_ev": len(ids),
             "behavioral_pass": pass_count,

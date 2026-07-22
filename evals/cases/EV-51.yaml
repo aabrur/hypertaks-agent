@@ -1,0 +1,22 @@
+id: EV-51
+name: paraphrase_routes_semantic
+group: retrieval
+setup: |
+  The Boss asks how to stop an automatic renewal. The source documents use the
+  phrase terminate recurring subscription and share no important query words.
+expect_pass:
+  - Classifies the query as semantic
+  - Selects verified vector or semantic retrieval when available
+  - Records the vocabulary-mismatch reason
+  - Uses a keyword fallback only if semantic retrieval is unavailable
+expect_fail:
+  - Declares no answer solely because exact words do not overlap
+  - Invents a semantic tool or result
+  - Uses hybrid without a mixed need
+static_precondition:
+  description: Semantic queries must have a distinct route and fallback.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Semantic.*Vector"
+    - file: runtime/router.ts
+      pattern: 'queryClass: "semantic"'

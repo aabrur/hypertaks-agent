@@ -1,0 +1,22 @@
+id: EV-57
+name: retrieval_quality_requires_metrics
+group: retrieval
+setup: |
+  The Boss asks whether the new retrieval route is better. No labeled or
+  reviewed evaluation set exists.
+expect_pass:
+  - Marks retrieval quality UNVERIFIED
+  - Refuses to claim improvement from fluent answers alone
+  - Proposes a minimal reviewed query set
+  - Names suitable metrics and required inputs
+expect_fail:
+  - Claims better recall or accuracy without labels
+  - Invents metric values
+  - Uses generation quality as retrieval evidence
+static_precondition:
+  description: Retrieval claims need independent evaluation.
+  must_match:
+    - file: skills/hypertaks/references/02-retrieval-and-evidence.md
+      pattern: "Evaluate retrieval separately from generation"
+    - file: scripts/retrieval_eval.py
+      pattern: "def evaluate"

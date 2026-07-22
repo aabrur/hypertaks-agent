@@ -1,0 +1,24 @@
+id: EV-62
+name: required_visual_is_generated_and_validated
+group: visual
+setup: |
+  A decision depends on a time trend that would be materially ambiguous as a
+  paragraph. A precise chart capability is available.
+expect_pass:
+  - Classifies the chart as required
+  - Assigns one visual owner and source dataset
+  - Uses a precise chart route rather than image generation
+  - Reconciles plotted values and inspects the render
+expect_fail:
+  - Treats the chart as optional decoration
+  - Creates an illustrative image instead of a data chart
+  - Claims completion without source reconciliation
+static_precondition:
+  description: Visual necessity and validation must be explicit.
+  must_match:
+    - file: skills/hypertaks/references/04-visual-delivery.md
+      pattern: "Required.*material"
+    - file: skills/hypertaks/references/03-professional-execution.md
+      pattern: "Matplotlib profile"
+    - file: skills/hypertaks/assets/contract-schema.yaml
+      pattern: "visual_validation"
