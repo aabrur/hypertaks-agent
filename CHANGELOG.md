@@ -21,6 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Python retrieval evaluator and Matplotlib report generator.
 - EV-50 through EV-65 across retrieval, contract, execution, visual, capability,
   and token-proportionality behavior.
+- Native Claude and Codex marketplace catalogs that target the canonical
+  repository and `main` branch.
+- A dependency-free managed-checkout updater with integration coverage for
+  current, available, fast-forward, dirty, diverged, detached, and wrong-remote
+  states.
+- A one-time migration path from copied skills to marketplace or linked managed
+  installations.
 
 ### Changed
 - Build, mutation, and external-effect contracts require a T1 approval that
@@ -32,6 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Agent briefs and final deliverables include retrieval, execution, and visual
   evidence.
 - CI validates the expanded Python and TypeScript runtime surface.
+- Replaced the blanket background-update prohibition with a bounded automatic
+  update contract: host-native updates may run when host and user or team policy
+  enable them, while opted-in managed checkouts update by verified fast-forward
+  only.
+- Copied directories and dirty, diverged, detached, wrong-remote, or
+  unreachable checkouts are never overwritten.
 
 ### Release evidence
 - The 4.3.0 Boss-confirmed behavioral ledger remains historical evidence only.

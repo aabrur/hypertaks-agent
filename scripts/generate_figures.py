@@ -101,6 +101,12 @@ def bar_chart(filename: str, title: str, subtitle: str, items: list[tuple[str, i
 
 def figure_1() -> None:
     roles_text = (SKILL / "references" / "agent-roles.md").read_text(encoding="utf-8")
+    marketplace_paths = [
+        ROOT / ".claude-plugin" / "marketplace.json",
+        ROOT / ".agents" / "plugins" / "marketplace.json",
+    ]
+    updater_tests = (ROOT / "scripts" / "test_update_hypertaks.py").read_text(
+        encoding="utf-8")
     counts = [
         ("Behavioral eval cases", len(list((ROOT / "evals" / "cases").glob("EV-*.yaml")))),
         ("Saved transcripts", len(list((ROOT / "evals" / "transcripts").glob("EV-*.jsonl")))),
@@ -108,6 +114,9 @@ def figure_1() -> None:
         ("Defined specialist roles", len(re.findall(r"^\|\s*\d+\s*\|\s*\*\*", roles_text, re.MULTILINE))),
         ("Reference documents", len(list((SKILL / "references").rglob("*.md")))),
         ("Skill assets", len(list((SKILL / "assets").glob("*")))),
+        ("Marketplace catalogs", sum(path.is_file() for path in marketplace_paths)),
+        ("Updater test scenarios", len(re.findall(
+            r"^\s+def test_", updater_tests, re.MULTILINE))),
     ]
     version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
     bar_chart(
@@ -115,7 +124,7 @@ def figure_1() -> None:
         f"Hypertaks v{version} - repository inventory",
         "Counts are derived from the current repository tree.",
         counts,
-        "Sources: evals/cases, evals/transcripts, skills/hypertaks/references, assets, agent-roles.md",
+        "Sources: evals, skills/hypertaks, .claude-plugin, .agents/plugins, scripts/test_update_hypertaks.py",
     )
 
 

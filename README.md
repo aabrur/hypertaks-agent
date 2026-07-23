@@ -50,7 +50,7 @@ defined entries. It is not a quality score or benchmark.
 
 ## 📈 What changed in 4.4.0
 
-Version 4.4.0 adds four coordinated layers:
+Version 4.4.0 adds five coordinated layers:
 
 1. **Retrieval Intelligence Router** - exact, semantic, mixed, structured,
    small-corpus, and unavailable query classes route to direct, keyword,
@@ -66,6 +66,9 @@ Version 4.4.0 adds four coordinated layers:
 4. **Visual Necessity Router** - visuals are classified as required,
    recommended, optional, or not needed, then validated against source data or
    the approved creative brief.
+5. **Automatic Update Delivery** - native marketplace records target the
+   canonical repository, while a dependency-free managed-checkout updater
+   provides a fast-forward-only fallback for linked skill installations.
 
 The plugin also ships a strict TypeScript reference router, a standard-library
 Python retrieval evaluator, a Matplotlib report generator, and EV-50 through
@@ -191,6 +194,14 @@ This repo is a cross-agent plugin. Every agent loads the single skill under
 discovering it. Install per agent below - everyone runs their own flow, so
 no particular workspace layout is assumed.
 
+### Update paths
+
+| Installation | Future release path | User action after initial setup |
+|---|---|---|
+| Host marketplace or plugin manager | Host-native update when that host and user or team policy enable it | Reload or start a new session when the host requires it |
+| Managed Git checkout + symlink/junction | `scripts/update_hypertaks.py` fast-forwards a verified clean `origin/main` checkout | Opt in once to an existing scheduler or host automation; resolve any blocked checkout state |
+| Copied or archived skill directory | No automatic channel can reach the copy | Migrate once to a marketplace install or managed checkout |
+
 <details open>
 <summary><strong>Claude Code</strong></summary>
 
@@ -198,16 +209,26 @@ no particular workspace layout is assumed.
 /plugin marketplace add aabrur/hypertaks-agent
 /plugin install hypertaks@hypertaks-marketplace
 ```
+
+For this third-party marketplace, enable auto-update once under
+`/plugin` -> **Marketplaces** -> **Hypertaks Marketplace**. Claude Code can
+then apply later manifest versions in the background. Reload plugins or start a
+new session to use the downloaded release.
 </details>
 
 <details>
 <summary><strong>Codex CLI</strong></summary>
 
-```
-/plugins
+```bash
+codex plugin marketplace add aabrur/hypertaks-agent --ref main
+codex plugin add hypertaks@hypertaks-marketplace
 ```
 
-Search for `hypertaks` and choose **Install Plugin**.
+Codex stores Git-backed marketplace snapshots and installed plugins in a
+versioned cache. Current public documentation exposes
+`codex plugin marketplace upgrade hypertaks-marketplace`, but does not promise
+universal background replacement of an installed third-party plugin. Use the
+Plugins directory to verify the installed version after a marketplace refresh.
 </details>
 
 <details>
@@ -217,7 +238,9 @@ Search for `hypertaks` and choose **Install Plugin**.
 /add-plugin hypertaks
 ```
 
-Or search for "hypertaks" in the marketplace.
+Or search for "hypertaks" in the marketplace. Automatic delivery is controlled
+by the supported public or team marketplace refresh policy; a local plugin
+directory is not an automatic update channel.
 </details>
 
 <details>
@@ -227,7 +250,9 @@ Or search for "hypertaks" in the marketplace.
 /plugins install https://github.com/aabrur/hypertaks-agent
 ```
 
-Or open `/plugins` → Marketplace → Hypertaks.
+Open the installed plugin in `/plugins` when Kimi shows an update badge, apply
+the update, then reload or start a new session. Marketplace discovery is
+automatic, while applying a third-party update remains host-controlled.
 </details>
 
 <details>
@@ -251,26 +276,42 @@ pi install git:github.com/aabrur/hypertaks-agent
 
 These agents load skills from a skills directory they scan on startup - the
 location depends on *your* setup. Clone this repo and make
-`skills/hypertaks` visible in that directory (copy or symlink/junction).
+`skills/hypertaks` visible through a symlink or junction to the managed
+checkout. Copying remains a legacy/manual path that needs one migration before
+future managed updates.
 See [`.openclaw/INSTALL.md`](.openclaw/INSTALL.md) and
 [`.hermes/INSTALL.md`](.hermes/INSTALL.md) for exact commands. The same
 generic approach works for any agent with a scanned skills folder.
 </details>
 
-### Updating safely
+### Automatic update policy
 
-Hypertaks never replaces its own code in the background. A trusted host
-marketplace or plugin manager may surface update metadata, but applying the
-update requires explicit approval. For a clean Git clone, use
-`git pull --ff-only` after approval. Archive and copied-directory installations
-must be reinstalled from a trusted release source.
+Updates follow the installation path. A marketplace or plugin manager may
+apply a compatible release automatically only when its host and user or team
+policy permit it. A managed checkout may update unattended only after
+installation-time opt-in:
+
+```bash
+python scripts/update_hypertaks.py --check-only
+python scripts/update_hypertaks.py
+```
+
+The updater changes only a canonical, clean `main` checkout that can
+fast-forward to `origin/main`. Dirty, diverged, detached, wrong-remote,
+unreachable, or unreconciled states are reported as `blocked` without resetting
+or overwriting user work. Copied skill folders are never overwritten; migrate
+them once. Every future release must bump all synchronized manifest versions;
+same-version commits can remain cached by version-keyed hosts. A successful
+update affects the next host reload or session, not the session already
+running. The canonical internal contract is
+[`plugins-and-mcp.md`](skills/hypertaks/references/plugins-and-mcp.md#automatic-update-contract).
 
 ### Manifest map
 
 | Agent | Manifest / install |
 |-------|--------------------|
 | Claude Code | `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` |
-| Codex | `.codex-plugin/plugin.json` |
+| Codex | `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` |
 | Cursor | `.cursor-plugin/plugin.json` |
 | Kimi Code | `.kimi-plugin/plugin.json` |
 | OpenCode | `.opencode/INSTALL.md` (git-backed plugin spec) |

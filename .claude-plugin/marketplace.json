@@ -11,7 +11,11 @@
   "plugins": [
     {
       "name": "hypertaks",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "aabrur/hypertaks-agent",
+        "ref": "main"
+      },
       "description": "Founder Operating System with contract integrity, retrieval intelligence, and targeted verified capabilities.",
       "version": "4.4.0",
       "license": "MIT",

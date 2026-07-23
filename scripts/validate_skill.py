@@ -10,20 +10,22 @@ Checks:
   2. Every `references/*.md` and `assets/*.md` path mentioned in SKILL.md exists.
   3. All JSON manifests parse.
   4. All live plugin and package records declare the same strict-semver version.
-  5. No Indonesian-language residue in any skill markdown file.
-  6. No personal absolute filesystem paths anywhere in the skill.
-  7. No version numbers in skill body text (allowed only in README.md,
+  5. Native Claude and Codex marketplace records target the canonical Git
+     repository and main branch.
+  6. No Indonesian-language residue in any skill markdown file.
+  7. No personal absolute filesystem paths anywhere in the skill.
+  8. No version numbers in skill body text (allowed only in README.md,
      RELEASE-NOTES.md, hypertaks-skill-card.md, and JSON manifest fields).
-  8. No duplicate section headers in references/knowledge-base.md.
-  9. Mandatory kernel and canonical router references exist.
- 10. assets/contract-schema.yaml exists and parses.
- 11. Domain packs: if domains/ exists, INDEX.md routes every pack in it.
- 12. Contradiction guard: no file suppresses an element SKILL.md marks
+  9. No duplicate section headers in references/knowledge-base.md.
+ 10. Mandatory kernel and canonical router references exist.
+ 11. assets/contract-schema.yaml exists and parses.
+ 12. Domain packs: if domains/ exists, INDEX.md routes every pack in it.
+ 13. Contradiction guard: no file suppresses an element SKILL.md marks
      mandatory, unless the suppression is scoped to EXECUTOR MODE.
 
 Note: these are structural invariants, not behavioral tests - they cannot
 verify that an agent actually runs the intake gate or the phase loop.
-Check #12 is the exception in KIND, not in strength: it compares files against
+Check #13 is the exception in KIND, not in strength: it compares files against
 each other rather than against a fixed list, so it catches a class of defect
 (one file quietly cancelling another) that no single-file grep can see. It
 still proves only what the files SAY. Conduct is graded in evals/.
@@ -152,7 +154,50 @@ check(all(re.fullmatch(r"\d+\.\d+\.\d+", str(value)) for value in versions.value
 check(len(distinct) == 1,
       f"Manifest versions out of sync: {versions}")
 
-# 4a. Repository text policy: tracked text only, ignored/generated files out.
+# 5. Native marketplace records use the canonical repository and branch.
+try:
+    claude_marketplace = json.loads(
+        (ROOT / ".claude-plugin" / "marketplace.json").read_text(encoding="utf-8"))
+    claude_source = claude_marketplace["plugins"][0]["source"]
+    check(claude_source == {
+        "source": "github",
+        "repo": "aabrur/hypertaks-agent",
+        "ref": "main",
+    }, f"Claude marketplace source is not canonical: {claude_source}")
+except (OSError, KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+    errors.append(f"Claude marketplace source cannot be validated: {exc}")
+
+codex_marketplace_path = ROOT / ".agents" / "plugins" / "marketplace.json"
+check(codex_marketplace_path.exists(),
+      "Codex marketplace missing: .agents/plugins/marketplace.json")
+if codex_marketplace_path.exists():
+    try:
+        codex_marketplace = json.loads(
+            codex_marketplace_path.read_text(encoding="utf-8"))
+        codex_plugin = codex_marketplace["plugins"][0]
+        check(codex_marketplace["name"] == "hypertaks-marketplace",
+              "Codex marketplace name must be hypertaks-marketplace")
+        check(codex_marketplace["interface"]["displayName"]
+              == "Hypertaks Marketplace",
+              "Codex marketplace display name is out of sync")
+        check(codex_plugin["name"] == "hypertaks",
+              "Codex marketplace plugin name must be hypertaks")
+        check(codex_plugin["source"] == {
+            "source": "url",
+            "url": "https://github.com/aabrur/hypertaks-agent.git",
+            "ref": "main",
+        }, f"Codex marketplace source is not canonical: "
+           f"{codex_plugin.get('source')}")
+        check(codex_plugin["policy"] == {
+            "installation": "AVAILABLE",
+            "authentication": "ON_INSTALL",
+        }, f"Codex marketplace policy is invalid: {codex_plugin.get('policy')}")
+        check(codex_plugin["category"] == "Coding",
+              "Codex marketplace category must be Coding")
+    except (OSError, KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+        errors.append(f"Codex marketplace cannot be validated: {exc}")
+
+# 6. Repository text policy: tracked text only, ignored/generated files out.
 INDONESIAN = re.compile(
     r"\b(yang|untuk|dengan|dari|dalam|adalah|atau|pada|tidak|bisa|akan|"
     r"harus|sudah|setiap|kalau|tanpa|sebelum|setelah|menjadi|secara|"

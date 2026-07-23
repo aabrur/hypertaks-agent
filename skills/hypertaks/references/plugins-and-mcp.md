@@ -131,20 +131,41 @@ Do not perform an update check for harmless Nano work. Host-native update
 metadata, when already visible, is fixed overhead and does not consume the
 task's production budget.
 
-## Update discovery and application
+## Automatic update contract
 
-Hypertaks may interpret trusted update metadata surfaced by a host, but it does
-not silently replace its own code.
+Update delivery follows the installation path. A configured host marketplace
+or plugin manager may apply a compatible release automatically when the host
+and the user or team policy enable it. This host-level update policy is the
+authorization boundary for future releases; it does not require a new chat
+approval for each compatible version.
 
 | Installation | Discovery | Apply path |
 |---|---|---|
-| Host marketplace or plugin manager | Host-native trusted metadata | Host-native update after explicit Boss approval |
-| Git clone | Explicit maintenance check | `git pull --ff-only` after approval and clean-worktree verification |
-| Archive or copied directory | Version notice or explicit check | Reinstall from a trusted release source |
+| Host marketplace or plugin manager | Host-native trusted metadata | Host-native automatic update when enabled and supported |
+| Managed canonical Git checkout | `scripts/update_hypertaks.py` fetches the configured `origin/main` | Fast-forward only, unattended only after installation-time opt-in |
+| Archive or copied directory | Version notice or explicit check | Migrate once to a marketplace install or managed checkout |
 
-Never run a background updater, mutate the skill during unrelated work,
-overwrite a dirty worktree, bypass authentication or approval, execute newly
-downloaded code before verification, or claim every host supports updates.
+Every release must bump the synchronized strict-semver fields in all live
+manifests. Version-keyed hosts may keep their cached copy when repository
+commits change without a new manifest version.
+
+The managed updater verifies the canonical remote, attached `main` branch,
+clean worktree, fetched target, and fast-forward ancestry before advancing the
+checkout. It fails closed for dirty, diverged, detached, wrong-remote,
+unreachable, or unreconciled states. It never resets, stashes, deletes,
+switches branches, changes remotes, or overwrites a copied installation.
+
+Automatic maintenance remains separate from task execution:
+
+- never invoke the updater from `SKILL.md` or during an unrelated Hypertaks
+  task;
+- never bypass host authentication, marketplace policy, or workspace
+  permissions;
+- load an updated release only on the host's next reload or session boundary;
+- treat an agent-initiated update outside a preconfigured automatic policy as a
+  normal file-write action under the active task contract;
+- never claim a host applies updates automatically unless its documented
+  marketplace or plugin manager supports that behavior.
 
 ## Reference-read failure ladder
 

@@ -14,13 +14,9 @@ visible in that directory.
    ```
 
 2. Make `skills/hypertaks` from this repo appear inside your Hermes skills
-   directory. Pick whichever fits your flow:
+   directory:
 
-   - **Copy:**
-     ```bash
-     cp -r hypertaks-agent/skills/hypertaks <your-hermes-skills-dir>/hypertaks
-     ```
-   - **Symlink / junction** (so it stays in sync with the repo):
+   - **Recommended: managed symlink / junction**
      ```bash
      # macOS/Linux
      ln -s "$(pwd)/hypertaks-agent/skills/hypertaks" <your-hermes-skills-dir>/hypertaks
@@ -29,17 +25,35 @@ visible in that directory.
      # Windows (PowerShell, run as admin or with Developer Mode)
      New-Item -ItemType Junction -Path "<your-hermes-skills-dir>\hypertaks" -Target "<path>\hypertaks-agent\skills\hypertaks"
      ```
+   - **Legacy/manual copy:**
+     ```bash
+     cp -r hypertaks-agent/skills/hypertaks <your-hermes-skills-dir>/hypertaks
+     ```
+     A copy has no automatic update channel. Migrate it once to the managed
+     link above before expecting future releases without another copy step.
 
 3. Restart Hermes. Verify: *"Hypertaks, analyze why our churn is high."* - it
    should run the intake gate, announce the tier (Prime for this task), then
    spawn the tier's specialist agents.
 
-## Updating safely
+## Automatic updates
 
-Hypertaks does not update itself in the background. For a symlink or junction
-pointing at a clean Git clone, review the update and run `git pull --ff-only`
-only after explicit approval. For a copied skill directory, reinstall it from
-a trusted release source, then restart Hermes. Never overwrite local changes.
+Run the managed-checkout updater from the canonical clone:
+
+```bash
+python scripts/update_hypertaks.py --check-only
+python scripts/update_hypertaks.py
+```
+
+To remove recurring manual update steps, opt in once by configuring an existing
+scheduler or trusted host automation to run the second command. The updater
+only fast-forwards a canonical, clean `main` checkout. Dirty, diverged,
+detached, wrong-remote, unreachable, or unreconciled states return `blocked`
+without resetting or overwriting user work.
+
+For an existing copied skill, preserve any local changes and migrate the folder
+once to the managed symlink or junction. Restart Hermes after a successful
+update; an active session does not change in place.
 
 > Replace `<your-hermes-skills-dir>` with your own path. This repo does not
 > assume any particular workspace layout.

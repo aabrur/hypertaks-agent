@@ -18,12 +18,18 @@ project-level):
 Restart OpenCode. The plugin installs through OpenCode's plugin manager and
 registers the skill.
 
-## Updating safely
+## Automatic updates
 
-Use OpenCode's native plugin update or reinstall flow only after explicit user
-approval. Hypertaks may report trusted update metadata already surfaced by the
-host, but it never replaces its own code in the background or during unrelated
-work.
+Keep OpenCode's native plugin manager as the primary delivery path. Whether it
+refreshes a Git-backed third-party plugin automatically remains controlled by
+the installed OpenCode version and user policy; Hypertaks does not bypass that
+host boundary.
+
+For a scanned or linked installation outside the native manager, use the
+managed repository checkout and `python scripts/update_hypertaks.py`. It may run
+unattended only after installation-time opt-in and only fast-forwards a clean
+canonical `main` checkout. Restart OpenCode after a successful update; the
+already-running session does not reload the plugin in place.
 
 Verify by asking: *"Hypertaks, analyze why our churn is high."* - it should run
 the intake gate first, announce the tier (Prime for this task), then spawn the
@@ -33,7 +39,7 @@ tier's specialist agents.
 
 ```json
 {
-  "plugin": ["hypertaks@git+https://github.com/aabrur/hypertaks-agent.git#v1.0.0"]
+  "plugin": ["hypertaks@git+https://github.com/aabrur/hypertaks-agent.git#v4.4.0"]
 }
 ```
 

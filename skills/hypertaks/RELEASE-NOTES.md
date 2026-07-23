@@ -6,7 +6,8 @@ Hypertaks 4.4.0 strengthens the Founder Operating System in four connected
 areas: retrieval quality, contract activation, targeted capability use, and
 professional artifact delivery. The plugin remains portable and does not bundle
 a vector database, embedding model, reranker, MCP server, credential, or
-background process.
+resident daemon. Update delivery uses host marketplaces where supported and a
+separate opt-in managed-checkout utility for linked skill installations.
 
 ### Added
 
@@ -29,6 +30,11 @@ background process.
   charts.
 - Added EV-50 through EV-65 for retrieval, contract, execution, visual, plugin,
   and token-proportionality behavior.
+- Added native Claude and Codex marketplace records that track the canonical
+  repository and `main` release branch.
+- Added `scripts/update_hypertaks.py` with integration coverage for current,
+  check-only available, fast-forward, dirty, diverged, detached, and
+  wrong-remote checkout states.
 
 ### Changed
 
@@ -48,6 +54,30 @@ background process.
   execution evidence, and visual validation.
 - CI now validates Python retrieval utilities, Matplotlib exports, TypeScript
   type-checking, runtime branch behavior, and the expanded eval suite.
+
+### Update delivery and boundaries
+
+| Installation | Delivery path | Boundary |
+|---|---|---|
+| Host marketplace or plugin manager | Host-native compatible update when enabled by host and user or team policy | Reload or start a new session when required by the host |
+| Managed canonical Git checkout | `scripts/update_hypertaks.py` fetches and fast-forwards `origin/main` | Unattended execution requires installation-time opt-in and a clean attached checkout |
+| Copied or archived skill directory | One-time migration to a marketplace or managed checkout | The copied folder is never overwritten |
+
+Use `python scripts/update_hypertaks.py --check-only` for diagnostics and
+`python scripts/update_hypertaks.py` to reconcile a managed checkout. Dirty,
+diverged, detached, wrong-remote, unreachable, or unreconciled states fail
+closed. The updater never resets, stashes, deletes, switches branches, changes
+remotes, or changes the already-running agent session in place.
+Every later release must bump all synchronized strict-semver manifest fields;
+version-keyed hosts may retain a cached plugin when only repository commits
+change.
+
+Claude Code can apply marketplace updates automatically after its third-party
+marketplace auto-update setting is enabled. Cursor behavior depends on its
+supported public or team marketplace refresh path. Codex documents marketplace
+snapshot refresh and versioned plugin caching, not a universal background
+replacement guarantee. Kimi Code discovers marketplace updates and applies
+them through its plugin manager.
 
 ### Precision boundaries
 
