@@ -1,15 +1,16 @@
 # Hypertaks Skill Card
 
-**Version:** 4.4.0
+**Version:** 4.5.0
 
 ## Release status
 
 **Release Candidate - behavioral re-certification pending.**
 
-- Structural eval definitions: 65
+- Structural eval definitions: 88
 - Historical certified ledger: 4.3.0, 43/49 Behavioral PASS
-- New behavioral cases requiring fresh runs: EV-50 through EV-65
-- Static GREEN is structural evidence only
+- New retrieval and execution cases requiring fresh runs: EV-50 through EV-65
+- New founder brain and continuity cases requiring fresh runs: EV-66 through EV-88
+- Static GREEN and CI success are structural evidence only
 
 This status does not claim formal third-party certification, absolute security,
 or guaranteed outcomes.
@@ -20,13 +21,28 @@ Hypertaks is a Founder Operating System that turns the host AI into an
 accountable operator and integrator for founder-shaped work across business,
 engineering, marketing, finance, ERP, supply chain, smart contracts, data, and
 IoT. The Boss remains the final human authority. The Founder owns framing,
-contract integrity, specialist coordination, capability relevance, evidence,
-risk awareness, and final result quality.
+contract integrity, specialist coordination, capability relevance, continuity,
+evidence, risk awareness, and final result quality.
 
 The mandatory loop is Intake and Verify, Frame, Pick Roles, Equip, Produce, and
 Integrate and Deliver. Tiered allocation scales from Nano through Omega. The
 system separates the Boss's objective from the proposed method, protects
-business health, and fails loud when evidence or capability is missing.
+business health, remembers verified founder context, and fails loud when
+evidence or capability is missing.
+
+## Public skill surface
+
+Hypertaks exposes exactly five public skills:
+
+1. `hypertaks`
+2. `hypertaks-verify`
+3. `hypertaks-brain`
+4. `hypertaks-graph`
+5. `hypertaks-continuity`
+
+The main skill remains the default Founder Operating System entry point. The
+four focused skills handle setup, durable memory, structural code intelligence,
+and session continuity.
 
 ## Core systems
 
@@ -35,6 +51,15 @@ business health, and fails loud when evidence or capability is missing.
 - **Contract Integrity Gate:** original request, desired outcome, proposed
   method, evidence, missing data, process, destination, validation evidence,
   permissions, and explicit activation.
+- **Founder Brain:** evidence-backed agent-private, project, and shared memory
+  with repository and Boss-approval provenance.
+- **Verification Engine:** discovers an existing main brain or shared memory,
+  previews approved destinations, and validates optional Obsidian and Graphify
+  capability boundaries.
+- **Continuity Engine:** Git-aware checkpoint, resume, handoff, reconciliation,
+  and proof of done.
+- **Graph Intelligence Router:** optional verified Graphify stdio MCP, shared
+  HTTPS MCP, or local command, with direct repository search fallback.
 - **Retrieval Intelligence Router:** exact, semantic, mixed, structured,
   small-corpus, and unavailable need classes with direct, keyword, vector,
   hybrid, fusion, reranking, evaluation, evidence packs, and fallback.
@@ -51,32 +76,49 @@ business health, and fails loud when evidence or capability is missing.
 
 - No mandatory external integration.
 - No bundled vector database, embedding model, reranker, MCP server,
-  credential, or background updater.
+  credential, hosted memory service, or resident daemon.
+- Graphify, Obsidian, MCP, and persistent memory are optional.
 - Optional host capabilities are discovered only when the approved task needs
   them.
-- TypeScript is a development dependency for the reference runtime; the skill
-  itself remains file-based and portable.
+- TypeScript and Node type definitions are development dependencies for the
+  reference runtime; the skills remain file-based and portable.
 - Matplotlib is used by the optional retrieval report utility.
+
+## Authority and storage boundaries
+
+- Active system policy and Boss decisions outrank memory and graph output.
+- Current repository evidence invalidates stale branch, commit, path, or hash
+  references.
+- Shared memory accepts only verified repository facts or decisions tied to a
+  valid T1 Boss approval proof.
+- Every persisted path is resolved inside an approved root.
+- Raw credentials, private keys, bearer tokens, connection strings, and secret
+  values are blocked or redacted.
+- Existing custom brains remain user-owned and are referenced rather than
+  copied or reorganized.
+- Obsidian support is approved Vault filesystem storage. Hypertaks never
+  modifies `.obsidian/`.
 
 ## Key risks and mitigations
 
+- **Memory injection:** classify memory as evidence below active authority.
+- **Arbitrary file writes:** validate identifiers and enforce canonical
+  approved-root containment before every write.
+- **Fabricated Boss approval:** accept only approval proofs minted from an active
+  T1 contract activation.
+- **Stale memory:** bind repository evidence to repository, branch, commit,
+  tracked path, and content hash.
+- **Secret leakage:** scan full serialized artifacts and redact handoffs.
+- **False Graphify success:** return success only after a real executor, local
+  command, or direct search runs.
+- **False completion:** require current test and acceptance evidence for proof of
+  done.
 - **Retrieval over-engineering:** classify the query and use direct search for a
   small corpus; hybrid and reranking require evidence.
-- **Wrong exact result:** protect identifiers with keyword or exact-match rules.
-- **Cross-boundary leakage:** constrain tenant, source, date, language, and trust
-  boundary before ranking.
-- **Unmeasured quality claims:** mark retrieval quality `UNVERIFIED` without a
-  reviewed query set.
 - **Tool and plugin sprawl:** derive need before discovery and reject unrelated
   capabilities.
-- **Unsafe build activation:** mutation and external effects require approval
-  identifying the contract ID.
-- **Decorative or inaccurate visuals:** classify necessity, choose by information
-  structure, reconcile source data, and inspect the render.
-- **Image generation used for precision work:** use code or diagram tooling for
-  numerical charts, tables, and technical topology.
-- **Token bloat:** retrieve focused candidates, reuse evidence packs, and keep
-  retrieval at zero when supplied context is sufficient.
+- **Token bloat:** create no brain, checkpoint, or graph work for harmless Nano
+  requests.
 
 ## Canonical references
 
@@ -92,6 +134,10 @@ business health, and fails loud when evidence or capability is missing.
 - `references/knowledge-base.md`
 - `references/engineering.md`
 - `references/token-discipline.md`
+- `../hypertaks-verify/SKILL.md`
+- `../hypertaks-brain/SKILL.md`
+- `../hypertaks-graph/SKILL.md`
+- `../hypertaks-continuity/SKILL.md`
 - `assets/agent-brief-template.md`
 - `assets/contract-schema.yaml`
 - `assets/deliverable-template.md`
@@ -99,13 +145,16 @@ business health, and fails loud when evidence or capability is missing.
 ## Output
 
 - One contract-bound founder-grade deliverable.
+- Verified founder context when durable memory is appropriate.
 - Framework output shapes when applicable.
-- Retrieval evidence packs and measured metrics when promised.
-- Python or TypeScript execution evidence when those profiles are used.
+- Retrieval and graph evidence with honest mode and freshness status.
+- Checkpoints and handoffs that preserve Git state, permissions, blockers, and
+  next action.
+- Proof-of-done status derived from current tests and acceptance evidence.
 - Validated tables, charts, diagrams, UI artifacts, or generated images when
   required by the contract.
 - Compliance footer and work log.
 
 ## Work log
 
-`2026-07-22 | Hypertaks v4.4.0 release candidate: retrieval intelligence, contract-ID activation, professional execution profiles, visual necessity routing, TypeScript runtime, Python retrieval metrics, Matplotlib reporting, and EV-50 through EV-65.`
+`2026-07-25 | Hypertaks v4.5.0 release candidate: exactly five public skills, secure founder memory, optional Graphify and Obsidian integration, Git-aware continuity, proof of done, runtime hardening, and EV-66 through EV-88.`
