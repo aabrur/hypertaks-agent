@@ -1,103 +1,137 @@
 # Release Notes
 
-## v4.4.0 - Retrieval Intelligence and Professional Execution
+## v4.5.0 - Founder Brain and Continuity System
 
-Hypertaks 4.4.0 strengthens the Founder Operating System in four connected
-areas: retrieval quality, contract activation, targeted capability use, and
-professional artifact delivery. The plugin remains portable and does not bundle
-a vector database, embedding model, reranker, MCP server, credential, or
-resident daemon. Update delivery uses host marketplaces where supported and a
-separate opt-in managed-checkout utility for linked skill installations.
+Hypertaks 4.5.0 strengthens the Founder Operating System with portable founder
+context, evidence-backed memory, structural code intelligence, and verified
+continuity across sessions and AI agents.
 
-### Added
+The release does not replace the Founder identity with a generic memory layer.
+The main `/hypertaks` skill remains the operating entry point. Four focused
+skills expose verification, brain, graph, and continuity work without expanding
+the public surface beyond five commands.
 
-- Added `references/02-retrieval-and-evidence.md` with the deterministic
-  Retrieval Intelligence Router: Need, Scope, Route, Retrieve, Fuse, Boost,
-  Rerank, Evaluate, Evidence Pack, and Fallback.
-- Added exact, semantic, mixed, structured, small-corpus, and unavailable query
-  classes with direct, keyword, vector, hybrid, and fallback routes.
-- Added metadata boundary rules, exact-match protection, rank-fusion guidance,
-  reranking criteria, independent retrieval metrics, and evidence-pack output.
-- Added `references/03-professional-execution.md` with Python, Matplotlib,
-  TypeScript, UI/UX, and image-generation execution profiles.
-- Added `references/04-visual-delivery.md` with required, recommended, optional,
-  and not-needed visual status plus medium selection and artifact validation.
-- Added a strict TypeScript reference router under `runtime/router.ts` with
-  executable branch tests.
-- Added `scripts/retrieval_eval.py`, a standard-library evaluator for Recall@k,
-  HitRate@k, MRR, nDCG@k, ExactMatch@k, latency, and cost.
-- Added `scripts/plot_retrieval_eval.py` for reproducible PNG and SVG quality
-  charts.
-- Added EV-50 through EV-65 for retrieval, contract, execution, visual, plugin,
-  and token-proportionality behavior.
-- Added native Claude and Codex marketplace records that track the canonical
-  repository and `main` release branch.
-- Added `scripts/update_hypertaks.py` with integration coverage for current,
-  check-only available, fast-forward, dirty, diverged, detached, and
-  wrong-remote checkout states.
+Graphify, Obsidian, MCP, external memory, and persistent memory remain optional.
+Hypertaks continues to work with core reasoning and local project tools when
+those capabilities are unavailable.
 
-### Changed
+### Five public skills
 
-- Expanded the task contract to preserve the original request, desired outcome,
-  proposed method, supplied evidence, missing data, planned process,
-  destination, validation evidence, retrieval strategy, execution profiles,
-  visual delivery, and approval mode.
-- Build work, file mutation, and external effects now require a T1 Boss approval
-  that identifies the contract ID. Vague delegation permits only conservative
-  advisory analysis with zero mutation permissions.
-- Capability routing now follows retrieval classification when external
-  knowledge is required, so the tool set is derived from the route rather than
-  from an inventory.
-- Token accounting now separates gate, retrieval, production, and verification
-  envelopes while preserving proportional Nano and Lite behavior.
-- Agent briefs and integrated deliverables now carry retrieval evidence,
-  execution evidence, and visual validation.
-- CI now validates Python retrieval utilities, Matplotlib exports, TypeScript
-  type-checking, runtime branch behavior, and the expanded eval suite.
+1. `/hypertaks` runs the Founder Operating System loop and routes focused work.
+2. `/hypertaks-verify` discovers existing brains, shared memory, approved
+   storage, Obsidian Vaults, Graphify modes, and governance preferences.
+3. `/hypertaks-brain` manages evidence-backed founder facts, decisions,
+   preferences, risks, corrections, revalidation, and shared-memory promotion.
+4. `/hypertaks-graph` uses verified Graphify operations for relationship and
+   impact questions, with a real direct repository-search fallback.
+5. `/hypertaks-continuity` creates and resumes checkpoints, generates safe
+   cross-agent handoffs, reconciles work, and verifies proof of done.
 
-### Update delivery and boundaries
+A repository validator rejects a missing command, duplicate command, or sixth
+public skill whose name starts with `hypertaks`.
 
-| Installation | Delivery path | Boundary |
-|---|---|---|
-| Host marketplace or plugin manager | Host-native compatible update when enabled by host and user or team policy | Reload or start a new session when required by the host |
-| Managed canonical Git checkout | `scripts/update_hypertaks.py` fetches and fast-forwards `origin/main` | Unattended execution requires installation-time opt-in and a clean attached checkout |
-| Copied or archived skill directory | One-time migration to a marketplace or managed checkout | The copied folder is never overwritten |
+### Secure founder memory
 
-Use `python scripts/update_hypertaks.py --check-only` for diagnostics and
-`python scripts/update_hypertaks.py` to reconcile a managed checkout. Dirty,
-diverged, detached, wrong-remote, unreachable, or unreconciled states fail
-closed. The updater never resets, stashes, deletes, switches branches, changes
-remotes, or changes the already-running agent session in place.
-Every later release must bump all synchronized strict-semver manifest fields;
-version-keyed hosts may retain a cached plugin when only repository commits
-change.
+Memory is lower-authority historical evidence. It cannot approve actions, grant
+permissions, expand scope, override workspace rules, or override current
+repository evidence.
 
-Claude Code can apply marketplace updates automatically after its third-party
-marketplace auto-update setting is enabled. Cursor behavior depends on its
-supported public or team marketplace refresh path. Codex documents marketplace
-snapshot refresh and versioned plugin caching, not a universal background
-replacement guarantee. Kimi Code discovers marketplace updates and applies
-them through its plugin manager.
+The runtime adds:
 
-### Precision boundaries
+- agent-private, project, and shared memory scopes;
+- strict memory and decision record identifiers;
+- approved-root containment for every file write;
+- rejection of traversal, absolute paths, reserved names, and symlink escapes;
+- runtime pointer validation and explicit corruption states;
+- atomic file writes;
+- full-artifact secret scanning and handoff redaction;
+- repository evidence bound to repository, branch, commit, tracked path, and
+  content hash;
+- shared-memory promotion only for verified repository facts or decisions tied
+  to a valid T1 Boss approval proof.
 
-- Hybrid retrieval is not a universal default.
-- Reranking is optional and must be bounded, permitted, and evaluated.
-- Retrieval quality remains `UNVERIFIED` when no labeled or reviewed query set
-  exists.
-- Image generation is not used for precise charts, tables, or technical
-  topology.
-- A successful tool call, compiler run, or file export is not completion
-  evidence without reconciliation and artifact inspection.
+A caller cannot manufacture `BossTurn`, `APPROVED`, or `VERIFIED` authority by
+constructing ordinary JSON fields.
 
-### Release evidence status
+### Verification and user-owned storage
 
-The 4.3.0 behavioral ledger remains historical evidence for its exact certified
-commit: 43/49 Behavioral PASS, 6 documented non-PASS, and 49/49 Static GREEN.
-This release adds behavior and 16 new cases, so it requires fresh independent
-behavioral runs before it may inherit the repository's Behaviorally Certified
-label.
+`/hypertaks-verify` separates read-only scanning from approved configuration.
+It asks at most two focused rounds:
 
-The 4.4.0 release candidate may be published with this limitation disclosed,
-but must not claim 65/65 behavioral PASS or reuse the 4.3.0 certification as if
-it covered the new behavior.
+- whether the Boss already has a main brain, shared agent memory, both, neither,
+  or wants session-only memory;
+- which approved destination, Graphify mode, and continuity policy to use.
+
+Existing custom memory structures are referenced through a pointer and remain
+user-owned. Hypertaks does not copy or reorganize an existing brain. A new local
+namespace uses `Brains/<agent-name>` only after approval.
+
+Obsidian support in 4.5.0 is an optional approved Vault filesystem destination.
+Hypertaks verifies the Vault root and never modifies `.obsidian/`. The
+`obsidianmd/obsidian-releases` repository is not treated as a memory API.
+
+### Graphify routing
+
+Graphify remains an optional evidence tool. Supported routes are:
+
+- a verified local stdio MCP executor;
+- a verified shared HTTPS MCP endpoint with an authentication handle and
+  approved external boundary;
+- a verified local command;
+- direct repository search when Graphify is disabled or unavailable.
+
+Hypertaks never reports Graphify success unless a real executor or command ran.
+Missing branch or commit metadata is `UNVERIFIED`; mismatched metadata is
+`STALE`. Graphify output cannot authorize code changes or external effects.
+
+### Continuity and proof of done
+
+Checkpoints record the active objective, contract, actual repository identity,
+branch, commit, changed files, completed and pending work, blockers, next action,
+permissions, tests, and acceptance criteria.
+
+Resume reads actual Git state and rejects repository, branch, or commit
+mismatches. Handoffs preserve permission boundaries and unresolved risks without
+copying raw transcripts or secrets.
+
+Proof of done does not trust caller-supplied booleans. It returns `DONE` only
+when current test evidence and acceptance evidence pass at the active commit,
+and when no pending work or blockers remain. Otherwise it returns `NOT_DONE`
+with exact reasons.
+
+### Runtime and routing hardening
+
+- Mutating operations require explicit approval even when a capability
+  descriptor incorrectly claims approval is unnecessary.
+- External systems fail closed unless named in the allowed contract boundary.
+- Advisory activation rejects negated phrases such as `do not proceed`.
+- Precise numeric visual requirements take precedence over creative-image flags.
+- The TypeScript build compiles every runtime module under strict settings.
+
+### Evaluation and compatibility
+
+EV-66 through EV-88 cover brain discovery, custom layout preservation, approval
+boundaries, path safety, secret handling, repository evidence, Graphify,
+continuity, Nano proportionality, and Hypertaks 4.4 compatibility.
+
+The GitHub Actions gate runs:
+
+- skill and manifest validation;
+- exact-five public-skill validation;
+- eval structure and static preconditions;
+- evaluator unit tests;
+- retrieval metrics and chart generation;
+- TypeScript typecheck, build, and adversarial runtime tests;
+- Python compilation;
+- pull request diff formatting checks.
+
+### Release evidence boundary
+
+Automated CI and static evals prove structural readiness only. They do not prove
+all cross-host behavior. Hypertaks 4.5.0 must remain a release candidate until
+fresh independent behavioral runs cover the new commands, real Graphify
+capabilities, approved Obsidian Vault behavior, and cross-agent resume and
+handoff flows.
+
+No tag, package publication, marketplace submission, or behavioral
+certification is implied by merging the source update.
