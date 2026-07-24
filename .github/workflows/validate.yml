@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Python dependencies
         run: pip install -r scripts/requirements-figures.txt
@@ -45,5 +47,5 @@ jobs:
       - name: Compile Python scripts
         run: python3 -m compileall scripts
 
-      - name: Check tracked diff formatting
-        run: git diff --check HEAD^
+      - name: Check pull request diff formatting
+        run: git diff --check origin/main...HEAD
