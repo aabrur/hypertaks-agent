@@ -5,8 +5,8 @@
     "email": "abrur_nic@yahoo.com"
   },
   "metadata": {
-    "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, and targeted execution.",
-    "version": "4.4.0"
+    "description": "Hypertaks Founder Operating System with founder continuity, evidence-backed memory, and verified capability routing.",
+    "version": "4.5.0"
   },
   "plugins": [
     {
@@ -16,15 +16,15 @@
         "repo": "aabrur/hypertaks-agent",
         "ref": "main"
       },
-      "description": "Founder Operating System with contract integrity, retrieval intelligence, and targeted verified capabilities.",
-      "version": "4.4.0",
+      "description": "Founder Operating System with secure continuity, Graphify routing, Obsidian-compatible memory, and proof of done.",
+      "version": "4.5.0",
       "license": "MIT",
       "keywords": [
         "founder",
-        "strategy",
-        "multi-agent",
-        "web3",
-        "finance"
+        "continuity",
+        "memory",
+        "graphify",
+        "obsidian"
       ]
     }
   ]
