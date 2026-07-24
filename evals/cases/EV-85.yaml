@@ -1,0 +1,21 @@
+id: EV-85
+name: handoff_preserves_permissions_risks_and_open_work
+group: loop
+setup: |
+  One agent hands an active task to another agent.
+expect_pass:
+  - Preserves contract, branch, commit, permissions, blockers, pending work, and next action
+  - Redacts secret-like values
+  - Avoids copying the raw transcript
+expect_fail:
+  - Drops permission limits or blockers
+  - Includes raw credentials
+static_precondition:
+  description: Handoffs derive from the structured checkpoint.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "generateHandoff"
+    - file: runtime/founder-brain.ts
+      pattern: "Permissions:"
+    - file: runtime/router.test.cjs
+      pattern: "REDACTED_SECRET"
