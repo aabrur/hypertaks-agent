@@ -1,185 +1,189 @@
-# Hypertaks v4.4.0 Implementation Report
+# Hypertaks v4.5.0 Implementation Report
 
-**Date:** 2026-07-22
+**Date:** 2026-07-25
 **Release channel:** Release Candidate
-**Scope status:** Complete and locked
-**External publication:** Not performed
+**Base commit:** `b45cc6b9c686c30615b971f880c532b1ed48e80b`
+**Candidate branch:** `feat/v450-founder-brain-continuity-remediated`
+**Pull request:** #12
+**External publication:** Source branch and pull request only; no tag, package,
+deployment, or marketplace submission
 
 ## Executive summary
 
-Hypertaks v4.4.0 adds a deterministic retrieval intelligence layer, stricter
-contract activation, targeted capability binding, professional Python and
-TypeScript execution profiles, and a visual necessity router. The release keeps
-Hypertaks portable: it does not bundle a vector database, embedding model, MCP
-server, credentials, background service, or host-specific runtime.
+Hypertaks v4.5.0 adds a secure Founder Brain and Continuity System while
+preserving Hypertaks as a Founder Operating System. The release gives users a
+portable way to reuse a main brain, preserve verified founder decisions, ask
+structural code questions through optional Graphify capabilities, continue work
+across sessions and agents, and require evidence before declaring work done.
 
-The implementation preserves proportionality. Harmless Nano and Lite work does
-not trigger capability discovery, corpus indexing, hybrid retrieval, visual
-production, or update checks unless the approved task requires them.
+The implementation replaces the rejected v4.5.0 candidate behavior rather than
+trusting its implementation claims. The remediation directly addresses the
+independent audit's critical findings: path escape, fabricated Boss approval,
+unverified repository facts, secret persistence, Graphify false success,
+unsafe external targets, caller-supplied completion assertions, invalid evals,
+and incomplete public command registration.
 
-## Delivered goals
+## Delivered public surface
 
-1. Route exact, semantic, mixed, structured, small-corpus, and unavailable
-   retrieval needs to the smallest sufficient method.
-2. Support keyword, vector, hybrid, metadata filtering, exact-match boosting,
-   fusion, reranking, evidence packs, and safe fallback without inventing a
-   capability.
-3. Bind native tools, skills, MCP tools, and connectors only after the task need
-   is known and the capability is verified.
-4. Capture the original request, desired outcome, proposed method, supplied
-   evidence, missing data, process, destination, success criteria, permissions,
-   retrieval plan, visual plan, and approval evidence in the contract.
-5. Require the canonical `APPROVE <contract-id>` signature from a T1 Boss turn
-   before build, mutation, publication, deployment, communication, or another
-   external effect.
-6. Provide runnable Python retrieval evaluation with Recall@k, HitRate@k, MRR,
-   nDCG@k, ExactMatch@k, latency, and cost fields.
-7. Provide deterministic Matplotlib export to PNG and SVG with artifact checks.
-8. Provide a strict TypeScript runtime router with typed retrieval, visual,
-   capability, and contract-activation decisions plus runtime tests.
-9. Route tables, charts, diagrams, UI mockups, and generated images according to
-   information structure and decision risk.
-10. Expand structural evaluation from 49 to 65 cases while retaining the
-    historical v4.3 behavioral ledger as historical evidence only.
+Exactly five public skill entry points are present:
 
-## Architecture delivered
+1. `skills/hypertaks`
+2. `skills/hypertaks-verify`
+3. `skills/hypertaks-brain`
+4. `skills/hypertaks-graph`
+5. `skills/hypertaks-continuity`
+
+`scripts/validate_public_skills.py` rejects a missing, duplicate, misplaced, or
+sixth public Hypertaks skill.
+
+## Delivered runtime
+
+### Approved-root storage
+
+`runtime/founder-brain.ts` provides one canonical path-containment boundary for
+pointers, memory, checkpoints, and output files. It rejects absolute paths,
+traversal, invalid record identifiers, control characters, reserved names, and
+symlink escapes. Writes use same-directory temporary files and rename-based
+atomic replacement.
+
+### Authority-bound memory
+
+Memory records carry explicit scope, status, evidence, repository identity, and
+creator metadata. Repository facts become verified only after matching the
+active repository, branch, commit, tracked file, and content hash.
+
+Shared Boss decisions require an opaque approval proof minted from an active T1
+contract activation. Ordinary callers cannot construct a valid proof by
+supplying fields that say `BossTurn`, `APPROVED`, or `VERIFIED`.
+
+### Secret protection
+
+The runtime scans complete serialized artifacts before persistence. It blocks
+common API key, token, private-key, password, and credential-bearing connection
+patterns. Cross-agent handoffs redact secret-like values rather than copying
+raw secrets.
+
+### Verification and user-owned storage
+
+The verification engine separates scanning, preview, approval, and application.
+It supports project-local storage, explicit external folders, an approved
+Obsidian Vault, a separate local Git location, a verified MCP memory
+capability, or session-only memory.
+
+Existing brains remain user-owned. The focused verification skill instructs
+agents to reuse the existing structure and create only the minimum pointer
+metadata after approval. Obsidian Vault validation requires the approved root
+and never authorizes modification of `.obsidian/`.
+
+### Graphify routing
+
+Graphify remains optional and lower-authority evidence. The runtime supports a
+verified host executor, a shared HTTPS MCP route with authentication and T1
+approval, a verified local command, or direct repository search.
+
+The router does not hardcode availability. Missing graph source metadata is
+`UNVERIFIED`, mismatched branch or commit metadata is `STALE`, and no Graphify
+route reports success without a real execution result.
+
+### Continuity and proof of done
+
+Checkpoints record actual Git repository identity, branch, commit, changed
+files, objective, contract, completed work, pending work, blockers, next action,
+permissions, test evidence, and acceptance criteria.
+
+Resume reads Git state internally and rejects repository, branch, or commit
+mismatches. Proof of done derives its verdict from current test and acceptance
+evidence, pending work, and blockers. It can and does return `NOT_DONE`.
+
+### Existing router hardening
+
+`runtime/router.ts` also closes earlier v4.4 issues:
+
+- external systems fail closed unless explicitly allowed;
+- mutating operations require approval even when capability metadata is wrong;
+- negated advisory approval is rejected;
+- numeric precision takes precedence over creative image routing.
+
+## Evaluation and test coverage
+
+EV-66 through EV-88 cover:
+
+- existing main-brain reuse;
+- custom-layout preservation;
+- approval before configuration writes;
+- agent-name and path traversal rejection;
+- private and shared memory separation;
+- project-local and Obsidian destinations;
+- Graphify fallback and authority boundaries;
+- shared HTTPS requirements;
+- unverified and inferred memory behavior;
+- secret blocking;
+- repository and branch staleness;
+- Boss decision promotion;
+- Nano proportionality;
+- checkpoint, resume, handoff, and proof of done;
+- memory conflict disclosure;
+- compatibility with the v4.4 runtime.
+
+The runtime test suite includes direct adversarial probes for path escape,
+fabricated approval, missing evidence, secret persistence, Graphify false
+success, stale evidence, checkpoint mismatch, and unsupported completion.
+
+## Validation matrix
+
+The final candidate must pass the exact GitHub Actions workflow on its final
+commit:
 
 ```text
-Request and evidence intake
-        |
-        v
-Contract framing and feasibility
-        |
-        +--> retrieval need and corpus boundary
-        +--> visual necessity and medium
-        +--> capability and permission need
-        |
-        v
-Contract-ID activation gate
-        |
-        v
-Retrieval Intelligence Router
-Need -> Scope -> Route -> Retrieve -> Fuse -> Boost -> Rerank
-     -> Evaluate -> Evidence Pack -> Fallback
-        |
-        v
-Capability Relevance Router
-Need -> Discover -> Normalize -> Filter -> Bind -> Verify -> Fallback
-        |
-        v
-Professional execution profiles
-Python | Matplotlib | TypeScript | UI/UX | Image generation
-        |
-        v
-Verification, evidence reconciliation, and delivery
-```
-
-## Main implementation areas
-
-### Retrieval and evidence
-
-Added `skills/hypertaks/references/02-retrieval-and-evidence.md` as the canonical
-retrieval policy. It distinguishes exact token retrieval from semantic search,
-requires pre-ranking trust-boundary filters, defines hybrid fusion and
-reranking rules, and prevents retrieval quality claims without measured data.
-
-### Contract integrity
-
-Updated the intake protocol, contract schema, state model, skill workflow,
-agent brief, and deliverable template. Mutation and external-effect approval is
-source-bound and contract-bound. Runtime activation rejects bare agreement,
-negated signatures, embedded tool text, and approvals from non-Boss sources.
-
-### Professional execution
-
-Added `skills/hypertaks/references/03-professional-execution.md` with separate
-profiles for Python, Matplotlib, TypeScript, UI/UX, and image generation. Each
-profile defines when it applies, evidence requirements, validation, and
-precision boundaries.
-
-### Visual delivery
-
-Added `skills/hypertaks/references/04-visual-delivery.md`. Visuals are classified
-as required, recommended, optional, or not needed. Generated images are limited
-to image-native creative work and cannot replace precise numerical charts,
-tables, or technical topology.
-
-### Runtime and evaluation utilities
-
-Added:
-
-- `runtime/router.ts`
-- `runtime/router.test.cjs`
-- `scripts/retrieval_eval.py`
-- `scripts/plot_retrieval_eval.py`
-- `scripts/test_retrieval_eval.py`
-- `evals/fixtures/retrieval-sample.jsonl`
-- EV-50 through EV-65
-
-## Validation evidence
-
-The release candidate passed:
-
-```text
-python scripts/validate_skill.py
-python scripts/run_evals.py --check
-python scripts/run_evals.py --static
-python -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
-python scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl \
-  --output /tmp/hypertaks-retrieval-report.json
-python scripts/plot_retrieval_eval.py \
-  /tmp/hypertaks-retrieval-report.json \
-  /tmp/hypertaks-retrieval-quality
+python3 scripts/validate_skill.py
+python3 scripts/validate_public_skills.py
+python3 scripts/run_evals.py --check
+python3 scripts/run_evals.py --static
+python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
+python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
+python3 scripts/plot_retrieval_eval.py <report> <output-base>
 npm test
-python -m compileall -q scripts
-python scripts/generate_figures.py
-git diff --check
-python scripts/run_evals.py --report evals/results.yaml
+python3 -m compileall scripts
+git diff --check origin/main...HEAD
 ```
 
-Observed results:
+At the time this report is written, earlier candidate workflow runs proved the
+skill validator, exact-five validator, eval integrity, 88/88 static
+preconditions, evaluator unit tests, retrieval utilities, TypeScript runtime,
+and Python compilation. A workflow configuration issue in the shallow checkout
+caused the pull request diff command to fail; the workflow was corrected to use
+a full checkout and compare `origin/main...HEAD`. The final merge decision must
+use the newest workflow run, not an earlier partial result.
 
-- skill validator: PASS, version 4.4.0
-- eval definition validation: PASS, 65 cases
-- static preconditions: 65/65 GREEN
-- Python unit tests: 24/24 PASS
-- retrieval report generation: PASS
-- Matplotlib PNG and SVG generation: PASS
-- TypeScript strict type-check: PASS
-- TypeScript production build: PASS
-- TypeScript runtime tests: PASS
-- Python compilation: PASS
-- repository figure generation: PASS
-- whitespace and patch integrity: PASS
-- historical v4.3 behavioral report: 43/49 PASS, 6 documented harness skips
+## Product boundaries
 
-## Scope controls
+The release intentionally excludes:
 
-The release intentionally does not include:
-
-- a bundled vector database;
-- an embedding or reranking model;
-- a bundled MCP server;
-- connector credentials;
+- a bundled vector database, embedding model, or reranker;
+- a bundled Graphify server or Obsidian application plugin;
+- credentials or secret values;
+- mandatory external memory;
 - automatic indexing of user data;
-- background updates;
-- silent code replacement;
-- publication or deployment actions.
+- a background daemon;
+- silent installation or server exposure;
+- automatic remote upload;
+- tag, package publication, deployment, or marketplace submission.
 
-These exclusions preserve security, host portability, token discipline, and
-reproducibility.
+## Known limitations
 
-## Known limitation
-
-EV-50 through EV-65 are structurally GREEN and supported by local unit and
-runtime tests, but they have not yet received independent cold-session
-behavioral transcripts. Hypertaks v4.4.0 must therefore not be labeled
-`BEHAVIORALLY CERTIFIED` until that evidence exists.
+- Obsidian integration is an approved Vault filesystem destination, not
+  application-level integration.
+- Real Graphify behavior depends on a capability verified in the active host;
+  automated tests use runtime executors and direct-search fallback rather than
+  claiming universal cross-host support.
+- EV-50 through EV-88 do not yet have fresh independent cold-session behavioral
+  transcripts for the v4.5.0 candidate.
+- Behavioral certification remains pending after merge.
 
 ## Final implementation status
 
-**IMPLEMENTATION COMPLETE**
+**IMPLEMENTATION COMPLETE, FINAL CI REQUIRED**
 
-The repository is suitable for packaging as Hypertaks v4.4.0 Release Candidate.
-Stable behavioral certification remains a separate evidence-producing work
-item, not an assumption.
+The candidate becomes merge-ready as a release candidate only when the complete
+GitHub Actions workflow passes on the exact final head commit. Stable behavioral
+certification remains a separate evidence-producing work item.
