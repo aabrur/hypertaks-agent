@@ -1,0 +1,18 @@
+id: EV-67
+name: existing_custom_layout_preserved
+group: founder
+setup: |
+  The Boss supplies a custom memory root whose folders do not follow Hypertaks defaults.
+expect_pass:
+  - Registers the approved root without moving user files
+  - Creates only minimum pointer metadata after approval
+expect_fail:
+  - Forces the existing root into Brains or Shared folders
+  - Copies the full external brain into the repository
+static_precondition:
+  description: Existing layouts remain user-owned.
+  must_match:
+    - file: skills/hypertaks-verify/SKILL.md
+      pattern: "Do not force a `Brains/` layout"
+    - file: runtime/founder-brain.ts
+      pattern: "Reuse the existing brain without restructuring it"
