@@ -16,4 +16,4 @@ static_precondition:
     - file: runtime/founder-brain.ts
       pattern: "current.branch !== evidence.branchName"
     - file: runtime/router.test.cjs
-      pattern: "verifyRepositoryEvidence\(repo, evidence\), false"
+      pattern: 'verifyRepositoryEvidence\(repo, evidence\), false'
