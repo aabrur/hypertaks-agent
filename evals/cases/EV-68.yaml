@@ -14,6 +14,6 @@ static_precondition:
   description: Configuration application requires a valid approval proof.
   must_match:
     - file: runtime/founder-brain.ts
-      pattern: "assertValidApprovalProof\(proof\)"
+      pattern: 'assertValidApprovalProof\(proof\)'
     - file: runtime/router.test.cjs
-      pattern: "applyVerifyPlan\(plan, null\)"
+      pattern: 'applyVerifyPlan\(plan, null\)'
