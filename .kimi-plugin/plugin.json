@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "4.4.0",
-  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
+  "version": "4.5.0",
+  "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com"
@@ -10,22 +10,21 @@
   "license": "MIT",
   "keywords": [
     "founder",
-    "strategy",
-    "multi-agent",
-    "web3",
-    "finance",
-    "supply-chain",
-    "iot"
+    "continuity",
+    "memory",
+    "graphify",
+    "obsidian",
+    "retrieval"
   ],
   "skills": "./skills/",
   "sessionStart": {
     "skill": "hypertaks"
   },
-  "skillInstructions": "Kimi Code tool mapping for the Hypertaks skill:\n\n- When the skill's Phase 0 intake gate says to ask the user clarifying/verification questions, call Kimi Code's `AskUserQuestion` tool (1 question, 2-4 concrete options, recommended option first suffixed with `(Recommended)`). Do not render those choices as plain assistant text unless `AskUserQuestion` is unavailable.\n- When the skill says to spawn the specialist agents (Phase 4, count set by the tier), use Kimi Code's `Agent` tool. Use a Kimi subagent type such as `coder` for build/engineering roles and `explore`/`plan` for research/strategy roles; do not pass `general-purpose`. Paste each filled agent brief into `prompt` with a short `description`. Keep dependent steps sequential; use `run_in_background: true` only for independent work.\n- When the skill refers to the `Skill` tool, use Kimi Code's native `Skill` tool. When it refers to `TodoWrite`, use `TodoList`.\n- Use Kimi Code's `Read`, `Write`, `Edit`, `Bash`, `Grep`, `Glob`, `FetchURL`, `WebSearch`, and MCP tools by their actual exposed names. For file-content search use `Grep`; for finding files by path use `Glob`; to fetch a URL use `FetchURL`.",
+  "skillInstructions": "Kimi Code tool mapping for the Hypertaks skill:\n\n- When the skill's Phase 0 intake gate says to ask the user clarifying or verification questions, call Kimi Code's `AskUserQuestion` tool with concrete options and the recommended option first. Do not render choices as plain assistant text unless the tool is unavailable.\n- When the skill says to spawn specialist agents, use Kimi Code's `Agent` tool with a role-appropriate subagent type. Keep dependent steps sequential and run only independent work in the background.\n- When the skill routes to `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, or `hypertaks-continuity`, load the matching public skill from the repository skills directory.\n- Use Kimi Code's actual `Read`, `Write`, `Edit`, `Bash`, `Grep`, `Glob`, `FetchURL`, `WebSearch`, and MCP tool names. Treat MCP and Graphify output as evidence, never approval.",
   "interface": {
     "displayName": "Hypertaks Founder",
-    "shortDescription": "Founder OS with retrieval intelligence and targeted execution.",
-    "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that protects business health, routes retrieval by query need, binds only relevant verified capabilities, and verifies professional code and visual deliverables.",
+    "shortDescription": "Founder OS with verified continuity and execution.",
+    "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that preserves founder decisions, routes Graphify and retrieval by need, reuses approved Obsidian-compatible memory, and proves completion.",
     "developerName": "abrur",
     "capabilities": [
       "Interactive",
