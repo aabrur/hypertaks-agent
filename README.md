@@ -1,366 +1,418 @@
 <div align="center">
 
-# 🧭 Hypertaks
+# Hypertaks
 
 ### Founder Operating System for AI coding agents
 
-**Turns your agent into the *Hypertaks Founder*** - an accountable operating
-protocol that evaluates requests against business health, protects the Boss's
-objective when a proposed method is harmful, and leads a dynamically tiered
-team of specialist agents to ship the work.
+**Hypertaks turns an AI agent into a founder-grade operating partner that
+frames the real objective, challenges harmful methods, coordinates specialist
+work, preserves verified founder context, and proves whether the work is done.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.4.0-blue)
-![Cross--Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
+![Version](https://img.shields.io/badge/version-4.5.0-blue)
+![Cross-Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
 ![Release Candidate](https://img.shields.io/badge/status-Release%20Candidate-f3a712)
 
-**Execution profiles:** CORE (small models) / FULL (frontier). See [SKILL-core.md](skills/hypertaks/SKILL-core.md).
+**Execution profiles:** [CORE](skills/hypertaks/SKILL-core.md) for smaller
+models and FULL through [SKILL.md](skills/hypertaks/SKILL.md) for frontier
+agents.
 
 </div>
 
 ---
 
-> **Hypertaks** = *"A founder who owns a library of more than 1,400
-> books, knows exactly which book to consult for this issue, and has a
-> strict SOP: gate → frame → roles → equip → produce → integrate -
-> six phases (0–5)."*
+## What Hypertaks is
 
-**Domains covered:** business strategy, full-spectrum engineering (web,
-backend, mobile, data, and **deep Solidity/Web3 smart contracts**),
-marketing, copywriting, finance, ERP, supply chain, supply chain finance,
-and IoT.
+Hypertaks is a portable operating protocol for founder-shaped work across
+business strategy, software engineering, marketing, finance, ERP, supply chain,
+smart contracts, data, design, and IoT.
 
-Hypertaks is an operating protocol and decision discipline. The Boss owns the
-business and remains the final human authority. The Hypertaks Founder owns the
-quality, integration, risk awareness, and long-term reasoning of the work, and
-manages specialist agents as an internal team.
+The Boss remains the final human authority. The Hypertaks Founder owns task
+framing, contract integrity, specialist coordination, capability relevance,
+evidence quality, founder continuity, risk disclosure, and final integration.
 
----
+Hypertaks is not a hosted model, autonomous legal entity, mandatory memory
+service, or bundled agent runtime. It runs inside the AI agent and tools the user
+already selected.
 
-## 🏆 Why Hypertaks
+## Why v4.5.0 matters
 
-The figure below is a repository inventory, generated from tracked files and
-defined entries. It is not a quality score or benchmark.
+Version 4.5.0 adds the **Founder Brain and Continuity System**.
 
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_1.png?raw=true" alt="Hypertaks v4.4.0 repository inventory" width="850">
-</div>
+A useful founder-grade agent must do more than answer one prompt well. It should
+remember approved decisions, preserve why they were made, distinguish facts
+from inference, resume from real repository state, pass work to another agent,
+and reject unsupported claims of completion.
 
----
+Hypertaks 4.5.0 adds that capability without replacing its Founder Operating
+System identity with a generic memory layer.
 
-## 📈 What changed in 4.4.0
+### Major additions
 
-Version 4.4.0 adds five coordinated layers:
-
-1. **Retrieval Intelligence Router** - exact, semantic, mixed, structured,
-   small-corpus, and unavailable query classes route to direct, keyword,
-   vector, hybrid, or fallback paths. Metadata scope, exact-match protection,
-   fusion, reranking, independent metrics, and evidence packs are explicit.
-2. **Contract Integrity Gate** - the contract preserves the original request,
-   desired outcome, proposed method, supplied evidence, missing data, process,
-   destination, validation evidence, and approval mode. Build and external
-   effects require a T1 approval that identifies the contract ID.
-3. **Professional Execution Profiles** - Python, Matplotlib, TypeScript, UI/UX,
-   and image generation have separate evidence requirements and precision
-   boundaries.
-4. **Visual Necessity Router** - visuals are classified as required,
-   recommended, optional, or not needed, then validated against source data or
-   the approved creative brief.
-5. **Automatic Update Delivery** - native marketplace records target the
-   canonical repository, while a dependency-free managed-checkout updater
-   provides a fast-forward-only fallback for linked skill installations.
-
-The plugin also ships a strict TypeScript reference router, a standard-library
-Python retrieval evaluator, a Matplotlib report generator, and EV-50 through
-EV-65. The structural inventory now contains 65 case definitions. Static GREEN
-still proves only that a behavior is represented in the files.
-
-### Release evidence status
-
-The last Boss-confirmed behavioral certification remains the 4.3.0 ledger:
-**43/49 Behavioral PASS**, **6 documented non-PASS**, and **49/49 Static
-GREEN**. Version 4.4.0 changes behavior and adds 16 cases, so that historical
-ledger is not presented as certification of this release. The 4.4.0 package is
-a release candidate until fresh independent behavioral runs are recorded.
-
-"Behaviorally Certified" remains the historical repository release-gate label
-for the exact certified commit. It is not a formal third-party certification
-and does not guarantee security or outcomes.
-
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_2.png?raw=true" alt="Historical Hypertaks 4.3.0 behavioral release gate status" width="850">
-</div>
-
-The current eval inventory includes retrieval, contract, execution, and visual
-groups in addition to the previous security, transaction, quantitative,
-Founder, and capability coverage:
-
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_4.png?raw=true" alt="Current behavioral eval case distribution by group" width="850">
-</div>
+- exactly five public Hypertaks skills;
+- discovery and reuse of an existing main brain or shared agent memory;
+- evidence-backed agent-private, project, and shared memory;
+- optional Obsidian Vault storage owned by the user;
+- optional Graphify relationship and impact analysis;
+- Git-aware checkpoint, resume, and cross-agent handoff;
+- proof of done based on current tests and acceptance evidence;
+- approved-root path containment, atomic writes, and secret protection;
+- EV-66 through EV-88 for founder brain and continuity behavior.
 
 ---
 
-## ⚙️ The Mandatory Loop - Six Phases (0–5)
+## Five public skills
 
-Every task - Lite or Hyper - runs through the same six phases, from Phase 0
-(the intake gate) to Phase 5 (integrate & deliver). The loop never
-disappears, it only scales: light tasks move through it fast, heavy tasks
-spawn more agents inside it.
+Hypertaks exposes exactly five public entry points.
 
-<div align="center">
-<img src="https://github.com/aabrur/hypertaks-agent/blob/main/Figure_3.png?raw=true" alt="Hypertaks mandatory phase-loop diagram" width="850">
-</div>
+| Skill | Purpose |
+|---|---|
+| `/hypertaks` | Main Founder Operating System flow for normal work |
+| `/hypertaks-verify` | Verify project, brain, shared memory, storage, Graphify, and Obsidian configuration |
+| `/hypertaks-brain` | Inspect, record, revalidate, correct, promote, demote, or archive founder memory |
+| `/hypertaks-graph` | Query code relationships and impact through verified Graphify capabilities or direct search |
+| `/hypertaks-continuity` | Checkpoint, resume, handoff, reconcile, status, and proof of done |
 
-## 🔒 Five hard rules
+The main `/hypertaks` skill remains the default entry point. Users do not need
+to memorize the other four commands. They can invoke them directly when focused
+control is useful.
 
-1. **Intake gate first, sized to the task** - Nano uses a zero-sized gate;
-   Lite/Standard use Express and Prime/Hyper use Deep. Build work begins only
-   after the request and permissions are explicit.
-2. **Dynamic Agent Allocation** - the gate assesses the task into a tier
-   that fixes the agent count:
-
-   | Tier | Agents | Typical task |
-   |------|--------|--------------|
-   | ⚪ Nano | 0 | a single factual answer - no contract, no team (escalates the moment anything must be built or decided) |
-   | 🟢 Lite | 1 | typo fix, one copy tweak, follow-up inside a confirmed contract |
-   | 🔵 Standard | 3 | 2–3 domains, one deliverable |
-   | 🟣 Prime | 5 | classic founder-shaped cross-domain work |
-   | 🔴 Hyper | 6–10+ | multi-workstream programs (launches, company-wide diagnosis) |
-   | ⚫ Omega | 10+ | multi-quarter programs with human go/no-go gates (needs explicit framing at this scale) |
-
-   The tier is set by a **printed 7-factor score**, not by a hunch, and it can be
-   *de-escalated* mid-run if the task proves smaller. The table in
-   `skills/hypertaks/SKILL.md` is the canonical one; this is a copy for readers.
-
-3. **Retrieval and evidence relevance** - Hypertaks classifies the information
-   need before selecting direct, keyword, vector, hybrid, fusion, or reranking.
-   Retrieval quality is measured independently from generation and every
-   material route returns an evidence pack.
-
-4. **Capability relevance** - Hypertaks derives need before discovery, rejects
-   irrelevant or over-privileged capabilities, and binds only verified host
-   skills, native tools, MCP tools, and connectors needed by the approved work.
-   Nano performs no registry scan or update check for harmless local work.
-
-5. **No silent deviation** - tier, gate mode, and assumptions are announced
-   in the task contract; frameworks must be delivered in their defined
-   output shapes (a rated Five Forces table, an ERRC grid, a 6M fishbone
-   tree - not just the name); every deliverable ends with a compliance
-   footer and a work log.
+A repository validator rejects a missing command, duplicate command, or sixth
+public Hypertaks skill.
 
 ---
 
-## ⚡ Lazy-loaded, not bloated
+## Founder Operating System loop
 
-The 1,400+ item knowledge base and reference docs are **grepped by keyword
-in Phase 3**, never loaded wholesale, and reference reading is conditional
-by tier. How much that saves versus loading everything up front is **not
-measured** - the figure this section used to quote compared Hypertaks
-against a strawman that loaded the entire knowledge base, which nothing
-does. Measured numbers will come from [`evals/`](evals/), or they will not
-be claimed.
+Every meaningful task follows the same six-phase operating loop:
 
----
-
-## 📚 Frameworks
-
-**Core** (full applied how-tos with mandatory output shapes): Porter's Five
-Forces · SWOT/TOWS · Pareto (80/20) · Fishbone (Ishikawa) · Blue Ocean (ERRC)
-· Red Apples & Bad Barrels · Theory of Constraints (bottleneck) · SCOR
-supply chain · Supply Chain Finance · ERP · Smart contracts · IoT.
-
-**Extended:** [`references/knowledge-base.md`](skills/hypertaks/references/knowledge-base.md)
-is a 1,400+ item encyclopedia of theories, methods, frameworks, and
-workflows across business, learning, science, and technology (JTBD, Kano,
-RICE, Cynefin, OKR, PESTLE, DDD, MLOps, EIP standards, sales methodologies,
-mental models, and more). Agents route to it by keyword instead of loading the
-whole catalog.
-
-**Retrieval and execution:**
-[`02-retrieval-and-evidence.md`](skills/hypertaks/references/02-retrieval-and-evidence.md)
-selects direct, keyword, vector, hybrid, fusion, reranking, metrics, and fallback.
-[`03-professional-execution.md`](skills/hypertaks/references/03-professional-execution.md)
-defines Python, Matplotlib, TypeScript, UI/UX, and image-generation evidence.
-[`04-visual-delivery.md`](skills/hypertaks/references/04-visual-delivery.md)
-routes required, recommended, optional, and unnecessary visuals.
-
----
-
-## 🚀 Install
-
-This repo is a cross-agent plugin. Every agent loads the single skill under
-[`skills/hypertaks`](skills/hypertaks); each agent just has its own way of
-discovering it. Install per agent below - everyone runs their own flow, so
-no particular workspace layout is assumed.
-
-### Update paths
-
-| Installation | Future release path | User action after initial setup |
-|---|---|---|
-| Host marketplace or plugin manager | Host-native update when that host and user or team policy enable it | Reload or start a new session when the host requires it |
-| Managed Git checkout + symlink/junction | `scripts/update_hypertaks.py` fast-forwards a verified clean `origin/main` checkout | Opt in once to an existing scheduler or host automation; resolve any blocked checkout state |
-| Copied or archived skill directory | No automatic channel can reach the copy | Migrate once to a marketplace install or managed checkout |
-
-<details open>
-<summary><strong>Claude Code</strong></summary>
-
+```text
+Phase 0  Intake and verify
+Phase 1  Frame the objective and feasibility
+Phase 2  Pick the required specialist roles
+Phase 3  Equip the smallest relevant capability set
+Phase 4  Produce the work
+Phase 5  Integrate, verify, and deliver
 ```
+
+The loop scales by task complexity:
+
+| Tier | Agents | Typical work |
+|---|---:|---|
+| Nano | 0 | One factual answer with no build, decision, or durable state |
+| Lite | 1 | Small focused correction or follow-up |
+| Standard | 3 | Bounded multi-discipline deliverable |
+| Prime | 5 | Founder-shaped cross-domain work |
+| Hyper | 6-10+ | Multi-workstream program |
+| Omega | 10+ | Long-running program with human go or no-go gates |
+
+Harmless Nano work creates no brain, pointer, checkpoint, graph job, registry
+scan, or update check.
+
+---
+
+## Founder judgment
+
+Hypertaks separates the Boss's objective from the proposed method.
+
+It protects customer value, trust, cash flow, runway, margin, product quality,
+operational capacity, team health, compliance, reputation, strategy, and
+long-term growth. When the proposed method materially damages the objective,
+Hypertaks states the conflict, explains the consequence, and proposes a safer
+path.
+
+The Boss remains the final authority unless system policy, permission, legal,
+security, or irreversible-action rules block execution.
+
+---
+
+## Founder Brain
+
+Founder memory is structured evidence, not hidden authority.
+
+### Memory scopes
+
+```text
+AgentPrivate  Temporary or agent-specific context
+Project       Verified project facts, decisions, risks, and preferences
+Shared        Cross-agent facts or Boss-approved decisions
+```
+
+Shared memory accepts only:
+
+1. a repository fact verified against the active repository, branch, commit,
+   tracked path, and content hash; or
+2. a Boss-approved decision whose message and contract match a valid T1
+   approval proof.
+
+Model inference remains `INFERRED`. Missing evidence remains `UNVERIFIED`.
+Changed repository evidence becomes stale or invalidated rather than silently
+remaining true.
+
+Memory and Graphify output cannot approve actions, expand scope, grant
+permissions, or override current repository evidence.
+
+### User-owned destinations
+
+`/hypertaks-verify` can configure:
+
+- project-local storage;
+- an explicit external local folder;
+- an existing Obsidian Vault;
+- a separate local Git repository;
+- a verified MCP memory capability;
+- session-only memory with no persistence.
+
+Existing custom brains remain user-owned. Hypertaks references them through a
+project pointer and does not copy or reorganize the existing structure.
+
+A new default namespace uses:
+
+```text
+Brains/<agent-name>/
+```
+
+Creation occurs only after an explicit preview and approval.
+
+---
+
+## Obsidian integration
+
+Obsidian is optional.
+
+Hypertaks 4.5.0 supports an approved Obsidian Vault as a user-owned filesystem
+destination. It validates the Vault root, respects the selected folder, and
+never modifies `.obsidian/`.
+
+This is not a claim of Obsidian application-level integration. The
+`obsidianmd/obsidian-releases` repository is a future distribution path for an
+optional visual plugin, not a memory API.
+
+---
+
+## Graphify integration
+
+Graphify is optional and is used only when relationships, architecture,
+dependencies, centrality, or change impact materially help the task.
+
+Supported routes are:
+
+1. a verified local stdio MCP executor;
+2. a verified shared HTTPS MCP endpoint with an authentication handle and
+   approved external boundary;
+3. a verified local command;
+4. direct repository search when Graphify is disabled or unavailable.
+
+Hypertaks never reports Graphify success unless a real executor, command, or
+direct search ran. Missing source metadata is `UNVERIFIED`. A branch or commit
+mismatch is `STALE`.
+
+Graphify results are evidence below the active Boss turn, workspace standards,
+approved contract, and current repository state.
+
+---
+
+## Continuity and proof of done
+
+A checkpoint records:
+
+- objective and active contract;
+- actual repository identity, branch, and commit;
+- changed files;
+- completed and pending work;
+- blockers and exact next action;
+- granted permissions;
+- tests with command, exit code, timestamp, and tested commit;
+- acceptance criteria with evidence.
+
+Resume reads Git state internally and rejects repository, branch, or commit
+mismatches.
+
+A handoff carries the smallest verified state another agent needs. It preserves
+permissions, blockers, risks, test status, and next action without dumping the
+raw transcript or raw secrets.
+
+Proof of done returns `DONE` only when current tests and acceptance evidence
+pass and no pending work or blocker remains. Otherwise it returns `NOT_DONE`
+with exact reasons.
+
+---
+
+## Security boundaries
+
+Hypertaks 4.5.0 enforces:
+
+- source-bound authority;
+- explicit permissions and contract activation;
+- fail-closed external-system capability binding;
+- canonical approved-root path containment;
+- strict agent names and record identifiers;
+- traversal, absolute-path, reserved-name, and symlink-escape rejection;
+- runtime pointer and checkpoint validation;
+- atomic persistence;
+- full-artifact secret scanning;
+- handoff redaction;
+- real Git-state verification;
+- no silent Graphify installation, server start, or remote upload.
+
+External side effects follow:
+
+```text
+PREPARE -> PREVIEW -> T1 APPROVAL -> COMMIT ONCE -> RECONCILE
+```
+
+A timeout is not proof of failure. Hypertaks reconciles before retrying.
+
+---
+
+## Retrieval, capability, and visual routing
+
+Hypertaks still includes the v4.4 systems:
+
+- Retrieval Intelligence Router for exact, semantic, mixed, structured,
+  small-corpus, and unavailable queries;
+- Capability Relevance Router for the smallest sufficient verified skill, tool,
+  MCP capability, or connector;
+- professional Python, Matplotlib, TypeScript, UI/UX, and image-generation
+  execution profiles;
+- Visual Necessity Router for required, recommended, optional, or unnecessary
+  visuals.
+
+Precise numbers use tables or charts before creative image generation. External
+systems fail closed unless the approved contract names the allowed boundary.
+Mutating operations require approval even when capability metadata is wrong.
+
+---
+
+## Install
+
+### Claude Code
+
+```text
 /plugin marketplace add aabrur/hypertaks-agent
 /plugin install hypertaks@hypertaks-marketplace
 ```
 
-For this third-party marketplace, enable auto-update once under
-`/plugin` -> **Marketplaces** -> **Hypertaks Marketplace**. Claude Code can
-then apply later manifest versions in the background. Reload plugins or start a
-new session to use the downloaded release.
-</details>
-
-<details>
-<summary><strong>Codex CLI</strong></summary>
+### Codex CLI
 
 ```bash
 codex plugin marketplace add aabrur/hypertaks-agent --ref main
 codex plugin add hypertaks@hypertaks-marketplace
 ```
 
-Codex stores Git-backed marketplace snapshots and installed plugins in a
-versioned cache. Current public documentation exposes
-`codex plugin marketplace upgrade hypertaks-marketplace`, but does not promise
-universal background replacement of an installed third-party plugin. Use the
-Plugins directory to verify the installed version after a marketplace refresh.
-</details>
+### Cursor
 
-<details>
-<summary><strong>Cursor</strong></summary>
-
-```
+```text
 /add-plugin hypertaks
 ```
 
-Or search for "hypertaks" in the marketplace. Automatic delivery is controlled
-by the supported public or team marketplace refresh policy; a local plugin
-directory is not an automatic update channel.
-</details>
+### Kimi Code
 
-<details>
-<summary><strong>Kimi Code</strong></summary>
-
-```
+```text
 /plugins install https://github.com/aabrur/hypertaks-agent
 ```
 
-Open the installed plugin in `/plugins` when Kimi shows an update badge, apply
-the update, then reload or start a new session. Marketplace discovery is
-automatic, while applying a third-party update remains host-controlled.
-</details>
-
-<details>
-<summary><strong>OpenCode</strong></summary>
-
-Follow [`.opencode/INSTALL.md`](.opencode/INSTALL.md) - add
-`"hypertaks@git+https://github.com/aabrur/hypertaks-agent.git"` to the
-`plugin` array in your `opencode.json`.
-</details>
-
-<details>
-<summary><strong>Pi</strong></summary>
+### Pi
 
 ```bash
 pi install git:github.com/aabrur/hypertaks-agent
 ```
-</details>
 
-<details>
-<summary><strong>OpenClaw / Hermes / any other agent</strong></summary>
+### OpenCode, OpenClaw, Hermes, and scanned-skill hosts
 
-These agents load skills from a skills directory they scan on startup - the
-location depends on *your* setup. Clone this repo and make
-`skills/hypertaks` visible through a symlink or junction to the managed
-checkout. Copying remains a legacy/manual path that needs one migration before
-future managed updates.
-See [`.openclaw/INSTALL.md`](.openclaw/INSTALL.md) and
-[`.hermes/INSTALL.md`](.hermes/INSTALL.md) for exact commands. The same
-generic approach works for any agent with a scanned skills folder.
-</details>
-
-### Automatic update policy
-
-Updates follow the installation path. A marketplace or plugin manager may
-apply a compatible release automatically only when its host and user or team
-policy permit it. A managed checkout may update unattended only after
-installation-time opt-in:
-
-```bash
-python scripts/update_hypertaks.py --check-only
-python scripts/update_hypertaks.py
-```
-
-The updater changes only a canonical, clean `main` checkout that can
-fast-forward to `origin/main`. Dirty, diverged, detached, wrong-remote,
-unreachable, or unreconciled states are reported as `blocked` without resetting
-or overwriting user work. Copied skill folders are never overwritten; migrate
-them once. Every future release must bump all synchronized manifest versions;
-same-version commits can remain cached by version-keyed hosts. A successful
-update affects the next host reload or session, not the session already
-running. The canonical internal contract is
-[`plugins-and-mcp.md`](skills/hypertaks/references/plugins-and-mcp.md#automatic-update-contract).
-
-### Manifest map
-
-| Agent | Manifest / install |
-|-------|--------------------|
-| Claude Code | `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` |
-| Codex | `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` |
-| Cursor | `.cursor-plugin/plugin.json` |
-| Kimi Code | `.kimi-plugin/plugin.json` |
-| OpenCode | `.opencode/INSTALL.md` (git-backed plugin spec) |
-| Pi | `.pi/extensions/hypertaks.ts` |
-| OpenClaw / Hermes / others | `.openclaw/INSTALL.md`, `.hermes/INSTALL.md` (generic copy/symlink) |
-| Cross-agent index | `.agents/plugins/hypertaks.json` |
+Use the platform instructions under `.opencode/`, `.openclaw/`, and `.hermes/`.
+A managed Git checkout exposed through a symlink or junction is preferred over
+copying the skill directory.
 
 ---
 
-## 💬 Usage
+## Usage
 
-Just address the founder:
+```text
+Hypertaks, verify this project and connect my existing main brain.
 
-- *"Hypertaks, fix the headline typo."* → **Lite** (Founder solo, Express gate)
-- *"Hypertaks, add a pricing table + its copy."* → **Standard** (Engineer, Copywriting, Integrator)
-- *"Hypertaks, why is our churn high?"* → **Prime** analysis lineup (Strategy, Finance, Marketing, Ops, Integrator)
-- *"Hypertaks, launch the product: contract + app + GTM + legal."* → **Hyper** (6–10+ agents, one per workstream)
+/hypertaks-brain inspect
 
-The skill asks its intake questions first, confirms a task contract that
-names the tier, then produces the tier's agents and delivers one
-founder-grade result ending with a compliance footer and work log.
+/hypertaks-graph impact runtime/router.ts
+
+/hypertaks-continuity checkpoint
+
+Hypertaks, resume the project and prove what remains unfinished.
+```
+
+Normal work can still begin with plain language:
+
+```text
+Hypertaks, fix this bug.
+Hypertaks, review this product decision.
+Hypertaks, build the feature after the contract is approved.
+Hypertaks, explain why the release is not done yet.
+```
 
 ---
 
-## 🗂️ Repo layout
+## Validation
 
+The GitHub Actions gate runs:
+
+```text
+python3 scripts/validate_skill.py
+python3 scripts/validate_public_skills.py
+python3 scripts/run_evals.py --check
+python3 scripts/run_evals.py --static
+python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
+python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
+python3 scripts/plot_retrieval_eval.py <report> <output-base>
+npm test
+python3 -m compileall scripts
+git diff --check origin/main...HEAD
 ```
+
+The structural inventory contains 88 eval definitions. Static GREEN and local
+runtime success are not behavioral certification.
+
+---
+
+## Release status
+
+Hypertaks 4.5.0 is a **Release Candidate** after the final merge gate passes.
+
+The historical 4.3.0 ledger remains 43/49 Behavioral PASS with 6 documented
+non-PASS harness cases. That evidence does not certify the changed v4.4 or v4.5
+behavior.
+
+Fresh independent behavioral runs are still required for EV-50 through EV-88,
+including real host skill discovery, Graphify capability behavior, approved
+Obsidian Vault behavior, and cross-agent continuity.
+
+No tag, package publication, marketplace submission, deployment, guaranteed
+security claim, or stable behavioral certification is implied by the source
+merge.
+
+---
+
+## Repository layout
+
+```text
 hypertaks-agent/
-├── skills/hypertaks/        # the skill (SKILL.md + references/ + assets/)
-├── .claude-plugin/          # Claude Code: plugin.json + marketplace.json
-├── .codex-plugin/           # Codex: plugin.json
-├── .cursor-plugin/          # Cursor: plugin.json
-├── .kimi-plugin/            # Kimi Code: plugin.json
-├── .openclaw/               # OpenClaw: INSTALL.md (generic)
-├── .hermes/                 # Hermes: INSTALL.md (generic)
-├── .opencode/               # OpenCode: INSTALL.md (git-backed plugin)
-├── .pi/extensions/          # Pi: hypertaks.ts extension
-├── .agents/plugins/         # cross-agent catalog record
-├── .github/                 # CI + contributing
-├── AGENTS.md  CLAUDE.md     # agent onboarding pointers
-└── LICENSE  README.md
+├── skills/hypertaks/             # Main Founder Operating System
+├── skills/hypertaks-verify/      # Environment and brain verification
+├── skills/hypertaks-brain/       # Evidence-backed founder memory
+├── skills/hypertaks-graph/       # Graphify and direct-search routing
+├── skills/hypertaks-continuity/  # Checkpoint, resume, handoff, proof of done
+├── runtime/                      # Strict TypeScript reference runtime
+├── evals/                        # EV-01 through EV-88
+├── scripts/                      # Validators, evaluators, reports, updater
+├── .claude-plugin/
+├── .codex-plugin/
+├── .cursor-plugin/
+├── .kimi-plugin/
+├── .agents/
+└── LICENSE
 ```
 
 ---
 
-<div align="center">
-
-## 📄 License
+## License
 
 [MIT](LICENSE) © abrur
-
-</div>
