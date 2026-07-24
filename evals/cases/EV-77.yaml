@@ -12,6 +12,6 @@ static_precondition:
   description: Inference status is explicit and cannot pass the shared gate.
   must_match:
     - file: runtime/founder-brain.ts
-      pattern: "input.inferred \? \"INFERRED\""
+      pattern: 'input.inferred \? "INFERRED"'
     - file: skills/hypertaks-brain/SKILL.md
       pattern: "Use `INFERRED` for model conclusions"
