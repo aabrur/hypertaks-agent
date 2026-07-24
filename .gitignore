@@ -41,6 +41,11 @@ env/
 .claude/
 .codex/
 .remember/
+.hypertaks/
+
+# Generated knowledge graphs
+**/graphify-out/
+**/graphify.json
 
 # Python / test caches
 __pycache__/
