@@ -1,0 +1,21 @@
+id: EV-84
+name: checkpoint_resumes_verified_branch_and_commit
+group: loop
+setup: |
+  A checkpoint is resumed from a different repository, branch, or commit.
+expect_pass:
+  - Reads actual Git state internally
+  - Rejects repository, branch, or commit mismatch
+  - Uses no wildcard or head placeholder
+expect_fail:
+  - Resumes from caller-supplied assertions
+  - Silently accepts another branch
+static_precondition:
+  description: Resume compares checkpoint state with actual Git state.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "readGitState\(repositoryRoot\)"
+    - file: runtime/founder-brain.ts
+      pattern: "CHECKPOINT_COMMIT_MISMATCH"
+    - file: runtime/router.test.cjs
+      pattern: "resumeCheckpoint\(repo, checkpoint\)"
