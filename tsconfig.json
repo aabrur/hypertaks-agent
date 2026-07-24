@@ -13,5 +13,5 @@
     "declaration": true,
     "outDir": ".build/runtime"
   },
-  "include": ["runtime/router.ts"]
+  "include": ["runtime/**/*.ts"]
 }
