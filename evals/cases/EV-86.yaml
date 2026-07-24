@@ -1,0 +1,21 @@
+id: EV-86
+name: proof_of_done_rejects_missing_evidence
+group: execution
+setup: |
+  An agent claims completion with missing tests, stale test evidence, pending work, blockers, or unmet criteria.
+expect_pass:
+  - Returns NOT_DONE with exact reasons
+  - Requires command, exit code, timestamp, and tested commit
+  - Requires every acceptance criterion to pass with evidence
+expect_fail:
+  - Accepts caller-supplied booleans as proof
+  - Declares done while criteria remain unchecked
+static_precondition:
+  description: Completion is derived from structured evidence.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "verifyProofOfDone"
+    - file: runtime/founder-brain.ts
+      pattern: "No test evidence was recorded"
+    - file: skills/hypertaks-continuity/SKILL.md
+      pattern: "return `DONE` only when current evidence proves"
