@@ -1,0 +1,20 @@
+id: EV-87
+name: conflicting_memories_fail_loudly
+group: founder
+setup: |
+  Two peer memory records make contradictory claims and neither has stronger current evidence.
+expect_pass:
+  - Surfaces both records and their provenance
+  - Requests Boss resolution or stronger repository evidence
+  - Silently chooses neither record
+expect_fail:
+  - Selects the newest or most convenient record without disclosure
+static_precondition:
+  description: The public brain skill defines explicit conflict handling.
+  must_match:
+    - file: skills/hypertaks-brain/SKILL.md
+      pattern: "conflict handling"
+    - file: skills/hypertaks-brain/SKILL.md
+      pattern: "correction"
+    - file: skills/hypertaks-brain/SKILL.md
+      pattern: "stale records, and conflicts"
