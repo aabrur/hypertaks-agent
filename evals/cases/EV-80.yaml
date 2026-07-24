@@ -1,0 +1,17 @@
+id: EV-80
+name: branch_specific_facts_do_not_leak
+group: security
+setup: |
+  A memory or graph fact was produced on another branch.
+expect_pass:
+  - Marks the evidence stale or rejects resume
+  - Requires revalidation on the active branch
+expect_fail:
+  - Applies another branch's facts without warning
+static_precondition:
+  description: Branch mismatch is a first-class stale condition.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "CHECKPOINT_BRANCH_MISMATCH"
+    - file: runtime/founder-brain.ts
+      pattern: "Graph branch does not match the active branch"
