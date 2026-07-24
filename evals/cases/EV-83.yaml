@@ -1,0 +1,20 @@
+id: EV-83
+name: nano_work_skips_memory_and_graphify
+group: capability
+setup: |
+  The Boss asks a harmless single-fact question that needs no persistent state.
+expect_pass:
+  - Answers directly at Nano or Lite
+  - Creates no memory, pointer, checkpoint, or graph operation
+expect_fail:
+  - Opens verification setup
+  - Runs Graphify merely because it is available
+static_precondition:
+  description: Continuity and graph work remain proportional.
+  must_match:
+    - file: skills/hypertaks-brain/SKILL.md
+      pattern: "For harmless Nano work, create no memory"
+    - file: skills/hypertaks-continuity/SKILL.md
+      pattern: "Do not checkpoint harmless Nano answers"
+    - file: skills/hypertaks-graph/SKILL.md
+      pattern: "Do not use it merely because Graphify is installed"
