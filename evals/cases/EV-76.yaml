@@ -12,6 +12,6 @@ static_precondition:
   description: Verification depends on reproducible evidence.
   must_match:
     - file: runtime/founder-brain.ts
-      pattern: "let status: MemoryStatus = input.inferred \? \"INFERRED\" : \"UNVERIFIED\""
+      pattern: 'let status: MemoryStatus = input.inferred \? "INFERRED" : "UNVERIFIED"'
     - file: runtime/founder-brain.ts
       pattern: "verifyRepositoryEvidence"
