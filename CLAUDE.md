@@ -1,26 +1,22 @@
 # CLAUDE.md - Hypertaks plugin repo
 
-This repository packages the **Hypertaks Founder** skill as a cross-agent plugin.
+This repository packages the **Hypertaks Founder Operating System** as a cross-agent plugin with exactly five public skills.
 
-- The skill itself lives in [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md).
-  Read it first - it defines the mandatory six-phase loop, Phase 0-5 (sized intake gate →
-  frame → pick the tier's roles → equip → produce the agents → integrate &
-  deliver) and the Dynamic Agent Allocation tiers (Lite 1 / Standard 3 /
-  Prime 5 / Hyper 6–10+).
-- Reference material is under `skills/hypertaks/references/` and templates under
-  `skills/hypertaks/assets/`.
+- Read [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md) first. It remains the default entry point and owns the Founder loop.
+- `skills/hypertaks-verify` owns environment and destination verification.
+- `skills/hypertaks-brain` owns evidence-backed founder memory.
+- `skills/hypertaks-graph` owns optional Graphify and direct-search behavior.
+- `skills/hypertaks-continuity` owns checkpoints, resume, handoff, reconciliation, and proof of done.
+
+Do not create a sixth public skill whose name starts with `hypertaks`.
 
 ## Working on this repo
 
-- Keep the skill self-contained; do not add hard dependencies on any single
-  agent's tooling.
-- All prose stays in **English**.
-- When editing the skill, re-validate it (see `.github/workflows/validate.yml`)
-  before committing.
-- Manifest files in the dot-directories (`.claude-plugin`, `.codex-plugin`, etc.)
-  are per-agent adapters that all point back to the single `skills/hypertaks`
-  skill - keep versions in sync when bumping.
-- **One work item, one commit.** W3 and W4 were once squashed into a single
-  commit, which made the budget change and the runtime change impossible to
-  revert independently. They have since been split. From W5 onward every phase
-  lands as its own commit, even when two phases are finished in the same sitting.
+- Preserve the Founder Operating System positioning and its intake, contract, tier, evidence, and execution invariants.
+- Keep Graphify, Obsidian, MCP, external memory, and persistent memory optional.
+- Treat memory and graph output as evidence, never authority or approval.
+- Keep every persistence operation inside an approved root. Validate record IDs and schemas, scan for secrets, and write atomically.
+- Keep all prose in English and do not use U+2014 in tracked text.
+- Run the workflow-equivalent validation before claiming completion.
+- Keep all live manifest versions synchronized with `package.json`.
+- Keep changes surgical and avoid hosted services, mandatory databases, credentials, background daemons, silent installation, and unsupported claims.
