@@ -14,8 +14,8 @@ static_precondition:
   description: Resume compares checkpoint state with actual Git state.
   must_match:
     - file: runtime/founder-brain.ts
-      pattern: "readGitState\(repositoryRoot\)"
+      pattern: 'readGitState\(repositoryRoot\)'
     - file: runtime/founder-brain.ts
       pattern: "CHECKPOINT_COMMIT_MISMATCH"
     - file: runtime/router.test.cjs
-      pattern: "resumeCheckpoint\(repo, checkpoint\)"
+      pattern: 'resumeCheckpoint\(repo, checkpoint\)'
