@@ -1,3 +1,5 @@
+export * from "./founder-brain";
+
 export type QueryClass =
   | "none"
   | "exact"
@@ -106,8 +108,8 @@ export interface ContractActivationInput {
 }
 
 export type ContractActivation =
-  | { readonly active: true; readonly evidence: string }
-  | { readonly active: false; readonly reason: string };
+  | { readonly active: true; readonly evidence: string; readonly contractId: string }
+  | { readonly active: false; readonly reason: string; readonly contractId: string };
 
 function assertNever(value: never): never {
   throw new Error(`Unhandled variant: ${String(value)}`);
@@ -205,15 +207,15 @@ export function classifyRetrieval(signals: QuerySignals): RetrievalDecision {
 
 export function selectVisual(signals: VisualSignals): VisualDecision {
   let type: VisualType = "none";
-  if (signals.creativeImageNative) type = "generated_image";
-  else if (signals.interactionDesign) type = "ui_mockup";
+  if (signals.exactValues) type = "table";
+  else if (signals.orderedTrend || signals.distribution || signals.numericRelationship || signals.categoricalComparison) type = "chart";
   else if (signals.entityRelationships) type = "erd";
   else if (signals.temporalDependencies) type = "timeline";
   else if (signals.branchingDecisionLogic) type = "decision_tree";
   else if (signals.systemTopology) type = "architecture_diagram";
   else if (signals.processFlow) type = "process_diagram";
-  else if (signals.orderedTrend || signals.distribution || signals.numericRelationship || signals.categoricalComparison) type = "chart";
-  else if (signals.exactValues) type = "table";
+  else if (signals.interactionDesign) type = "ui_mockup";
+  else if (signals.creativeImageNative) type = "generated_image";
 
   if (type === "none") {
     return { status: "not_needed", type, reason: "Text or code is clearer than a visual." };
@@ -227,6 +229,10 @@ export function selectVisual(signals: VisualSignals): VisualDecision {
   return { status: "optional", type, reason: "The visual is primarily presentational." };
 }
 
+function operationHasEffect(operation: Operation): boolean {
+  return operation !== "read";
+}
+
 export function bindCapabilities(
   needs: readonly CapabilityNeed[],
   capabilities: readonly CapabilityDescriptor[],
@@ -237,14 +243,15 @@ export function bindCapabilities(
       if (candidate.availability !== "verified") return false;
       if (!candidate.categories.includes(need.category)) return false;
       if (!candidate.operations.includes(need.operation)) return false;
-      if (!need.allowSideEffects && candidate.side_effect !== "none") return false;
+      const mutating = operationHasEffect(need.operation) || candidate.side_effect !== "none";
+      if (mutating && !need.allowSideEffects) return false;
+      if (mutating && need.approvalGranted !== true) return false;
       if (candidate.approval_required && need.approvalGranted !== true) return false;
       if (candidate.authentication === "missing") return false;
-      if (
-        candidate.external_system !== null &&
-        need.allowedExternalSystems !== undefined &&
-        !need.allowedExternalSystems.includes(candidate.external_system)
-      ) return false;
+      if (candidate.external_system !== null) {
+        if (need.allowedExternalSystems === undefined) return false;
+        if (!need.allowedExternalSystems.includes(candidate.external_system)) return false;
+      }
       return true;
     });
     candidates.sort((left, right) => {
@@ -266,11 +273,15 @@ export function bindCapabilities(
 
 export function activateContract(input: ContractActivationInput): ContractActivation {
   if (!input.isBossTurn) {
-    return { active: false, reason: "Approval did not originate in a T1 Boss turn." };
+    return { active: false, reason: "Approval did not originate in a T1 Boss turn.", contractId: input.contractId };
   }
   const normalized = input.bossMessage.trim();
   if (!normalized) {
-    return { active: false, reason: "Approval message is empty." };
+    return { active: false, reason: "Approval message is empty.", contractId: input.contractId };
+  }
+  const lower = normalized.toLowerCase();
+  if (/\b(?:not approved|do not proceed|don't proceed|never proceed|not authorized|reject(?:ed)?)\b/u.test(lower)) {
+    return { active: false, reason: "The Boss message contains explicit negation or rejection.", contractId: input.contractId };
   }
   if (input.requiresMutationOrExternalEffect) {
     const expected = `APPROVE ${input.contractId}`.toUpperCase();
@@ -279,16 +290,15 @@ export function activateContract(input: ContractActivationInput): ContractActiva
       return {
         active: false,
         reason: "Build or external-effect approval must be the canonical contract-ID signature.",
+        contractId: input.contractId,
       };
     }
-    return { active: true, evidence: expected };
+    return { active: true, evidence: expected, contractId: input.contractId };
   }
-  const advisoryWords = new Set(["yes", "approved", "approve", "go", "proceed"]);
-  const tokens = normalized.toLowerCase().split(/\s+/u);
-  if (tokens.some((token) => advisoryWords.has(token))) {
-    return { active: true, evidence: normalized };
+  if (/^(?:yes|approved|approve|go|proceed)(?:[.!])?$/iu.test(normalized)) {
+    return { active: true, evidence: normalized, contractId: input.contractId };
   }
-  return { active: false, reason: "The Boss message is not an explicit affirmative." };
+  return { active: false, reason: "The Boss message is not an explicit standalone affirmative.", contractId: input.contractId };
 }
 
 export function describeRoute(route: RetrievalRoute): string {

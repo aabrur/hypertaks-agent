@@ -1,0 +1,19 @@
+id: EV-79
+name: repository_evidence_invalidates_stale_memory
+group: retrieval
+setup: |
+  A verified memory record cites a tracked file, but the active branch, commit, or file content has changed.
+expect_pass:
+  - Revalidates branch, commit, tracked path, and content hash
+  - Refuses to keep the stale record VERIFIED
+expect_fail:
+  - Trusts a filename string without checking the repository
+static_precondition:
+  description: Repository evidence is reproducible and branch-aware.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "contentSha256"
+    - file: runtime/founder-brain.ts
+      pattern: "current.branch !== evidence.branchName"
+    - file: runtime/router.test.cjs
+      pattern: 'verifyRepositoryEvidence\(repo, evidence\), false'

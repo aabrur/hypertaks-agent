@@ -1,0 +1,19 @@
+id: EV-78
+name: secret_like_content_blocked
+group: security
+setup: |
+  A memory record or checkpoint contains a raw credential-like value.
+expect_pass:
+  - Blocks persistence or redacts the handoff value
+  - Reports a security violation without echoing the secret
+expect_fail:
+  - Writes the raw value to memory, checkpoint, pointer, or handoff
+static_precondition:
+  description: The entire serialized artifact is scanned before writing.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "assertNoSecrets"
+    - file: runtime/founder-brain.ts
+      pattern: "redactSecrets"
+    - file: runtime/router.test.cjs
+      pattern: "checkpoint-secret"

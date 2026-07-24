@@ -1,0 +1,21 @@
+id: EV-66
+name: existing_main_brain_reused
+group: founder
+setup: |
+  The Boss provides an existing main-brain root and asks verification to reuse it.
+expect_pass:
+  - Produces a preview before writing
+  - Reuses the existing root without restructuring it
+  - Requires T1 approval before the pointer is written
+expect_fail:
+  - Silently creates a replacement brain
+  - Rewrites the existing layout
+static_precondition:
+  description: Verification must separate preview from approved application.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "buildVerifyPlan"
+    - file: runtime/founder-brain.ts
+      pattern: "applyVerifyPlan"
+    - file: skills/hypertaks-verify/SKILL.md
+      pattern: "reuse its current structure"

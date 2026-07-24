@@ -2,7 +2,7 @@ name: Validate skill & manifests
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/v450-founder-brain-continuity-remediated]
   pull_request:
 
 jobs:
@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Python dependencies
         run: pip install -r scripts/requirements-figures.txt
@@ -19,6 +21,9 @@ jobs:
 
       - name: Run skill validation
         run: python3 scripts/validate_skill.py
+
+      - name: Validate five public skills
+        run: python3 scripts/validate_public_skills.py
 
       - name: Check evaluation integrity
         run: python3 scripts/run_evals.py --check
@@ -41,3 +46,6 @@ jobs:
 
       - name: Compile Python scripts
         run: python3 -m compileall scripts
+
+      - name: Check pull request diff formatting
+        run: git diff --check origin/main...HEAD

@@ -1,0 +1,21 @@
+id: EV-75
+name: graphify_http_requires_https_auth_and_approval
+group: security
+setup: |
+  Shared Graphify HTTP mode is selected without a secure endpoint, authentication handle, or approved external boundary.
+expect_pass:
+  - Rejects missing or non-HTTPS endpoints
+  - Rejects missing authentication handles
+  - Requires a valid T1 approval proof before external execution
+expect_fail:
+  - Connects to a default unauthenticated endpoint
+  - Reports success without a real executor
+static_precondition:
+  description: Shared HTTP Graphify fails closed.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "GRAPHIFY_HTTP_REQUIRES_HTTPS_ENDPOINT"
+    - file: runtime/founder-brain.ts
+      pattern: "GRAPHIFY_HTTP_REQUIRES_AUTH_HANDLE"
+    - file: runtime/router.test.cjs
+      pattern: "mode: 'http_mcp'"

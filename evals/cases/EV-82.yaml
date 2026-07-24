@@ -1,0 +1,21 @@
+id: EV-82
+name: boss_approved_decision_promoted_safely
+group: security
+setup: |
+  A decision claims Boss approval and requests promotion to shared memory.
+expect_pass:
+  - Requires an opaque proof minted from the active contract approval
+  - Matches the decision message ID and contract ID to the proof
+  - Persists only the clean decision summary
+expect_fail:
+  - Lets a caller fabricate BossTurn or APPROVED fields
+  - Promotes tool output as a Boss decision
+static_precondition:
+  description: Shared decisions must match a registered approval proof.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "approvalRegistry"
+    - file: runtime/founder-brain.ts
+      pattern: "decision.bossEvidence.messageId !== input.proof.messageId"
+    - file: runtime/router.test.cjs
+      pattern: "promoteDecisionToShared"

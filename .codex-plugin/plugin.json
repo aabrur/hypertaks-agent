@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "4.4.0",
-  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
+  "version": "4.5.0",
+  "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com",
@@ -14,18 +14,17 @@
     "founder",
     "strategy",
     "multi-agent",
-    "solidity",
-    "web3",
-    "marketing",
-    "finance",
-    "supply-chain",
-    "iot"
+    "continuity",
+    "memory",
+    "graphify",
+    "obsidian",
+    "retrieval"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Hypertaks Founder",
-    "shortDescription": "Founder OS with retrieval intelligence and targeted execution.",
-    "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that protects business health, routes retrieval by query need, binds only relevant verified capabilities, and verifies professional code and visual deliverables.",
+    "shortDescription": "Founder OS with verified continuity and execution.",
+    "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that preserves founder decisions, routes retrieval and Graphify by need, reuses approved Obsidian-compatible memory, and verifies completion evidence.",
     "developerName": "abrur",
     "category": "Coding",
     "capabilities": [
@@ -34,8 +33,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Hypertaks, analyze why our churn is high.",
-      "Hypertaks, build a landing page and a smart contract for a new product."
+      "Hypertaks, verify this project and connect my main brain.",
+      "Hypertaks, resume the current project and prove what remains unfinished."
     ],
     "websiteURL": "https://github.com/aabrur/hypertaks-agent"
   }

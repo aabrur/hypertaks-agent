@@ -1,0 +1,21 @@
+id: EV-71
+name: project_and_obsidian_destinations_supported
+group: founder
+setup: |
+  One project selects project-local storage and another selects an explicit Obsidian Vault.
+expect_pass:
+  - Preserves the selected destination per project
+  - Validates an Obsidian Vault by its approved root
+  - Keeps Obsidian optional
+expect_fail:
+  - Forces every project into Obsidian
+  - Uses a hardcoded personal path
+static_precondition:
+  description: Verification supports explicit destination types.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "BrainDestinationType"
+    - file: runtime/founder-brain.ts
+      pattern: "INVALID_OBSIDIAN_VAULT"
+    - file: skills/hypertaks-verify/SKILL.md
+      pattern: "project-local storage"

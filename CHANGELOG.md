@@ -5,6 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.0] - 2026-07-25
+
+### Added
+- Four focused public skills alongside the main `/hypertaks` entry point:
+  `/hypertaks-verify`, `/hypertaks-brain`, `/hypertaks-graph`, and
+  `/hypertaks-continuity`.
+- A secure founder-continuity runtime with approved-root path containment,
+  strict record identifiers, runtime pointer validation, atomic persistence,
+  and full-artifact secret scanning.
+- Evidence-backed founder memory with agent-private, project, and shared scopes.
+- Repository evidence bound to the active repository, branch, commit, tracked
+  file, and content hash.
+- Boss decision promotion bound to an opaque approval proof minted from an
+  active T1 contract approval.
+- Git-aware checkpoints, resume validation, compact cross-agent handoffs, and a
+  proof-of-done gate based on test and acceptance evidence.
+- Optional Graphify routing for verified stdio MCP, shared HTTPS MCP, and local
+  command modes, plus an honest direct repository-search fallback.
+- Optional Obsidian Vault destination validation without modifying `.obsidian/`.
+- EV-66 through EV-88 for founder brain, storage boundaries, Graphify,
+  continuity, authority, secret handling, and backward compatibility.
+- A validator that enforces exactly five public Hypertaks skills.
+
+### Changed
+- Capability binding now fails closed for external systems unless the contract
+  names the allowed boundary.
+- Every mutating capability requires explicit approval even when its descriptor
+  incorrectly claims approval is unnecessary.
+- Numeric visual requirements take precedence over creative-image flags.
+- Advisory contract activation rejects negated approval language.
+- The TypeScript build includes every runtime module and uses Node type
+  definitions.
+- CORE guidance now routes founder memory, graph intelligence, verification,
+  and continuity without replacing the Founder Operating System identity.
+
+### Security
+- Memory identifiers can no longer escape an approved root.
+- Callers can no longer manufacture verified Boss approval for shared memory.
+- A filename string alone cannot verify a repository fact.
+- Checkpoints and handoffs reject or redact secret-like content.
+- Graphify cannot report success unless a real executor, local command, or
+  direct search ran.
+- Shared Graphify HTTP requires HTTPS, an authentication handle, and approved
+  external access.
+
+### Release evidence
+- Static validation and automated runtime evidence remain separate from
+  behavioral certification.
+- The release may be merged only after the complete GitHub Actions validation
+  workflow passes on the final candidate commit.
+- Fresh independent cross-host behavioral runs remain required before claiming
+  stable behavioral certification for the new v4.5.0 behaviors.
+
 ## [4.4.0] - 2026-07-22
 
 ### Added
@@ -99,7 +152,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Safety Kernel (P0)**: Introduced `references/00-security-kernel.md` for absolute authority binding (T0 > T1 > T2 > T3 > T4=T5=T6) and approval-source binding to close approval spoofing.
-- **State and Transactions**: Introduced `references/01-state-and-transactions.md` enforcing idempotency keys for external actions and PREPARE → PREVIEW → APPROVAL → COMMIT loop.
+- **State and Transactions**: Introduced `references/01-state-and-transactions.md` enforcing idempotency keys for external actions and PREPARE -> PREVIEW -> APPROVAL -> COMMIT loop.
 - **Domain Packs (Quantitative expansion)**: Added 12 routed domain packs (`D1` through `D12`) covering quantitative methods, economics, data, research, logistics, operations, trade, finance, software engineering, design/UX, engineering economy, and soft skills.
 - **CORE Execution Profile**: Added the 40-line `SKILL-core.md`, a reduced profile intended for smaller context windows.
 - **Behavioral Evals**: Expanded the suite to 38 case definitions, including missing-input (`DATA UNAVAILABLE`) complements.

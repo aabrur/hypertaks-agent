@@ -1,0 +1,23 @@
+id: EV-88
+name: existing_hypertaks_behavior_remains_intact
+group: execution
+setup: |
+  Run the established retrieval, capability, contract, visual, updater, and runtime checks after founder continuity is added.
+expect_pass:
+  - Existing evals remain structurally valid and statically green
+  - Existing runtime routing tests still pass
+  - Nano and Lite proportionality remain intact
+expect_fail:
+  - Founder continuity replaces the main Founder Operating System loop
+  - Existing retrieval or capability behavior regresses
+static_precondition:
+  description: The new runtime is exported from the existing router rather than replacing it.
+  must_match:
+    - file: runtime/router.ts
+      pattern: 'export \* from "./founder-brain"'
+    - file: runtime/router.ts
+      pattern: "classifyRetrieval"
+    - file: runtime/router.ts
+      pattern: "bindCapabilities"
+    - file: runtime/router.test.cjs
+      pattern: "runtime router tests passed"
