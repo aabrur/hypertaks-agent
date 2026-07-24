@@ -1,8 +1,8 @@
 {
   "name": "hypertaks",
   "displayName": "Hypertaks Founder",
-  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
-  "version": "4.4.0",
+  "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
+  "version": "4.5.0",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com"
@@ -12,11 +12,11 @@
   "license": "MIT",
   "keywords": [
     "founder",
-    "strategy",
-    "multi-agent",
-    "web3",
-    "finance",
-    "supply-chain"
+    "continuity",
+    "memory",
+    "graphify",
+    "obsidian",
+    "retrieval"
   ],
   "skills": "./skills/"
 }
