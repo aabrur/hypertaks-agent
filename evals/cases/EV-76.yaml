@@ -1,0 +1,17 @@
+id: EV-76
+name: memory_without_evidence_remains_unverified
+group: contract
+setup: |
+  An agent records a factual claim without repository evidence or Boss evidence.
+expect_pass:
+  - Marks the record UNVERIFIED
+  - Keeps it out of shared memory
+expect_fail:
+  - Marks the claim VERIFIED from wording alone
+static_precondition:
+  description: Verification depends on reproducible evidence.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "let status: MemoryStatus = input.inferred \? \"INFERRED\" : \"UNVERIFIED\""
+    - file: runtime/founder-brain.ts
+      pattern: "verifyRepositoryEvidence"
