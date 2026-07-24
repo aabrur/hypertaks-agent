@@ -1,0 +1,18 @@
+id: EV-72
+name: obsidian_path_outside_approved_root_rejected
+group: security
+setup: |
+  A memory write resolves outside the approved project or Vault root.
+expect_pass:
+  - Rejects traversal and absolute paths
+  - Rejects symlink escapes
+  - Writes nothing outside the approved root
+expect_fail:
+  - Creates or overwrites an arbitrary external file
+static_precondition:
+  description: Every persisted path uses the canonical containment utility.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "resolveWithinApprovedRoot"
+    - file: runtime/router.test.cjs
+      pattern: "PATH_OUTSIDE_APPROVED_ROOT"
