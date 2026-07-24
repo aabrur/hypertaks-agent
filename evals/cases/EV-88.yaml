@@ -14,7 +14,7 @@ static_precondition:
   description: The new runtime is exported from the existing router rather than replacing it.
   must_match:
     - file: runtime/router.ts
-      pattern: "export \* from \"./founder-brain\""
+      pattern: 'export \* from "./founder-brain"'
     - file: runtime/router.ts
       pattern: "classifyRetrieval"
     - file: runtime/router.ts
