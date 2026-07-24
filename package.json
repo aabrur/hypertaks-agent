@@ -1,7 +1,7 @@
 {
   "name": "hypertaks",
-  "version": "4.4.0",
-  "description": "Hypertaks Founder Operating System - contract integrity, retrieval intelligence, targeted host capabilities, and professional execution.",
+  "version": "4.5.0",
+  "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
   "homepage": "https://github.com/aabrur/hypertaks-agent#readme",
@@ -15,17 +15,13 @@
     "skill",
     "founder",
     "multi-agent",
-    "solidity",
-    "web3",
-    "strategy",
-    "finance",
-    "supply-chain",
-    "iot",
+    "continuity",
+    "memory",
+    "graphify",
+    "obsidian",
     "retrieval",
     "rag",
-    "hybrid-search",
     "typescript",
-    "matplotlib",
     "mcp"
   ],
   "files": [
@@ -50,6 +46,7 @@
     "test": "npm run typecheck && npm run build:runtime && npm run test:runtime"
   },
   "devDependencies": {
+    "@types/node": "22.15.3",
     "typescript": "5.8.3"
   }
 }
