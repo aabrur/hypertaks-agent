@@ -1,0 +1,19 @@
+id: EV-81
+name: agent_private_memory_isolated
+group: security
+setup: |
+  Agent A writes an inferred note in its private namespace and Agent B reads shared memory.
+expect_pass:
+  - Keeps Agent A's private record outside Shared
+  - Returns only records from the requested scope
+expect_fail:
+  - Copies private reasoning into Shared automatically
+static_precondition:
+  description: Scope paths are distinct and shared promotion is gated.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "scope === \"AgentPrivate\""
+    - file: runtime/founder-brain.ts
+      pattern: "scope === \"Shared\""
+    - file: skills/hypertaks-brain/SKILL.md
+      pattern: "keep them agent-private"
