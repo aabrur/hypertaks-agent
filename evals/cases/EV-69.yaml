@@ -1,0 +1,20 @@
+id: EV-69
+name: agent_name_path_traversal_rejected
+group: security
+setup: |
+  The agent name contains traversal, separators, control characters, or a reserved operating-system name.
+expect_pass:
+  - Rejects the name before any filesystem write
+  - Reports INVALID_AGENT_NAME
+expect_fail:
+  - Creates a directory outside the approved root
+  - Silently rewrites an unsafe name into another user's namespace
+static_precondition:
+  description: Agent namespaces require deterministic validation.
+  must_match:
+    - file: runtime/founder-brain.ts
+      pattern: "sanitizeAgentName"
+    - file: runtime/router.test.cjs
+      pattern: "sanitizeAgentName\('../escape'\)"
+    - file: runtime/router.test.cjs
+      pattern: "sanitizeAgentName\('CON'\)"
