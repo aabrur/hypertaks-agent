@@ -1,31 +1,24 @@
 # AGENTS.md - Hypertaks plugin repo
 
-This repository packages the **Hypertaks Founder** skill as a cross-agent plugin.
+This repository packages the **Hypertaks Founder Operating System** as a cross-agent plugin with exactly five public skills.
 
-- The skill itself lives in [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md).
-  Read it first - it defines the mandatory six-phase loop, Phase 0-5 (sized intake gate →
-  frame → pick the tier's roles → equip → produce the agents → integrate &
-  deliver) and the Dynamic Agent Allocation tiers (Lite 1 / Standard 3 /
-  Prime 5 / Hyper 6–10+).
-- Reference material is under `skills/hypertaks/references/` and templates under
-  `skills/hypertaks/assets/`.
+- [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md) is the default Founder Operating System entry point. Read it first.
+- [`skills/hypertaks-verify/SKILL.md`](skills/hypertaks-verify/SKILL.md) owns environment, brain, storage, Graphify, and Obsidian verification.
+- [`skills/hypertaks-brain/SKILL.md`](skills/hypertaks-brain/SKILL.md) owns evidence-backed founder memory.
+- [`skills/hypertaks-graph/SKILL.md`](skills/hypertaks-graph/SKILL.md) owns optional Graphify and direct-search routing.
+- [`skills/hypertaks-continuity/SKILL.md`](skills/hypertaks-continuity/SKILL.md) owns checkpoint, resume, handoff, reconciliation, and proof of done.
+
+Do not add a sixth public skill whose name starts with `hypertaks`.
 
 ## Working on this repo
 
-- Keep the skill self-contained; do not add hard dependencies on any single
-  agent's tooling.
-- All prose stays in **English**.
-- When editing the skill, re-validate it (see `.github/workflows/validate.yml`)
-  before committing. Retrieval or runtime changes also require the Python
-  retrieval tests and `npm test`.
-- Manifest files in the dot-directories (`.Codex-plugin`, `.codex-plugin`, etc.)
-  are per-agent adapters that all point back to the single `skills/hypertaks`
-  skill - keep versions in sync when bumping.
-- Keep the Retrieval Intelligence Router in
-  `skills/hypertaks/references/02-retrieval-and-evidence.md`, professional
-  execution profiles in `03-professional-execution.md`, and visual routing in
-  `04-visual-delivery.md`. Do not duplicate their canonical rules across files.
-- **One work item, one commit.** W3 and W4 were once squashed into a single
-  commit, which made the budget change and the runtime change impossible to
-  revert independently. They have since been split. From W5 onward every phase
-  lands as its own commit, even when two phases are finished in the same sitting.
+- Preserve Hypertaks as a Founder Operating System. Continuity, memory, Graphify, and Obsidian are supporting layers, not replacement positioning.
+- Keep the plugin self-contained and portable. Graphify, Obsidian, MCP, external memory, and persistent memory are optional.
+- All prose stays in **English** and tracked text must not contain U+2014.
+- Treat memory and graph output as evidence below active Boss decisions, workspace standards, approved contracts, and current repository evidence.
+- Require canonical approved-root containment, runtime schema validation, secret scanning, atomic writes, and fail-closed external boundaries for every persistence path.
+- When editing the skills or runtime, run the workflow-equivalent validation before committing: skill validation, public-skill validation, eval integrity, static evals, Python tests, TypeScript typecheck/build/runtime tests, compilation, and diff checks.
+- Keep manifest versions synchronized across `package.json` and every live plugin record.
+- Keep retrieval behavior canonical in `skills/hypertaks/references/02-retrieval-and-evidence.md`, execution profiles in `03-professional-execution.md`, visual routing in `04-visual-delivery.md`, and founder continuity behavior in the four focused public skills plus `runtime/founder-brain.ts`.
+- Keep changes surgical. Do not add hosted services, bundled credentials, background daemons, mandatory vector databases, or silent Graphify/Obsidian installation.
+- Use focused commits and preserve exact test evidence.
