@@ -14,8 +14,9 @@ capability that a verified host may expose when the approved task needs it.
 - `skills/` contains the five canonical public skills.
 - `distribution/registry.json` records host adapter status and package routes.
 - `distribution/<host>/` contains host-specific source templates only.
-- `scripts/build_distributions.py` generates host-native packages from the
-  canonical skills.
+- `scripts/build_distributions.py` generates host-native packages from only the
+  Git-tracked canonical skill files. Untracked files and symlinks are excluded
+  or rejected rather than silently entering a release package.
 - `dist/` contains generated output and is never hand-edited or committed.
 
 ## Status vocabulary
