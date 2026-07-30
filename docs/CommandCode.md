@@ -1,4 +1,4 @@
-# Hypertaks Cross-AI Distribution Wave 2 — Verification Report
+﻿# Hypertaks Cross-AI Distribution Wave 2 â€” Verification Report
 
 **Reviewer:** CommandCode (Principal Cross-Agent Distribution Engineer)
 **Date:** 2026-07-31
@@ -24,19 +24,19 @@ One fix was needed during verification: `docs/abrur.md` was tracked by git but m
 
 | # | Check | Command | Result |
 |---|-------|---------|--------|
-| 1 | Public skills | `python scripts/validate_public_skills.py` | ✅ 5/5 OK |
-| 2 | Skill validation | `python scripts/validate_skill.py` | ✅ OK (v4.5.0) |
-| 3 | Distribution validation | `python scripts/validate_distributions.py` | ✅ PASS |
-| 4 | Antigravity build check | `python scripts/build_distributions.py antigravity --check-only` | ✅ PASS |
-| 5 | Build tests | `python -m unittest scripts.test_build_distributions -v` | ✅ 3/3 OK |
-| 6 | Eval structure | `python scripts/run_evals.py --check` | ✅ 88/88 OK |
-| 7 | Eval static preconditions | `python scripts/run_evals.py --static` | ✅ 88/88 GREEN |
-| 8 | Eval + retrieval tests | `python -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v` | ✅ 25/25 OK |
-| 9 | TypeScript runtime | `npm test` (typecheck → build → test) | ✅ PASS |
-| 10 | Installer tests | `python -m unittest scripts.test_installer -v` | ✅ 5/5 OK |
-| 11 | Update tests | `python -m unittest scripts.test_update_hypertaks -v` | ✅ 7/7 OK |
-| 12 | Conformance tests | `python -m unittest scripts.test_validate_conformance -v` | ✅ 1/1 OK |
-| 13 | Python compileall + git diff | `python -m compileall scripts` + `git diff --check` | ✅ PASS |
+| 1 | Public skills | `python scripts/validate_public_skills.py` | âœ… 5/5 OK |
+| 2 | Skill validation | `python scripts/validate_skill.py` | âœ… OK (v4.5.0) |
+| 3 | Distribution validation | `python scripts/validate_distributions.py` | âœ… PASS |
+| 4 | Antigravity build check | `python scripts/build_distributions.py antigravity --check-only` | âœ… PASS |
+| 5 | Build tests | `python -m unittest scripts.test_build_distributions -v` | âœ… 3/3 OK |
+| 6 | Eval structure | `python scripts/run_evals.py --check` | âœ… 88/88 OK |
+| 7 | Eval static preconditions | `python scripts/run_evals.py --static` | âœ… 88/88 GREEN |
+| 8 | Eval + retrieval tests | `python -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v` | âœ… 25/25 OK |
+| 9 | TypeScript runtime | `npm test` (typecheck â†’ build â†’ test) | âœ… PASS |
+| 10 | Installer tests | `python -m unittest scripts.test_installer -v` | âœ… 5/5 OK |
+| 11 | Update tests | `python -m unittest scripts.test_update_hypertaks -v` | âœ… 7/7 OK |
+| 12 | Conformance tests | `python -m unittest scripts.test_validate_conformance -v` | âœ… 1/1 OK |
+| 13 | Python compileall + git diff | `python -m compileall scripts` + `git diff --check` | âœ… PASS |
 
 **Total: 13/13 gates pass. Zero failures.**
 
@@ -46,28 +46,28 @@ One fix was needed during verification: `docs/abrur.md` was tracked by git but m
 
 | Host ID | Classification | Structure | Installer Test | Live Host Test | Evidence |
 |---------|---------------|-----------|----------------|----------------|----------|
-| `claude-code` | `NATIVE_PLUGIN` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `codex` | `NATIVE_PLUGIN` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `cursor` | `NATIVE_PLUGIN` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `kimi-code` | `NATIVE_PLUGIN` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `opencode` | `PLUGIN_AND_SKILL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `pi` | `HOST_EXTENSION` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `openclaw` | `NATIVE_SKILL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `hermes` | `NATIVE_SKILL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `antigravity` | `PLUGIN_AND_SKILL` | ✅ | ✅ (build + install lifecycle) | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `chatgpt` | `CHATGPT_APP_ADAPTER` | ✅ | N/A (MCP transport) | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `github-copilot` | `NATIVE_PLUGIN` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `windsurf` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `cline` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `roo-code` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `kilo-code` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `aider` | `PROJECT_INSTRUCTIONS` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `goose` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `openhands` | `MANAGED_INSTALL` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `claude-ai` | `PROJECT_INSTRUCTIONS` | ✅ | N/A (web UI upload) | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `gemini-app` | `CUSTOM_ASSISTANT` | ✅ | N/A (web UI Gem) | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `open-webui` | `HOST_EXTENSION` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
-| `librechat` | `HOST_EXTENSION` | ✅ | ✅ | ❌ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `claude-code` | `NATIVE_PLUGIN` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `codex` | `NATIVE_PLUGIN` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `cursor` | `NATIVE_PLUGIN` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `kimi-code` | `NATIVE_PLUGIN` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `opencode` | `PLUGIN_AND_SKILL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `pi` | `HOST_EXTENSION` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `openclaw` | `NATIVE_SKILL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `hermes` | `NATIVE_SKILL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `antigravity` | `PLUGIN_AND_SKILL` | âœ… | âœ… (build + install lifecycle) | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `chatgpt` | `CHATGPT_APP_ADAPTER` | âœ… | N/A (MCP transport) | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `github-copilot` | `NATIVE_PLUGIN` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `windsurf` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `cline` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `roo-code` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `kilo-code` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `aider` | `PROJECT_INSTRUCTIONS` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `goose` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `openhands` | `MANAGED_INSTALL` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `claude-ai` | `PROJECT_INSTRUCTIONS` | âœ… | N/A (web UI upload) | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `gemini-app` | `CUSTOM_ASSISTANT` | âœ… | N/A (web UI Gem) | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `open-webui` | `HOST_EXTENSION` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
+| `librechat` | `HOST_EXTENSION` | âœ… | âœ… | âŒ NEEDS_MANUAL_HOST_TEST | PARTIAL |
 
 ---
 
@@ -75,28 +75,28 @@ One fix was needed during verification: `docs/abrur.md` was tracked by git but m
 
 | Host | Install (project) | Install (user) | Update | Uninstall | Reinstall |
 |------|-------------------|----------------|--------|-----------|-----------|
-| `antigravity` | ✅ tested | ⚠️ structure only | ✅ tested | ✅ tested | ✅ tested |
-| `claude-code` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `codex` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `cursor` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `kimi-code` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `opencode` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `pi` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `openclaw` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `hermes` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
+| `antigravity` | âœ… tested | âš ï¸ structure only | âœ… tested | âœ… tested | âœ… tested |
+| `claude-code` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `codex` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `cursor` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `kimi-code` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `opencode` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `pi` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `openclaw` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `hermes` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
 | `chatgpt` | N/A (MCP register) | N/A | N/A | N/A | N/A |
-| `github-copilot` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `windsurf` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `cline` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `roo-code` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `kilo-code` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `aider` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `goose` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `openhands` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
+| `github-copilot` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `windsurf` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `cline` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `roo-code` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `kilo-code` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `aider` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `goose` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `openhands` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
 | `claude-ai` | N/A (web UI) | N/A | N/A | N/A | N/A |
 | `gemini-app` | N/A (web UI) | N/A | N/A | N/A | N/A |
-| `open-webui` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
-| `librechat` | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only | ✅ structure only |
+| `open-webui` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
+| `librechat` | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only | âœ… structure only |
 
 ---
 
@@ -164,8 +164,8 @@ All 5/5 invariant verification cases pass. Coverage across 4 hosts and 7 invaria
 1. Canonical five skills: identity unchanged, routing intact
 2. 22 host adapters: structurally present with plugin.json and INSTALL.md per host
 3. Universal installer: `scripts/installer.py` with `doctor`, `list-hosts`, `install`, `status`, `update`, `uninstall`, `verify`
-4. Installer tests: fresh install, reinstall, update, corrupted package, unsupported host, uninstall, reinstall-after-uninstall — all passing
-5. Update mechanism: `scripts/update_hypertaks.py` with dirty/diverged/detached/wrong-remote rejection — all 7 tests passing
+4. Installer tests: fresh install, reinstall, update, corrupted package, unsupported host, uninstall, reinstall-after-uninstall â€” all passing
+5. Update mechanism: `scripts/update_hypertaks.py` with dirty/diverged/detached/wrong-remote rejection â€” all 7 tests passing
 6. Distribution build: `scripts/build_distributions.py antigravity` produces valid package with BUILD-MANIFEST.json, SVG hash, 5 skills, no MCP/hooks
 7. Capability matrix: `distribution/host-capabilities.json` (22 hosts, 623 lines) and `distribution/HOST-CAPABILITY-MATRIX.md`
 8. Audit reports: 9 hosts with `PARTIAL` verdicts, accurate evidence classification in `distribution/EXISTING-ADAPTER-AUDIT.md`
@@ -200,16 +200,16 @@ Every host requires manual live testing:
 ## Exact Manual Actions Required
 
 1. **Review and merge** the PR from `feat/cross-ai-distribution-wave-2` to `main`
-2. **Live host testing** — install and invoke Hypertaks on each real host application (see `distribution/EXISTING-ADAPTER-AUDIT.md` for procedures)
-3. **Marketplace approval** — explicitly approve each marketplace submission before publication
-4. **Global install test** — test `hypertaks install antigravity --scope user` on macOS or Linux
-5. **Behavioral certification** — run EV-50 through EV-88 as independent cold-session behavioral transcripts
+2. **Live host testing** â€” install and invoke Hypertaks on each real host application (see `distribution/EXISTING-ADAPTER-AUDIT.md` for procedures)
+3. **Marketplace approval** â€” explicitly approve each marketplace submission before publication
+4. **Global install test** â€” test `hypertaks install antigravity --scope user` on macOS or Linux
+5. **Behavioral certification** â€” run EV-50 through EV-88 as independent cold-session behavioral transcripts
 
 ---
 
 ## Explicit Confirmation
 
-No unauthorized marketplace publication occurred. All 13 marketplace packages are tagged `READY_FOR_HUMAN_SUBMISSION` — a status that requires explicit human approval before any submission action. No `SUBMITTED`, `APPROVED`, or `PUBLISHED` status has been claimed.
+No unauthorized marketplace publication occurred. All 13 marketplace packages are tagged `READY_FOR_HUMAN_SUBMISSION` â€” a status that requires explicit human approval before any submission action. No `SUBMITTED`, `APPROVED`, or `PUBLISHED` status has been claimed.
 
 ---
 
@@ -220,3 +220,4 @@ No unauthorized marketplace publication occurred. All 13 marketplace packages ar
 **Blocked Hosts:** None (all structurally present; live testing pending)
 **Tests:** 13/13 gates pass, 49 unit tests pass, 88 eval cases structurally OK, 88 static preconditions GREEN
 **Marketplace Readiness:** 13 READY_FOR_HUMAN_SUBMISSION, 9 NO_PUBLIC_MARKETPLACE
+

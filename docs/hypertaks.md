@@ -1,4 +1,4 @@
-# Hypertaks Cross-AI Distribution Status
+﻿# Hypertaks Cross-AI Distribution Status
 
 **Date:** 2026-07-31
 **Author:** Kilo (Principal Cross-Agent Distribution Engineer)
@@ -31,9 +31,9 @@ Do not treat this document as a substitute for live host testing. Every conclusi
 - **Logo:** `assets/Hypertask.svg` copied without destructive modification.
 
 Evidence:
-- `scripts/validate_public_skills.py` — PASS
-- `distribution/registry.json` — exactly five canonical skills listed
-- `package.json` files array — includes canonical skills plus adapter directories
+- `scripts/validate_public_skills.py` â€” PASS
+- `distribution/registry.json` â€” exactly five canonical skills listed
+- `package.json` files array â€” includes canonical skills plus adapter directories
 
 ---
 
@@ -72,8 +72,8 @@ Evidence:
 | `librechat` | HOST_EXTENSION | VERIFIED | NEEDS_MANUAL_HOST_TEST | PARTIAL |
 
 Evidence:
-- `distribution/host-capabilities.json` — 22 entries, all `evidenceStatus: PASS` at structure level
-- `distribution/HOST-CAPABILITY-MATRIX.md` — summary matrix
+- `distribution/host-capabilities.json` â€” 22 entries, all `evidenceStatus: PASS` at structure level
+- `distribution/HOST-CAPABILITY-MATRIX.md` â€” summary matrix
 - Adapter directories and manifests present for all 22 hosts
 
 ---
@@ -87,9 +87,9 @@ Evidence:
 - `BUILD-MANIFEST.json` present with per-file SHA-256 digests
 - No `mcp_config.json` bundled
 - No `hooks.json` bundled
-- `python scripts/validate_distributions.py` — PASS
-- `python scripts/build_distributions.py antigravity --check-only` — PASS
-- `python -m unittest scripts.test_build_distributions` — 3/3 OK
+- `python scripts/validate_distributions.py` â€” PASS
+- `python scripts/build_distributions.py antigravity --check-only` â€” PASS
+- `python -m unittest scripts.test_build_distributions` â€” 3/3 OK
 
 Evidence class for Antigravity host-app invocation: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
@@ -109,15 +109,15 @@ Supported commands:
 - `hypertaks verify <host>`
 
 Verified behaviors:
-- Fresh install, verify, update, uninstall lifecycle for `antigravity` project scope — PASS
-- Corrupted package detection — PASS (checksum mismatch reported)
-- Unsupported host rejection — PASS (`"nonexistent-host"` returns FAIL with actionable message)
+- Fresh install, verify, update, uninstall lifecycle for `antigravity` project scope â€” PASS
+- Corrupted package detection â€” PASS (checksum mismatch reported)
+- Unsupported host rejection â€” PASS (`"nonexistent-host"` returns FAIL with actionable message)
 - Cross-platform paths: Windows tested in this session; macOS/Linux paths inferred from installer code
 
 Evidence:
-- `scripts/test_installer.py` — 6/6 OK
-- `scripts/validate_conformance.py` — PASS
-- `scripts/test_validate_conformance.py` — 1/1 OK
+- `scripts/test_installer.py` â€” 6/6 OK
+- `scripts/validate_conformance.py` â€” PASS
+- `scripts/test_validate_conformance.py` â€” 1/1 OK
 
 ---
 
@@ -143,7 +143,7 @@ All entries carry status `READY_FOR_HUMAN_SUBMISSION`.
 No entry carries `SUBMITTED`, `APPROVED`, or `PUBLISHED`.
 
 Evidence:
-- `marketplace/SUBMISSION-READINESS.md` — status matrix with explicit human-approval gate
+- `marketplace/SUBMISSION-READINESS.md` â€” status matrix with explicit human-approval gate
 - Zero external marketplace API calls, webhook submissions, or publish actions in this session
 
 ---
@@ -154,7 +154,7 @@ Evidence:
 - Cases: `evals/cross-host/cases.jsonl`
 - Results: `evals/cross-host/results.json`
 - Summary: `evals/cross-host/SUMMARY.md`
-- Validator: `scripts/validate_conformance.py` — PASS
+- Validator: `scripts/validate_conformance.py` â€” PASS
 
 Note: Behavioral conformance is validated structurally and via validator. Live host behavioral execution is UNVERIFIED for all hosts.
 
@@ -224,3 +224,4 @@ No marketplace, registry, or external host received a Hypertaks package, submiss
 ---
 
 *This document is the top-level evidence anchor for the Hypertaks Cross-AI Distribution Wave 2 implementation. Child evidence lives in `distribution/`, `evals/`, `marketplace/`, and `scripts/`.*
+

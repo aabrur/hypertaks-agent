@@ -1,4 +1,4 @@
-# Kilo - Cross-AI Distribution Wave 2 Final Report
+﻿# Kilo - Cross-AI Distribution Wave 2 Final Report
 
 **Date:** 2026-07-31
 **Author:** Kilo (Principal Cross-Agent Distribution Engineer, AI Plugin Architect, Release Engineer, Security Reviewer, QA Lead, Marketplace Publication Manager)
@@ -37,9 +37,9 @@ Evidence class: VERIFIED (file structure and schema validated by `validate_distr
 - No `hooks.json` (hooks not bundled)
 
 **Verification commands and exit codes:**
-- `python scripts/validate_distributions.py` → exit 0 (PASS)
-- `python scripts/build_distributions.py antigravity --check-only` → exit 0 (PASS)
-- `python -m unittest scripts.test_build_distributions` → exit 0 (3/3 OK)
+- `python scripts/validate_distributions.py` â†’ exit 0 (PASS)
+- `python scripts/build_distributions.py antigravity --check-only` â†’ exit 0 (PASS)
+- `python -m unittest scripts.test_build_distributions` â†’ exit 0 (3/3 OK)
 
 **Installer lifecycle test:** `test_fresh_install_verify_update_uninstall_lifecycle` verified project-scope install (38 files), verify (checksum pass), corrupted-package detection (checksum mismatch caught), update, uninstall (NOT_INSTALLED), and clean reinstall for Antigravity.
 
@@ -96,13 +96,13 @@ All new target adapters preserve the five-skill routing model and do not introdu
 ## Phase 5 - Universal Installer
 
 `scripts/installer.py` (407 lines) implements:
-- `hypertaks doctor` — system health check
-- `hypertaks list-hosts` — list registered hosts
-- `hypertaks install <host> [--scope project|user]` — atomic file copy with ownership manifest
-- `hypertaks status` — installation status
-- `hypertaks update [host]` — fast-forward update via `update_hypertaks.py`
-- `hypertaks uninstall <host>` — ownership-manifest-based removal
-- `hypertaks verify <host>` — SHA-256 checksum verification
+- `hypertaks doctor` â€” system health check
+- `hypertaks list-hosts` â€” list registered hosts
+- `hypertaks install <host> [--scope project|user]` â€” atomic file copy with ownership manifest
+- `hypertaks status` â€” installation status
+- `hypertaks update [host]` â€” fast-forward update via `update_hypertaks.py`
+- `hypertaks uninstall <host>` â€” ownership-manifest-based removal
+- `hypertaks verify <host>` â€” SHA-256 checksum verification
 
 Safety features verified:
 - Dry-run by default for destructive/ambiguous changes
@@ -120,7 +120,7 @@ Safety features verified:
 - Offline failure handling
 - JSON output mode for automation
 
-Installer tests: `scripts/test_installer.py` — 6/6 OK (exit 0).
+Installer tests: `scripts/test_installer.py` â€” 6/6 OK (exit 0).
 
 ---
 
@@ -133,7 +133,7 @@ Installer tests: `scripts/test_installer.py` — 6/6 OK (exit 0).
 
 All 13 are tagged `READY_FOR_HUMAN_SUBMISSION`.
 
-9 hosts have no public marketplace: kimi-code, opencode, pi, openclaw, hermes, kilo-code, aider, claude-ai, gemini-app — all tagged `NO_PUBLIC_MARKETPLACE`.
+9 hosts have no public marketplace: kimi-code, opencode, pi, openclaw, hermes, kilo-code, aider, claude-ai, gemini-app â€” all tagged `NO_PUBLIC_MARKETPLACE`.
 
 No package carries `SUBMITTED`, `APPROVED`, or `PUBLISHED` status.
 
@@ -152,18 +152,18 @@ No package carries `SUBMITTED`, `APPROVED`, or `PUBLISHED` status.
 
 `evals/cross-host/cases.jsonl` contains 5 conformance case records.
 `evals/cross-host/results.json` contains the validator-passing results.
-`scripts/validate_conformance.py` — PASS (exit 0).
-`scripts/test_validate_conformance.py` — 1/1 OK (exit 0).
+`scripts/validate_conformance.py` â€” PASS (exit 0).
+`scripts/test_validate_conformance.py` â€” 1/1 OK (exit 0).
 
 ---
 
 ## Phase 8 - Documentation
 
-- `README.md` — updated with universal installer commands and cross-agent distribution section.
-- `docs/hypertaks.md` — top-level evidence anchor.
-- `docs/abrur.md` — prior completion report.
-- `docs/antigravity.md` — Antigravity lifecycle report.
-- `docs/kilo.md` — this file (Kilo-named summary per Boss instruction).
+- `README.md` â€” updated with universal installer commands and cross-agent distribution section.
+- `docs/hypertaks.md` â€” top-level evidence anchor.
+- `docs/abrur.md` â€” prior completion report.
+- `docs/antigravity.md` â€” Antigravity lifecycle report.
+- `docs/kilo.md` â€” this file (Kilo-named summary per Boss instruction).
 
 ---
 
@@ -225,4 +225,5 @@ No package carries `SUBMITTED`, `APPROVED`, or `PUBLISHED` status.
 - **Tests and exit codes:** All gates pass (see table above)
 - **Marketplace readiness:** 13 hosts `READY_FOR_HUMAN_SUBMISSION`; 9 hosts `NO_PUBLIC_MARKETPLACE`; no `SUBMITTED`/`APPROVED`/`PUBLISHED`
 - **Manual actions required:** (1) Live test each host app and update `evals/hosts/<host-id>/REPORT.md`; (2) Submit to marketplaces only after explicit human approval; (3) Review and merge PR #15
-- **No unauthorized marketplace publication occurred:** Confirmed — no external marketplace API calls, no submissions, no deployments made in this session.
+- **No unauthorized marketplace publication occurred:** Confirmed â€” no external marketplace API calls, no submissions, no deployments made in this session.
+
