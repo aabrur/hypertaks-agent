@@ -26,6 +26,19 @@ class DistributionBuildTests(unittest.TestCase):
             self.assertFalse((package / "mcp_config.json").exists())
             self.assertFalse((package / "hooks.json").exists())
 
+    def test_antigravity_package_includes_canonical_svg(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = build_antigravity(Path(temp_dir))
+            manifest = json.loads(
+                (package / "BUILD-MANIFEST.json").read_text(encoding="utf-8")
+            )
+            brand = manifest["brand"]
+            self.assertTrue(brand["included"])
+            self.assertEqual(brand["source"], "assets/Hypertask.svg")
+            self.assertEqual(brand["output"], "assets/hypertaks.svg")
+            self.assertTrue((package / "assets" / "hypertaks.svg").is_file())
+            self.assertRegex(brand["sha256"], r"^[0-9a-f]{64}$")
+
     def test_antigravity_package_excludes_untracked_skill_files(self) -> None:
         probe = ROOT / "skills" / "hypertaks" / ".distribution-untracked-probe"
         self.assertFalse(probe.exists())
