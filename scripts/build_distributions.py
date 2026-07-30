@@ -61,6 +61,10 @@ def git_tracked_files() -> set[str]:
 
 
 def require_tracked_file(path: Path, tracked: set[str]) -> str:
+    repository_root = ROOT.resolve()
+    resolved = path.resolve()
+    if resolved != repository_root and repository_root not in resolved.parents:
+        raise ValueError(f"distribution source escapes the repository: {path}")
     try:
         relative = path.relative_to(ROOT).as_posix()
     except ValueError as exc:
@@ -75,7 +79,10 @@ def require_tracked_file(path: Path, tracked: set[str]) -> str:
 
 
 def copy_tracked_tree(source_root: Path, destination_root: Path, tracked: set[str]) -> None:
+    repository_root = ROOT.resolve()
     source_root_resolved = source_root.resolve()
+    if source_root_resolved != repository_root and repository_root not in source_root_resolved.parents:
+        raise ValueError(f"canonical source tree escapes the repository: {source_root}")
     relative_root = source_root.relative_to(ROOT).as_posix()
     prefix = relative_root + "/"
     selected = sorted(item for item in tracked if item.startswith(prefix))
