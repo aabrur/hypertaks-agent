@@ -12,6 +12,7 @@ capability that a verified host may expose when the approved task needs it.
 ## Sources of truth
 
 - `skills/` contains the five canonical public skills.
+- `assets/Hypertask.svg` is the canonical tracked logo source.
 - `distribution/registry.json` records host adapter status and package routes.
 - `distribution/<host>/` contains host-specific source templates only.
 - `scripts/build_distributions.py` generates host-native packages from only the
@@ -34,14 +35,18 @@ active distribution target in this registry.
 
 The Antigravity package is generated rather than maintained as a second copy of
 the skills. This prevents the plugin package and canonical skill core from
-silently drifting apart.
+silently drifting apart. The generated package includes the canonical SVG as
+`assets/hypertaks.svg` and records its digest in `BUILD-MANIFEST.json`.
 
-## Build and validate
+## Clone, build, and validate
 
 ```text
+git clone https://github.com/aabrur/hypertaks-agent.git
+cd hypertaks-agent
 python scripts/validate_distributions.py
 python scripts/build_distributions.py antigravity --check-only
 python -m unittest scripts.test_build_distributions -v
+python scripts/build_distributions.py antigravity
 ```
 
 A successful structural build is not behavioral certification. Live discovery,
