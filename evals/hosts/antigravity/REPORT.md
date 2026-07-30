@@ -5,8 +5,9 @@
 - **Application Version**: 1.4.0 (antigravity-cli 2026.7)
 - **OS**: Windows 11 (build 26100)
 - **Tested Commit**: `b7fdaf9` (branch: `feat/cross-ai-distribution-wave-2`)
-- **Timestamp**: `2026-07-31T01:14:00+07:00`
-- **Verdict**: `PASS`
+- **Timestamp**: `2026-07-31T01:16:00+07:00`
+- **Verdict**: `PARTIAL`
+- **Evidence Class**: Package build and installer-level lifecycle VERIFIED in this session; live Google Antigravity host-app invocation UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
 ---
 
@@ -36,7 +37,7 @@ python scripts/build_distributions.py antigravity
 
 ## 3. Discovered Skills Verification
 
-The following exact five public skills were discovered in `.agents/plugins/hypertaks/skills`:
+The built package contains exactly these five public skills:
 1. `hypertaks`
 2. `hypertaks-verify`
 3. `hypertaks-brain`
@@ -48,25 +49,48 @@ The following exact five public skills were discovered in `.agents/plugins/hyper
 
 ## 4. Invocation Testing
 
-- `Hypertaks, fix a typo in this README.`: Intake selected Nano tier; routed directly without subagent overhead.
-- `/hypertaks-verify`: Invoked verification suite; returned clear pass summary.
-- `/hypertaks-brain inspect`: Inspected main founder brain state and Obsidian root bounds cleanly.
-- `/hypertaks-graph impact runtime/router.ts`: Simulated impact analysis on router module.
-- `/hypertaks-continuity status`: Checked checkpoint status, commit evidence, and open work items.
+Live invocation inside the actual Antigravity application was not executed in this session.
+
+Unverified items requiring manual host test:
+- `Hypertaks, fix a typo in this README.`
+- `/hypertaks-verify`
+- `/hypertaks-brain inspect`
+- `/hypertaks-graph impact runtime/router.ts`
+- `/hypertaks-continuity status`
+
+Manual verification procedure:
+1. Install Antigravity per host docs.
+2. Run `hypertaks install antigravity --scope project`.
+3. Confirm discovery of the exact five canonical skills.
+4. Run the five invocations above; record host version, OS, commit, timestamps, and sanitized logs.
+5. Repeat for `--scope user`.
 
 ## 5. Lifecycle Scopes (Workspace & Global)
 
+Installer-level lifecycle was executed in this session for project scope:
 - **Workspace Installation**: `.agents/plugins/hypertaks`
-  - Status: Installed, verified file copy, discovery passed, uninstalled cleanly.
+  - Status: `PASS` via installer test `test_fresh_install_verify_update_uninstall_lifecycle`.
+  - Files installed: 38; target `C:\Users\abrur\Documents\hypertaks-agent\.agents\plugins\hypertaks`
 - **Global Installation**: `~/.gemini/config/plugins/hypertaks`
-  - Status: Installed, verified file copy, discovery passed, uninstalled cleanly.
+  - Status: UNVERIFIED in this session (Windows home-path expansion not exercised in automated test).
 
 ## 6. Update & Uninstall Verification
 
-- Clean fast-forward update: Rebuilt distribution package from updated git HEAD; files reconciled.
-- Rejection tests: Rejected update on dirty worktrees, detached HEAD, and diverged remotes as designed.
-- Uninstall test: Removed `.agents/plugins/hypertaks` and `~/.gemini/config/plugins/hypertaks`. Verified no user files or unrelated plugins were touched. Reinstallation succeeded cleanly.
+- Installer and update-script guards verified at code level:
+  - `scripts/update_hypertaks.py` rejects dirty worktree, detached HEAD, diverged branch, and wrong remote.
+  - `scripts/test_update_hypertaks.py` exercises those rejection paths.
+- Package rebuild after update: verified `python scripts/build_distributions.py antigravity` produces consistent manifest and hashes.
+- Uninstall test: `test_fresh_install_verify_update_uninstall_lifecycle` verified post-uninstall state shows `NOT_INSTALLED` for project scope.
+- Clean reinstall: verified within the same installer test.
+
+Live host-app update and uninstall: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
+
+## 7. Security & Boundary Verification
+
+- Structural: no `mcp_config.json` and no `hooks.json` in built package. `VERIFIED`.
+- Package integrity: `validate_distributions.py` enforces exact five-skill set, SVG presence, manifest hash accuracy. `VERIFIED`.
+- Host-specific security boundary review: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
 ---
 
-**Final Verdict**: `PASS`
+**Final Verdict**: `PARTIAL`
