@@ -11,6 +11,7 @@
   },
   "keywords": [
     "claude-code",
+    "antigravity",
     "plugin",
     "skill",
     "founder",
@@ -27,6 +28,9 @@
   "files": [
     "skills/",
     "runtime/",
+    "distribution/",
+    "scripts/build_distributions.py",
+    "scripts/validate_distributions.py",
     ".claude-plugin/",
     ".codex-plugin/",
     ".cursor-plugin/",
@@ -43,6 +47,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build:runtime": "tsc -p tsconfig.json",
     "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js",
+    "build:distribution": "python scripts/build_distributions.py antigravity",
+    "check:distribution": "python scripts/validate_distributions.py && python scripts/build_distributions.py antigravity --check-only",
     "test": "npm run typecheck && npm run build:runtime && npm run test:runtime"
   },
   "devDependencies": {
