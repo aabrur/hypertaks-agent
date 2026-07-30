@@ -28,6 +28,7 @@
   "files": [
     "skills/",
     "runtime/",
+    "assets/",
     "distribution/",
     "scripts/build_distributions.py",
     "scripts/validate_distributions.py",
