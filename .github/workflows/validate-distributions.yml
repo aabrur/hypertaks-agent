@@ -2,7 +2,7 @@ name: Validate distributions
 
 on:
   push:
-    branches: [main, feat/distribution-foundation-v2]
+    branches: [main, feat/cross-ai-distribution-wave-2]
   pull_request:
 
 jobs:
@@ -21,5 +21,8 @@ jobs:
       - name: Build-check Antigravity package
         run: python scripts/build_distributions.py antigravity --check-only
 
-      - name: Run distribution tests
-        run: python -m unittest scripts.test_build_distributions -v
+      - name: Validate cross-host conformance
+        run: python scripts/validate_conformance.py
+
+      - name: Run distribution, installer, and conformance unit tests
+        run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance -v
