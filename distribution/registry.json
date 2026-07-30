@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "product": {
+    "id": "hypertaks",
+    "displayName": "Hypertaks",
+    "version": "4.5.0",
+    "canonicalSkillsRoot": "skills",
+    "canonicalPublicSkills": [
+      "hypertaks",
+      "hypertaks-verify",
+      "hypertaks-brain",
+      "hypertaks-graph",
+      "hypertaks-continuity"
+    ],
+    "architecture": "plugin-plus-skills",
+    "mcpPolicy": "optional-external-capability-only",
+    "brand": {
+      "canonicalSvg": null,
+      "publicationRequired": true,
+      "note": "Set this to the tracked project SVG path before marketplace publication. Generated packages never redraw or trace the logo."
+    }
+  },
+  "hosts": [
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin",
+      "manifest": ".claude-plugin/plugin.json",
+      "marketplace": ".claude-plugin/marketplace.json"
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin",
+      "manifest": ".codex-plugin/plugin.json",
+      "marketplace": ".agents/plugins/marketplace.json"
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin",
+      "manifest": ".cursor-plugin/plugin.json"
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin",
+      "manifest": ".kimi-plugin/plugin.json"
+    },
+    {
+      "id": "openclaw",
+      "displayName": "OpenClaw",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "scanned-skill-host",
+      "installGuide": ".openclaw/INSTALL.md"
+    },
+    {
+      "id": "hermes",
+      "displayName": "Hermes",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "scanned-skill-host",
+      "installGuide": ".hermes/INSTALL.md"
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin-manager",
+      "installGuide": ".opencode/INSTALL.md"
+    },
+    {
+      "id": "pi",
+      "displayName": "Pi",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "extension",
+      "adapter": ".pi/extensions/hypertaks.ts"
+    },
+    {
+      "id": "antigravity",
+      "displayName": "Google Antigravity",
+      "adapterStatus": "buildable-needs-live-verification",
+      "distributionType": "generated-native-plugin",
+      "template": "distribution/antigravity/plugin.json",
+      "buildCommand": "python scripts/build_distributions.py antigravity",
+      "output": "dist/antigravity/hypertaks",
+      "workspaceInstallTarget": ".agents/plugins/hypertaks",
+      "globalInstallTarget": "~/.gemini/config/plugins/hypertaks",
+      "bundledComponents": {
+        "skills": true,
+        "rules": false,
+        "mcpServers": false,
+        "hooks": false
+      }
+    }
+  ],
+  "plannedHosts": [
+    "chatgpt",
+    "github-copilot",
+    "windsurf",
+    "cline",
+    "roo-code",
+    "kilo-code",
+    "aider",
+    "goose",
+    "openhands",
+    "claude-ai",
+    "gemini-app",
+    "open-webui",
+    "librechat"
+  ]
+}
