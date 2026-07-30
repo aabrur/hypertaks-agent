@@ -1,0 +1,25 @@
+name: Validate distributions
+
+on:
+  push:
+    branches: [main, feat/distribution-foundation]
+  pull_request:
+
+jobs:
+  validate-distributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate distribution registry
+        run: python scripts/validate_distributions.py
+
+      - name: Build-check Antigravity package
+        run: python scripts/build_distributions.py antigravity --check-only
+
+      - name: Run distribution tests
+        run: python -m unittest scripts.test_build_distributions -v
