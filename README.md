@@ -284,45 +284,47 @@ Mutating operations require approval even when capability metadata is wrong.
 
 ---
 
-## Install
+## Universal Installer & Distribution
 
-### Claude Code
-
-```text
-/plugin marketplace add aabrur/hypertaks-agent
-/plugin install hypertaks@hypertaks-marketplace
-```
-
-### Codex CLI
+Hypertaks provides a unified CLI installer to manage host adapters across supported AI environments.
 
 ```bash
-codex plugin marketplace add aabrur/hypertaks-agent --ref main
-codex plugin add hypertaks@hypertaks-marketplace
+python scripts/installer.py doctor
+python scripts/installer.py list-hosts
+python scripts/installer.py install <host> [--scope project|user]
+python scripts/installer.py status
+python scripts/installer.py update [host]
+python scripts/installer.py verify <host>
+python scripts/installer.py uninstall <host>
 ```
 
-### Cursor
+### Supported Host Adapter Classifications
 
-```text
-/add-plugin hypertaks
-```
+| Host | Classification | Install Scope | MCP Support |
+|---|---|---|---|
+| **Google Antigravity** | `PLUGIN_AND_SKILL` | Project / User | Optional |
+| **Claude Code** | `NATIVE_PLUGIN` | Project / User | Optional |
+| **Codex** | `NATIVE_PLUGIN` | Project / User | Optional |
+| **Cursor** | `NATIVE_PLUGIN` | Project / User | Optional |
+| **Kimi Code** | `NATIVE_PLUGIN` | Project / User | Optional |
+| **OpenCode** | `PLUGIN_AND_SKILL` | Project / User | Optional |
+| **Pi** | `HOST_EXTENSION` | Project / User | Optional |
+| **OpenClaw** | `NATIVE_SKILL` | Project / User | Optional |
+| **Hermes** | `NATIVE_SKILL` | Project / User | Optional |
+| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) |
+| **GitHub Copilot** | `NATIVE_PLUGIN` | Project / User | Optional |
+| **Windsurf** | `MANAGED_INSTALL` | Project / User | Optional |
+| **Cline** | `MANAGED_INSTALL` | Project / User | Optional |
+| **Roo Code** | `MANAGED_INSTALL` | Project / User | Optional |
+| **Kilo Code** | `MANAGED_INSTALL` | Project / User | Optional |
+| **Aider** | `PROJECT_INSTRUCTIONS` | Project / User | Unavailable |
+| **Goose** | `MANAGED_INSTALL` | Project / User | Optional |
+| **OpenHands** | `MANAGED_INSTALL` | Project / User | Optional |
+| **Claude.ai** | `PROJECT_INSTRUCTIONS` | Project Knowledge | Unavailable |
+| **Gemini App** | `CUSTOM_ASSISTANT` | Custom Gem | Unavailable |
+| **Open WebUI** | `HOST_EXTENSION` | Project / User | Optional |
+| **LibreChat** | `HOST_EXTENSION` | Project / User | Optional |
 
-### Kimi Code
-
-```text
-/plugins install https://github.com/aabrur/hypertaks-agent
-```
-
-### Pi
-
-```bash
-pi install git:github.com/aabrur/hypertaks-agent
-```
-
-### OpenCode, OpenClaw, Hermes, and scanned-skill hosts
-
-Use the platform instructions under `.opencode/`, `.openclaw/`, and `.hermes/`.
-A managed Git checkout exposed through a symlink or junction is preferred over
-copying the skill directory.
 
 ---
 

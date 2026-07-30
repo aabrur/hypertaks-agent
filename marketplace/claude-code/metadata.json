@@ -1,0 +1,13 @@
+{
+  "host": "claude-code",
+  "displayName": "Claude Code",
+  "packageId": "hypertaks",
+  "version": "4.5.0",
+  "shortDescription": "Hypertaks Founder OS plugin for Claude Code.",
+  "longDescription": "Brings the Hypertaks five-skill founder operating system to Claude Code with secure continuity, memory, and routing.",
+  "developer": "abrur <abrur_nic@yahoo.com>",
+  "repository": "https://github.com/aabrur/hypertaks-agent",
+  "license": "MIT",
+  "logoSvg": "assets/Hypertask.svg",
+  "status": "READY_FOR_HUMAN_SUBMISSION"
+}

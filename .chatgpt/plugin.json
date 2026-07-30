@@ -1,0 +1,19 @@
+{
+  "name": "hypertaks",
+  "version": "4.5.0",
+  "description": "ChatGPT App Adapter for Hypertaks Founder OS using host-required MCP transport.",
+  "transport": "mcp",
+  "mcpServer": {
+    "command": "node",
+    "args": ["runtime/mcp_server.js"]
+  },
+  "canonicalSkills": [
+    "hypertaks",
+    "hypertaks-verify",
+    "hypertaks-brain",
+    "hypertaks-graph",
+    "hypertaks-continuity"
+  ],
+  "readOnlyByDefault": true,
+  "requiresUserConfirmationForWrite": true
+}

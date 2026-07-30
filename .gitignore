@@ -68,3 +68,7 @@ scratch/
 # Repomix output (configuration remains tracked)
 repomix-output.*
 repomix-*.xml
+# Temporary test backups and local tool states
+*.bak
+*.bak/
+.commandcode/

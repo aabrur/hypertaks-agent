@@ -95,21 +95,111 @@
         "mcpServers": false,
         "hooks": false
       }
+    },
+    {
+      "id": "chatgpt",
+      "displayName": "ChatGPT",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "chatgpt-app-adapter",
+      "manifest": ".chatgpt/plugin.json",
+      "installGuide": ".chatgpt/INSTALL.md"
+    },
+    {
+      "id": "github-copilot",
+      "displayName": "GitHub Copilot",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "native-plugin",
+      "manifest": ".github-copilot/plugin.json",
+      "installGuide": ".github-copilot/INSTALL.md"
+    },
+    {
+      "id": "windsurf",
+      "displayName": "Windsurf",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".windsurf/plugin.json",
+      "installGuide": ".windsurf/INSTALL.md"
+    },
+    {
+      "id": "cline",
+      "displayName": "Cline",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".cline/plugin.json",
+      "installGuide": ".cline/INSTALL.md"
+    },
+    {
+      "id": "roo-code",
+      "displayName": "Roo Code",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".roo/plugin.json",
+      "installGuide": ".roo/INSTALL.md"
+    },
+    {
+      "id": "kilo-code",
+      "displayName": "Kilo Code",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".kilo/plugin.json",
+      "installGuide": ".kilo/INSTALL.md"
+    },
+    {
+      "id": "aider",
+      "displayName": "Aider",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "project-instructions",
+      "manifest": ".aider/plugin.json",
+      "installGuide": ".aider/INSTALL.md"
+    },
+    {
+      "id": "goose",
+      "displayName": "Goose",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".goose/plugin.json",
+      "installGuide": ".goose/INSTALL.md"
+    },
+    {
+      "id": "openhands",
+      "displayName": "OpenHands",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "managed-install",
+      "manifest": ".openhands/plugin.json",
+      "installGuide": ".openhands/INSTALL.md"
+    },
+    {
+      "id": "claude-ai",
+      "displayName": "Claude.ai",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "project-instructions",
+      "manifest": ".claude-ai/plugin.json",
+      "installGuide": ".claude-ai/INSTALL.md"
+    },
+    {
+      "id": "gemini-app",
+      "displayName": "Gemini App",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "custom-assistant",
+      "manifest": ".gemini-app/plugin.json",
+      "installGuide": ".gemini-app/INSTALL.md"
+    },
+    {
+      "id": "open-webui",
+      "displayName": "Open WebUI",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "extension",
+      "manifest": ".open-webui/plugin.json",
+      "installGuide": ".open-webui/INSTALL.md"
+    },
+    {
+      "id": "librechat",
+      "displayName": "LibreChat",
+      "adapterStatus": "present-needs-live-verification",
+      "distributionType": "extension",
+      "manifest": ".librechat/plugin.json",
+      "installGuide": ".librechat/INSTALL.md"
     }
   ],
-  "plannedHosts": [
-    "chatgpt",
-    "github-copilot",
-    "windsurf",
-    "cline",
-    "roo-code",
-    "kilo-code",
-    "aider",
-    "goose",
-    "openhands",
-    "claude-ai",
-    "gemini-app",
-    "open-webui",
-    "librechat"
-  ]
+  "plannedHosts": []
 }
