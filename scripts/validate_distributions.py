@@ -64,6 +64,8 @@ def main() -> int:
     if len(set(versions.values())) != 1:
         errors.append(f"distribution versions are out of sync: {versions}")
 
+    if product.get("canonicalSkillsRoot") != "skills":
+        errors.append("canonicalSkillsRoot must remain skills")
     if product.get("architecture") != "plugin-plus-skills":
         errors.append("product architecture must remain plugin-plus-skills")
     if product.get("mcpPolicy") != "optional-external-capability-only":
@@ -83,6 +85,45 @@ def main() -> int:
     host_ids = [host.get("id") for host in hosts if isinstance(host, Mapping)]
     if len(host_ids) != len(set(host_ids)):
         errors.append("distribution registry contains duplicate host ids")
+    supported_agents = catalog.get("supportedAgents")
+    if not isinstance(supported_agents, list):
+        errors.append(".agents/plugins/hypertaks.json supportedAgents must be a list")
+    elif len(supported_agents) != len(set(supported_agents)):
+        errors.append(
+            ".agents/plugins/hypertaks.json contains duplicate supported agents"
+        )
+    elif set(supported_agents) != set(host_ids):
+        errors.append(
+            "catalog supportedAgents and distribution registry hosts differ: "
+            f"catalog={sorted(supported_agents)}, registry={sorted(host_ids)}"
+        )
+
+    allowed_statuses = {
+        "present-needs-live-verification",
+        "buildable-needs-live-verification",
+        "planned",
+    }
+    for host in hosts:
+        if not isinstance(host, Mapping):
+            errors.append("distribution registry host entry must be an object")
+            continue
+        host_id = host.get("id")
+        if host.get("adapterStatus") not in allowed_statuses:
+            errors.append(f"host {host_id} has an invalid adapterStatus")
+        if not isinstance(host.get("distributionType"), str):
+            errors.append(f"host {host_id} has no distributionType")
+        for field in (
+            "manifest",
+            "marketplace",
+            "installGuide",
+            "adapter",
+            "template",
+        ):
+            relative = host.get(field)
+            if relative is not None and (
+                not isinstance(relative, str) or not (ROOT / relative).is_file()
+            ):
+                errors.append(f"host {host_id} references a missing {field}: {relative}")
     if "antigravity" not in host_ids:
         errors.append("Antigravity host entry is missing")
     if "gemini-cli" in host_ids:
