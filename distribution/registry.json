@@ -15,9 +15,9 @@
     "architecture": "plugin-plus-skills",
     "mcpPolicy": "optional-external-capability-only",
     "brand": {
-      "canonicalSvg": null,
+      "canonicalSvg": "assets/Hypertask.svg",
       "publicationRequired": true,
-      "note": "Set this to the tracked project SVG path before marketplace publication. Generated packages never redraw or trace the logo."
+      "note": "Generated packages include this tracked project SVG without redrawing or tracing the logo."
     }
   },
   "hosts": [
