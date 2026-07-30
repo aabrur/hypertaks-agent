@@ -81,14 +81,14 @@ Throughout this expansion:
 
 ## Live Antigravity Lifecycle Test Verdict
 
-- **Package Build**: `dist/antigravity/hypertaks` (`PASS`)
-- **Validation Check**: `python scripts/build_distributions.py antigravity --check-only` (`PASS`)
-- **Canonical SVG Verification**: Matches `assets/Hypertask.svg` sha256 (`PASS`)
-- **Five Skills Discovered**: `hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity` (`PASS`)
-- **Direct & Natural Language Invocation**: Direct slash commands and natural language prompts (`PASS`)
-- **Update Reconciliation**: Clean fast-forward update (`PASS`)
-- **Uninstall Safety**: Removes only Hypertaks files without touching user files (`PASS`)
-- **Verdict**: `PASS` (`CONFIRMED`)
+- **Package Build**: `dist/antigravity/hypertaks` (`PASS` - `VERIFIED`)
+- **Validation Check**: `python scripts/build_distributions.py antigravity --check-only` (`PASS` - `VERIFIED`)
+- **Canonical SVG Verification**: Matches `assets/Hypertask.svg` sha256 (`PASS` - `VERIFIED`)
+- **Five Skills Discovered**: The generated package contains exactly the five canonical public skills (`PASS` - `VERIFIED`)
+- **Direct & Natural Language Invocation**: Inside build/installer test suite (`PASS` - `VERIFIED` at installer test level); inside actual Antigravity host application (`UNVERIFIED` - `NEEDS_MANUAL_HOST_TEST`)
+- **Update Reconciliation**: `scripts/update_hypertaks.py` guards and `scripts/installer.py` update lifecycle (`PASS` - `VERIFIED`)
+- **Uninstall Safety**: `scripts/installer.py` uninstall removes only Hypertaks files without touching user files (`PASS` - `VERIFIED`)
+- **Verdict**: `PARTIAL` - Structural, build, and installer-level lifecycle `VERIFIED`. Live host-app invocation, tool mapping, and behavioral execution inside the Antigravity application `UNVERIFIED` / `NEEDS_MANUAL_HOST_TEST`.
 
 ---
 
