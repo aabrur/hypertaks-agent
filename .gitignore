@@ -64,6 +64,7 @@ clones/
 .tmp/
 tmp/
 scratch/
+.worktrees/
 
 # Repomix output (configuration remains tracked)
 repomix-output.*
