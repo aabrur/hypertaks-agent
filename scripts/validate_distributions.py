@@ -126,6 +126,8 @@ def main() -> int:
                 errors.append(f"host {host_id} references a missing {field}: {relative}")
     if "antigravity" not in host_ids:
         errors.append("Antigravity host entry is missing")
+    if "chatgpt" not in host_ids:
+        errors.append("ChatGPT host entry is missing")
     if "gemini-cli" in host_ids:
         errors.append("Gemini CLI must not remain an active host target")
 
@@ -157,6 +159,67 @@ def main() -> int:
         errors.append(
             "Antigravity plugin.json must be the minimal documented manifest"
         )
+
+    chatgpt_host = next(
+        (
+            host
+            for host in hosts
+            if isinstance(host, Mapping) and host.get("id") == "chatgpt"
+        ),
+        None,
+    )
+    if not isinstance(chatgpt_host, Mapping):
+        errors.append("ChatGPT host entry is invalid")
+    else:
+        expected_chatgpt_files = {
+            "manifest": ".chatgpt/plugin.json",
+            "installGuide": ".chatgpt/INSTALL.md",
+            "runtime": "runtime/chatgpt-mcp-server.mjs",
+            "runtimeTest": "runtime/chatgpt-mcp-server.test.cjs",
+        }
+        for field, expected in expected_chatgpt_files.items():
+            if chatgpt_host.get(field) != expected:
+                errors.append(
+                    f"ChatGPT {field} must reference {expected}: "
+                    f"{chatgpt_host.get(field)}"
+                )
+            elif not (ROOT / expected).is_file():
+                errors.append(f"ChatGPT {field} is missing: {expected}")
+        if chatgpt_host.get("testCommand") != "npm run test:chatgpt":
+            errors.append("ChatGPT testCommand must be npm run test:chatgpt")
+        components = chatgpt_host.get("bundledComponents")
+        if not isinstance(components, Mapping):
+            errors.append("ChatGPT bundledComponents must be an object")
+        else:
+            if components.get("canonicalSkills") is not True:
+                errors.append("ChatGPT adapter must preserve canonical skills")
+            if components.get("mcpTransport") is not True:
+                errors.append("ChatGPT adapter must declare MCP as host transport")
+            if components.get("writeTools") is not False:
+                errors.append("ChatGPT Wave 1 adapter must expose no write tools")
+
+    try:
+        chatgpt_manifest = read_json(ROOT / ".chatgpt" / "plugin.json")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        errors.append(f"ChatGPT manifest is invalid: {exc}")
+        chatgpt_manifest = {}
+    if chatgpt_manifest.get("canonicalSkills") != EXPECTED_SKILLS:
+        errors.append("ChatGPT manifest must declare exactly five canonical skills")
+    if chatgpt_manifest.get("transport") != "streamable-http":
+        errors.append("ChatGPT manifest must declare MCP Streamable HTTP transport")
+    if chatgpt_manifest.get("readOnlyByDefault") is not True:
+        errors.append("ChatGPT Wave 1 runtime must be read-only by default")
+    if chatgpt_manifest.get("writeToolsExposed") is not False:
+        errors.append("ChatGPT Wave 1 runtime must expose no write actions")
+    exposed_tools = chatgpt_manifest.get("tools")
+    expected_tools = [
+        "hypertaks_manifest",
+        "hypertaks_get_skill",
+        "hypertaks_route",
+        "hypertaks_verify_installation",
+    ]
+    if exposed_tools != expected_tools:
+        errors.append(f"ChatGPT exposed tools must be exactly {expected_tools}")
 
     brand = product.get("brand")
     if not isinstance(brand, Mapping):

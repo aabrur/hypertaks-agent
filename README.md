@@ -10,8 +10,9 @@ work, preserves verified founder context, and proves whether the work is done.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.5.0-blue)
-![Cross-Agent](https://img.shields.io/badge/cross--agent-22%20platforms-brightgreen)
-![Release Candidate](https://img.shields.io/badge/status-Release%20Candidate-f3a712)
+![Adapter Targets](https://img.shields.io/badge/adapter%20targets-22-brightgreen)
+![Live Certified](https://img.shields.io/badge/live%20certified-0%2F22-lightgrey)
+![Status](https://img.shields.io/badge/status-Production%20Rollout%20Wave%201-f3a712)
 
 **Execution profiles:** [CORE](skills/hypertaks/SKILL-core.md) for smaller
 models and FULL through [SKILL.md](skills/hypertaks/SKILL.md) for frontier
@@ -34,6 +35,25 @@ evidence quality, founder continuity, risk disclosure, and final integration.
 Hypertaks is not a hosted model, autonomous legal entity, mandatory memory
 service, or bundled agent runtime. It runs inside the AI agent and tools the user
 already selected.
+
+## Production rollout status
+
+Hypertaks currently has **22 adapter targets**, not 22 behaviorally certified
+hosts. Structural packages, validators, and the universal installer are ready.
+Real host certification remains evidence-gated.
+
+| Area | Current evidence | Status |
+|---|---|---|
+| Canonical five-skill core | Structural validation and 88 static evals | Confirmed |
+| Universal installer | Isolated install, verify, update, uninstall, reinstall tests | Confirmed |
+| Google Antigravity | Package build and installer lifecycle | Partial, live app test pending |
+| ChatGPT | Executable read-only MCP runtime and local HTTP lifecycle | Partial, live app test pending |
+| Other 20 targets | Adapter structure and evidence records | Partial, live app tests pending |
+| Marketplace publication | Metadata preparation only | Not submitted |
+
+`PASS` is reserved for evidence from a real host lifecycle. A manifest, package,
+local server, or installer test cannot independently certify discovery and
+invocation inside the target AI application.
 
 ## Why v4.5.0 matters
 
@@ -306,12 +326,14 @@ python scripts/installer.py uninstall <host> [--json]
 interactive TTY, install-replacement, update, and uninstall return an actionable error
 and change nothing. `--json` emits structured results on every branch.
 
-### Supported Host Adapter Classifications
+### Target Host Adapter Classifications
 
-All hosts below are structurally supported against the Hypertaks adapter catalog in this
-release. No host is behaviorally certified in a live session; each requires live host
-verification (see `evals/hosts/<host-id>/REPORT.md` and `distribution/HOST-CAPABILITY-MATRIX.md`).
-Google Antigravity is the active build target with installer-level lifecycle evidence.
+All hosts below have an adapter record in the Hypertaks catalog. No host is yet
+behaviorally certified in a live session. Each requires real host verification
+through `evals/hosts/<host-id>/REPORT.md` and
+`distribution/HOST-CAPABILITY-MATRIX.md`. Google Antigravity has
+installer-lifecycle evidence. ChatGPT has executable local MCP runtime evidence;
+live ChatGPT evidence is still pending.
 
 | Host | Classification | Install Scope | MCP Support | Evidence |
 |---|---|---|---|---|
@@ -324,7 +346,7 @@ Google Antigravity is the active build target with installer-level lifecycle evi
 | **Pi** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
 | **OpenClaw** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
 | **Hermes** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
-| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) | Partial (structural adapter) |
+| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) | Partial (local runtime tested) |
 | **GitHub Copilot** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
 | **Windsurf** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
 | **Cline** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
@@ -338,7 +360,33 @@ Google Antigravity is the active build target with installer-level lifecycle evi
 | **Open WebUI** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
 | **LibreChat** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
 
+### ChatGPT runtime quick start
 
+The ChatGPT adapter now includes an executable read-only MCP transport. It does
+not expose write, delete, shell, deploy, publish, or user-filesystem tools.
+
+```bash
+npm install --ignore-scripts
+npm run test:chatgpt
+npm run start:chatgpt
+```
+
+Local health endpoint:
+
+```text
+http://127.0.0.1:8787/healthz
+```
+
+Local MCP endpoint:
+
+```text
+http://127.0.0.1:8787/mcp
+```
+
+A real ChatGPT test requires an eligible workspace plus a remote HTTPS endpoint
+or an approved secure tunnel. ChatGPT cannot connect directly to an arbitrary
+local MCP process. See [the ChatGPT adapter guide](.chatgpt/INSTALL.md) and
+[live certification checklist](evals/hosts/chatgpt/LIVE-TEST-CHECKLIST.md).
 
 ---
 
@@ -384,6 +432,7 @@ python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
 python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
 python3 scripts/plot_retrieval_eval.py <report> <output-base>
 python3 -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
+npm run test:chatgpt
 npm test
 python3 -m compileall scripts
 git diff --check origin/main...HEAD
@@ -421,9 +470,10 @@ hypertaks-agent/
 ├── skills/hypertaks-brain/       # Evidence-backed founder memory
 ├── skills/hypertaks-graph/       # Graphify and direct-search routing
 ├── skills/hypertaks-continuity/  # Checkpoint, resume, handoff, proof of done
-├── runtime/                      # Strict TypeScript reference runtime
-├── evals/                        # EV-01 through EV-88
+├── runtime/                      # Strict TypeScript reference runtime and ChatGPT adapter
+├── evals/                        # EV-01 through EV-88 plus host evidence
 ├── scripts/                      # Validators, evaluators, reports, updater
+├── .chatgpt/
 ├── .claude-plugin/
 ├── .codex-plugin/
 ├── .cursor-plugin/

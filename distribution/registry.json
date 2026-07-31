@@ -102,7 +102,18 @@
       "adapterStatus": "present-needs-live-verification",
       "distributionType": "chatgpt-app-adapter",
       "manifest": ".chatgpt/plugin.json",
-      "installGuide": ".chatgpt/INSTALL.md"
+      "installGuide": ".chatgpt/INSTALL.md",
+      "runtime": "runtime/chatgpt-mcp-server.mjs",
+      "runtimeTest": "runtime/chatgpt-mcp-server.test.cjs",
+      "testCommand": "npm run test:chatgpt",
+      "startCommand": "npm run start:chatgpt",
+      "endpoint": "/mcp",
+      "bundledComponents": {
+        "canonicalSkills": true,
+        "mcpTransport": true,
+        "writeTools": false,
+        "widgets": false
+      }
     },
     {
       "id": "github-copilot",
