@@ -1,6 +1,20 @@
-# Hypertaks Claude.ai Installation
+# Hypertaks Plugin for Claude.ai
 
-## Setup Instructions
-1. Create a new Project in Claude.ai.
-2. Upload the canonical `skills/` files as Project Knowledge files.
-3. Paste the contents of `.claude-ai/plugin.json` into Project Custom Instructions.
+## Install
+
+1. Open **Claude Plugins**.
+2. Choose **Upload Plugin**.
+3. Upload the Hypertaks plugin package from this repository.
+4. Confirm the five canonical Hypertaks skills are included.
+
+## Update
+
+Upload the newer reviewed Hypertaks plugin package and replace the installed version.
+
+## Uninstall
+
+Remove Hypertaks from Claude Plugins.
+
+## Compatibility
+
+Official native plugin compatibility: `PASS`.

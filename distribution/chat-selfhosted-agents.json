@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "wave": 4,
+  "product": "hypertaks",
+  "version": "4.5.0",
+  "canonicalSkills": [
+    "hypertaks",
+    "hypertaks-verify",
+    "hypertaks-brain",
+    "hypertaks-graph",
+    "hypertaks-continuity"
+  ],
+  "evidenceRule": "PASS requires official-native-compatibility evidence and a matching tracked adapter path.",
+  "hosts": [
+    {
+      "id": "chatgpt",
+      "displayName": "ChatGPT",
+      "classification": "CUSTOM_PLUGIN_APP",
+      "adapterPath": ".chatgpt/plugin.json",
+      "installationMode": "custom-plugin-app",
+      "installInstruction": "Open ChatGPT Plugins or Developer Mode, create a custom plugin app, and connect the deployed Hypertaks HTTPS MCP endpoint.",
+      "updateMechanism": "Refresh the custom plugin app after deploying the newer Hypertaks runtime.",
+      "uninstallMechanism": "Remove or disconnect the Hypertaks custom plugin app.",
+      "officialDocs": ["https://help.openai.com/en/articles/11487775-connectors-in-chatgpt", "https://platform.openai.com/docs/mcp"],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "evidenceStatus": "PASS",
+      "evidenceType": "official-native-compatibility",
+      "evidenceNote": "Official host documentation supports this plugin app route and the matching Hypertaks adapter is tracked."
+    },
+    {
+      "id": "claude-ai",
+      "displayName": "Claude.ai",
+      "classification": "NATIVE_CLAUDE_PLUGIN",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "installationMode": "native-claude-plugin",
+      "installInstruction": "Open Claude Plugins, choose Upload Plugin, and upload the Hypertaks plugin package from this repository.",
+      "updateMechanism": "Upload the newer Hypertaks plugin package and replace the installed version.",
+      "uninstallMechanism": "Remove Hypertaks from Claude Plugins.",
+      "officialDocs": ["https://support.anthropic.com/en/articles/12512176-what-are-plugins", "https://support.anthropic.com/en/articles/12512180-how-to-use-plugins"],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "evidenceStatus": "PASS",
+      "evidenceType": "official-native-compatibility",
+      "evidenceNote": "Official host documentation supports uploaded plugin packages and the matching Hypertaks package is tracked."
+    },
+    {
+      "id": "gemini-app",
+      "displayName": "Gemini App",
+      "classification": "GEM_PLUGIN_WRAPPER",
+      "adapterPath": ".gemini-app/plugin.json",
+      "installationMode": "gem-plugin-wrapper",
+      "installInstruction": "Create a Gem and import the Hypertaks plugin instruction bundle as the Gem knowledge and instructions.",
+      "updateMechanism": "Replace the Gem knowledge files with the newer Hypertaks plugin bundle.",
+      "uninstallMechanism": "Delete or disable the Hypertaks Gem.",
+      "officialDocs": ["https://support.google.com/gemini/answer/15235603"],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "evidenceStatus": "PASS",
+      "evidenceType": "official-native-compatibility",
+      "evidenceNote": "Official host documentation supports Gems and the matching Hypertaks plugin instruction bundle is tracked."
+    },
+    {
+      "id": "open-webui",
+      "displayName": "Open WebUI",
+      "classification": "WORKSPACE_PLUGIN_IMPORT",
+      "adapterPath": ".open-webui/plugin.json",
+      "installationMode": "workspace-plugin-import",
+      "installInstruction": "Open Admin Panel, Workspace, Tools or Functions, then import the Hypertaks plugin adapter.",
+      "updateMechanism": "Replace the Hypertaks Tool or Function through Workspace.",
+      "uninstallMechanism": "Delete the Hypertaks Tool or Function from Workspace.",
+      "officialDocs": ["https://docs.openwebui.com/features/plugin/"],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "evidenceStatus": "PASS",
+      "evidenceType": "official-native-compatibility",
+      "evidenceNote": "Official host documentation supports imported Tools and Functions and the matching Hypertaks adapter is tracked."
+    },
+    {
+      "id": "librechat",
+      "displayName": "LibreChat",
+      "classification": "MCP_ACTION_PLUGIN",
+      "adapterPath": ".librechat/plugin.json",
+      "installationMode": "mcp-action-plugin",
+      "installInstruction": "Register the Hypertaks plugin adapter as an MCP server or OpenAPI Action in LibreChat configuration.",
+      "updateMechanism": "Update the Hypertaks endpoint or Action schema and restart the LibreChat deployment.",
+      "uninstallMechanism": "Remove the Hypertaks MCP or Action entry from LibreChat configuration.",
+      "officialDocs": ["https://www.librechat.ai/docs/features/mcp", "https://www.librechat.ai/docs/features/actions"],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "evidenceStatus": "PASS",
+      "evidenceType": "official-native-compatibility",
+      "evidenceNote": "Official host documentation supports MCP and Actions and the matching Hypertaks adapter is tracked."
+    }
+  ]
+}

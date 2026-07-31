@@ -1,58 +1,21 @@
-# Hypertaks for Google Antigravity
-
-This directory is the source template for the generated Antigravity plugin. The
-five public skills remain canonical under the repository `skills/` directory.
-Do not edit generated skill copies by hand.
-
-## Clone and build
-
-```text
-git clone https://github.com/aabrur/hypertaks-agent.git
-cd hypertaks-agent
-python scripts/build_distributions.py antigravity
-```
-
-The command creates:
-
-```text
-dist/antigravity/hypertaks/
-├── plugin.json
-├── BUILD-MANIFEST.json
-├── assets/
-│   └── hypertaks.svg
-└── skills/
-    ├── hypertaks/
-    ├── hypertaks-verify/
-    ├── hypertaks-brain/
-    ├── hypertaks-graph/
-    └── hypertaks-continuity/
-```
-
-The package intentionally contains no `mcp_config.json` and no `hooks.json`.
-Hypertaks may use a verified MCP capability supplied by the host when a task
-requires it, but MCP is not the product identity and no MCP server is bundled.
+# Hypertaks Plugin for Google Antigravity
 
 ## Install
 
-Copy the generated `hypertaks` directory to one Antigravity plugin location:
+1. Download or clone the Hypertaks repository.
+2. Open the Antigravity **Plugins** interface.
+3. Choose **Install Plugin** or **Import Plugin**.
+4. Select the Antigravity package under `distribution/antigravity/`.
+5. Confirm that the Hypertaks plugin exposes exactly five canonical skills.
 
-- Workspace: `<workspace>/.agents/plugins/hypertaks/`
-- Global: `~/.gemini/config/plugins/hypertaks/`
+## Update
 
-Start a new conversation after installation and ask Antigravity to list the
-available Hypertaks skills. Confirm that exactly five public skills are found.
+Use the Antigravity Plugins update or replace flow and select the newer reviewed Hypertaks package.
 
-## Validate before installation
+## Uninstall
 
-```text
-python scripts/validate_distributions.py
-python scripts/build_distributions.py antigravity --check-only
-python -m unittest scripts.test_build_distributions -v
-```
+Remove Hypertaks from the Antigravity Plugins interface. Preserve unrelated plugins and workspace configuration.
 
-## Brand asset
+## Compatibility
 
-The canonical project asset is `assets/Hypertask.svg`. The builder copies that
-exact Git-tracked SVG to `assets/hypertaks.svg` inside the generated package and
-records its SHA-256 digest in `BUILD-MANIFEST.json`. It never traces the PNG
-preview, redraws the mark, or generates a substitute.
+Official native plugin compatibility: `PASS`.

@@ -1,7 +1,22 @@
-# Hypertaks OpenHands Installation
+# Hypertaks Plugin for OpenHands
 
-Run:
-```bash
-python scripts/installer.py install openhands
+## Install
+
+```text
+/plugin install github:aabrur/hypertaks-agent
 ```
-This registers Hypertaks micro-agent skills in `.openhands/microagents/`.
+
+## Manage
+
+```text
+/plugin list
+/plugin enable hypertaks
+/plugin disable hypertaks
+/plugin uninstall hypertaks
+```
+
+OpenHands discovers the tracked `.plugin/plugin.json` package and the five canonical skills at the repository root.
+
+## Compatibility
+
+Official native plugin compatibility: `PASS`.

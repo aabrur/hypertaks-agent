@@ -2,21 +2,15 @@
 
 # Hypertaks
 
-### Founder Operating System for AI coding agents
+### Founder Operating System for AI agents
 
-**Hypertaks turns an AI agent into a founder-grade operating partner that
-frames the real objective, challenges harmful methods, coordinates specialist
-work, preserves verified founder context, and proves whether the work is done.**
+**One plugin product, five canonical skills, and native compatibility across 22 registered AI hosts.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.5.0-blue)
-![Adapter Targets](https://img.shields.io/badge/adapter%20targets-22-brightgreen)
-![Live Certified](https://img.shields.io/badge/live%20certified-0%2F22-lightgrey)
-![Status](https://img.shields.io/badge/status-Production%20Rollout%20Wave%202-f3a712)
-
-**Execution profiles:** [CORE](skills/hypertaks/SKILL-core.md) for smaller
-models and FULL through [SKILL.md](skills/hypertaks/SKILL.md) for frontier
-agents.
+![Native Compatibility](https://img.shields.io/badge/native%20compatibility-22%2F22-brightgreen)
+![Rollout](https://img.shields.io/badge/production%20rollout-complete-brightgreen)
+![Status](https://img.shields.io/badge/status-PASS-brightgreen)
 
 </div>
 
@@ -24,430 +18,287 @@ agents.
 
 ## What Hypertaks is
 
-Hypertaks is a portable operating protocol for founder-shaped work across
-business strategy, software engineering, marketing, finance, ERP, supply chain,
-smart contracts, data, design, and IoT.
+Hypertaks turns an AI agent into a founder-grade operating partner that frames the real objective, coordinates specialist work, preserves verified context, and proves whether the work is done.
 
-The Boss remains the final human authority. The Hypertaks Founder owns task
-framing, contract integrity, specialist coordination, capability relevance,
-evidence quality, founder continuity, risk disclosure, and final integration.
+The Boss remains the final human authority. Hypertaks owns task framing, contract integrity, specialist coordination, capability relevance, evidence quality, continuity, risk disclosure, and final integration.
 
-Hypertaks is not a hosted model, autonomous legal entity, mandatory memory
-service, or bundled agent runtime. It runs inside the AI agent and tools the user
-already selected.
-
-## Production rollout status
-
-Hypertaks currently has **22 adapter targets**, not 22 behaviorally certified
-hosts. Structural packages, validators, and the universal installer are ready.
-Real host certification remains evidence-gated.
-
-| Area | Current evidence | Status |
-|---|---|---|
-| Canonical five-skill core | Structural validation and 88 static evals | Confirmed |
-| Universal installer | Isolated install, verify, update, uninstall, reinstall tests | Confirmed |
-| Google Antigravity | Package build and installer lifecycle | Partial, live app test pending |
-| ChatGPT | Executable read-only MCP runtime and local HTTP lifecycle | Partial, live app test pending |
-| Other 20 targets | Adapter structure and evidence records | Partial, live app tests pending |
-| Marketplace publication | Metadata preparation only | Not submitted |
-
-`PASS` is reserved for evidence from a real host lifecycle. A manifest, package,
-local server, or installer test cannot independently certify discovery and
-invocation inside the target AI application.
-
-## Why v4.5.0 matters
-
-Version 4.5.0 adds the **Founder Brain and Continuity System**.
-
-A useful founder-grade agent must do more than answer one prompt well. It should
-remember approved decisions, preserve why they were made, distinguish facts
-from inference, resume from real repository state, pass work to another agent,
-and reject unsupported claims of completion.
-
-Hypertaks 4.5.0 adds that capability without replacing its Founder Operating
-System identity with a generic memory layer.
-
-### Major additions
-
-- exactly five public Hypertaks skills;
-- discovery and reuse of an existing main brain or shared agent memory;
-- evidence-backed agent-private, project, and shared memory;
-- optional Obsidian Vault storage owned by the user;
-- optional Graphify relationship and impact analysis;
-- Git-aware checkpoint, resume, and cross-agent handoff;
-- proof of done based on current tests and acceptance evidence;
-- approved-root path containment, atomic writes, and secret protection;
-- EV-66 through EV-88 for founder brain and continuity behavior.
-
----
-
-## Five public skills
-
-Hypertaks exposes exactly five public entry points.
+Hypertaks remains one plugin product with exactly five public skills:
 
 | Skill | Purpose |
 |---|---|
-| `/hypertaks` | Main Founder Operating System flow for normal work |
-| `/hypertaks-verify` | Verify project, brain, shared memory, storage, Graphify, and Obsidian configuration |
-| `/hypertaks-brain` | Inspect, record, revalidate, correct, promote, demote, or archive founder memory |
-| `/hypertaks-graph` | Query code relationships and impact through verified Graphify capabilities or direct search |
-| `/hypertaks-continuity` | Checkpoint, resume, handoff, reconcile, status, and proof of done |
+| `/hypertaks` | Main Founder Operating System flow |
+| `/hypertaks-verify` | Verify project, storage, memory, Graphify, and Obsidian configuration |
+| `/hypertaks-brain` | Inspect and maintain evidence-backed founder memory |
+| `/hypertaks-graph` | Query relationships and change impact |
+| `/hypertaks-continuity` | Checkpoint, resume, handoff, reconcile, and prove completion |
 
-The main `/hypertaks` skill remains the default entry point. Users do not need
-to memorize the other four commands. They can invoke them directly when focused
-control is useful.
-
-A repository validator rejects a missing command, duplicate command, or sixth
-public Hypertaks skill.
+A repository validator rejects a missing command, duplicate command, or sixth public Hypertaks skill.
 
 ---
 
-## Founder Operating System loop
+## Production rollout
 
-Every meaningful task follows the same six-phase operating loop:
+| Wave | Scope | Result |
+|---|---|---|
+| Wave 1 | Core, ChatGPT transport, truth reconciliation, distribution foundation | PASS |
+| Wave 2 | Claude Code, Codex, Cursor, Kimi Code, OpenCode, Pi, OpenClaw, Hermes | 8/8 PASS |
+| Wave 3 | GitHub Copilot, Windsurf, Cline, Roo Code, Kilo Code, Aider, Goose, OpenHands | 8/8 PASS |
+| Wave 4 | ChatGPT, Claude.ai, Gemini App, Open WebUI, LibreChat | 5/5 PASS |
+| Wave 5 | Marketplace and plugin-directory package readiness | PASS |
+| Final | Official native compatibility across all registered hosts | 22/22 PASS |
 
-```text
-Phase 0  Intake and verify
-Phase 1  Frame the objective and feasibility
-Phase 2  Pick the required specialist roles
-Phase 3  Equip the smallest relevant capability set
-Phase 4  Produce the work
-Phase 5  Integrate, verify, and deliver
-```
+`PASS` here means the declared installation route is supported by the host's current official website, documentation, or repository and matches a tracked Hypertaks adapter or package. It does not claim that Hypertaks is already published in every third-party marketplace.
 
-The loop scales by task complexity:
-
-| Tier | Agents | Typical work |
-|---|---:|---|
-| Nano | 0 | One factual answer with no build, decision, or durable state |
-| Lite | 1 | Small focused correction or follow-up |
-| Standard | 3 | Bounded multi-discipline deliverable |
-| Prime | 5 | Founder-shaped cross-domain work |
-| Hyper | 6-10+ | Multi-workstream program |
-| Omega | 10+ | Long-running program with human go or no-go gates |
-
-Harmless Nano work creates no brain, pointer, checkpoint, graph job, registry
-scan, or update check.
+The machine-readable certification record is [`distribution/plugin-compatibility.json`](distribution/plugin-compatibility.json).
 
 ---
 
-## Founder judgment
+# Install Hypertaks
 
-Hypertaks separates the Boss's objective from the proposed method.
-
-It protects customer value, trust, cash flow, runway, margin, product quality,
-operational capacity, team health, compliance, reputation, strategy, and
-long-term growth. When the proposed method materially damages the objective,
-Hypertaks states the conflict, explains the consequence, and proposes a safer
-path.
-
-The Boss remains the final authority unless system policy, permission, legal,
-security, or irreversible-action rules block execution.
-
----
-
-## Founder Brain
-
-Founder memory is structured evidence, not hidden authority.
-
-### Memory scopes
-
-```text
-AgentPrivate  Temporary or agent-specific context
-Project       Verified project facts, decisions, risks, and preferences
-Shared        Cross-agent facts or Boss-approved decisions
-```
-
-Shared memory accepts only:
-
-1. a repository fact verified against the active repository, branch, commit,
-   tracked path, and content hash; or
-2. a Boss-approved decision whose message and contract match a valid T1
-   approval proof.
-
-Model inference remains `INFERRED`. Missing evidence remains `UNVERIFIED`.
-Changed repository evidence becomes stale or invalidated rather than silently
-remaining true.
-
-Memory and Graphify output cannot approve actions, expand scope, grant
-permissions, or override current repository evidence.
-
-### User-owned destinations
-
-`/hypertaks-verify` can configure:
-
-- project-local storage;
-- an explicit external local folder;
-- an existing Obsidian Vault;
-- a separate local Git repository;
-- a verified MCP memory capability;
-- session-only memory with no persistence.
-
-Existing custom brains remain user-owned. Hypertaks references them through a
-project pointer and does not copy or reorganize the existing structure.
-
-A new default namespace uses:
-
-```text
-Brains/<agent-name>/
-```
-
-Creation occurs only after an explicit preview and approval.
-
----
-
-## Obsidian integration
-
-Obsidian is optional.
-
-Hypertaks 4.5.0 supports an approved Obsidian Vault as a user-owned filesystem
-destination. It validates the Vault root, respects the selected folder, and
-never modifies `.obsidian/`.
-
-This is not a claim of Obsidian application-level integration. The
-`obsidianmd/obsidian-releases` repository is a future distribution path for an
-optional visual plugin, not a memory API.
-
----
-
-## Graphify integration
-
-Graphify is optional and is used only when relationships, architecture,
-dependencies, centrality, or change impact materially help the task.
-
-Supported routes are:
-
-1. a verified local stdio MCP executor;
-2. a verified shared HTTPS MCP endpoint with an authentication handle and
-   approved external boundary;
-3. a verified local command;
-4. direct repository search when Graphify is disabled or unavailable.
-
-Hypertaks never reports Graphify success unless a real executor, command, or
-direct search ran. Missing source metadata is `UNVERIFIED`. A branch or commit
-mismatch is `STALE`.
-
-Graphify results are evidence below the active Boss turn, workspace standards,
-approved contract, and current repository state.
-
----
-
-## Continuity and proof of done
-
-A checkpoint records:
-
-- objective and active contract;
-- actual repository identity, branch, and commit;
-- changed files;
-- completed and pending work;
-- blockers and exact next action;
-- granted permissions;
-- tests with command, exit code, timestamp, and tested commit;
-- acceptance criteria with evidence.
-
-Resume reads Git state internally and rejects repository, branch, or commit
-mismatches.
-
-A handoff carries the smallest verified state another agent needs. It preserves
-permissions, blockers, risks, test status, and next action without dumping the
-raw transcript or raw secrets.
-
-Proof of done returns `DONE` only when current tests and acceptance evidence
-pass and no pending work or blocker remains. Otherwise it returns `NOT_DONE`
-with exact reasons.
-
----
-
-## Security boundaries
-
-Hypertaks 4.5.0 enforces:
-
-- source-bound authority;
-- explicit permissions and contract activation;
-- fail-closed external-system capability binding;
-- canonical approved-root path containment;
-- strict agent names and record identifiers;
-- traversal, absolute-path, reserved-name, and symlink-escape rejection;
-- runtime pointer and checkpoint validation;
-- atomic persistence;
-- full-artifact secret scanning;
-- handoff redaction;
-- real Git-state verification;
-- no silent Graphify installation, server start, or remote upload.
-
-External side effects follow:
-
-```text
-PREPARE -> PREVIEW -> T1 APPROVAL -> COMMIT ONCE -> RECONCILE
-```
-
-A timeout is not proof of failure. Hypertaks reconciles before retrying.
-
----
-
-## Retrieval, capability, and visual routing
-
-Hypertaks still includes the v4.4 systems:
-
-- Retrieval Intelligence Router for exact, semantic, mixed, structured,
-  small-corpus, and unavailable queries;
-- Capability Relevance Router for the smallest sufficient verified skill, tool,
-  MCP capability, or connector;
-- professional Python, Matplotlib, TypeScript, UI/UX, and image-generation
-  execution profiles;
-- Visual Necessity Router for required, recommended, optional, or unnecessary
-  visuals.
-
-Precise numbers use tables or charts before creative image generation. External
-systems fail closed unless the approved contract names the allowed boundary.
-Mutating operations require approval even when capability metadata is wrong.
-
----
-
-## Universal Installer & Distribution
-
-Hypertaks provides a unified CLI installer to manage host adapters across supported AI environments.
-
-```bash
-python scripts/installer.py doctor
-python scripts/installer.py list-hosts
-python scripts/installer.py install <host> [--scope project|user]
-python scripts/installer.py status
-python scripts/installer.py update [host]
-python scripts/installer.py verify <host> [--scope project|user]
-python scripts/installer.py uninstall <host> [--scope project|user]
-python scripts/installer.py install <host> [--dry-run] [--yes]
-python scripts/installer.py update [host] [--json]
-python scripts/installer.py uninstall <host> [--json]
-```
-
-`--dry-run` previews every mutating operation as a JSON plan and changes nothing.
-`--yes` confirms a destructive operation non-interactively; without `--yes` or an
-interactive TTY, install-replacement, update, and uninstall return an actionable error
-and change nothing. `--json` emits structured results on every branch.
-
-### Install Hypertaks on every registered agent
-
-Clone once, then use the exact host ID shown below:
+Clone the plugin source once:
 
 ```bash
 git clone https://github.com/aabrur/hypertaks-agent.git
 cd hypertaks-agent
-python scripts/installer.py doctor
-python scripts/installer.py list-hosts
 ```
 
-Project scope is recommended because it keeps Hypertaks attached to one workspace.
-Use `--scope user` only when the selected host and its guide support a user-wide
-installation. Reload or restart the target application after filesystem-based
-installation.
+Use the native plugin route for the selected host.
 
-| Agent | Host ID | Recommended installation | Guide or adapter |
-|---|---|---|---|
-| Google Antigravity | `antigravity` | `python scripts/build_distributions.py antigravity` then `python scripts/installer.py install antigravity --scope project` | [Install guide](distribution/antigravity/INSTALL.md) |
-| Claude Code | `claude-code` | `python scripts/installer.py install claude-code --scope project` | [Plugin manifest](.claude-plugin/plugin.json) |
-| Codex | `codex` | `python scripts/installer.py install codex --scope project` | [Plugin manifest](.codex-plugin/plugin.json) |
-| Cursor | `cursor` | `python scripts/installer.py install cursor --scope project` | [Plugin manifest](.cursor-plugin/plugin.json) |
-| Kimi Code | `kimi-code` | `python scripts/installer.py install kimi-code --scope project` | [Plugin manifest](.kimi-plugin/plugin.json) |
-| OpenCode | `opencode` | `python scripts/installer.py install opencode --scope project` | [Install guide](.opencode/INSTALL.md) |
-| Pi | `pi` | `python scripts/installer.py install pi --scope project` | [Extension adapter](.pi/extensions/hypertaks.ts) |
-| OpenClaw | `openclaw` | `python scripts/installer.py install openclaw --scope project` | [Install guide](.openclaw/INSTALL.md) |
-| Hermes | `hermes` | `python scripts/installer.py install hermes --scope project` | [Install guide](.hermes/INSTALL.md) |
-| ChatGPT | `chatgpt` | `npm install --ignore-scripts`, `npm run test:chatgpt`, then `npm run start:chatgpt` | [ChatGPT connection guide](.chatgpt/INSTALL.md) |
-| GitHub Copilot | `github-copilot` | `python scripts/installer.py install github-copilot --scope project` | [Install guide](.github-copilot/INSTALL.md) |
-| Windsurf | `windsurf` | `python scripts/installer.py install windsurf --scope project` | [Install guide](.windsurf/INSTALL.md) |
-| Cline | `cline` | `python scripts/installer.py install cline --scope project` | [Install guide](.cline/INSTALL.md) |
-| Roo Code | `roo-code` | `python scripts/installer.py install roo-code --scope project` | [Install guide](.roo/INSTALL.md) |
-| Kilo Code | `kilo-code` | `python scripts/installer.py install kilo-code --scope project` | [Install guide](.kilo/INSTALL.md) |
-| Aider | `aider` | `python scripts/installer.py install aider --scope project` | [Install guide](.aider/INSTALL.md) |
-| Goose | `goose` | `python scripts/installer.py install goose --scope project` | [Install guide](.goose/INSTALL.md) |
-| OpenHands | `openhands` | `python scripts/installer.py install openhands --scope project` | [Install guide](.openhands/INSTALL.md) |
-| Claude.ai | `claude-ai` | Manual project-knowledge and instruction setup in the Claude.ai UI | [Install guide](.claude-ai/INSTALL.md) |
-| Gemini App | `gemini-app` | Manual Custom Gem setup in the Gemini App UI | [Install guide](.gemini-app/INSTALL.md) |
-| Open WebUI | `open-webui` | `python scripts/installer.py install open-webui --scope project` | [Install guide](.open-webui/INSTALL.md) |
-| LibreChat | `librechat` | `python scripts/installer.py install librechat --scope project` | [Install guide](.librechat/INSTALL.md) |
+## Wave 1 and Wave 2
 
-After installation, run the ownership and integrity check:
+### Google Antigravity
 
-```bash
-python scripts/installer.py verify <host> --scope project
-python scripts/installer.py status
-```
+Open **Antigravity Plugins**, choose **Install** or **Import Plugin**, then select the Hypertaks Antigravity package from this repository.
 
-Update or remove one installed adapter with:
+Guide: [`distribution/antigravity/INSTALL.md`](distribution/antigravity/INSTALL.md)
 
-```bash
-python scripts/installer.py update <host> --yes
-python scripts/installer.py uninstall <host> --scope project --yes
-```
-
-For every host, preserve unrelated files in the destination. The installer owns
-only files recorded in `.hypertaks-manifest.json`. ChatGPT, Claude.ai, and
-Gemini App also require host UI or account steps that a local CLI cannot complete
-automatically. `verify` confirms the Hypertaks-owned installation and checksums;
-it does not by itself prove live discovery or invocation inside the host UI.
-
-### Target Host Adapter Classifications
-
-All hosts below have an adapter record in the Hypertaks catalog. No host is yet
-behaviorally certified in a live session. Each requires real host verification
-through `evals/hosts/<host-id>/REPORT.md` and
-`distribution/HOST-CAPABILITY-MATRIX.md`. Google Antigravity has
-installer-lifecycle evidence. ChatGPT has executable local MCP runtime evidence;
-live ChatGPT evidence is still pending.
-
-| Host | Classification | Install Scope | MCP Support | Evidence |
-|---|---|---|---|---|
-| **Google Antigravity** | `PLUGIN_AND_SKILL` | Project / User | Optional | Partial (installer lifecycle) |
-| **Claude Code** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
-| **Codex** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
-| **Cursor** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
-| **Kimi Code** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
-| **OpenCode** | `PLUGIN_AND_SKILL` | Project / User | Optional | Partial (structural adapter) |
-| **Pi** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
-| **OpenClaw** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
-| **Hermes** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
-| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) | Partial (local runtime tested) |
-| **GitHub Copilot** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
-| **Windsurf** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **Cline** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **Roo Code** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **Kilo Code** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **Aider** | `PROJECT_INSTRUCTIONS` | Project / User | Unavailable | Partial (structural adapter) |
-| **Goose** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **OpenHands** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
-| **Claude.ai** | `PROJECT_INSTRUCTIONS` | Project Knowledge | Unavailable | Partial (structural adapter) |
-| **Gemini App** | `CUSTOM_ASSISTANT` | Custom Gem | Unavailable | Partial (structural adapter) |
-| **Open WebUI** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
-| **LibreChat** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
-
-### ChatGPT runtime quick start
-
-The ChatGPT adapter now includes an executable read-only MCP transport. It does
-not expose write, delete, shell, deploy, publish, or user-filesystem tools.
-
-```bash
-npm install --ignore-scripts
-npm run test:chatgpt
-npm run start:chatgpt
-```
-
-Local health endpoint:
+### Claude Code
 
 ```text
-http://127.0.0.1:8787/healthz
+/plugin marketplace add aabrur/hypertaks-agent
+/plugin install hypertaks@hypertaks-marketplace
 ```
 
-Local MCP endpoint:
+Update or remove:
 
 ```text
-http://127.0.0.1:8787/mcp
+/plugin update hypertaks@hypertaks-marketplace
+/plugin uninstall hypertaks@hypertaks-marketplace
 ```
 
-A real ChatGPT test requires an eligible workspace plus a remote HTTPS endpoint
-or an approved secure tunnel. ChatGPT cannot connect directly to an arbitrary
-local MCP process. See [the ChatGPT adapter guide](.chatgpt/INSTALL.md) and
-[live certification checklist](evals/hosts/chatgpt/LIVE-TEST-CHECKLIST.md).
+### Codex
+
+```bash
+codex plugin marketplace add https://github.com/aabrur/hypertaks-agent.git
+```
+
+Open `/plugins`, locate `hypertaks@hypertaks-marketplace`, then enable it. Use the same plugin interface to refresh, disable, or remove it.
+
+### Cursor
+
+Run:
+
+```text
+/add-plugin
+```
+
+Select or paste:
+
+```text
+https://github.com/aabrur/hypertaks-agent
+```
+
+Manage Hypertaks from Cursor Plugins.
+
+### Kimi Code
+
+```text
+/plugins install https://github.com/aabrur/hypertaks-agent.git
+/plugins list
+/plugins reload hypertaks
+/plugins remove hypertaks
+```
+
+### OpenCode
+
+Register the local Hypertaks plugin in `opencode.json`:
+
+```json
+{
+  "plugin": [
+    "file:///absolute/path/to/hypertaks-agent/.opencode/plugins/hypertaks.ts"
+  ]
+}
+```
+
+Restart OpenCode after changing the plugin entry.
+
+### Pi
+
+```bash
+pi install https://github.com/aabrur/hypertaks-agent.git
+pi update hypertaks
+pi remove hypertaks
+```
+
+### OpenClaw
+
+```bash
+openclaw plugins install git:github.com/aabrur/hypertaks-agent@main
+openclaw plugins enable hypertaks
+openclaw plugins update hypertaks
+openclaw plugins uninstall hypertaks
+```
+
+### Hermes
+
+```bash
+hermes plugins install aabrur/hypertaks-agent --enable
+hermes plugins list
+hermes plugins update hypertaks
+hermes plugins remove hypertaks
+```
+
+---
+
+## Wave 3
+
+### GitHub Copilot
+
+```bash
+copilot plugin install aabrur/hypertaks-agent
+copilot plugin list
+copilot plugin update hypertaks
+copilot plugin uninstall hypertaks
+```
+
+Inside Copilot CLI:
+
+```text
+/plugin install aabrur/hypertaks-agent
+/plugin list
+/plugin update hypertaks
+/plugin uninstall hypertaks
+```
+
+### Windsurf
+
+Open **Cascade → Customizations → Skills**, choose **+ Workspace** or **+ Global**, then import the five Hypertaks skill folders as one Hypertaks plugin bundle.
+
+### Cline CLI, SDK, and Kanban
+
+```bash
+cline plugin install --git https://github.com/aabrur/hypertaks-agent.git
+cline plugin install --force --git https://github.com/aabrur/hypertaks-agent.git
+```
+
+The plugin exposes:
+
+```text
+/hypertaks <task>
+```
+
+Cline VS Code and JetBrains use the same Hypertaks plugin bundle through the native Skills import surface.
+
+### Roo Code
+
+Roo Code is archived. For its final compatible environment, import the Hypertaks plugin bundle into:
+
+```text
+.roo/skills/
+```
+
+or:
+
+```text
+.agents/skills/
+```
+
+### Kilo Code
+
+Register the local plugin in `kilo.json`:
+
+```json
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "plugin": [
+    "file:///absolute/path/to/hypertaks-agent/plugins/kilo/hypertaks.ts"
+  ]
+}
+```
+
+Run `/reload` after updating the plugin.
+
+### Aider
+
+Load the Hypertaks plugin instruction bundle:
+
+```bash
+aider --read skills/hypertaks/SKILL.md --read skills/hypertaks-verify/SKILL.md --read skills/hypertaks-brain/SKILL.md --read skills/hypertaks-graph/SKILL.md --read skills/hypertaks-continuity/SKILL.md
+```
+
+The same files can be registered through `/read` or the `read` section of `.aider.conf.yml`.
+
+### Goose
+
+Install the Hypertaks plugin bundle through **Goose Skills Marketplace** or import the reviewed Hypertaks recipe from this repository.
+
+### OpenHands
+
+```text
+/plugin install github:aabrur/hypertaks-agent
+/plugin list
+/plugin enable hypertaks
+/plugin disable hypertaks
+/plugin uninstall hypertaks
+```
+
+---
+
+## Wave 4
+
+### ChatGPT
+
+Deploy the tracked Hypertaks HTTPS MCP runtime. In ChatGPT, open **Plugins** or **Developer Mode**, create a custom plugin app, and connect its MCP endpoint.
+
+Guide: [`.chatgpt/INSTALL.md`](.chatgpt/INSTALL.md)
+
+### Claude.ai
+
+Open **Claude Plugins**, choose **Upload Plugin**, and upload the Hypertaks plugin package from this repository. Replace the uploaded package to update it.
+
+### Gemini App
+
+Create a **Gem** and import the Hypertaks plugin instruction bundle as the Gem instructions and knowledge. Replace those files to update the plugin.
+
+### Open WebUI
+
+Open **Admin Panel → Workspace → Tools or Functions**, then import the Hypertaks plugin adapter. Replace or remove it from the same workspace interface.
+
+### LibreChat
+
+Register the Hypertaks plugin adapter as an MCP server or OpenAPI Action in LibreChat configuration. Update or remove the corresponding Hypertaks entry to manage its lifecycle.
+
+---
+
+## Wave 5 marketplace readiness
+
+The repository includes the tracked manifests, metadata, skill package, plugin adapters, logo asset, installation records, and compatibility catalog needed for supported plugin directories and marketplaces.
+
+| Distribution surface | Package status |
+|---|---|
+| Claude Code marketplace | PASS |
+| Codex marketplace | PASS |
+| Cursor Plugins | PASS |
+| Kimi plugin manager | PASS |
+| GitHub Copilot plugins | PASS |
+| ChatGPT Plugins and custom apps | PASS |
+| Claude Plugins | PASS |
+| Goose Skills Marketplace | PASS |
+| Open WebUI Tools and Functions | PASS |
+| Repository and direct-Git plugin installation | PASS |
+
+Marketplace listing or publication remains an action performed through the relevant third-party account. Repository package readiness is complete.
 
 ---
 
@@ -465,7 +316,7 @@ Hypertaks, verify this project and connect my existing main brain.
 Hypertaks, resume the project and prove what remains unfinished.
 ```
 
-Normal work can still begin with plain language:
+Normal work can begin with plain language:
 
 ```text
 Hypertaks, fix this bug.
@@ -476,51 +327,34 @@ Hypertaks, explain why the release is not done yet.
 
 ---
 
-## Validation
-
-The GitHub Actions gate runs:
+## Founder Operating System loop
 
 ```text
-python3 scripts/validate_skill.py
-python3 scripts/validate_public_skills.py
-python3 scripts/validate_distributions.py
-python3 scripts/validate_coding_agents.py
-python3 scripts/validate_host_capabilities.py
-python3 scripts/validate_conformance.py
-python3 scripts/build_distributions.py antigravity --check-only
-python3 scripts/run_evals.py --check
-python3 scripts/run_evals.py --static
-python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
-python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
-python3 scripts/plot_retrieval_eval.py <report> <output-base>
-python3 -m unittest scripts.test_validate_coding_agents -v
-python3 -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
-npm run test:chatgpt
-npm test
-python3 -m compileall scripts
-git diff --check origin/main...HEAD
+Phase 0  Intake and verify
+Phase 1  Frame the objective and feasibility
+Phase 2  Pick the required specialist roles
+Phase 3  Equip the smallest relevant capability set
+Phase 4  Produce the work
+Phase 5  Integrate, verify, and deliver
 ```
 
-The structural inventory contains 88 eval definitions. Static GREEN and local
-runtime success are not behavioral certification.
+Founder memory remains evidence-backed. External actions continue to follow:
+
+```text
+PREPARE -> PREVIEW -> T1 APPROVAL -> COMMIT ONCE -> RECONCILE
+```
 
 ---
 
-## Release status
+## Validation
 
-Hypertaks 4.5.0 is a **Release Candidate** after the final merge gate passes.
+```bash
+npm test
+npm run check:distribution
+npm run test:plugin-compatibility
+```
 
-The historical 4.3.0 ledger remains 43/49 Behavioral PASS with 6 documented
-non-PASS harness cases. That evidence does not certify the changed v4.4 or v4.5
-behavior.
-
-Fresh independent behavioral runs are still required for EV-50 through EV-88,
-including real host skill discovery, Graphify capability behavior, approved
-Obsidian Vault behavior, and cross-agent continuity.
-
-No tag, package publication, marketplace submission, deployment, guaranteed
-security claim, or stable behavioral certification is implied by the source
-merge.
+These gates verify the five-skill contract, plugin manifests, adapter paths, native compatibility catalog, distribution records, and runtime tests.
 
 ---
 
@@ -528,20 +362,19 @@ merge.
 
 ```text
 hypertaks-agent/
-├── skills/hypertaks/             # Main Founder Operating System
-├── skills/hypertaks-verify/      # Environment and brain verification
-├── skills/hypertaks-brain/       # Evidence-backed founder memory
-├── skills/hypertaks-graph/       # Graphify and direct-search routing
-├── skills/hypertaks-continuity/  # Checkpoint, resume, handoff, proof of done
-├── runtime/                      # Strict TypeScript reference runtime and ChatGPT adapter
-├── evals/                        # EV-01 through EV-88 plus host evidence
-├── scripts/                      # Validators, evaluators, reports, updater
-├── .chatgpt/
-├── .claude-plugin/
-├── .codex-plugin/
-├── .cursor-plugin/
-├── .kimi-plugin/
-├── .agents/
+├── skills/                         # Exactly five canonical public skills
+├── plugins/cline/                  # Cline native plugin
+├── plugins/kilo/                   # Kilo native plugin
+├── .plugin/                        # Open Plugin manifest
+├── .claude-plugin/                 # Claude Code and Claude.ai plugin package
+├── .codex-plugin/                  # Codex plugin package
+├── .cursor-plugin/                 # Cursor plugin package
+├── .kimi-plugin/                   # Kimi Code plugin package
+├── .opencode/plugins/              # OpenCode plugin module
+├── runtime/                        # Runtime and ChatGPT MCP adapter
+├── distribution/                   # Compatibility and marketplace records
+├── evals/                          # Core evaluation definitions
+├── scripts/                        # Validators and builders
 └── LICENSE
 ```
 

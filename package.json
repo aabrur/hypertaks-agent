@@ -11,7 +11,9 @@
   },
   "keywords": [
     "claude-code",
-    "antigravity",
+    "codex",
+    "cursor",
+    "chatgpt",
     "plugin",
     "skill",
     "founder",
@@ -20,9 +22,6 @@
     "memory",
     "graphify",
     "obsidian",
-    "retrieval",
-    "rag",
-    "typescript",
     "mcp"
   ],
   "files": [
@@ -30,9 +29,17 @@
     "runtime/",
     "assets/",
     "distribution/",
+    "plugins/",
+    "plugin.yaml",
+    "__init__.py",
     "scripts/build_distributions.py",
     "scripts/validate_distributions.py",
     "scripts/validate_coding_agents.py",
+    "scripts/validate_managed_agents.py",
+    "scripts/validate_chat_selfhosted_agents.py",
+    "scripts/validate_plugin_compatibility.py",
+    "scripts/validate_marketplace_readiness.py",
+    ".plugin/",
     ".claude-plugin/",
     ".codex-plugin/",
     ".cursor-plugin/",
@@ -58,6 +65,19 @@
     "README.md",
     "LICENSE"
   ],
+  "cline": {
+    "plugins": [
+      {
+        "paths": [
+          "./plugins/cline/hypertaks.ts"
+        ],
+        "capabilities": [
+          "rules",
+          "commands"
+        ]
+      }
+    ]
+  },
   "pi": {
     "extensions": [
       ".pi/extensions/hypertaks.ts"
@@ -71,11 +91,27 @@
     "build:runtime": "tsc -p tsconfig.json",
     "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js",
     "build:distribution": "python scripts/build_distributions.py antigravity",
-    "check:distribution": "python scripts/validate_distributions.py && python scripts/build_distributions.py antigravity --check-only",
+    "check:distribution": "python scripts/validate_distributions.py && python scripts/validate_coding_agents.py && python scripts/validate_managed_agents.py && python scripts/validate_chat_selfhosted_agents.py && python scripts/validate_plugin_compatibility.py && python scripts/validate_marketplace_readiness.py && python scripts/build_distributions.py antigravity --check-only",
     "test:coding-hosts": "python scripts/validate_coding_agents.py && python -m unittest scripts.test_validate_coding_agents -v",
-    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt && npm run test:coding-hosts",
+    "test:managed-hosts": "python scripts/validate_managed_agents.py && python -m unittest scripts.test_validate_managed_agents -v",
+    "test:chat-hosts": "python scripts/validate_chat_selfhosted_agents.py && python -m unittest scripts.test_validate_chat_selfhosted_agents -v",
+    "test:plugin-compatibility": "python scripts/validate_plugin_compatibility.py && python -m unittest scripts.test_validate_plugin_compatibility -v",
+    "test:marketplace-readiness": "python scripts/validate_marketplace_readiness.py && python -m unittest scripts.test_validate_marketplace_readiness -v",
+    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt && npm run test:coding-hosts && npm run test:managed-hosts && npm run test:chat-hosts && npm run test:plugin-compatibility && npm run test:marketplace-readiness",
     "start:chatgpt": "node runtime/chatgpt-mcp-server.mjs",
     "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
+  },
+  "peerDependencies": {
+    "@cline/sdk": "*",
+    "@kilocode/plugin": "*"
+  },
+  "peerDependenciesMeta": {
+    "@cline/sdk": {
+      "optional": true
+    },
+    "@kilocode/plugin": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "22.15.3",

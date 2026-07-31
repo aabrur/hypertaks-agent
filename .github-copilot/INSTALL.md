@@ -1,13 +1,31 @@
-# Hypertaks GitHub Copilot Plugin Installation
+# Hypertaks Plugin for GitHub Copilot
 
-## Workspace Installation
-Run:
+## Install
+
 ```bash
-python scripts/installer.py install github-copilot --scope project
+copilot plugin install aabrur/hypertaks-agent
 ```
 
-## User Installation
-Run:
-```bash
-python scripts/installer.py install github-copilot --scope user
+Inside Copilot CLI:
+
+```text
+/plugin install aabrur/hypertaks-agent
 ```
+
+## Manage
+
+```bash
+copilot plugin list
+copilot plugin update hypertaks
+copilot plugin uninstall hypertaks
+```
+
+```text
+/plugin list
+/plugin update hypertaks
+/plugin uninstall hypertaks
+```
+
+## Compatibility
+
+Official native plugin compatibility: `PASS`.

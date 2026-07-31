@@ -7,17 +7,17 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.validate_coding_agents import validate
+from scripts.validate_chat_selfhosted_agents import validate
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
-class CodingAgentCatalogTests(unittest.TestCase):
+class ChatSelfHostedCatalogTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.temp = Path(tempfile.mkdtemp(prefix="hypertaks-wave2-"))
+        self.temp = Path(tempfile.mkdtemp(prefix="hypertaks-wave4-"))
         shutil.copytree(ROOT, self.temp / "repo", dirs_exist_ok=True)
         self.root = self.temp / "repo"
-        self.catalog = self.root / "distribution" / "coding-agents.json"
+        self.catalog = self.root / "distribution" / "chat-selfhosted-agents.json"
 
     def tearDown(self) -> None:
         shutil.rmtree(self.temp, ignore_errors=True)

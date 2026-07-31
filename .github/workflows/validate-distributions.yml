@@ -2,7 +2,7 @@ name: Validate distributions
 
 on:
   push:
-    branches: [main, feat/production-rollout-wave-2]
+    branches: [main, feat/production-rollout-wave-3]
   pull_request:
 
 jobs:
@@ -25,10 +25,22 @@ jobs:
       - name: Validate Wave 2 coding-agent catalog
         run: python scripts/validate_coding_agents.py
 
+      - name: Validate Wave 3 managed-agent catalog
+        run: python scripts/validate_managed_agents.py
+
+      - name: Validate Wave 4 chat and self-hosted catalog
+        run: python scripts/validate_chat_selfhosted_agents.py
+
+      - name: Validate official native plugin compatibility
+        run: python scripts/validate_plugin_compatibility.py
+
+      - name: Validate Wave 5 marketplace readiness
+        run: python scripts/validate_marketplace_readiness.py
+
       - name: Build-check Antigravity package
         run: python scripts/build_distributions.py antigravity --check-only
 
-      - name: Validate cross-host conformance
+      - name: Validate cross-host conformance records
         run: python scripts/validate_conformance.py
 
       - name: Validate host capability evidence
@@ -40,8 +52,21 @@ jobs:
       - name: Test ChatGPT MCP runtime
         run: node --test runtime/chatgpt-mcp-server.test.cjs
 
-      - name: Test Wave 2 coding-agent validator
-        run: python -m unittest scripts.test_validate_coding_agents -v
+      - name: Test compatibility catalogs
+        run: >-
+          python -m unittest
+          scripts.test_validate_coding_agents
+          scripts.test_validate_managed_agents
+          scripts.test_validate_chat_selfhosted_agents
+          scripts.test_validate_plugin_compatibility
+          scripts.test_validate_marketplace_readiness
+          -v
 
-      - name: Run distribution, installer, conformance, and host-capability unit tests
-        run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
+      - name: Run distribution and lifecycle unit tests
+        run: >-
+          python -m unittest
+          scripts.test_build_distributions
+          scripts.test_installer
+          scripts.test_validate_conformance
+          scripts.test_validate_host_capabilities
+          -v
