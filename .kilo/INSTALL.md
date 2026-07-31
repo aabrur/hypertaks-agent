@@ -1,41 +1,55 @@
 # Hypertaks for Kilo Code
 
-Kilo Code supports native Agent Skills and compatible cross-agent skill directories.
+Hypertaks uses a native Kilo TypeScript plugin. No Python installer is required.
 
-## Workspace installation
+## Install the repository plugin
 
-The native project root is:
+Clone Hypertaks to a stable location, then register the plugin file in the project `kilo.json` or `.kilo/opencode.jsonc`:
 
-```text
-.kilo/skills/
+```json
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "plugin": [
+    "file:///absolute/path/to/hypertaks-agent/plugins/kilo/hypertaks.ts"
+  ]
+}
 ```
 
-Copy the five canonical Hypertaks skill directories from `skills/` into that root. Do not use the legacy `.kilo-code/skills/` path as proof of Kilo discovery.
+The plugin injects the five canonical Hypertaks skill documents through Kilo's native plugin hook.
 
-Kilo also discovers compatible project skills under `.agents/skills/`.
-
-## Global installation
-
-Place the five skill folders under:
-
-```text
-~/.kilo/skills/
-```
+Kilo's `kilo plugin <module>` command installs npm modules only. Do not use `kilo plugin hypertaks` until a Hypertaks Kilo npm package has actually been published.
 
 ## Verify
 
-Start a new Kilo session or run:
+```bash
+kilo config check
+kilo --print-logs --log-level DEBUG
+```
+
+Start a new Kilo session and confirm the `hypertaks` plugin loads without an error. Invoke Hypertaks in natural language or through the canonical skill name.
+
+## Update
+
+Update the reviewed Hypertaks checkout in its stable location, then restart Kilo or run:
 
 ```text
 /reload
 ```
 
-Confirm all five skill IDs are present and explicitly request `hypertaks` for a repository review task.
+## Uninstall
 
-## Update and uninstall
+Remove only the Hypertaks plugin entry from the Kilo configuration. Preserve unrelated plugins and settings.
 
-Refresh only the Hypertaks-owned skill directories. Run `/reload` or start a new session after update. Remove only those five directories during uninstall and preserve unrelated Kilo configuration.
+## Future registry command
+
+After an npm package is published and verified, installation may use:
+
+```bash
+kilo plugin <published-hypertaks-package>
+```
+
+That command is intentionally not presented as available before publication.
 
 ## Certification
 
-Run the Kilo Code section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until a named Kilo version proves discovery, invocation, update, uninstall, and reinstall.
+Run the Kilo Code section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until a named Kilo version proves plugin loading, invocation, update, uninstall, and reinstall.
