@@ -1,4 +1,4 @@
-# Codex Execution Evidence Log — Cross-AI Distribution Wave 2
+# Codex Execution Evidence Log - Cross-AI Distribution Wave 2
 
 - **Agent**: codex (worktree `cross-ai-distribution-wave-2-execution`)
 - **Branch**: `feat/cross-ai-distribution-wave-2` / `codex/cross-ai-distribution-wave-2-execution`
@@ -23,7 +23,7 @@ conformance validator accepted structural `PASS` without evidence; only 9 of 22 
 
 ## 2. TDD Evidence (RED -> GREEN per task)
 
-### Task 2 — Host capability evidence validator
+### Task 2 - Host capability evidence validator
 
 - `test_validate_host_capabilities.ValidateHostCapabilitiesTests.test_pass_requires_real_host_lifecycle` -> RED (`ModuleNotFoundError`), then GREEN after `validate_host_capabilities.py`.
 - Negative cases added: duplicate host IDs, capability/host set mismatch, unsupported classification,
@@ -31,7 +31,7 @@ conformance validator accepted structural `PASS` without evidence; only 9 of 22 
 - Final: `python -m unittest scripts.test_validate_host_capabilities` -> 8 tests, OK.
 - `python scripts/validate_host_capabilities.py` -> exit 0 on schema-v2 records.
 
-### Task 3 — Installer ownership lifecycle
+### Task 3 - Installer ownership lifecycle
 
 - `test_uninstall_preserves_unknown_files` -> RED (unknown file deleted), then GREEN after safe ownership deletion + `project_root` isolation.
 - Transaction set added: unmanaged collision rejected without user files; dry-run leaves nothing;
@@ -41,7 +41,7 @@ conformance validator accepted structural `PASS` without evidence; only 9 of 22 
 - Final: `python -m unittest scripts.test_installer` -> 15 tests, OK.
 - Tests install into a temporary project root; the repository's own `.agents/` is never touched.
 
-### Task 4 — Evidence-backed conformance validator
+### Task 4 - Evidence-backed conformance validator
 
 - Fixture-based RED tests -> RED (`ImportError`), then GREEN after `validate()`.
 - Negative cases: case missing evidenceType/evidencePath/actualResult/limitations/reviewer;
