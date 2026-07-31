@@ -1,42 +1,65 @@
 # Hypertaks for GitHub Copilot
 
-GitHub Copilot supports installable plugin directories and Agent Skills. Hypertaks preserves exactly five public skills.
+Hypertaks uses the native Copilot plugin lifecycle. No Python installer is required.
 
-## Option A: local Copilot plugin
-
-Prepare the plugin directory from the repository clone:
+## Install from Copilot CLI
 
 ```bash
-python scripts/installer.py install github-copilot --scope project
-copilot plugin install ./.github-copilot
+copilot plugin install aabrur/hypertaks-agent
 ```
 
-Confirm the plugin and skills:
+Inside an interactive Copilot CLI session, the equivalent command is:
 
 ```text
+/plugin install aabrur/hypertaks-agent
+```
+
+Copilot discovers the repository `.plugin/plugin.json` manifest and the root `skills/` directory.
+
+## Verify
+
+```bash
 copilot plugin list
+```
+
+Inside Copilot CLI:
+
+```text
+/plugin list
 /skills list
 ```
 
-The plugin directory must contain `plugin.json` and `.github-copilot/skills/` with all five canonical skill folders.
-
-## Option B: repository Agent Skills
-
-Copy the five canonical skill directories into:
-
-```text
-.github/skills/
-```
-
-Copilot also supports compatible project skills under `.agents/skills/` and personal skills under `~/.copilot/skills/` or `~/.agents/skills/`.
+Confirm the `hypertaks` plugin and exactly five canonical Hypertaks skills are present.
 
 ## Update
 
-Update the reviewed Hypertaks checkout, rerun the staging install, then use the current Copilot plugin update flow or reinstall the local plugin. Start a new session before verifying changed skill content.
+```bash
+copilot plugin update hypertaks
+```
+
+Or interactively:
+
+```text
+/plugin update hypertaks
+```
+
+Reload skills after updating:
+
+```text
+/skills reload
+```
 
 ## Uninstall
 
-Remove the plugin through the current Copilot plugin command, or remove only the five Hypertaks-owned directories from the selected Agent Skills root. Preserve unrelated Copilot configuration and skills.
+```bash
+copilot plugin uninstall hypertaks
+```
+
+Or interactively:
+
+```text
+/plugin uninstall hypertaks
+```
 
 ## Certification
 
