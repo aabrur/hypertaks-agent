@@ -31,6 +31,7 @@
     "assets/",
     "distribution/",
     "plugins/cline/",
+    "plugins/kilo/",
     "scripts/build_distributions.py",
     "scripts/validate_distributions.py",
     "scripts/validate_coding_agents.py",
@@ -90,10 +91,14 @@
     "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
   },
   "peerDependencies": {
-    "@cline/sdk": "*"
+    "@cline/sdk": "*",
+    "@kilocode/plugin": "*"
   },
   "peerDependenciesMeta": {
     "@cline/sdk": {
+      "optional": true
+    },
+    "@kilocode/plugin": {
       "optional": true
     }
   },
