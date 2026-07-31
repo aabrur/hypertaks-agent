@@ -53,8 +53,11 @@ def validate(catalog_path: Path = CATALOG, root: Path = ROOT, **_: Any) -> int:
         if host.get("canonicalSkills") != EXPECTED_SKILLS:
             errors.append(f"{host_id}: canonicalSkills mismatch")
         instruction = host.get("installInstruction")
-        if not isinstance(instruction, str) or "plugin" not in instruction.lower():
-            errors.append(f"{host_id}: plugin installation instruction required")
+        mode = host.get("installationMode")
+        if not isinstance(instruction, str) or not isinstance(mode, str) or (
+            "plugin" not in instruction.lower() and "plugin" not in mode.lower()
+        ):
+            errors.append(f"{host_id}: plugin installation route required")
         docs = host.get("officialDocs")
         if not isinstance(docs, list) or not docs:
             errors.append(f"{host_id}: officialDocs required")
