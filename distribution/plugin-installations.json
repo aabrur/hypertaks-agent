@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "product": "hypertaks",
+  "version": "4.5.0",
+  "repository": "https://github.com/aabrur/hypertaks-agent",
+  "command": "hypertaks plugin",
+  "defaultSources": [
+    "skills",
+    ".plugin/plugin.json",
+    "assets/Hypertask.svg"
+  ],
+  "hosts": [
+    {
+      "id": "antigravity",
+      "displayName": "Google Antigravity",
+      "wave": 1,
+      "projectTarget": ".agents/plugins/hypertaks",
+      "userTarget": "~/.gemini/config/plugins/hypertaks",
+      "adapterPaths": ["distribution/antigravity"],
+      "nativeCommand": "/plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "wave": 2,
+      "projectTarget": ".claude/plugins/hypertaks",
+      "userTarget": "~/.claude/plugins/hypertaks",
+      "adapterPaths": [".claude-plugin"],
+      "nativeCommand": "/plugin install hypertaks",
+      "requiresHostImport": true
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex",
+      "wave": 2,
+      "projectTarget": ".codex/plugins/hypertaks",
+      "userTarget": "~/.codex/plugins/hypertaks",
+      "adapterPaths": [".codex-plugin", ".agents/plugins/hypertaks.json"],
+      "nativeCommand": "codex plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "wave": 2,
+      "projectTarget": ".cursor/plugins/hypertaks",
+      "userTarget": "~/.cursor/plugins/hypertaks",
+      "adapterPaths": [".cursor-plugin"],
+      "nativeCommand": "/plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "wave": 2,
+      "projectTarget": ".kimi/plugins/hypertaks",
+      "userTarget": "~/.kimi/plugins/hypertaks",
+      "adapterPaths": [".kimi-plugin"],
+      "nativeCommand": "kimi plugin install https://github.com/aabrur/hypertaks-agent.git",
+      "requiresHostImport": true
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "wave": 2,
+      "projectTarget": ".opencode/plugins/hypertaks",
+      "userTarget": "~/.opencode/plugins/hypertaks",
+      "adapterPaths": [".opencode"],
+      "nativeCommand": "opencode plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "pi",
+      "displayName": "Pi",
+      "wave": 2,
+      "projectTarget": ".pi/extensions/hypertaks",
+      "userTarget": "~/.pi/extensions/hypertaks",
+      "adapterPaths": [".pi"],
+      "nativeCommand": "pi plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "openclaw",
+      "displayName": "OpenClaw",
+      "wave": 2,
+      "projectTarget": ".openclaw/plugins/hypertaks",
+      "userTarget": "~/.openclaw/plugins/hypertaks",
+      "adapterPaths": [".openclaw"],
+      "nativeCommand": "openclaw plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "hermes",
+      "displayName": "Hermes",
+      "wave": 2,
+      "projectTarget": ".hermes/plugins/hypertaks",
+      "userTarget": "~/.hermes/plugins/hypertaks",
+      "adapterPaths": [".hermes"],
+      "nativeCommand": "hermes plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": true
+    },
+    {
+      "id": "github-copilot",
+      "displayName": "GitHub Copilot",
+      "wave": 3,
+      "projectTarget": ".copilot/plugins/hypertaks",
+      "userTarget": "~/.copilot/plugins/hypertaks",
+      "adapterPaths": [".github-copilot"],
+      "nativeCommand": "copilot plugin install aabrur/hypertaks-agent",
+      "requiresHostImport": false
+    },
+    {
+      "id": "windsurf",
+      "displayName": "Windsurf",
+      "wave": 3,
+      "projectTarget": ".windsurf/plugins/hypertaks",
+      "userTarget": "~/.codeium/windsurf/plugins/hypertaks",
+      "adapterPaths": [".windsurf"],
+      "nativeCommand": null,
+      "requiresHostImport": true
+    },
+    {
+      "id": "cline",
+      "displayName": "Cline",
+      "wave": 3,
+      "projectTarget": ".cline/plugins/hypertaks",
+      "userTarget": "~/.cline/plugins/hypertaks",
+      "adapterPaths": [".cline", "plugins/cline"],
+      "nativeCommand": "cline plugin install --git https://github.com/aabrur/hypertaks-agent.git",
+      "requiresHostImport": false
+    },
+    {
+      "id": "roo-code",
+      "displayName": "Roo Code",
+      "wave": 3,
+      "projectTarget": ".roo/plugins/hypertaks",
+      "userTarget": "~/.roo/plugins/hypertaks",
+      "adapterPaths": [".roo"],
+      "nativeCommand": null,
+      "requiresHostImport": true
+    },
+    {
+      "id": "kilo-code",
+      "displayName": "Kilo Code",
+      "wave": 3,
+      "projectTarget": ".kilo/plugins/hypertaks",
+      "userTarget": "~/.kilo/plugins/hypertaks",
+      "adapterPaths": [".kilo", "plugins/kilo"],
+      "nativeCommand": "kilo plugin file:plugins/kilo/hypertaks.ts",
+      "requiresHostImport": false
+    },
+    {
+      "id": "aider",
+      "displayName": "Aider",
+      "wave": 3,
+      "projectTarget": ".aider/plugins/hypertaks",
+      "userTarget": "~/.aider/plugins/hypertaks",
+      "adapterPaths": [".aider"],
+      "nativeCommand": null,
+      "requiresHostImport": true
+    },
+    {
+      "id": "goose",
+      "displayName": "Goose",
+      "wave": 3,
+      "projectTarget": ".goose/plugins/hypertaks",
+      "userTarget": "~/.goose/plugins/hypertaks",
+      "adapterPaths": [".goose"],
+      "nativeCommand": null,
+      "requiresHostImport": true
+    },
+    {
+      "id": "openhands",
+      "displayName": "OpenHands",
+      "wave": 3,
+      "projectTarget": ".openhands/plugins/hypertaks",
+      "userTarget": "~/.openhands/plugins/hypertaks",
+      "adapterPaths": [".openhands"],
+      "nativeCommand": "/plugin install github:aabrur/hypertaks-agent",
+      "requiresHostImport": false
+    },
+    {
+      "id": "chatgpt",
+      "displayName": "ChatGPT",
+      "wave": 4,
+      "projectTarget": ".hypertaks/plugins/chatgpt",
+      "userTarget": "~/.hypertaks/plugins/chatgpt",
+      "adapterPaths": [".chatgpt", "runtime/chatgpt-mcp-server.mjs", "runtime/chatgpt-mcp-server.test.cjs"],
+      "nativeCommand": "hypertaks plugin connect chatgpt",
+      "requiresHostImport": true
+    },
+    {
+      "id": "claude-ai",
+      "displayName": "Claude.ai",
+      "wave": 4,
+      "projectTarget": ".hypertaks/plugins/claude-ai",
+      "userTarget": "~/.hypertaks/plugins/claude-ai",
+      "adapterPaths": [".claude-ai"],
+      "nativeCommand": "hypertaks plugin connect claude-ai",
+      "requiresHostImport": true
+    },
+    {
+      "id": "gemini-app",
+      "displayName": "Gemini App",
+      "wave": 4,
+      "projectTarget": ".hypertaks/plugins/gemini-app",
+      "userTarget": "~/.hypertaks/plugins/gemini-app",
+      "adapterPaths": [".gemini-app"],
+      "nativeCommand": "hypertaks plugin connect gemini-app",
+      "requiresHostImport": true
+    },
+    {
+      "id": "open-webui",
+      "displayName": "Open WebUI",
+      "wave": 4,
+      "projectTarget": ".open-webui/plugins/hypertaks",
+      "userTarget": "~/.open-webui/plugins/hypertaks",
+      "adapterPaths": [".open-webui"],
+      "nativeCommand": "hypertaks plugin connect open-webui",
+      "requiresHostImport": true
+    },
+    {
+      "id": "librechat",
+      "displayName": "LibreChat",
+      "wave": 4,
+      "projectTarget": ".librechat/plugins/hypertaks",
+      "userTarget": "~/.librechat/plugins/hypertaks",
+      "adapterPaths": [".librechat"],
+      "nativeCommand": "hypertaks plugin connect librechat",
+      "requiresHostImport": true
+    }
+  ]
+}
