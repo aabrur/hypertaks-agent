@@ -2,7 +2,7 @@ name: Validate distributions
 
 on:
   push:
-    branches: [main, feat/production-rollout-wave-1]
+    branches: [main, feat/production-rollout-wave-2]
   pull_request:
 
 jobs:
@@ -22,6 +22,9 @@ jobs:
       - name: Validate distribution registry
         run: python scripts/validate_distributions.py
 
+      - name: Validate Wave 2 coding-agent catalog
+        run: python scripts/validate_coding_agents.py
+
       - name: Build-check Antigravity package
         run: python scripts/build_distributions.py antigravity --check-only
 
@@ -36,6 +39,9 @@ jobs:
 
       - name: Test ChatGPT MCP runtime
         run: node --test runtime/chatgpt-mcp-server.test.cjs
+
+      - name: Test Wave 2 coding-agent validator
+        run: python -m unittest scripts.test_validate_coding_agents -v
 
       - name: Run distribution, installer, conformance, and host-capability unit tests
         run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
