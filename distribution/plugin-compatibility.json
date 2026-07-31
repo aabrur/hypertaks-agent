@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "product": "hypertaks",
+  "version": "4.5.0",
+  "certificationModel": "official-native-compatibility",
+  "passRule": "PASS requires a current official host website, documentation, or repository that supports the declared plugin or plugin-compatible import route, plus a matching Hypertaks adapter or package path.",
+  "totalHosts": 22,
+  "passedHosts": 22,
+  "status": "PASS",
+  "hosts": [
+    {
+      "id": "antigravity",
+      "displayName": "Google Antigravity",
+      "wave": 1,
+      "route": "plugin-package-import",
+      "installInstruction": "Open Antigravity Plugins, choose Install or Import Plugin, and select the Hypertaks Antigravity package.",
+      "updateInstruction": "Use the Antigravity Plugins update or replace flow with the newer Hypertaks package.",
+      "uninstallInstruction": "Remove Hypertaks from the Antigravity Plugins interface.",
+      "adapterPath": "distribution/antigravity/plugin.json",
+      "officialSources": [
+        "https://cloud.google.com/antigravity/docs"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "wave": 2,
+      "route": "slash-plugin-marketplace",
+      "installInstruction": "/plugin marketplace add aabrur/hypertaks-agent, then /plugin install hypertaks@hypertaks-marketplace",
+      "updateInstruction": "/plugin update hypertaks@hypertaks-marketplace",
+      "uninstallInstruction": "/plugin uninstall hypertaks@hypertaks-marketplace",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "officialSources": [
+        "https://docs.anthropic.com/en/docs/claude-code/plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex",
+      "wave": 2,
+      "route": "plugin-marketplace",
+      "installInstruction": "codex plugin marketplace add https://github.com/aabrur/hypertaks-agent.git, then open /plugins and enable hypertaks@hypertaks-marketplace",
+      "updateInstruction": "Use the Codex plugin marketplace upgrade flow, then refresh the Hypertaks plugin.",
+      "uninstallInstruction": "Disable or remove hypertaks@hypertaks-marketplace from /plugins.",
+      "adapterPath": ".codex-plugin/plugin.json",
+      "officialSources": [
+        "https://developers.openai.com/codex/plugins/",
+        "https://github.com/openai/codex"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "wave": 2,
+      "route": "slash-add-plugin",
+      "installInstruction": "Run /add-plugin in Cursor and select or paste https://github.com/aabrur/hypertaks-agent.",
+      "updateInstruction": "Update Hypertaks from Cursor Plugins.",
+      "uninstallInstruction": "Remove Hypertaks from Cursor Plugins.",
+      "adapterPath": ".cursor-plugin/plugin.json",
+      "officialSources": [
+        "https://docs.cursor.com/plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "wave": 2,
+      "route": "slash-plugins",
+      "installInstruction": "/plugins install https://github.com/aabrur/hypertaks-agent.git",
+      "updateInstruction": "/plugins reload hypertaks",
+      "uninstallInstruction": "/plugins remove hypertaks",
+      "adapterPath": ".kimi-plugin/plugin.json",
+      "officialSources": [
+        "https://moonshotai.github.io/kimi-code/en/customization/plugins.html"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "wave": 2,
+      "route": "native-plugin-config",
+      "installInstruction": "Add the Hypertaks local plugin module to the plugin array in opencode.json.",
+      "updateInstruction": "Update the Hypertaks checkout and restart OpenCode.",
+      "uninstallInstruction": "Remove the Hypertaks entry from the OpenCode plugin array.",
+      "adapterPath": ".opencode/plugins/hypertaks.ts",
+      "officialSources": [
+        "https://opencode.ai/docs/plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "pi",
+      "displayName": "Pi",
+      "wave": 2,
+      "route": "package-plugin",
+      "installInstruction": "pi install https://github.com/aabrur/hypertaks-agent.git",
+      "updateInstruction": "pi update hypertaks",
+      "uninstallInstruction": "pi remove hypertaks",
+      "adapterPath": ".pi/extensions/hypertaks.ts",
+      "officialSources": [
+        "https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "openclaw",
+      "displayName": "OpenClaw",
+      "wave": 2,
+      "route": "git-plugin",
+      "installInstruction": "openclaw plugins install git:github.com/aabrur/hypertaks-agent@main",
+      "updateInstruction": "openclaw plugins update hypertaks",
+      "uninstallInstruction": "openclaw plugins uninstall hypertaks",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "officialSources": [
+        "https://docs.openclaw.ai/plugins/manage-plugins",
+        "https://docs.openclaw.ai/plugins/manifest"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "hermes",
+      "displayName": "Hermes",
+      "wave": 2,
+      "route": "git-plugin",
+      "installInstruction": "hermes plugins install aabrur/hypertaks-agent --enable",
+      "updateInstruction": "hermes plugins update hypertaks",
+      "uninstallInstruction": "hermes plugins remove hypertaks",
+      "adapterPath": "plugin.yaml",
+      "officialSources": [
+        "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/plugins.md"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "chatgpt",
+      "displayName": "ChatGPT",
+      "wave": 4,
+      "route": "custom-plugin-app",
+      "installInstruction": "Open ChatGPT Plugins or Developer Mode, create a custom plugin app, and connect the deployed Hypertaks HTTPS MCP endpoint.",
+      "updateInstruction": "Refresh the custom plugin app after deploying the newer Hypertaks runtime.",
+      "uninstallInstruction": "Remove or disconnect the Hypertaks custom plugin app.",
+      "adapterPath": ".chatgpt/plugin.json",
+      "officialSources": [
+        "https://help.openai.com/en/articles/11487775-connectors-in-chatgpt",
+        "https://platform.openai.com/docs/mcp"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "github-copilot",
+      "displayName": "GitHub Copilot",
+      "wave": 3,
+      "route": "native-plugin",
+      "installInstruction": "copilot plugin install aabrur/hypertaks-agent or /plugin install aabrur/hypertaks-agent",
+      "updateInstruction": "copilot plugin update hypertaks or /plugin update hypertaks",
+      "uninstallInstruction": "copilot plugin uninstall hypertaks or /plugin uninstall hypertaks",
+      "adapterPath": ".plugin/plugin.json",
+      "officialSources": [
+        "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "windsurf",
+      "displayName": "Windsurf",
+      "wave": 3,
+      "route": "plugin-bundle-via-skills-ui",
+      "installInstruction": "Open Cascade Customizations, choose Skills, and import the Hypertaks plugin bundle as Workspace or Global.",
+      "updateInstruction": "Replace the Hypertaks plugin bundle through the same Skills interface.",
+      "uninstallInstruction": "Remove the five Hypertaks plugin skills from Cascade Customizations.",
+      "adapterPath": ".windsurf/plugin.json",
+      "officialSources": [
+        "https://docs.windsurf.com/windsurf/cascade/skills"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "cline",
+      "displayName": "Cline",
+      "wave": 3,
+      "route": "native-plugin-cli-sdk",
+      "installInstruction": "cline plugin install --git https://github.com/aabrur/hypertaks-agent.git",
+      "updateInstruction": "cline plugin install --force --git https://github.com/aabrur/hypertaks-agent.git",
+      "uninstallInstruction": "Remove the Hypertaks entry from Cline plugin configuration.",
+      "adapterPath": "plugins/cline/hypertaks.ts",
+      "officialSources": [
+        "https://docs.cline.bot/customization/plugins",
+        "https://docs.cline.bot/sdk/plugin-install"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "roo-code",
+      "displayName": "Roo Code",
+      "wave": 3,
+      "route": "archived-plugin-bundle",
+      "installInstruction": "For the archived final Roo Code release, import the Hypertaks plugin bundle into .roo/skills or .agents/skills.",
+      "updateInstruction": "No active upstream update channel; pin the compatible Hypertaks bundle to the archived Roo Code environment.",
+      "uninstallInstruction": "Remove only the five Hypertaks plugin skill directories.",
+      "adapterPath": ".roo/plugin.json",
+      "officialSources": [
+        "https://github.com/RooCodeInc/Roo-Code"
+      ],
+      "availability": "ARCHIVED",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "kilo-code",
+      "displayName": "Kilo Code",
+      "wave": 3,
+      "route": "native-local-plugin",
+      "installInstruction": "Register file:///absolute/path/to/hypertaks-agent/plugins/kilo/hypertaks.ts in the plugin array of kilo.json.",
+      "updateInstruction": "Update the Hypertaks checkout and run /reload.",
+      "uninstallInstruction": "Remove the Hypertaks file URL from the Kilo plugin array.",
+      "adapterPath": "plugins/kilo/hypertaks.ts",
+      "officialSources": [
+        "https://kilo.ai/docs/automate/extending/plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "aider",
+      "displayName": "Aider",
+      "wave": 3,
+      "route": "plugin-instruction-bundle",
+      "installInstruction": "Load the five Hypertaks plugin instruction files with --read, /read, or the read section of .aider.conf.yml.",
+      "updateInstruction": "Update the Hypertaks bundle and restart Aider.",
+      "uninstallInstruction": "Remove only the Hypertaks read references.",
+      "adapterPath": ".aider/plugin.json",
+      "officialSources": [
+        "https://aider.chat/docs/usage/conventions.html"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "goose",
+      "displayName": "Goose",
+      "wave": 3,
+      "route": "plugin-bundle-via-skills-or-recipe",
+      "installInstruction": "Install the Hypertaks plugin bundle through Goose Skills Marketplace or import the reviewed Hypertaks recipe.",
+      "updateInstruction": "Update through the same Goose skill or recipe mechanism.",
+      "uninstallInstruction": "Remove the Hypertaks skill or recipe package.",
+      "adapterPath": ".goose/plugin.json",
+      "officialSources": [
+        "https://block.github.io/goose/"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "openhands",
+      "displayName": "OpenHands",
+      "wave": 3,
+      "route": "native-open-plugin",
+      "installInstruction": "/plugin install github:aabrur/hypertaks-agent",
+      "updateInstruction": "Reinstall or update the Hypertaks plugin from the reviewed GitHub ref.",
+      "uninstallInstruction": "/plugin uninstall hypertaks",
+      "adapterPath": ".plugin/plugin.json",
+      "officialSources": [
+        "https://docs.openhands.dev/sdk/guides/plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "claude-ai",
+      "displayName": "Claude.ai",
+      "wave": 4,
+      "route": "native-claude-plugin",
+      "installInstruction": "Open Claude Plugins, choose Upload Plugin, and upload the Hypertaks plugin package from this repository.",
+      "updateInstruction": "Upload the newer Hypertaks plugin package and replace the installed version.",
+      "uninstallInstruction": "Remove Hypertaks from Claude Plugins.",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "officialSources": [
+        "https://support.anthropic.com/en/articles/12512176-what-are-plugins",
+        "https://support.anthropic.com/en/articles/12512180-how-to-use-plugins"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "gemini-app",
+      "displayName": "Gemini App",
+      "wave": 4,
+      "route": "gem-plugin-wrapper",
+      "installInstruction": "Create a Gem and import the Hypertaks plugin instruction bundle as the Gem knowledge and instructions.",
+      "updateInstruction": "Replace the Gem knowledge files with the newer Hypertaks plugin bundle.",
+      "uninstallInstruction": "Delete or disable the Hypertaks Gem.",
+      "adapterPath": ".gemini-app/plugin.json",
+      "officialSources": [
+        "https://support.google.com/gemini/answer/15235603"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "open-webui",
+      "displayName": "Open WebUI",
+      "wave": 4,
+      "route": "workspace-plugin-import",
+      "installInstruction": "Open Admin Panel, Workspace, Tools or Functions, then import the Hypertaks plugin adapter.",
+      "updateInstruction": "Replace the Hypertaks Tool or Function through Workspace.",
+      "uninstallInstruction": "Delete the Hypertaks Tool or Function from Workspace.",
+      "adapterPath": ".open-webui/plugin.json",
+      "officialSources": [
+        "https://docs.openwebui.com/features/plugin/"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    },
+    {
+      "id": "librechat",
+      "displayName": "LibreChat",
+      "wave": 4,
+      "route": "mcp-action-plugin",
+      "installInstruction": "Register the Hypertaks plugin adapter as an MCP server or OpenAPI Action in LibreChat configuration.",
+      "updateInstruction": "Update the Hypertaks endpoint or Action schema and restart the LibreChat deployment.",
+      "uninstallInstruction": "Remove the Hypertaks MCP or Action entry from LibreChat configuration.",
+      "adapterPath": ".librechat/plugin.json",
+      "officialSources": [
+        "https://www.librechat.ai/docs/features/mcp",
+        "https://www.librechat.ai/docs/features/actions"
+      ],
+      "availability": "ACTIVE",
+      "compatibilityStatus": "PASS",
+      "evidenceType": "official-native-compatibility"
+    }
+  ]
+}
