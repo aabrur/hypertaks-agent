@@ -32,6 +32,7 @@
     "distribution/",
     "scripts/build_distributions.py",
     "scripts/validate_distributions.py",
+    "scripts/validate_coding_agents.py",
     ".claude-plugin/",
     ".codex-plugin/",
     ".cursor-plugin/",
@@ -57,13 +58,22 @@
     "README.md",
     "LICENSE"
   ],
+  "pi": {
+    "extensions": [
+      ".pi/extensions/hypertaks.ts"
+    ],
+    "skills": [
+      "skills/"
+    ]
+  },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build:runtime": "tsc -p tsconfig.json",
     "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js",
     "build:distribution": "python scripts/build_distributions.py antigravity",
     "check:distribution": "python scripts/validate_distributions.py && python scripts/build_distributions.py antigravity --check-only",
-    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt",
+    "test:coding-hosts": "python scripts/validate_coding_agents.py && python -m unittest scripts.test_validate_coding_agents -v",
+    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt && npm run test:coding-hosts",
     "start:chatgpt": "node runtime/chatgpt-mcp-server.mjs",
     "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
   },
