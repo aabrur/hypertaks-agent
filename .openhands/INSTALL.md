@@ -1,35 +1,48 @@
 # Hypertaks for OpenHands
 
-OpenHands supports repository and user Skills. The current preferred repository path is `.agents/skills/`.
+Hypertaks uses the native OpenHands plugin format. The repository includes `.plugin/plugin.json` and the root `skills/` package. No Python installer is required.
 
-## Repository installation
+## Install plugin
 
-Copy the five canonical Hypertaks skill directories into:
-
-```text
-.agents/skills/
-```
-
-OpenHands also recognizes `.openhands/skills/` and `.openhands/microagents/`, but those paths are deprecated and should not be used for new installations.
-
-## User installation
-
-For supported self-hosted CLI, headless, and development modes, user skills may be placed under:
+Inside OpenHands CLI, install directly from GitHub:
 
 ```text
-~/.agents/skills/
+/plugin install github:aabrur/hypertaks-agent
 ```
 
-Project-specific skills take precedence over user skills.
+For a pinned release or commit, use the supported source/ref fields in the current OpenHands plugin flow.
 
 ## Verify
 
-Start a new OpenHands conversation for the target repository. Confirm the five Hypertaks skills are loaded through the documented skill precedence, then test direct and natural-language invocation.
+```text
+/plugin list
+```
 
-## Update and uninstall
+Confirm the `hypertaks` plugin is enabled and exposes exactly five canonical skills. Start a new conversation and test direct and natural-language invocation.
 
-Refresh only the five Hypertaks-owned skill directories and start a new conversation. Remove only those files during uninstall. Preserve unrelated `.agents`, `.openhands`, setup scripts, hooks, and repository configuration.
+## Enable or disable
+
+```text
+/plugin enable hypertaks
+/plugin disable hypertaks
+```
+
+## Update
+
+Use the current OpenHands plugin update command or reinstall the same GitHub source at the reviewed ref. Record the exact command during live certification because the CLI surface may vary by version.
+
+## Uninstall
+
+```text
+/plugin uninstall hypertaks
+```
+
+Do not remove unrelated OpenHands plugins, skills, hooks, MCP configuration, or repository settings.
+
+## Skill-only fallback
+
+OpenHands also supports `/add-skill` for individual GitHub-hosted skills. That is a fallback and does not certify the combined plugin package.
 
 ## Certification
 
-Run the OpenHands section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until a named OpenHands version proves discovery, invocation, update, uninstall, and reinstall.
+Run the OpenHands section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until a named OpenHands version proves plugin install, discovery, invocation, update, uninstall, and reinstall.
