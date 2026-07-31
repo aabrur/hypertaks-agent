@@ -26,6 +26,7 @@ ALLOWED_EVIDENCE_TYPES = {
     "official-documentation",
     "static-package",
     "installer-lifecycle",
+    "runtime-lifecycle",
     "real-host-lifecycle",
 }
 ALLOWED_CLASSIFICATIONS = {
