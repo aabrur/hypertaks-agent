@@ -12,7 +12,7 @@ work, preserves verified founder context, and proves whether the work is done.**
 ![Version](https://img.shields.io/badge/version-4.5.0-blue)
 ![Adapter Targets](https://img.shields.io/badge/adapter%20targets-22-brightgreen)
 ![Live Certified](https://img.shields.io/badge/live%20certified-0%2F22-lightgrey)
-![Status](https://img.shields.io/badge/status-Production%20Rollout%20Wave%201-f3a712)
+![Status](https://img.shields.io/badge/status-Production%20Rollout%20Wave%202-f3a712)
 
 **Execution profiles:** [CORE](skills/hypertaks/SKILL-core.md) for smaller
 models and FULL through [SKILL.md](skills/hypertaks/SKILL.md) for frontier
@@ -326,6 +326,67 @@ python scripts/installer.py uninstall <host> [--json]
 interactive TTY, install-replacement, update, and uninstall return an actionable error
 and change nothing. `--json` emits structured results on every branch.
 
+### Install Hypertaks on every registered agent
+
+Clone once, then use the exact host ID shown below:
+
+```bash
+git clone https://github.com/aabrur/hypertaks-agent.git
+cd hypertaks-agent
+python scripts/installer.py doctor
+python scripts/installer.py list-hosts
+```
+
+Project scope is recommended because it keeps Hypertaks attached to one workspace.
+Use `--scope user` only when the selected host and its guide support a user-wide
+installation. Reload or restart the target application after filesystem-based
+installation.
+
+| Agent | Host ID | Recommended installation | Guide or adapter |
+|---|---|---|---|
+| Google Antigravity | `antigravity` | `python scripts/build_distributions.py antigravity` then `python scripts/installer.py install antigravity --scope project` | [Install guide](distribution/antigravity/INSTALL.md) |
+| Claude Code | `claude-code` | `python scripts/installer.py install claude-code --scope project` | [Plugin manifest](.claude-plugin/plugin.json) |
+| Codex | `codex` | `python scripts/installer.py install codex --scope project` | [Plugin manifest](.codex-plugin/plugin.json) |
+| Cursor | `cursor` | `python scripts/installer.py install cursor --scope project` | [Plugin manifest](.cursor-plugin/plugin.json) |
+| Kimi Code | `kimi-code` | `python scripts/installer.py install kimi-code --scope project` | [Plugin manifest](.kimi-plugin/plugin.json) |
+| OpenCode | `opencode` | `python scripts/installer.py install opencode --scope project` | [Install guide](.opencode/INSTALL.md) |
+| Pi | `pi` | `python scripts/installer.py install pi --scope project` | [Extension adapter](.pi/extensions/hypertaks.ts) |
+| OpenClaw | `openclaw` | `python scripts/installer.py install openclaw --scope project` | [Install guide](.openclaw/INSTALL.md) |
+| Hermes | `hermes` | `python scripts/installer.py install hermes --scope project` | [Install guide](.hermes/INSTALL.md) |
+| ChatGPT | `chatgpt` | `npm install --ignore-scripts`, `npm run test:chatgpt`, then `npm run start:chatgpt` | [ChatGPT connection guide](.chatgpt/INSTALL.md) |
+| GitHub Copilot | `github-copilot` | `python scripts/installer.py install github-copilot --scope project` | [Install guide](.github-copilot/INSTALL.md) |
+| Windsurf | `windsurf` | `python scripts/installer.py install windsurf --scope project` | [Install guide](.windsurf/INSTALL.md) |
+| Cline | `cline` | `python scripts/installer.py install cline --scope project` | [Install guide](.cline/INSTALL.md) |
+| Roo Code | `roo-code` | `python scripts/installer.py install roo-code --scope project` | [Install guide](.roo/INSTALL.md) |
+| Kilo Code | `kilo-code` | `python scripts/installer.py install kilo-code --scope project` | [Install guide](.kilo/INSTALL.md) |
+| Aider | `aider` | `python scripts/installer.py install aider --scope project` | [Install guide](.aider/INSTALL.md) |
+| Goose | `goose` | `python scripts/installer.py install goose --scope project` | [Install guide](.goose/INSTALL.md) |
+| OpenHands | `openhands` | `python scripts/installer.py install openhands --scope project` | [Install guide](.openhands/INSTALL.md) |
+| Claude.ai | `claude-ai` | Manual project-knowledge and instruction setup in the Claude.ai UI | [Install guide](.claude-ai/INSTALL.md) |
+| Gemini App | `gemini-app` | Manual Custom Gem setup in the Gemini App UI | [Install guide](.gemini-app/INSTALL.md) |
+| Open WebUI | `open-webui` | `python scripts/installer.py install open-webui --scope project` | [Install guide](.open-webui/INSTALL.md) |
+| LibreChat | `librechat` | `python scripts/installer.py install librechat --scope project` | [Install guide](.librechat/INSTALL.md) |
+
+After installation, run the ownership and integrity check:
+
+```bash
+python scripts/installer.py verify <host> --scope project
+python scripts/installer.py status
+```
+
+Update or remove one installed adapter with:
+
+```bash
+python scripts/installer.py update <host> --yes
+python scripts/installer.py uninstall <host> --scope project --yes
+```
+
+For every host, preserve unrelated files in the destination. The installer owns
+only files recorded in `.hypertaks-manifest.json`. ChatGPT, Claude.ai, and
+Gemini App also require host UI or account steps that a local CLI cannot complete
+automatically. `verify` confirms the Hypertaks-owned installation and checksums;
+it does not by itself prove live discovery or invocation inside the host UI.
+
 ### Target Host Adapter Classifications
 
 All hosts below have an adapter record in the Hypertaks catalog. No host is yet
@@ -423,6 +484,7 @@ The GitHub Actions gate runs:
 python3 scripts/validate_skill.py
 python3 scripts/validate_public_skills.py
 python3 scripts/validate_distributions.py
+python3 scripts/validate_coding_agents.py
 python3 scripts/validate_host_capabilities.py
 python3 scripts/validate_conformance.py
 python3 scripts/build_distributions.py antigravity --check-only
@@ -431,6 +493,7 @@ python3 scripts/run_evals.py --static
 python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
 python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
 python3 scripts/plot_retrieval_eval.py <report> <output-base>
+python3 -m unittest scripts.test_validate_coding_agents -v
 python3 -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
 npm run test:chatgpt
 npm test
