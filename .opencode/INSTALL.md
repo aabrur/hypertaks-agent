@@ -1,76 +1,80 @@
 # Installing Hypertaks for OpenCode
 
-## Prerequisites
+OpenCode supports Agent Skills directly. Wave 2 uses the documented native skill locations and does not claim an npm-style Git plugin package.
 
-- [OpenCode.ai](https://opencode.ai) installed
+## Project installation
 
-## Installation
+From a clean Hypertaks clone:
 
-Add hypertaks to the `plugin` array in your `opencode.json` (global or
-project-level):
-
-```json
-{
-  "plugin": ["hypertaks@git+https://github.com/aabrur/hypertaks-agent.git"]
-}
+```text
+python scripts/installer.py install opencode --scope project
 ```
 
-Restart OpenCode. The plugin installs through OpenCode's plugin manager and
-registers the skill.
+The current project installer places the five canonical skills under:
 
-## Automatic updates
-
-Keep OpenCode's native plugin manager as the primary delivery path. Whether it
-refreshes a Git-backed third-party plugin automatically remains controlled by
-the installed OpenCode version and user policy; Hypertaks does not bypass that
-host boundary.
-
-For a scanned or linked installation outside the native manager, use the
-managed repository checkout and `python scripts/update_hypertaks.py`. It may run
-unattended only after installation-time opt-in and only fast-forwards a clean
-canonical `main` checkout. Restart OpenCode after a successful update; the
-already-running session does not reload the plugin in place.
-
-Verify by asking: *"Hypertaks, analyze why our churn is high."* - it should run
-the intake gate first, announce the tier (Prime for this task), then spawn the
-tier's specialist agents.
-
-## Pinning a version
-
-```json
-{
-  "plugin": ["hypertaks@git+https://github.com/aabrur/hypertaks-agent.git#v4.4.0"]
-}
+```text
+.opencode/skills/
 ```
 
-## Usage
+OpenCode also discovers project skills from:
 
-Use OpenCode's native `skill` tool:
-
-```
-use skill tool to list skills
-use skill tool to load hypertaks
+```text
+.agents/skills/
 ```
 
-## Tool mapping
+## User installation
 
-The skill speaks in actions. On OpenCode they resolve to:
+For a user-wide installation, copy or link each of the five canonical skill directories to:
 
-- Ask the user (Phase 0 intake gate) → present options; if a question tool is
-  available use it, otherwise ask inline.
-- Spawn the tier's agents (Phase 4) → `task` tool with `subagent_type: "general"`
-  (or `"explore"` for read-only research roles).
-- Invoke a skill → OpenCode's native `skill` tool.
-- Read a file → `read`; create/edit/delete → `apply_patch`; run a shell command
-  → `bash`; search contents / find files → `grep`, `glob`; fetch a URL →
-  `webfetch`.
+```text
+~/.config/opencode/skills/
+```
 
-## Troubleshooting
+Do not place Hypertaks in `~/.opencode/plugins/`; that is not the documented user skill root.
 
-1. Check logs: `opencode run --print-logs "hello" 2>&1 | grep -i hypertaks`
-2. Verify the plugin line in your `opencode.json`.
-3. Make sure you are running a recent version of OpenCode.
+## Discovery and invocation
 
-## Getting help
+Start a new OpenCode session and inspect the native `skill` tool. Confirm exactly these IDs:
 
-- Issues: https://github.com/aabrur/hypertaks-agent/issues
+```text
+hypertaks
+hypertaks-verify
+hypertaks-brain
+hypertaks-graph
+hypertaks-continuity
+```
+
+Load the main skill through the native skill mechanism or invoke it in natural language:
+
+```text
+Hypertaks, inspect this repository and explain what remains unfinished.
+```
+
+## Permissions
+
+Ensure the selected OpenCode profile does not deny the five Hypertaks skill IDs. A permission value of `ask` may request approval when a skill loads; `deny` hides it.
+
+## Update
+
+Update the canonical checkout only after review:
+
+```text
+python scripts/update_hypertaks.py --check-only
+python scripts/update_hypertaks.py
+```
+
+Restart or reload OpenCode after the update. Do not claim that an active session reloads skill content automatically.
+
+## Uninstall
+
+Remove only the five Hypertaks-owned skill directories and the Hypertaks ownership manifest. Preserve unrelated OpenCode skills and configuration.
+
+## Certification
+
+Run the OpenCode section in:
+
+```text
+evals/coding-agents/LIVE-CERTIFICATION.md
+```
+
+A structurally valid skill directory remains `PARTIAL` until discovery and invocation are observed in a real OpenCode version.
