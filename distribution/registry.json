@@ -135,41 +135,51 @@
       "id": "github-copilot",
       "displayName": "GitHub Copilot",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "native-plugin",
+      "distributionType": "native-plugin-and-skills",
       "manifest": ".github-copilot/plugin.json",
-      "installGuide": ".github-copilot/INSTALL.md"
+      "installGuide": ".github-copilot/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "windsurf",
       "displayName": "Windsurf",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "native-skill",
       "manifest": ".windsurf/plugin.json",
-      "installGuide": ".windsurf/INSTALL.md"
+      "installGuide": ".windsurf/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "cline",
       "displayName": "Cline",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "native-skill-experimental",
       "manifest": ".cline/plugin.json",
-      "installGuide": ".cline/INSTALL.md"
+      "installGuide": ".cline/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "roo-code",
       "displayName": "Roo Code",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "native-skill",
       "manifest": ".roo/plugin.json",
-      "installGuide": ".roo/INSTALL.md"
+      "installGuide": ".roo/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "kilo-code",
       "displayName": "Kilo Code",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "native-skill",
       "manifest": ".kilo/plugin.json",
-      "installGuide": ".kilo/INSTALL.md"
+      "installGuide": ".kilo/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "aider",
@@ -177,23 +187,29 @@
       "adapterStatus": "present-needs-live-verification",
       "distributionType": "project-instructions",
       "manifest": ".aider/plugin.json",
-      "installGuide": ".aider/INSTALL.md"
+      "installGuide": ".aider/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "goose",
       "displayName": "Goose",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "skill-or-recipe",
       "manifest": ".goose/plugin.json",
-      "installGuide": ".goose/INSTALL.md"
+      "installGuide": ".goose/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "openhands",
       "displayName": "OpenHands",
       "adapterStatus": "present-needs-live-verification",
-      "distributionType": "managed-install",
+      "distributionType": "native-skill",
       "manifest": ".openhands/plugin.json",
-      "installGuide": ".openhands/INSTALL.md"
+      "installGuide": ".openhands/INSTALL.md",
+      "wave": 3,
+      "liveChecklist": "evals/managed-agents/LIVE-CERTIFICATION.md"
     },
     {
       "id": "claude-ai",
