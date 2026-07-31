@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the Wave 3 managed-agent adapter catalog."""
+"""Validate the plugin-first Wave 3 managed-agent catalog."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ from typing import Any, Mapping
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CATALOG = ROOT / "distribution" / "managed-agents.json"
 DEFAULT_REGISTRY = ROOT / "distribution" / "registry.json"
+DEFAULT_PACKAGE = ROOT / "package.json"
 
 EXPECTED_HOSTS = {
     "github-copilot",
@@ -29,6 +30,16 @@ EXPECTED_SKILLS = [
     "hypertaks-graph",
     "hypertaks-continuity",
 ]
+EXPECTED_PLUGIN_SUPPORT = {
+    "github-copilot": "SUPPORTED",
+    "windsurf": "UNAVAILABLE",
+    "cline": "SUPPORTED_CLI_SDK",
+    "roo-code": "UNAVAILABLE",
+    "kilo-code": "SUPPORTED_LOCAL_UNPUBLISHED",
+    "aider": "UNAVAILABLE",
+    "goose": "UNAVAILABLE",
+    "openhands": "SUPPORTED",
+}
 ALLOWED_EVIDENCE_STATUSES = {
     "PASS",
     "PARTIAL",
@@ -43,14 +54,17 @@ ALLOWED_EVIDENCE_TYPES = {
     "installer-lifecycle",
     "real-host-lifecycle",
 }
+ALLOWED_PLUGIN_SUPPORT = set(EXPECTED_PLUGIN_SUPPORT.values())
 REQUIRED_FIELDS = {
     "id",
     "displayName",
     "classification",
     "adapterPath",
     "installationMode",
-    "projectSkillRoot",
-    "userSkillRoot",
+    "pluginSupport",
+    "pluginInstallCommand",
+    "slashInstallCommand",
+    "fallbackInstallation",
     "discoveryMechanism",
     "invocationMechanism",
     "updateMechanism",
@@ -62,6 +76,7 @@ REQUIRED_FIELDS = {
     "evidenceType",
     "evidenceNote",
 }
+FORBIDDEN_INSTALL_TEXT = "python scripts/installer.py"
 
 
 def read_json(path: Path) -> Mapping[str, Any]:
@@ -85,6 +100,7 @@ def safe_repository_path(root: Path, relative: str) -> Path:
 def validate(
     catalog_path: Path = DEFAULT_CATALOG,
     registry_path: Path = DEFAULT_REGISTRY,
+    package_path: Path = DEFAULT_PACKAGE,
     root: Path = ROOT,
 ) -> int:
     errors: list[str] = []
@@ -92,6 +108,7 @@ def validate(
     try:
         catalog = read_json(catalog_path)
         registry = read_json(registry_path)
+        package = read_json(package_path)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"Managed-agent validation failed: {exc}", file=sys.stderr)
         return 1
@@ -131,6 +148,7 @@ def validate(
         if not isinstance(host, Mapping):
             errors.append("managed-agents host entry must be an object")
             continue
+
         host_id = host.get("id")
         missing = sorted(REQUIRED_FIELDS - set(host))
         if missing:
@@ -145,10 +163,39 @@ def validate(
         ):
             errors.append(f"host {host_id} officialDocs must be non-empty HTTPS URLs")
 
-        for field in ("projectSkillRoot", "userSkillRoot"):
-            value = host.get(field)
-            if not isinstance(value, str) or not value.strip():
-                errors.append(f"host {host_id} {field} must be a non-empty string")
+        plugin_support = host.get("pluginSupport")
+        if plugin_support not in ALLOWED_PLUGIN_SUPPORT:
+            errors.append(f"host {host_id} has invalid pluginSupport: {plugin_support}")
+        elif EXPECTED_PLUGIN_SUPPORT.get(host_id) != plugin_support:
+            errors.append(
+                f"host {host_id} pluginSupport must be {EXPECTED_PLUGIN_SUPPORT.get(host_id)}"
+            )
+
+        plugin_command = host.get("pluginInstallCommand")
+        slash_command = host.get("slashInstallCommand")
+        for field, command in (
+            ("pluginInstallCommand", plugin_command),
+            ("slashInstallCommand", slash_command),
+        ):
+            if command is not None and not isinstance(command, str):
+                errors.append(f"host {host_id} {field} must be a string or null")
+            if isinstance(command, str):
+                lowered = command.lower()
+                if "plugin" not in lowered:
+                    errors.append(f"host {host_id} {field} must be a plugin command")
+                if FORBIDDEN_INSTALL_TEXT in lowered:
+                    errors.append(f"host {host_id} {field} must not use the Python installer")
+
+        if plugin_support == "SUPPORTED" and not (plugin_command or slash_command):
+            errors.append(f"host {host_id} supported plugin lifecycle needs an install command")
+        if plugin_support == "UNAVAILABLE" and (plugin_command or slash_command):
+            errors.append(f"host {host_id} must not invent a plugin command")
+
+        fallback = host.get("fallbackInstallation")
+        if not isinstance(fallback, str) or not fallback.strip():
+            errors.append(f"host {host_id} fallbackInstallation must be non-empty")
+        elif FORBIDDEN_INSTALL_TEXT in fallback.lower():
+            errors.append(f"host {host_id} fallbackInstallation must not use Python installer")
 
         evidence_status = host.get("evidenceStatus")
         evidence_type = host.get("evidenceType")
@@ -182,14 +229,46 @@ def validate(
                 errors.append(f"host {host_id} registry liveChecklist must match Wave 3 catalog")
 
     guide_expectations = {
-        ".windsurf/INSTALL.md": [".windsurf/skills", "~/.codeium/windsurf/skills", "@hypertaks"],
-        ".cline/INSTALL.md": [".cline/skills", "~/.cline/skills", "Enable Skills"],
-        ".roo/INSTALL.md": [".roo/skills", "~/.roo/skills", ".agents/skills"],
-        ".kilo/INSTALL.md": [".kilo/skills", "~/.kilo/skills", "/reload"],
-        ".aider/INSTALL.md": ["--read", ".aider.conf.yml", "no native Agent Skills"],
-        ".goose/INSTALL.md": ["skills", "recipe", "PARTIAL"],
-        ".openhands/INSTALL.md": [".agents/skills", "microagents", "deprecated"],
-        ".github-copilot/INSTALL.md": ["copilot plugin install", "/skills list", ".github/skills"],
+        ".github-copilot/INSTALL.md": [
+            "copilot plugin install aabrur/hypertaks-agent",
+            "/plugin install aabrur/hypertaks-agent",
+            "/skills list",
+        ],
+        ".cline/INSTALL.md": [
+            "cline plugin install --git",
+            "plugins/cline/hypertaks.ts",
+            "/hypertaks",
+        ],
+        ".kilo/INSTALL.md": [
+            "plugins/kilo/hypertaks.ts",
+            "plugin",
+            "npm package has actually been published",
+        ],
+        ".openhands/INSTALL.md": [
+            "/plugin install github:aabrur/hypertaks-agent",
+            "/plugin uninstall hypertaks",
+            ".plugin/plugin.json",
+        ],
+        ".windsurf/INSTALL.md": [
+            "does not expose a custom `/plugin install`",
+            "Customizations",
+            "@hypertaks",
+        ],
+        ".roo/INSTALL.md": [
+            "does not expose a documented custom `/plugin install`",
+            ".roo/skills",
+            ".agents/skills",
+        ],
+        ".aider/INSTALL.md": [
+            "no native Agent Skills plugin loader",
+            "--read",
+            ".aider.conf.yml",
+        ],
+        ".goose/INSTALL.md": [
+            "Skills Marketplace",
+            "recipe",
+            "does not expose",
+        ],
     }
     for relative, required_fragments in guide_expectations.items():
         path = root / relative
@@ -197,21 +276,53 @@ def validate(
             errors.append(f"missing Wave 3 install guide: {relative}")
             continue
         text = path.read_text(encoding="utf-8")
+        if FORBIDDEN_INSTALL_TEXT in text.lower():
+            errors.append(f"{relative} must not recommend the Python installer")
         for fragment in required_fragments:
             if fragment not in text:
                 errors.append(f"{relative} must contain {fragment!r}")
 
-    copilot_manifest_path = root / ".github-copilot" / "plugin.json"
-    if copilot_manifest_path.is_file():
+    open_plugin_path = root / ".plugin" / "plugin.json"
+    if not open_plugin_path.is_file():
+        errors.append("missing universal .plugin/plugin.json")
+    else:
         try:
-            copilot_manifest = read_json(copilot_manifest_path)
+            open_plugin = read_json(open_plugin_path)
         except (OSError, ValueError, json.JSONDecodeError) as exc:
-            errors.append(f"Copilot plugin manifest is invalid: {exc}")
+            errors.append(f"Open Plugin manifest is invalid: {exc}")
         else:
-            if copilot_manifest.get("name") != "hypertaks":
-                errors.append("Copilot plugin name must be hypertaks")
-            if copilot_manifest.get("skills") != ["./skills/"]:
-                errors.append("Copilot plugin skills must be ['./skills/']")
+            if open_plugin.get("name") != "hypertaks":
+                errors.append("Open Plugin manifest name must be hypertaks")
+
+    cline_config = package.get("cline")
+    expected_cline = {
+        "plugins": [
+            {
+                "paths": ["./plugins/cline/hypertaks.ts"],
+                "capabilities": ["rules", "commands"],
+            }
+        ]
+    }
+    if cline_config != expected_cline:
+        errors.append("package.json must expose the exact Cline Hypertaks plugin entrypoint")
+
+    cline_plugin_path = root / "plugins" / "cline" / "hypertaks.ts"
+    if cline_plugin_path.is_file():
+        cline_text = cline_plugin_path.read_text(encoding="utf-8")
+        for fragment in ("registerRule", "registerCommand", 'name: "hypertaks"'):
+            if fragment not in cline_text:
+                errors.append(f"Cline plugin must contain {fragment!r}")
+    else:
+        errors.append("missing executable Cline plugin")
+
+    kilo_plugin_path = root / "plugins" / "kilo" / "hypertaks.ts"
+    if kilo_plugin_path.is_file():
+        kilo_text = kilo_plugin_path.read_text(encoding="utf-8")
+        for fragment in ("experimental.chat.system.transform", 'id: "hypertaks"'):
+            if fragment not in kilo_text:
+                errors.append(f"Kilo plugin must contain {fragment!r}")
+    else:
+        errors.append("missing Kilo plugin module")
 
     if errors:
         print("MANAGED-AGENT VALIDATION FAILED:", file=sys.stderr)
