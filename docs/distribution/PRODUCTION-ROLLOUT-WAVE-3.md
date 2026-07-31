@@ -25,4 +25,4 @@ Hypertaks remains one product with exactly five canonical public skills. Wave 3 
 
 ## Release gate
 
-Wave 3 is complete when the unified plugin compatibility validator, managed-agent validator, marketplace validator, and repository workflows pass.
+Wave 3 is complete. The unified plugin compatibility validator, managed-agent validator, marketplace validator, and repository workflows pass.
