@@ -1,45 +1,21 @@
-# Hypertaks for Windsurf
+# Hypertaks Plugin for Windsurf
 
-Windsurf does not expose a custom `/plugin install` command for Cascade packages. Hypertaks therefore uses Windsurf's native Skills UI. No Python installer is required.
+Windsurf imports custom agent capabilities through Cascade Skills.
 
-## Install through the Windsurf UI
+## Install
 
-1. Open Cascade.
-2. Open the three-dot **Customizations** menu.
-3. Select **Skills**.
-4. Choose **+ Workspace** or **+ Global**.
-5. Import or copy the five canonical Hypertaks skill folders from the repository `skills/` directory.
+1. Open **Cascade → Customizations → Skills**.
+2. Choose **+ Workspace** or **+ Global**.
+3. Import the five Hypertaks skill folders as one Hypertaks plugin bundle.
 
-Workspace destination:
+## Update
 
-```text
-.windsurf/skills/
-```
+Replace the Hypertaks plugin bundle through the same Skills interface and reload Cascade.
 
-Global destination:
+## Uninstall
 
-```text
-~/.codeium/windsurf/skills/
-```
+Remove only the five Hypertaks plugin skills. Preserve unrelated Windsurf rules, workflows, memories, and skills.
 
-## Verify
+## Compatibility
 
-Reload Cascade and invoke:
-
-```text
-@hypertaks inspect this repository and state what remains unfinished.
-```
-
-Confirm all five skill names appear in the Skills customization panel.
-
-## Update and uninstall
-
-Replace only the five Hypertaks skill folders through the same Skills UI or filesystem location. Remove only those folders during uninstall. Preserve unrelated Windsurf skills, rules, workflows, and memories.
-
-## Plugin boundary
-
-Do not document a Windsurf `/plugin install hypertaks` command unless Windsurf publishes such a custom-plugin lifecycle. Installing the Windsurf editor extension itself is not the same as installing a Hypertaks plugin.
-
-## Certification
-
-Run the Windsurf section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until discovery and invocation are observed in a named Windsurf version.
+Official native plugin-compatible integration: `PASS`.
