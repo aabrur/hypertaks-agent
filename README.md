@@ -10,7 +10,7 @@ work, preserves verified founder context, and proves whether the work is done.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.5.0-blue)
-![Cross-Agent](https://img.shields.io/badge/cross--agent-7%2B%20platforms-brightgreen)
+![Cross-Agent](https://img.shields.io/badge/cross--agent-22%20platforms-brightgreen)
 ![Release Candidate](https://img.shields.io/badge/status-Release%20Candidate-f3a712)
 
 **Execution profiles:** [CORE](skills/hypertaks/SKILL-core.md) for smaller
@@ -294,36 +294,50 @@ python scripts/installer.py list-hosts
 python scripts/installer.py install <host> [--scope project|user]
 python scripts/installer.py status
 python scripts/installer.py update [host]
-python scripts/installer.py verify <host>
-python scripts/installer.py uninstall <host>
+python scripts/installer.py verify <host> [--scope project|user]
+python scripts/installer.py uninstall <host> [--scope project|user]
+python scripts/installer.py install <host> [--dry-run] [--yes]
+python scripts/installer.py update [host] [--json]
+python scripts/installer.py uninstall <host> [--json]
 ```
+
+`--dry-run` previews every mutating operation as a JSON plan and changes nothing.
+`--yes` confirms a destructive operation non-interactively; without `--yes` or an
+interactive TTY, install-replacement, update, and uninstall return an actionable error
+and change nothing. `--json` emits structured results on every branch.
 
 ### Supported Host Adapter Classifications
 
-| Host | Classification | Install Scope | MCP Support |
-|---|---|---|---|
-| **Google Antigravity** | `PLUGIN_AND_SKILL` | Project / User | Optional |
-| **Claude Code** | `NATIVE_PLUGIN` | Project / User | Optional |
-| **Codex** | `NATIVE_PLUGIN` | Project / User | Optional |
-| **Cursor** | `NATIVE_PLUGIN` | Project / User | Optional |
-| **Kimi Code** | `NATIVE_PLUGIN` | Project / User | Optional |
-| **OpenCode** | `PLUGIN_AND_SKILL` | Project / User | Optional |
-| **Pi** | `HOST_EXTENSION` | Project / User | Optional |
-| **OpenClaw** | `NATIVE_SKILL` | Project / User | Optional |
-| **Hermes** | `NATIVE_SKILL` | Project / User | Optional |
-| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) |
-| **GitHub Copilot** | `NATIVE_PLUGIN` | Project / User | Optional |
-| **Windsurf** | `MANAGED_INSTALL` | Project / User | Optional |
-| **Cline** | `MANAGED_INSTALL` | Project / User | Optional |
-| **Roo Code** | `MANAGED_INSTALL` | Project / User | Optional |
-| **Kilo Code** | `MANAGED_INSTALL` | Project / User | Optional |
-| **Aider** | `PROJECT_INSTRUCTIONS` | Project / User | Unavailable |
-| **Goose** | `MANAGED_INSTALL` | Project / User | Optional |
-| **OpenHands** | `MANAGED_INSTALL` | Project / User | Optional |
-| **Claude.ai** | `PROJECT_INSTRUCTIONS` | Project Knowledge | Unavailable |
-| **Gemini App** | `CUSTOM_ASSISTANT` | Custom Gem | Unavailable |
-| **Open WebUI** | `HOST_EXTENSION` | Project / User | Optional |
-| **LibreChat** | `HOST_EXTENSION` | Project / User | Optional |
+All hosts below are structurally supported against the Hypertaks adapter catalog in this
+release. No host is behaviorally certified in a live session; each requires live host
+verification (see `evals/hosts/<host-id>/REPORT.md` and `distribution/HOST-CAPABILITY-MATRIX.md`).
+Google Antigravity is the active build target with installer-level lifecycle evidence.
+
+| Host | Classification | Install Scope | MCP Support | Evidence |
+|---|---|---|---|---|
+| **Google Antigravity** | `PLUGIN_AND_SKILL` | Project / User | Optional | Partial (installer lifecycle) |
+| **Claude Code** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
+| **Codex** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
+| **Cursor** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
+| **Kimi Code** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
+| **OpenCode** | `PLUGIN_AND_SKILL` | Project / User | Optional | Partial (structural adapter) |
+| **Pi** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
+| **OpenClaw** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
+| **Hermes** | `NATIVE_SKILL` | Project / User | Optional | Partial (structural adapter) |
+| **ChatGPT** | `CHATGPT_APP_ADAPTER` | Global / Apps SDK | Required (Transport) | Partial (structural adapter) |
+| **GitHub Copilot** | `NATIVE_PLUGIN` | Project / User | Optional | Partial (structural adapter) |
+| **Windsurf** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **Cline** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **Roo Code** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **Kilo Code** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **Aider** | `PROJECT_INSTRUCTIONS` | Project / User | Unavailable | Partial (structural adapter) |
+| **Goose** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **OpenHands** | `MANAGED_INSTALL` | Project / User | Optional | Partial (structural adapter) |
+| **Claude.ai** | `PROJECT_INSTRUCTIONS` | Project Knowledge | Unavailable | Partial (structural adapter) |
+| **Gemini App** | `CUSTOM_ASSISTANT` | Custom Gem | Unavailable | Partial (structural adapter) |
+| **Open WebUI** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
+| **LibreChat** | `HOST_EXTENSION` | Project / User | Optional | Partial (structural adapter) |
+
 
 
 ---
@@ -360,11 +374,16 @@ The GitHub Actions gate runs:
 ```text
 python3 scripts/validate_skill.py
 python3 scripts/validate_public_skills.py
+python3 scripts/validate_distributions.py
+python3 scripts/validate_host_capabilities.py
+python3 scripts/validate_conformance.py
+python3 scripts/build_distributions.py antigravity --check-only
 python3 scripts/run_evals.py --check
 python3 scripts/run_evals.py --static
 python3 -m unittest scripts.test_run_evals scripts.test_retrieval_eval -v
 python3 scripts/retrieval_eval.py evals/fixtures/retrieval-sample.jsonl --output <report>
 python3 scripts/plot_retrieval_eval.py <report> <output-base>
+python3 -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v
 npm test
 python3 -m compileall scripts
 git diff --check origin/main...HEAD

@@ -5,6 +5,13 @@ This document tracks submission readiness for third-party AI host marketplaces.
 > [!IMPORTANT]
 > **Human Approval Gate**: No marketplace publication will take place without explicit, real-time human owner approval for that exact package version and target marketplace.
 
+> [!NOTE]
+> The statuses below reflect **structural submission-readiness**: the adapter package,
+> classification, and required metadata are present and validated against the local catalog.
+> They are **not** a behavioral certification. Live host skill invocation, tool mapping, and
+> runtime behavior are unverified (`PARTIAL`) for every host. Behavioral certification remains a
+> separate, owner-performed live-test gate before any external submission.
+
 ## Marketplace Status Matrix
 
 | Host ID | Target Marketplace | Package ID | Submission Status | Prerequisites / Blockers |
