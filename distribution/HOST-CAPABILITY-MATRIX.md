@@ -18,6 +18,7 @@ lifecycle was run during this wave.
 | `official-documentation` | Capability classification is documented; behavior remains `NEEDS_MANUAL_HOST_TEST` until observed. |
 | `static-package` | Package format and tracked contents are structurally valid. |
 | `installer-lifecycle` | Hypertaks-owned install, update, uninstall, and reinstall behavior works in an isolated test target. |
+| `runtime-lifecycle` | An executable host transport starts, initializes, lists tools, and completes representative local calls, but the real host has not been observed. |
 | `real-host-lifecycle` | Discovery and invocation in the named host version were observed; the only type that supports a host `PASS`. |
 
 ## Summary Matrix
@@ -33,7 +34,7 @@ lifecycle was run during this wave.
 | `openclaw` | OpenClaw | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
 | `hermes` | Hermes | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
 | `antigravity` | Google Antigravity | `PLUGIN_AND_SKILL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (installer-lifecycle)` |
-| `chatgpt` | ChatGPT | `CHATGPT_APP_ADAPTER` | No | No | Yes | Yes | Global | Required (Transport) | Synthesized | `PARTIAL (static-package)` |
+| `chatgpt` | ChatGPT Plugins | `CHATGPT_APP_ADAPTER` | No | No | Yes | Yes | Global | Required (Transport) | Synthesized | `PARTIAL (runtime-lifecycle)` |
 | `github-copilot` | GitHub Copilot | `NATIVE_PLUGIN` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
 | `windsurf` | Windsurf | `MANAGED_INSTALL` | Yes | Yes | No | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
 | `cline` | Cline | `MANAGED_INSTALL` | No | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
@@ -55,6 +56,6 @@ lifecycle was run during this wave.
    - `skills/hypertaks-brain`
    - `skills/hypertaks-graph`
    - `skills/hypertaks-continuity`
-2. **MCP Policy**: Optional external capability. MCP is only required on hosts (like ChatGPT Apps SDK) where MCP serves as the host-mandated transport layer.
+2. **MCP Policy**: Optional external capability. MCP is only required on hosts such as ChatGPT Plugins where MCP serves as the host transport layer.
 3. **Google Antigravity Target**: Google Antigravity is the primary active Google coding-agent target. Gemini CLI is deprecated and unlisted. Gemini App is maintained as a separate Custom Assistant definition.
 4. **Canonical Logo Asset**: `assets/Hypertask.svg` is copied without destructive tracing, redrawing, or modification.
