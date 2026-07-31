@@ -2,94 +2,100 @@
 
 - **Host ID**: `antigravity`
 - **Official Display Name**: Google Antigravity
-- **Application Version**: 1.4.0 (antigravity-cli 2026.7)
-- **OS**: Windows 11 (build 26100)
-- **Tested Commit**: `b7fdaf9` (branch: `feat/cross-ai-distribution-wave-2`)
+- **Application Version**: 1.4.0 (antigravity-cli 2026.7; claimed in adapter metadata, not independently observed in this session)
+- **OS**: Windows 11 (build 26100) - host OS only
+- **Tested Commit**: `d845cea` (branch: `codex/cross-ai-distribution-wave-2-execution` in worktree `cross-ai-distribution-wave-2-execution`, base `feat/cross-ai-distribution-wave-2`)
 - **Timestamp**: `2026-07-31T01:16:00+07:00`
 - **Verdict**: `PARTIAL`
 - **Evidence Class**: Package build and installer-level lifecycle VERIFIED in this session; live Google Antigravity host-app invocation UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
 ---
 
-## 1. Distribution Validation & Build Verification
+## 1. Distribution Validation and Build Verification
 
-```powershell
+Commands:
+
+```text
 python scripts/validate_skill.py
 python scripts/validate_public_skills.py
 python scripts/validate_distributions.py
-python scripts/build_distributions.py antigravity
+python scripts/validate_host_capabilities.py
+python scripts/build_distributions.py antigravity --check-only
 ```
 
-**Results**:
+Results:
+
 - Skill validation: `OK (version 4.5.0)`
-- Public Hypertaks skills: `OK`
+- Public Hypertaks skills: `OK` (exactly five: hypertaks, hypertaks-verify, hypertaks-brain, hypertaks-graph, hypertaks-continuity)
+- Host capabilities validation: `PASS`
 - Distribution validation: `PASS`
-- Build Output: `C:\Users\abrur\Documents\hypertaks-agent\dist\antigravity\hypertaks`
+- Antigravity build check (`--check-only`): `PASS`
+- Build output: `dist/antigravity/hypertaks`
 
-## 2. Integrity & Asset Verification
+## 2. Integrity and Asset Verification
 
-- Canonical SVG Source: `assets/Hypertask.svg`
-- Package SVG Output: `dist/antigravity/hypertaks/assets/hypertaks.svg`
-- SHA256 Hash Match: `a2a7e019df002500e05e2de095870c70f81e8eddd04c4ad9c922cddc483e6369`
-- MCP Server Bundled: `false` (verified `mcp_config.json` absent)
-- Hooks Bundled: `false` (verified `hooks.json` absent)
-- Package Manifest: `BUILD-MANIFEST.json` contains full file table and hashes.
+- Canonical SVG source: `assets/Hypertask.svg`
+- Package SVG output: `dist/antigravity/hypertaks/assets/hypertaks.svg`
+- SHA256 hash match: `a2a7e019df002500e05e2de095870c70f81e8eddd04c4ad9c922cddc483e6369`
+- MCP server bundled: `false` (no `mcp_config.json` in built package)
+- Hooks bundled: `false` (no `hooks.json` in built package)
+- Package manifest: `BUILD-MANIFEST.json` contains the full file table and hashes.
 
 ## 3. Discovered Skills Verification
 
 The built package contains exactly these five public skills:
+
 1. `hypertaks`
 2. `hypertaks-verify`
 3. `hypertaks-brain`
 4. `hypertaks-graph`
 5. `hypertaks-continuity`
 
-- Total Public Hypertaks Skills: **5**
-- Sixth Public Skill Present: **No**
+- Total public Hypertaks skills: **5**
+- Sixth public skill present: **No**
 
 ## 4. Invocation Testing
 
 Live invocation inside the actual Antigravity application was not executed in this session.
 
 Unverified items requiring manual host test:
-- `Hypertaks, fix a typo in this README.`
-- `/hypertaks-verify`
-- `/hypertaks-brain inspect`
+
+- `Hypertaks, fix a typo in README.md` (INV-04)
+- `/hypertaks-verify` (INV-01)
+- `/hypertaks-brain inspect` (INV-15)
 - `/hypertaks-graph impact runtime/router.ts`
 - `/hypertaks-continuity status`
 
 Manual verification procedure:
+
 1. Install Antigravity per host docs.
 2. Run `hypertaks install antigravity --scope project`.
 3. Confirm discovery of the exact five canonical skills.
-4. Run the five invocations above; record host version, OS, commit, timestamps, and sanitized logs.
+4. Run the invocations above; record host version, OS, commit, timestamps, and sanitized logs.
 5. Repeat for `--scope user`.
 
-## 5. Lifecycle Scopes (Workspace & Global)
+## 5. Installer Lifecycle (Isolated Target)
 
-Installer-level lifecycle was executed in this session for project scope:
-- **Workspace Installation**: `.agents/plugins/hypertaks`
-  - Status: `PASS` via installer test `test_fresh_install_verify_update_uninstall_lifecycle`.
-  - Files installed: 38; target `C:\Users\abrur\Documents\hypertaks-agent\.agents\plugins\hypertaks`
-- **Global Installation**: `~/.gemini/config/plugins/hypertaks`
-  - Status: UNVERIFIED in this session (Windows home-path expansion not exercised in automated test).
+The hardened universal installer was exercised against Antigravity in an isolated temporary project root (never the repository's own `.agents/`), via `scripts/test_installer.py`:
 
-## 6. Update & Uninstall Verification
+- **Workspace install**: `cmd_install(host="antigravity", scope="project", project_root=<temp>)` -> `PASS`, 38 files installed at `<temp>/.agents/plugins/hypertaks`.
+- **Verify**: `cmd_verify` -> `PASS` (all 38 checksums match).
+- **Update**: `cmd_update` recalculates ownership hashes; `cmd_verify` passes afterward.
+- **Uninstall**: `cmd_uninstall` removes only the 38 manifest-owned files; an unrelated `skills/UNKNOWN.md` is preserved; post-uninstall `cmd_verify` returns `NOT_INSTALLED`.
+- **Clean reinstall**: install -> uninstall -> install succeeds idempotently.
+- **Dirty/unsafe guards**: malformed manifest, traversal path, and unmanaged collision are each rejected without deletion; noninteractive calls without `--yes` change nothing.
 
-- Installer and update-script guards verified at code level:
-  - `scripts/update_hypertaks.py` rejects dirty worktree, detached HEAD, diverged branch, and wrong remote.
-  - `scripts/test_update_hypertaks.py` exercises those rejection paths.
-- Package rebuild after update: verified `python scripts/build_distributions.py antigravity` produces consistent manifest and hashes.
-- Uninstall test: `test_fresh_install_verify_update_uninstall_lifecycle` verified post-uninstall state shows `NOT_INSTALLED` for project scope.
-- Clean reinstall: verified within the same installer test.
+## 6. Update and Uninstall Verification
 
-Live host-app update and uninstall: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
+- Installer and update-script guards verified at code level: `scripts/update_hypertaks.py` rejects dirty worktree, detached HEAD, diverged branch, and wrong remote (see `scripts/test_update_hypertaks.py`).
+- Package rebuild after update: `python scripts/build_distributions.py antigravity --check-only` produces a consistent manifest and hashes.
+- Live host-app update and uninstall: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
-## 7. Security & Boundary Verification
+## 7. Security and Boundary Verification
 
-- Structural: no `mcp_config.json` and no `hooks.json` in built package. `VERIFIED`.
-- Package integrity: `validate_distributions.py` enforces exact five-skill set, SVG presence, manifest hash accuracy. `VERIFIED`.
-- Host-specific security boundary review: UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
+- Structural: no `mcp_config.json` and no `hooks.json` in the built package. VERIFIED.
+- Package integrity: `scripts/validate_distributions.py` enforces the exact five-skill set, canonical SVG presence, and manifest hash accuracy. VERIFIED.
+- Host-specific security boundary review (path traversal, prompt injection, secret masking): UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
 
 ---
 
