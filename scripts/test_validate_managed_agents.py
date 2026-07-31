@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unit tests for the Wave 3 managed-agent validator."""
+"""Unit tests for the plugin-first Wave 3 managed-agent validator."""
 
 from __future__ import annotations
 
@@ -20,12 +20,14 @@ class ManagedAgentValidatorTests(unittest.TestCase):
         self.root = Path(self.temp_dir)
         self.catalog = self.root / "distribution" / "managed-agents.json"
         self.registry = self.root / "distribution" / "registry.json"
+        self.package = self.root / "package.json"
 
         paths = [
             "distribution/managed-agents.json",
             "distribution/registry.json",
+            "package.json",
             "evals/managed-agents/LIVE-CERTIFICATION.md",
-            ".github-copilot/plugin.json",
+            ".plugin/plugin.json",
             ".github-copilot/INSTALL.md",
             ".windsurf/INSTALL.md",
             ".cline/INSTALL.md",
@@ -34,6 +36,8 @@ class ManagedAgentValidatorTests(unittest.TestCase):
             ".aider/INSTALL.md",
             ".goose/INSTALL.md",
             ".openhands/INSTALL.md",
+            "plugins/cline/hypertaks.ts",
+            "plugins/kilo/hypertaks.ts",
         ]
         for relative in paths:
             source = ROOT / relative
@@ -48,6 +52,7 @@ class ManagedAgentValidatorTests(unittest.TestCase):
         return validate(
             catalog_path=self.catalog,
             registry_path=self.registry,
+            package_path=self.package,
             root=self.root,
         )
 
@@ -67,19 +72,26 @@ class ManagedAgentValidatorTests(unittest.TestCase):
         self.catalog.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         self.assertNotEqual(self._validate(), 0)
 
-    def test_registry_wave_mismatch_fails(self) -> None:
-        data = json.loads(self.registry.read_text(encoding="utf-8"))
+    def test_unavailable_host_cannot_claim_plugin_command(self) -> None:
+        data = json.loads(self.catalog.read_text(encoding="utf-8"))
         for host in data["hosts"]:
-            if host.get("id") == "windsurf":
-                host["wave"] = 2
+            if host["id"] == "windsurf":
+                host["pluginInstallCommand"] = "windsurf plugin install hypertaks"
                 break
-        self.registry.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        self.catalog.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
         self.assertNotEqual(self._validate(), 0)
 
-    def test_deprecated_openhands_guidance_must_be_explicit(self) -> None:
-        path = self.root / ".openhands" / "INSTALL.md"
-        text = path.read_text(encoding="utf-8").replace("deprecated", "legacy")
-        path.write_text(text, encoding="utf-8")
+    def test_python_installer_instruction_fails(self) -> None:
+        path = self.root / ".roo" / "INSTALL.md"
+        path.write_text(
+            path.read_text(encoding="utf-8")
+            + "\npython scripts/installer.py install roo-code\n",
+            encoding="utf-8",
+        )
+        self.assertNotEqual(self._validate(), 0)
+
+    def test_missing_executable_plugin_fails(self) -> None:
+        (self.root / "plugins" / "cline" / "hypertaks.ts").unlink()
         self.assertNotEqual(self._validate(), 0)
 
 
