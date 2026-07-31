@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "wave": 5,
+  "product": "hypertaks",
+  "version": "4.5.0",
+  "status": "PASS",
+  "definition": "PASS means the repository contains the package metadata or adapter needed for submission or native direct installation. It does not mean the third-party listing has already been published.",
+  "surfaces": [
+    {
+      "hostId": "claude-code",
+      "displayName": "Claude Code marketplace",
+      "packagePath": ".claude-plugin/marketplace.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "codex",
+      "displayName": "Codex marketplace",
+      "packagePath": ".agents/plugins/marketplace.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "cursor",
+      "displayName": "Cursor Plugins",
+      "packagePath": ".cursor-plugin/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "kimi-code",
+      "displayName": "Kimi plugin manager",
+      "packagePath": ".kimi-plugin/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "github-copilot",
+      "displayName": "GitHub Copilot plugins",
+      "packagePath": ".plugin/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "chatgpt",
+      "displayName": "ChatGPT Plugins and custom apps",
+      "packagePath": ".chatgpt/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "claude-ai",
+      "displayName": "Claude Plugins",
+      "packagePath": ".claude-plugin/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "goose",
+      "displayName": "Goose Skills Marketplace",
+      "packagePath": ".goose/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "open-webui",
+      "displayName": "Open WebUI Tools and Functions",
+      "packagePath": ".open-webui/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    }
+  ]
+}
