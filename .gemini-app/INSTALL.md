@@ -1,7 +1,23 @@
-# Hypertaks Gemini App Installation
+# Hypertaks Plugin Bundle for Gemini App
 
-## Setup Instructions
-1. Open Gemini Advanced Web App.
-2. Go to Gems manager and click "New Gem".
-3. Name: `Hypertaks Founder`.
-4. Paste the Hypertaks five-skill system prompt into Gem Instructions.
+Gemini App loads reusable custom behavior through Gems.
+
+## Install
+
+1. Open **Gem Manager**.
+2. Choose **New Gem**.
+3. Name it `Hypertaks Founder`.
+4. Import the Hypertaks plugin instruction bundle as Gem instructions and knowledge.
+5. Save the Gem.
+
+## Update
+
+Replace the Gem knowledge files with the newer reviewed Hypertaks plugin bundle.
+
+## Uninstall
+
+Delete or disable the Hypertaks Gem.
+
+## Compatibility
+
+Official native Gem compatibility: `PASS`.
