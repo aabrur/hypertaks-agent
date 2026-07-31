@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "wave": 2,
+  "product": "hypertaks",
+  "version": "4.5.0",
+  "canonicalSkills": [
+    "hypertaks",
+    "hypertaks-verify",
+    "hypertaks-brain",
+    "hypertaks-graph",
+    "hypertaks-continuity"
+  ],
+  "evidenceRule": "PASS requires real-host-lifecycle evidence from the named host version.",
+  "hosts": [
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "classification": "NATIVE_PLUGIN",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "installationMode": "native-plugin-or-canonical-skills",
+      "discoveryMechanism": "Claude Code plugin and skill discovery",
+      "invocationMechanism": "natural language or explicit Hypertaks skill selection",
+      "updateMechanism": "host plugin update or managed checkout fast-forward",
+      "uninstallMechanism": "host plugin removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://docs.anthropic.com/en/docs/claude-code/getting-started",
+        "https://docs.anthropic.com/en/docs/claude-code/cli-usage"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Plugin metadata and canonical skill package are present; real Claude Code discovery and invocation remain unobserved in this repository session."
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex",
+      "classification": "NATIVE_PLUGIN",
+      "adapterPath": ".codex-plugin/plugin.json",
+      "installationMode": "native-plugin-and-agent-skills",
+      "discoveryMechanism": "Codex plugin catalog and Agent Skills discovery",
+      "invocationMechanism": "natural language or direct skill activation",
+      "updateMechanism": "plugin catalog refresh or managed checkout fast-forward",
+      "uninstallMechanism": "plugin removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://developers.openai.com/codex/",
+        "https://developers.openai.com/codex/use-cases"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Plugin metadata and five canonical skills are present; a real Codex session has not been captured for this wave."
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "classification": "NATIVE_PLUGIN",
+      "adapterPath": ".cursor-plugin/plugin.json",
+      "installationMode": "native-plugin-with-project-rules-fallback",
+      "discoveryMechanism": "Cursor plugin or project instruction discovery",
+      "invocationMechanism": "Cursor Agent natural language invocation",
+      "updateMechanism": "host-managed plugin refresh or managed checkout fast-forward",
+      "uninstallMechanism": "plugin removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://docs.cursor.com/en/cli/overview",
+        "https://docs.cursor.com/context/rules"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Cursor adapter metadata is present; live skill discovery, command approval, and invocation remain manual tests."
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "classification": "NATIVE_PLUGIN",
+      "adapterPath": ".kimi-plugin/plugin.json",
+      "installationMode": "user-scoped-native-plugin",
+      "discoveryMechanism": "Kimi Code plugin manager loads skills from the plugin manifest",
+      "invocationMechanism": "natural language, sessionStart skill, or direct skill routing",
+      "updateMechanism": "Kimi plugin manager update followed by reload or new session",
+      "uninstallMechanism": "Kimi plugin manager remove with managed-copy reconciliation",
+      "officialDocs": [
+        "https://moonshotai.github.io/kimi-code/en/customization/plugins.html",
+        "https://moonshotai.github.io/kimi-code/en/configuration/data-locations.html"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "The manifest follows the documented .kimi-plugin path and declares the canonical skills; a user-scoped plugin-manager lifecycle remains to be observed."
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "classification": "NATIVE_SKILL",
+      "adapterPath": ".opencode/INSTALL.md",
+      "installationMode": "native-agent-skills",
+      "discoveryMechanism": "OpenCode scans .opencode/skills and .agents/skills",
+      "invocationMechanism": "native skill tool or slash command where enabled",
+      "updateMechanism": "managed checkout update followed by OpenCode reload or restart",
+      "uninstallMechanism": "ownership-aware removal from the selected skill root",
+      "officialDocs": [
+        "https://opencode.ai/docs/skills",
+        "https://opencode.ai/docs/plugins"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Wave 2 uses documented native skill directories instead of claiming an unverified npm-style Git plugin package."
+    },
+    {
+      "id": "pi",
+      "displayName": "Pi",
+      "classification": "HOST_EXTENSION",
+      "adapterPath": ".pi/extensions/hypertaks.ts",
+      "installationMode": "pi-package-extension-plus-skills",
+      "discoveryMechanism": "Pi package resources and resources_discover skillPaths",
+      "invocationMechanism": "automatic skill loading or /skill:<name>",
+      "updateMechanism": "Pi package update or managed checkout fast-forward",
+      "uninstallMechanism": "Pi package removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/skills.md",
+        "https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "The TypeScript extension registers the canonical skills root and package.json exposes Pi resources; real Pi discovery remains a host test."
+    },
+    {
+      "id": "openclaw",
+      "displayName": "OpenClaw",
+      "classification": "NATIVE_SKILL",
+      "adapterPath": ".openclaw/INSTALL.md",
+      "installationMode": "native-agent-skills",
+      "discoveryMechanism": "workspace skills or .agents/skills discovery",
+      "invocationMechanism": "natural language or host skill command",
+      "updateMechanism": "OpenClaw skill update or managed checkout fast-forward",
+      "uninstallMechanism": "OpenClaw skill removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://docs.openclaw.ai/tools/skills",
+        "https://docs.openclaw.ai/cli/skills"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "All five canonical skill directories are documented for installation; OpenClaw discovery and invocation remain unobserved."
+    },
+    {
+      "id": "hermes",
+      "displayName": "Hermes",
+      "classification": "NATIVE_SKILL",
+      "adapterPath": ".hermes/INSTALL.md",
+      "installationMode": "native-agent-skills",
+      "discoveryMechanism": "Hermes ~/.hermes/skills or configured external skill directories",
+      "invocationMechanism": "natural language, skill_view, or slash command",
+      "updateMechanism": "managed checkout update or Hermes skill source update",
+      "uninstallMechanism": "Hermes skill removal or ownership-aware installer uninstall",
+      "officialDocs": [
+        "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/skills.md",
+        "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/guides/work-with-skills.md"
+      ],
+      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "liveChecklist": "evals/coding-agents/LIVE-CERTIFICATION.md",
+      "evidenceStatus": "PARTIAL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Hermes supports standard SKILL.md packages and external directories; the five-skill lifecycle still requires a real Hermes session."
+    }
+  ]
+}
