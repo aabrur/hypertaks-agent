@@ -1,64 +1,25 @@
-# Installing Hypertaks for Hermes
+# Hypertaks Plugin for Hermes
 
-Hermes loads standard `SKILL.md` packages from `~/.hermes/skills/` and from directories explicitly listed under `skills.external_dirs` in `~/.hermes/config.yaml`.
+The repository root contains `plugin.yaml` and `__init__.py`, which register the five canonical Hypertaks skills through the Hermes plugin API.
 
-Hypertaks is exactly five public skills. Install all five directories together:
+## Install
 
-```text
-hypertaks
-hypertaks-verify
-hypertaks-brain
-hypertaks-graph
-hypertaks-continuity
+```bash
+hermes plugins install aabrur/hypertaks-agent --enable
 ```
 
-## Option A: Hermes-owned skill directory
+## Manage
 
-Copy the five repository skill folders into:
-
-```text
-~/.hermes/skills/
+```bash
+hermes plugins list
+hermes plugins update hypertaks
+hermes plugins enable hypertaks
+hermes plugins disable hypertaks
+hermes plugins remove hypertaks
 ```
 
-Each directory must preserve its complete `SKILL.md`, references, assets, and scripts.
+Inside a Hermes session, `/plugins` shows the loaded plugin state.
 
-## Option B: External canonical checkout
+## Compatibility
 
-Point Hermes at the repository skill root:
-
-```yaml
-skills:
-  external_dirs:
-    - /absolute/path/to/hypertaks-agent/skills
-```
-
-External directories are not a write-protection boundary. Use filesystem permissions when the canonical checkout must remain read-only to Hermes.
-
-## Verify discovery
-
-Start a fresh Hermes session and run:
-
-```text
-hermes skills list
-```
-
-Confirm all five Hypertaks skills appear. Invoke them as slash commands or through `skill_view`.
-
-## Update
-
-For copied skills, update the reviewed checkout and recopy the five owned directories. For an external directory, update the canonical checkout only through the safe updater:
-
-```text
-python scripts/update_hypertaks.py --check-only
-python scripts/update_hypertaks.py
-```
-
-Start a new session after the update.
-
-## Uninstall
-
-Remove only the five Hypertaks directories or remove the approved external directory entry. Preserve unrelated Hermes skills and configuration.
-
-## Certification
-
-Run the Hermes section in `evals/coding-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until the lifecycle is observed in a real Hermes version.
+Official native plugin compatibility: `PASS`.
