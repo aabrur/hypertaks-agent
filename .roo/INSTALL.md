@@ -1,44 +1,40 @@
 # Hypertaks for Roo Code
 
-Roo Code supports native Agent Skills with project, global, cross-agent, and mode-specific discovery.
+Roo Code does not expose a documented custom `/plugin install` lifecycle for Hypertaks packages. Hypertaks therefore uses Roo's native Agent Skills discovery. No Python installer is required.
 
-## Workspace installation
+## Install as Roo skills
 
-```bash
-python scripts/installer.py install roo-code --scope project
-```
-
-The preferred Roo-specific project root is:
+Place the five canonical Hypertaks skill folders under the project root:
 
 ```text
 .roo/skills/
 ```
 
-Roo also discovers cross-agent skills under:
+Roo also discovers compatible cross-agent skills under:
 
 ```text
 .agents/skills/
 ```
 
-## Global installation
-
-Place the five canonical skill folders under:
+For a global installation, use:
 
 ```text
 ~/.roo/skills/
 ```
 
-or the cross-agent root `~/.agents/skills/` when intentional sharing is desired.
+or `~/.agents/skills/` when intentional sharing is desired.
 
 ## Verify
 
-Confirm all five skill IDs are indexed in the selected Roo mode. Ask Roo to use `hypertaks` explicitly and then test automatic matching.
-
-Project Roo-specific skills override global and cross-agent copies with the same name. Avoid duplicate conflicting installations.
+Start a new Roo task, confirm all five skill IDs are indexed in the selected mode, then request `hypertaks` explicitly and test automatic matching.
 
 ## Update and uninstall
 
-Refresh only the Hypertaks-owned files. Roo file watchers may detect changes, but start a new task when validating updated behavior. Remove only the five Hypertaks directories during uninstall.
+Replace only the five Hypertaks-owned skill folders. Remove only those folders during uninstall. Preserve unrelated Roo modes, rules, MCP settings, and skills.
+
+## Plugin boundary
+
+Do not publish a Roo `/plugin install hypertaks` command until Roo documents and supports that lifecycle. Native Skills are the supported installation mechanism for this adapter.
 
 ## Certification
 
