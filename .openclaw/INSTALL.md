@@ -1,59 +1,56 @@
 # Installing Hypertaks for OpenClaw
 
-OpenClaw discovers skills from a **skills directory** it scans on startup - the
-location is whatever *your* OpenClaw setup points at (everyone runs their own
-flow). There is no marketplace manifest to install; you just make the skill
-visible in that directory.
+OpenClaw loads standard `SKILL.md` packages from workspace skill roots, including `<workspace>/skills` and `<workspace>/.agents/skills` where supported by the active profile.
 
-## Generic install (any OpenClaw setup)
+Hypertaks is exactly five public skills. Install all five directories together:
 
-1. Clone this repo somewhere:
+```text
+hypertaks
+hypertaks-verify
+hypertaks-brain
+hypertaks-graph
+hypertaks-continuity
+```
 
-   ```bash
-   git clone https://github.com/aabrur/hypertaks-agent.git
-   ```
+## Project installation
 
-2. Make `skills/hypertaks` from this repo appear inside your OpenClaw skills
-   directory:
+Clone the repository, then copy or link the complete contents of the repository `skills/` directory into one OpenClaw workspace skill root. The resulting layout must contain:
 
-   - **Recommended: managed symlink / junction**
-     ```bash
-     # macOS/Linux
-     ln -s "$(pwd)/hypertaks-agent/skills/hypertaks" <your-openclaw-skills-dir>/hypertaks
-     ```
-     ```powershell
-     # Windows (PowerShell, run as admin or with Developer Mode)
-     New-Item -ItemType Junction -Path "<your-openclaw-skills-dir>\hypertaks" -Target "<path>\hypertaks-agent\skills\hypertaks"
-     ```
-   - **Legacy/manual copy:**
-     ```bash
-     cp -r hypertaks-agent/skills/hypertaks <your-openclaw-skills-dir>/hypertaks
-     ```
-     A copy has no automatic update channel. Migrate it once to the managed
-     link above before expecting future releases without another copy step.
+```text
+<workspace>/.agents/skills/hypertaks/SKILL.md
+<workspace>/.agents/skills/hypertaks-verify/SKILL.md
+<workspace>/.agents/skills/hypertaks-brain/SKILL.md
+<workspace>/.agents/skills/hypertaks-graph/SKILL.md
+<workspace>/.agents/skills/hypertaks-continuity/SKILL.md
+```
 
-3. Restart OpenClaw. Verify: *"Hypertaks, analyze why our churn is high."* - it
-   should run the intake gate, announce the tier (Prime for this task), then
-   spawn the tier's specialist agents.
+Use a normal file copy for the public installation path. A managed link may be used only when the user explicitly chooses developer mode and understands that changes in the source checkout become immediately visible.
 
-## Automatic updates
+## Verify discovery
 
-Run the managed-checkout updater from the canonical clone:
+Run the current OpenClaw skill listing command:
 
-```bash
+```text
+openclaw skills list --json
+```
+
+Confirm all five skills are present and eligible for the selected agent profile. Start a new session before testing invocation.
+
+## Update
+
+Use OpenClaw's tracked skill update when the installation came from a supported source, or update the reviewed canonical checkout:
+
+```text
 python scripts/update_hypertaks.py --check-only
 python scripts/update_hypertaks.py
 ```
 
-To remove recurring manual update steps, opt in once by configuring an existing
-scheduler or trusted host automation to run the second command. The updater
-only fast-forwards a canonical, clean `main` checkout. Dirty, diverged,
-detached, wrong-remote, unreachable, or unreconciled states return `blocked`
-without resetting or overwriting user work.
+Reconcile the five destination folders after the source update, then restart the session.
 
-For an existing copied skill, preserve any local changes and migrate the folder
-once to the managed symlink or junction. Restart OpenClaw after a successful
-update; an active session does not change in place.
+## Uninstall
 
-> Replace `<your-openclaw-skills-dir>` with your own path. This repo does not
-> assume any particular workspace layout.
+Remove only the five Hypertaks directories. Do not delete the containing skill root or unrelated skills.
+
+## Certification
+
+Run the OpenClaw section in `evals/coding-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until a real OpenClaw session proves discovery, invocation, update, uninstall, and reinstall.

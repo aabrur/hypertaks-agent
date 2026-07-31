@@ -1,59 +1,64 @@
 # Installing Hypertaks for Hermes
 
-Hermes discovers skills from a **skills directory** it scans on startup - the
-location is whatever *your* Hermes setup points at (everyone runs their own
-flow). There is no marketplace manifest to install; you just make the skill
-visible in that directory.
+Hermes loads standard `SKILL.md` packages from `~/.hermes/skills/` and from directories explicitly listed under `skills.external_dirs` in `~/.hermes/config.yaml`.
 
-## Generic install (any Hermes setup)
+Hypertaks is exactly five public skills. Install all five directories together:
 
-1. Clone this repo somewhere:
+```text
+hypertaks
+hypertaks-verify
+hypertaks-brain
+hypertaks-graph
+hypertaks-continuity
+```
 
-   ```bash
-   git clone https://github.com/aabrur/hypertaks-agent.git
-   ```
+## Option A: Hermes-owned skill directory
 
-2. Make `skills/hypertaks` from this repo appear inside your Hermes skills
-   directory:
+Copy the five repository skill folders into:
 
-   - **Recommended: managed symlink / junction**
-     ```bash
-     # macOS/Linux
-     ln -s "$(pwd)/hypertaks-agent/skills/hypertaks" <your-hermes-skills-dir>/hypertaks
-     ```
-     ```powershell
-     # Windows (PowerShell, run as admin or with Developer Mode)
-     New-Item -ItemType Junction -Path "<your-hermes-skills-dir>\hypertaks" -Target "<path>\hypertaks-agent\skills\hypertaks"
-     ```
-   - **Legacy/manual copy:**
-     ```bash
-     cp -r hypertaks-agent/skills/hypertaks <your-hermes-skills-dir>/hypertaks
-     ```
-     A copy has no automatic update channel. Migrate it once to the managed
-     link above before expecting future releases without another copy step.
+```text
+~/.hermes/skills/
+```
 
-3. Restart Hermes. Verify: *"Hypertaks, analyze why our churn is high."* - it
-   should run the intake gate, announce the tier (Prime for this task), then
-   spawn the tier's specialist agents.
+Each directory must preserve its complete `SKILL.md`, references, assets, and scripts.
 
-## Automatic updates
+## Option B: External canonical checkout
 
-Run the managed-checkout updater from the canonical clone:
+Point Hermes at the repository skill root:
 
-```bash
+```yaml
+skills:
+  external_dirs:
+    - /absolute/path/to/hypertaks-agent/skills
+```
+
+External directories are not a write-protection boundary. Use filesystem permissions when the canonical checkout must remain read-only to Hermes.
+
+## Verify discovery
+
+Start a fresh Hermes session and run:
+
+```text
+hermes skills list
+```
+
+Confirm all five Hypertaks skills appear. Invoke them as slash commands or through `skill_view`.
+
+## Update
+
+For copied skills, update the reviewed checkout and recopy the five owned directories. For an external directory, update the canonical checkout only through the safe updater:
+
+```text
 python scripts/update_hypertaks.py --check-only
 python scripts/update_hypertaks.py
 ```
 
-To remove recurring manual update steps, opt in once by configuring an existing
-scheduler or trusted host automation to run the second command. The updater
-only fast-forwards a canonical, clean `main` checkout. Dirty, diverged,
-detached, wrong-remote, unreachable, or unreconciled states return `blocked`
-without resetting or overwriting user work.
+Start a new session after the update.
 
-For an existing copied skill, preserve any local changes and migrate the folder
-once to the managed symlink or junction. Restart Hermes after a successful
-update; an active session does not change in place.
+## Uninstall
 
-> Replace `<your-hermes-skills-dir>` with your own path. This repo does not
-> assume any particular workspace layout.
+Remove only the five Hypertaks directories or remove the approved external directory entry. Preserve unrelated Hermes skills and configuration.
+
+## Certification
+
+Run the Hermes section in `evals/coding-agents/LIVE-CERTIFICATION.md`. Keep the verdict `PARTIAL` until the lifecycle is observed in a real Hermes version.
