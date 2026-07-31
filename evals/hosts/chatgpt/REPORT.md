@@ -1,53 +1,33 @@
 # ChatGPT Adapter Audit Report
 
 - **Host ID**: `chatgpt`
-- **Official Display Name**: ChatGPT
-- **Official Documentation**: https://platform.openai.com/docs/actions
-- **Tested Version**: ChatGPT Web/Apps SDK 2026 (from adapter metadata; not independently observed in this session)
-- **OS**: all-web-platforms - host OS only
-- **Tested Commit**: `d845cea` (branch: `codex/cross-ai-distribution-wave-2-execution` worktree)
-- **Timestamp**: `2026-07-31T01:16:00+07:00`
+- **Tested Commit**: `a494f15`
+- **Branch**: `feat/production-rollout-wave-1`
 - **Verdict**: `PARTIAL`
-- **Evidence Class**: Adapter files and manifest structure VERIFIED; live host lifecycle UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
+- **Evidence Class**: Local runtime lifecycle and adapter structure verified. Real ChatGPT lifecycle remains unverified.
 
----
+## Verified in Wave 1
 
-## Verified Items (Code/Structure)
+1. Hypertaks still exposes exactly five canonical public skills.
+2. `.chatgpt/plugin.json` points to the executable runtime at `runtime/chatgpt-mcp-server.mjs`.
+3. MCP is used only as the ChatGPT host transport. It does not replace the canonical skill core.
+4. The runtime exposes exactly four read-only tools:
+   - `hypertaks_manifest`
+   - `hypertaks_get_skill`
+   - `hypertaks_route`
+   - `hypertaks_verify_installation`
+5. No write action is exposed.
+6. Local tests cover protocol initialization, tool discovery, representative calls, request validation, origin validation, optional bearer validation, and shutdown.
+7. Distribution validation and GitHub Actions passed on the Wave 1 branch.
 
-1. **Manifest Presence**: the registered adapter path exists and is structurally valid.
-   - Adapter path: `.chatgpt/plugin.json`
-2. **Registry Entry**: `distribution/registry.json` maps `chatgpt` to distribution type `chatgpt-app-adapter`.
-3. **Skill Root**: manifest references `./skills/`; canonical skill directory present.
-4. **Classification**: CHATGPT_APP_ADAPTER
-5. **Skill Count Validation**: `python scripts/validate_public_skills.py` confirms exactly 5 canonical public skills (hypertaks, hypertaks-verify, hypertaks-brain, hypertaks-graph, hypertaks-continuity); no sixth `hypertaks-*` skill.
-6. **No Unneeded MCP**: the adapter does not bundle an MCP server; MCP remains optional external capability.
+## Not yet verified
 
-## Host Capabilities (from official documentation)
+1. Connection from an eligible ChatGPT workspace to the remote HTTPS endpoint.
+2. Tool discovery and invocation inside ChatGPT.
+3. Refresh behavior after a runtime update.
+4. Removal of the draft app and disappearance of its tools.
+5. App Directory review or publication.
 
-- Invocation: chatgpt-app-action-trigger
-- Update mechanism: remote-mcp-server-update
-- Uninstall mechanism: remove-custom-gpt-or-app
-- Host tool mapping: mcp-server-tools
-- Subagent model: synthesized
-- Persistent memory: custom-gpt-instructions-and-mcp-state
-- Filesystem availability: none-remote-mcp-only
-- Command execution: none-remote-mcp-only
-- Required account/plan: chatgpt-plus-or-team
-- MCP requirement: required
-- Known restrictions: MCP transport is host-required for ChatGPT Apps SDK integration
+Use `evals/hosts/chatgpt/LIVE-TEST-CHECKLIST.md` for the real-host evidence procedure.
 
-## Unverified Items (Require Manual Host Test)
-
-1. **Installation**: run `hypertaks install chatgpt --scope project`; verify activation in the real host.
-2. **Plugin and Skill Discovery**: confirm the host discovers exactly the five canonical skills with no sixth.
-3. **Direct Invocation**: exercise `/hypertaks-verify` and the other four slash invocations.
-4. **Natural Language Invocation**: `Hypertaks, fix a typo in this README.` selects Nano tier without subagent overhead.
-5. **Tool Mapping**: verify capability routing matches mcp-server-tools.
-6. **Tier Behavior**: verify Lite, Standard, Prime, and Hyper contracts enforce correctly.
-7. **Subagent Behavior**: verify subagent delegation per the host model.
-8. **Update Mechanism**: `hypertaks update chatgpt` fast-forwards cleanly; rejects dirty/diverged/detached states.
-9. **Uninstall Mechanism**: `hypertaks uninstall chatgpt` removes only Hypertaks files; `hypertaks verify chatgpt` then reports NOT_INSTALLED.
-10. **Security Boundaries**: verify path traversal, prompt injection, and secret masking boundaries.
-11. **Clean Reinstall**: uninstall then reinstall succeeds without error.
-
-**Verdict**: `PARTIAL`
+Local runtime success is not behavioral certification. ChatGPT remains `PARTIAL` until real-host lifecycle evidence exists.
