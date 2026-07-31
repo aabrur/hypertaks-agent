@@ -83,8 +83,14 @@ def validate(catalog_path: Path = CATALOG, readme_path: Path = README, root: Pat
         if host.get("availability") not in {"ACTIVE", "ARCHIVED"}:
             errors.append(f"{host_id}: invalid availability")
         instruction = host.get("installInstruction")
-        if not isinstance(instruction, str) or "plugin" not in instruction.lower():
-            errors.append(f"{host_id}: installInstruction must describe the plugin route")
+        route = host.get("route")
+        plugin_route = (
+            isinstance(instruction, str)
+            and isinstance(route, str)
+            and ("plugin" in instruction.lower() or "plugin" in route.lower())
+        )
+        if not plugin_route:
+            errors.append(f"{host_id}: installInstruction or route must describe the plugin lifecycle")
         sources = host.get("officialSources")
         if not isinstance(sources, list) or not sources or not all(
             isinstance(url, str) and url.startswith("https://") for url in sources
