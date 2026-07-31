@@ -1,46 +1,44 @@
 # Hypertaks for Windsurf
 
-Windsurf Cascade supports native Agent Skills with progressive loading.
+Windsurf does not expose a custom `/plugin install` command for Cascade packages. Hypertaks therefore uses Windsurf's native Skills UI. No Python installer is required.
 
-## Workspace installation
+## Install through the Windsurf UI
 
-From the Hypertaks repository root:
+1. Open Cascade.
+2. Open the three-dot **Customizations** menu.
+3. Select **Skills**.
+4. Choose **+ Workspace** or **+ Global**.
+5. Import or copy the five canonical Hypertaks skill folders from the repository `skills/` directory.
 
-```bash
-python scripts/installer.py install windsurf --scope project
-```
-
-This prepares the five canonical skill folders under:
+Workspace destination:
 
 ```text
 .windsurf/skills/
 ```
 
-Windsurf also discovers compatible workspace skills under `.agents/skills/`.
-
-## Global installation
-
-Install the five skill folders under:
+Global destination:
 
 ```text
 ~/.codeium/windsurf/skills/
 ```
 
-Use `--scope user` only after confirming the target path on the active Windsurf version.
-
 ## Verify
 
-Reload Cascade, then invoke the main skill explicitly:
+Reload Cascade and invoke:
 
 ```text
 @hypertaks inspect this repository and state what remains unfinished.
 ```
 
-Also confirm automatic matching with a founder-shaped natural-language request.
+Confirm all five skill names appear in the Skills customization panel.
 
 ## Update and uninstall
 
-Refresh the reviewed Hypertaks checkout and rerun the installation. Remove only the five Hypertaks-owned skill directories during uninstall. Preserve unrelated Windsurf skills, rules, workflows, and memories.
+Replace only the five Hypertaks skill folders through the same Skills UI or filesystem location. Remove only those folders during uninstall. Preserve unrelated Windsurf skills, rules, workflows, and memories.
+
+## Plugin boundary
+
+Do not document a Windsurf `/plugin install hypertaks` command unless Windsurf publishes such a custom-plugin lifecycle. Installing the Windsurf editor extension itself is not the same as installing a Hypertaks plugin.
 
 ## Certification
 
