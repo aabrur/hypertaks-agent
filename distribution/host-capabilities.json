@@ -339,9 +339,9 @@
     {
       "id": "chatgpt",
       "displayName": "ChatGPT",
-      "docUrl": "https://platform.openai.com/docs/actions",
+      "docUrl": "https://developers.openai.com/plugins",
       "retrievalDate": "2026-07-31",
-      "testedVersion": "ChatGPT Web/Apps SDK 2026",
+      "testedVersion": "Local MCP transport harness on Node.js 22.16.0; ChatGPT host not observed",
       "supportedOS": [
         "all-web-platforms"
       ],
@@ -352,23 +352,25 @@
       "marketplaceAvailability": "available-app-store",
       "projectInstall": false,
       "globalInstall": true,
-      "invocationMechanism": "chatgpt-app-action-trigger",
-      "updateMechanism": "remote-mcp-server-update",
-      "uninstallMechanism": "remove-custom-gpt-or-app",
+      "invocationMechanism": "chatgpt-plugin-tool-selection",
+      "updateMechanism": "deploy-or-restart-mcp-server-and-refresh-plugin-metadata",
+      "uninstallMechanism": "remove-plugin-connection",
       "hostToolMapping": "mcp-server-tools",
       "subagentSupport": "synthesized",
-      "persistentMemorySupport": "custom-gpt-instructions-and-mcp-state",
+      "persistentMemorySupport": "none-in-read-only-adapter",
       "filesystemAvailability": "none-remote-mcp-only",
       "commandExecutionAvailability": "none-remote-mcp-only",
-      "requiredAccountOrPlan": "chatgpt-plus-or-team",
+      "requiredAccountOrPlan": "depends-on-ChatGPT-developer-mode-and-workspace-policy",
       "mcpRequirement": "required",
       "knownRestrictions": [
-        "MCP transport is host-required for ChatGPT Apps SDK integration"
+        "MCP transport is host-required for the ChatGPT plugin integration",
+        "local runtime is read-only and cannot access or mutate the user's local repository",
+        "public submission requires a stable HTTPS endpoint and live ChatGPT validation"
       ],
       "evidenceStatus": "PARTIAL",
       "classification": "CHATGPT_APP_ADAPTER",
-      "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceType": "runtime-lifecycle",
+      "evidenceNote": "Executable local MCP transport and isolated runtime lifecycle tests passed; real ChatGPT host connection remains unobserved.",
       "evidencePath": "evals/hosts/chatgpt/REPORT.md"
     },
     {
@@ -442,7 +444,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "MANAGED_INSTALL",
       "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceNote": "Adapter packae present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/windsurf/REPORT.md"
     },
     {
@@ -553,7 +555,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "MANAGED_INSTALL",
       "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceNote": "Adapter packae present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/kilo-code/REPORT.md"
     },
     {
@@ -590,7 +592,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "PROJECT_INSTRUCTIONS",
       "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceNote": "Adapter packae present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/aider/REPORT.md"
     },
     {
@@ -627,7 +629,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "MANAGED_INSTALL",
       "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+       "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/goose/REPORT.md"
     },
     {
@@ -664,7 +666,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "MANAGED_INSTALL",
       "evidenceType": "static-package",
-      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceNote": "Adapter packae present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/openhands/REPORT.md"
     },
     {

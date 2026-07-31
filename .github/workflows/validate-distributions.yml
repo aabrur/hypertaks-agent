@@ -2,7 +2,7 @@ name: Validate distributions
 
 on:
   push:
-    branches: [main, feat/cross-ai-distribution-wave-2]
+    branches: [main, feat/production-rollout-wave-1]
   pull_request:
 
 jobs:
@@ -15,6 +15,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Validate distribution registry
         run: python scripts/validate_distributions.py
 
@@ -26,6 +30,12 @@ jobs:
 
       - name: Validate host capability evidence
         run: python scripts/validate_host_capabilities.py
+
+      - name: Validate ChatGPT MCP runtime syntax
+        run: node --check runtime/chatgpt-mcp-server.mjs
+
+      - name: Test ChatGPT MCP runtime
+        run: node --test runtime/chatgpt-mcp-server.test.cjs
 
       - name: Run distribution, installer, conformance, and host-capability unit tests
         run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v

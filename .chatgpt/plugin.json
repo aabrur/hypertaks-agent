@@ -1,11 +1,16 @@
 {
   "name": "hypertaks",
   "version": "4.5.0",
-  "description": "ChatGPT App Adapter for Hypertaks Founder OS using host-required MCP transport.",
-  "transport": "mcp",
+  "description": "Executable ChatGPT plugin adapter for Hypertaks using host-required MCP Streamable HTTP transport.",
+  "transport": "streamable-http",
   "mcpServer": {
     "command": "node",
-    "args": ["runtime/mcp_server.js"]
+    "args": [
+      "runtime/chatgpt-mcp-server.mjs"
+    ],
+    "endpoint": "/mcp",
+    "healthEndpoint": "/healthz",
+    "defaultBind": "127.0.0.1:8787"
   },
   "canonicalSkills": [
     "hypertaks",
@@ -14,6 +19,19 @@
     "hypertaks-graph",
     "hypertaks-continuity"
   ],
+  "tools": [
+    "hypertaks_manifest",
+    "hypertaks_get_skill",
+    "hypertaks_route",
+    "hypertaks_verify_installation"
+  ],
   "readOnlyByDefault": true,
-  "requiresUserConfirmationForWrite": true
+  "writeToolsExposed": false,
+  "requiresUserConfirmationForWrite": true,
+  "productionSubmissionRequires": [
+    "stable-public-https-endpoint",
+    "production-authentication-if-user-data-is-added",
+    "live-chatgpt-developer-mode-evidence",
+    "human-marketplace-approval"
+  ]
 }

@@ -66,6 +66,37 @@ class ValidateHostCapabilitiesTests(unittest.TestCase):
             rc = validate(capabilities, registry)
             self.assertEqual(rc, 0)
 
+    def test_valid_partial_runtime_lifecycle(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            registry = self._registry(directory, ["chatgpt"])
+            capabilities = self._capability(
+                directory,
+                self._base_host(
+                    id="chatgpt",
+                    classification="CHATGPT_APP_ADAPTER",
+                    evidenceType="runtime-lifecycle",
+                ),
+            )
+            rc = validate(capabilities, registry)
+            self.assertEqual(rc, 0)
+
+    def test_runtime_lifecycle_cannot_claim_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            registry = self._registry(directory, ["chatgpt"])
+            capabilities = self._capability(
+                directory,
+                self._base_host(
+                    id="chatgpt",
+                    classification="CHATGPT_APP_ADAPTER",
+                    evidenceStatus="PASS",
+                    evidenceType="runtime-lifecycle",
+                ),
+            )
+            rc = validate(capabilities, registry)
+            self.assertNotEqual(rc, 0)
+
     def test_duplicate_host_ids_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             directory = Path(tmp)
