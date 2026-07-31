@@ -1,7 +1,10 @@
 {
   "name": "hypertaks",
   "version": "4.5.0",
-  "description": "Hypertaks plugin for GitHub Copilot Agent CLI and VS Code Copilot Chat.",
-  "skills": "./skills/",
-  "publisher": "abrur"
+  "description": "Hypertaks Founder Operating System plugin for GitHub Copilot CLI and compatible Copilot surfaces.",
+  "license": "MIT",
+  "author": "abrur",
+  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "repository": "https://github.com/aabrur/hypertaks-agent.git",
+  "skills": ["./skills/"]
 }
