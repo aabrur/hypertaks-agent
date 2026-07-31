@@ -30,10 +30,12 @@
     "runtime/",
     "assets/",
     "distribution/",
+    "plugins/cline/",
     "scripts/build_distributions.py",
     "scripts/validate_distributions.py",
     "scripts/validate_coding_agents.py",
     "scripts/validate_managed_agents.py",
+    ".plugin/",
     ".claude-plugin/",
     ".codex-plugin/",
     ".cursor-plugin/",
@@ -59,6 +61,14 @@
     "README.md",
     "LICENSE"
   ],
+  "cline": {
+    "plugins": [
+      {
+        "paths": ["./plugins/cline/hypertaks.ts"],
+        "capabilities": ["rules", "commands"]
+      }
+    ]
+  },
   "pi": {
     "extensions": [
       ".pi/extensions/hypertaks.ts"
@@ -78,6 +88,14 @@
     "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt && npm run test:coding-hosts && npm run test:managed-hosts",
     "start:chatgpt": "node runtime/chatgpt-mcp-server.mjs",
     "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
+  },
+  "peerDependencies": {
+    "@cline/sdk": "*"
+  },
+  "peerDependenciesMeta": {
+    "@cline/sdk": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "22.15.3",
