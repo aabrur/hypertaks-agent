@@ -1,35 +1,51 @@
 # Hypertaks Host Capability Matrix
 
-This matrix documents the distribution capabilities, classification, invocation model, and tool integration strategy for Hypertaks across all 22 supported and target AI platforms.
+This matrix documents the distribution capabilities, classification, invocation model, tool integration strategy, and evidence status for Hypertaks across all 22 supported and target AI platforms.
 
 Retrieval Date: **2026-07-31**
+
+## Evidence model
+
+Every host record carries an `evidenceStatus` and an `evidenceType`. A host
+`PASS` is permitted only when `evidenceType` is `real-host-lifecycle`, meaning
+discovery and invocation were observed in the named host application. Structural
+package or installer evidence alone supports `PARTIAL` at most. No host in this
+matrix currently holds a `PASS` verdict, because no real host application
+lifecycle was run during this wave.
+
+| Evidence type | Permitted conclusion |
+|---|---|
+| `official-documentation` | Capability classification is documented; behavior remains `NEEDS_MANUAL_HOST_TEST` until observed. |
+| `static-package` | Package format and tracked contents are structurally valid. |
+| `installer-lifecycle` | Hypertaks-owned install, update, uninstall, and reinstall behavior works in an isolated test target. |
+| `real-host-lifecycle` | Discovery and invocation in the named host version were observed; the only type that supports a host `PASS`. |
 
 ## Summary Matrix
 
 | Host ID | Official Display Name | Classification | Native Plugin | Native Skill | Custom Agent | Extension | Scope | MCP Requirement | Subagent Model | Evidence Verdict |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `claude-code` | Claude Code | `NATIVE_PLUGIN` | Yes | Yes | No | Yes | Project/User | Optional | Native Subagent | `PASS` |
-| `codex` | Codex | `NATIVE_PLUGIN` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized / Native | `PASS` |
-| `cursor` | Cursor | `NATIVE_PLUGIN` | Yes | Yes | No | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `kimi-code` | Kimi Code | `NATIVE_PLUGIN` | Yes | Yes | No | No | Project/User | Optional | Synthesized | `PASS` |
-| `opencode` | OpenCode | `PLUGIN_AND_SKILL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PASS` |
-| `pi` | Pi | `HOST_EXTENSION` | No | No | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `openclaw` | OpenClaw | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PASS` |
-| `hermes` | Hermes | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PASS` |
-| `antigravity` | Google Antigravity | `PLUGIN_AND_SKILL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PASS` |
-| `chatgpt` | ChatGPT | `CHATGPT_APP_ADAPTER` | No | No | Yes | Yes | Global | Required (Transport) | Synthesized | `PASS` |
-| `github-copilot` | GitHub Copilot | `NATIVE_PLUGIN` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `windsurf` | Windsurf | `MANAGED_INSTALL` | Yes | Yes | No | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `cline` | Cline | `MANAGED_INSTALL` | No | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `roo-code` | Roo Code | `MANAGED_INSTALL` | No | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `kilo-code` | Kilo Code | `MANAGED_INSTALL` | No | Yes | No | No | Project/User | Optional | Synthesized | `PASS` |
-| `aider` | Aider | `PROJECT_INSTRUCTIONS` | No | No | No | No | Project/User | Unavailable | Synthesized | `PASS` |
-| `goose` | Goose | `MANAGED_INSTALL` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `openhands` | OpenHands | `MANAGED_INSTALL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Micro-Agent | `PASS` |
-| `claude-ai` | Claude.ai | `PROJECT_INSTRUCTIONS` | No | No | Yes | No | Project | Unavailable | Synthesized | `PASS` |
-| `gemini-app` | Gemini App | `CUSTOM_ASSISTANT` | No | No | Yes | No | Global | Unavailable | Synthesized | `PASS` |
-| `open-webui` | Open WebUI | `HOST_EXTENSION` | Yes | No | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
-| `librechat` | LibreChat | `HOST_EXTENSION` | Yes | No | Yes | Yes | Project/User | Optional | Synthesized | `PASS` |
+| `claude-code` | Claude Code | `NATIVE_PLUGIN` | Yes | Yes | No | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
+| `codex` | Codex | `NATIVE_PLUGIN` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized / Native | `PARTIAL (static-package)` |
+| `cursor` | Cursor | `NATIVE_PLUGIN` | Yes | Yes | No | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `kimi-code` | Kimi Code | `NATIVE_PLUGIN` | Yes | Yes | No | No | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `opencode` | OpenCode | `PLUGIN_AND_SKILL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
+| `pi` | Pi | `HOST_EXTENSION` | No | No | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `openclaw` | OpenClaw | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
+| `hermes` | Hermes | `NATIVE_SKILL` | No | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (static-package)` |
+| `antigravity` | Google Antigravity | `PLUGIN_AND_SKILL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Subagent | `PARTIAL (installer-lifecycle)` |
+| `chatgpt` | ChatGPT | `CHATGPT_APP_ADAPTER` | No | No | Yes | Yes | Global | Required (Transport) | Synthesized | `PARTIAL (static-package)` |
+| `github-copilot` | GitHub Copilot | `NATIVE_PLUGIN` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `windsurf` | Windsurf | `MANAGED_INSTALL` | Yes | Yes | No | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `cline` | Cline | `MANAGED_INSTALL` | No | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `roo-code` | Roo Code | `MANAGED_INSTALL` | No | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `kilo-code` | Kilo Code | `MANAGED_INSTALL` | No | Yes | No | No | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `aider` | Aider | `PROJECT_INSTRUCTIONS` | No | No | No | No | Project/User | Unavailable | Synthesized | `PARTIAL (static-package)` |
+| `goose` | Goose | `MANAGED_INSTALL` | Yes | Yes | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `openhands` | OpenHands | `MANAGED_INSTALL` | Yes | Yes | Yes | Yes | Project/User | Optional | Native Micro-Agent | `PARTIAL (static-package)` |
+| `claude-ai` | Claude.ai | `PROJECT_INSTRUCTIONS` | No | No | Yes | No | Project | Unavailable | Synthesized | `PARTIAL (static-package)` |
+| `gemini-app` | Gemini App | `CUSTOM_ASSISTANT` | No | No | Yes | No | Global | Unavailable | Synthesized | `PARTIAL (static-package)` |
+| `open-webui` | Open WebUI | `HOST_EXTENSION` | Yes | No | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
+| `librechat` | LibreChat | `HOST_EXTENSION` | Yes | No | Yes | Yes | Project/User | Optional | Synthesized | `PARTIAL (static-package)` |
 
 ## Canonical Product Identity Guarantees
 
