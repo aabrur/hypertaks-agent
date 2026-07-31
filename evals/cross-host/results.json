@@ -1,35 +1,35 @@
 {
   "totalCases": 5,
-  "passedCases": 5,
+  "passedCases": 0,
   "failedCases": 0,
-  "verdict": "PASS",
-  "testedCommit": "b7fdaf9",
+  "verdict": "PARTIAL",
+  "testedCommit": "d845cea",
   "timestamp": "2026-07-31T01:15:00+07:00",
   "results": [
     {
       "caseId": "CH-01",
       "host": "antigravity",
-      "verdict": "PASS"
+      "verdict": "PARTIAL"
     },
     {
       "caseId": "CH-02",
       "host": "antigravity",
-      "verdict": "PASS"
+      "verdict": "PARTIAL"
     },
     {
       "caseId": "CH-03",
       "host": "claude-code",
-      "verdict": "PASS"
+      "verdict": "PARTIAL"
     },
     {
       "caseId": "CH-04",
       "host": "codex",
-      "verdict": "PASS"
+      "verdict": "PARTIAL"
     },
     {
       "caseId": "CH-05",
       "host": "chatgpt",
-      "verdict": "PASS"
+      "verdict": "PARTIAL"
     }
   ]
 }

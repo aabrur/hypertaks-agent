@@ -24,5 +24,8 @@ jobs:
       - name: Validate cross-host conformance
         run: python scripts/validate_conformance.py
 
-      - name: Run distribution, installer, and conformance unit tests
-        run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance -v
+      - name: Validate host capability evidence
+        run: python scripts/validate_host_capabilities.py
+
+      - name: Run distribution, installer, conformance, and host-capability unit tests
+        run: python -m unittest scripts.test_build_distributions scripts.test_installer scripts.test_validate_conformance scripts.test_validate_host_capabilities -v

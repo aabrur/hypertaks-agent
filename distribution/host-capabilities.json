@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "retrievalDate": "2026-07-31",
   "totalHosts": 22,
   "hosts": [
@@ -9,7 +9,11 @@
       "docUrl": "https://docs.anthropic.com/en/docs/agents-and-tools/claude-code",
       "retrievalDate": "2026-07-31",
       "testedVersion": "2.1.215",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": false,
@@ -27,9 +31,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "anthropic-api-or-pro",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["subagents require prompt-level delegation in headless CLI"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_PLUGIN"
+      "knownRestrictions": [
+        "subagents require prompt-level delegation in headless CLI"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_PLUGIN",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/claude-code/REPORT.md"
     },
     {
       "id": "codex",
@@ -37,7 +46,11 @@
       "docUrl": "https://github.com/openai/codex",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.146.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -55,9 +68,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "openai-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["plugin manifests must be indexed by marketplace registry"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_PLUGIN"
+      "knownRestrictions": [
+        "plugin manifests must be indexed by marketplace registry"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_PLUGIN",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/codex/REPORT.md"
     },
     {
       "id": "cursor",
@@ -65,7 +83,11 @@
       "docUrl": "https://docs.cursor.com",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.45.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": false,
@@ -83,9 +105,14 @@
       "commandExecutionAvailability": "terminal-execution-with-user-prompt",
       "requiredAccountOrPlan": "cursor-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["subagent spawning relies on synthesized role execution"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_PLUGIN"
+      "knownRestrictions": [
+        "subagent spawning relies on synthesized role execution"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_PLUGIN",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/cursor/REPORT.md"
     },
     {
       "id": "kimi-code",
@@ -93,7 +120,11 @@
       "docUrl": "https://kimi.moonshot.cn/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.2.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": false,
@@ -111,9 +142,14 @@
       "commandExecutionAvailability": "terminal-execution",
       "requiredAccountOrPlan": "moonshot-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["requires UTF-8 manifest parsing"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_PLUGIN"
+      "knownRestrictions": [
+        "requires UTF-8 manifest parsing"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_PLUGIN",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/kimi-code/REPORT.md"
     },
     {
       "id": "opencode",
@@ -121,7 +157,11 @@
       "docUrl": "https://opencode.ai/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.9.4",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -139,9 +179,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["requires plugin manager discovery path"],
-      "evidenceStatus": "PASS",
-      "classification": "PLUGIN_AND_SKILL"
+      "knownRestrictions": [
+        "requires plugin manager discovery path"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "PLUGIN_AND_SKILL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/opencode/REPORT.md"
     },
     {
       "id": "pi",
@@ -149,7 +194,11 @@
       "docUrl": "https://github.com/minds/pi",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.82.1",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": false,
       "customAgent": true,
@@ -167,9 +216,14 @@
       "commandExecutionAvailability": "extension-shell",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["extension adapter bridges TypeScript runtime to Pi event bus"],
-      "evidenceStatus": "PASS",
-      "classification": "HOST_EXTENSION"
+      "knownRestrictions": [
+        "extension adapter bridges TypeScript runtime to Pi event bus"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "HOST_EXTENSION",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/pi/REPORT.md"
     },
     {
       "id": "openclaw",
@@ -177,7 +231,11 @@
       "docUrl": "https://openclaw.ai/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "2026.7.1-2",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": true,
       "customAgent": true,
@@ -195,9 +253,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["scans skills directory automatically"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_SKILL"
+      "knownRestrictions": [
+        "scans skills directory automatically"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_SKILL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/openclaw/REPORT.md"
     },
     {
       "id": "hermes",
@@ -205,7 +268,11 @@
       "docUrl": "https://github.com/hermes-agent/hermes",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.19.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": true,
       "customAgent": true,
@@ -223,9 +290,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["requires .hermes/ skill scanning configuration"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_SKILL"
+      "knownRestrictions": [
+        "requires .hermes/ skill scanning configuration"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_SKILL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/hermes/REPORT.md"
     },
     {
       "id": "antigravity",
@@ -233,7 +305,11 @@
       "docUrl": "https://cloud.google.com/antigravity/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.4.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -251,9 +327,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "google-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["bundled package requires BUILD-MANIFEST.json and canonical SVG"],
-      "evidenceStatus": "PASS",
-      "classification": "PLUGIN_AND_SKILL"
+      "knownRestrictions": [
+        "bundled package requires BUILD-MANIFEST.json and canonical SVG"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "PLUGIN_AND_SKILL",
+      "evidenceType": "installer-lifecycle",
+      "evidenceNote": "Antigravity package build and installer lifecycle verified in an isolated target; real Antigravity application session not run.",
+      "evidencePath": "evals/hosts/antigravity/REPORT.md"
     },
     {
       "id": "chatgpt",
@@ -261,7 +342,9 @@
       "docUrl": "https://platform.openai.com/docs/actions",
       "retrievalDate": "2026-07-31",
       "testedVersion": "ChatGPT Web/Apps SDK 2026",
-      "supportedOS": ["all-web-platforms"],
+      "supportedOS": [
+        "all-web-platforms"
+      ],
       "nativePlugin": false,
       "nativeSkill": false,
       "customAgent": true,
@@ -279,9 +362,14 @@
       "commandExecutionAvailability": "none-remote-mcp-only",
       "requiredAccountOrPlan": "chatgpt-plus-or-team",
       "mcpRequirement": "required",
-      "knownRestrictions": ["MCP transport is host-required for ChatGPT Apps SDK integration"],
-      "evidenceStatus": "PASS",
-      "classification": "CHATGPT_APP_ADAPTER"
+      "knownRestrictions": [
+        "MCP transport is host-required for ChatGPT Apps SDK integration"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "CHATGPT_APP_ADAPTER",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/chatgpt/REPORT.md"
     },
     {
       "id": "github-copilot",
@@ -289,7 +377,11 @@
       "docUrl": "https://docs.github.com/en/copilot",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.0.70",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -307,9 +399,14 @@
       "commandExecutionAvailability": "workspace-terminal",
       "requiredAccountOrPlan": "github-copilot-subscription",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["requires .github-copilot/ or .github/ plugin specification"],
-      "evidenceStatus": "PASS",
-      "classification": "NATIVE_PLUGIN"
+      "knownRestrictions": [
+        "requires .github-copilot/ or .github/ plugin specification"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "NATIVE_PLUGIN",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/github-copilot/REPORT.md"
     },
     {
       "id": "windsurf",
@@ -317,7 +414,11 @@
       "docUrl": "https://codeium.com/windsurf/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.9.1",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": false,
@@ -335,9 +436,14 @@
       "commandExecutionAvailability": "terminal-execution",
       "requiredAccountOrPlan": "codeium-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed installation writes rules and skills to .windsurf/"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed installation writes rules and skills to .windsurf/"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/windsurf/REPORT.md"
     },
     {
       "id": "cline",
@@ -345,7 +451,11 @@
       "docUrl": "https://github.com/cline/cline",
       "retrievalDate": "2026-07-31",
       "testedVersion": "3.0.47",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": true,
       "customAgent": true,
@@ -363,9 +473,14 @@
       "commandExecutionAvailability": "terminal-execution",
       "requiredAccountOrPlan": "open-source-or-api-key",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed installation configures .cline/skills and custom prompt"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed installation configures .cline/skills and custom prompt"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/cline/REPORT.md"
     },
     {
       "id": "roo-code",
@@ -373,7 +488,11 @@
       "docUrl": "https://github.com/RooVetGit/Roo-Code",
       "retrievalDate": "2026-07-31",
       "testedVersion": "3.8.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": true,
       "customAgent": true,
@@ -391,9 +510,14 @@
       "commandExecutionAvailability": "terminal-execution",
       "requiredAccountOrPlan": "open-source-or-api-key",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed installation injects mode configuration into .roo/"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed installation injects mode configuration into .roo/"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/roo-code/REPORT.md"
     },
     {
       "id": "kilo-code",
@@ -401,7 +525,11 @@
       "docUrl": "https://kilo.ai/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.1.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": true,
       "customAgent": false,
@@ -419,9 +547,14 @@
       "commandExecutionAvailability": "terminal-execution",
       "requiredAccountOrPlan": "kilo-account",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed skill adapter links canonical skills to .kilo/skills"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed skill adapter links canonical skills to .kilo/skills"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/kilo-code/REPORT.md"
     },
     {
       "id": "aider",
@@ -429,7 +562,11 @@
       "docUrl": "https://aider.chat/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.72.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": false,
       "nativeSkill": false,
       "customAgent": false,
@@ -447,9 +584,14 @@
       "commandExecutionAvailability": "shell-command",
       "requiredAccountOrPlan": "open-source-or-api-key",
       "mcpRequirement": "unavailable",
-      "knownRestrictions": ["uses project instructions via .aider.conf.yml and CONVENTIONS.md"],
-      "evidenceStatus": "PASS",
-      "classification": "PROJECT_INSTRUCTIONS"
+      "knownRestrictions": [
+        "uses project instructions via .aider.conf.yml and CONVENTIONS.md"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "PROJECT_INSTRUCTIONS",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/aider/REPORT.md"
     },
     {
       "id": "goose",
@@ -457,7 +599,11 @@
       "docUrl": "https://block.github.io/goose/docs",
       "retrievalDate": "2026-07-31",
       "testedVersion": "1.0.2",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -475,9 +621,14 @@
       "commandExecutionAvailability": "full-terminal-execution",
       "requiredAccountOrPlan": "open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed installation provisions recipe and extension files under .goose/"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed installation provisions recipe and extension files under .goose/"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/goose/REPORT.md"
     },
     {
       "id": "openhands",
@@ -485,7 +636,11 @@
       "docUrl": "https://github.com/All-Hands-AI/OpenHands",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.18.0",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": true,
       "customAgent": true,
@@ -503,9 +658,14 @@
       "commandExecutionAvailability": "docker-bash-terminal",
       "requiredAccountOrPlan": "open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["managed installation registers micro-agent skills in .openhands/"],
-      "evidenceStatus": "PASS",
-      "classification": "MANAGED_INSTALL"
+      "knownRestrictions": [
+        "managed installation registers micro-agent skills in .openhands/"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "MANAGED_INSTALL",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/openhands/REPORT.md"
     },
     {
       "id": "claude-ai",
@@ -513,7 +673,9 @@
       "docUrl": "https://support.anthropic.com/en/articles/9517377-about-projects",
       "retrievalDate": "2026-07-31",
       "testedVersion": "Claude.ai Web App 2026",
-      "supportedOS": ["all-web-platforms"],
+      "supportedOS": [
+        "all-web-platforms"
+      ],
       "nativePlugin": false,
       "nativeSkill": false,
       "customAgent": true,
@@ -531,9 +693,14 @@
       "commandExecutionAvailability": "none-sandboxed-javascript-artifacts-only",
       "requiredAccountOrPlan": "claude-pro-or-team",
       "mcpRequirement": "unavailable",
-      "knownRestrictions": ["no native terminal command execution; uses uploaded project instructions package"],
-      "evidenceStatus": "PASS",
-      "classification": "PROJECT_INSTRUCTIONS"
+      "knownRestrictions": [
+        "no native terminal command execution; uses uploaded project instructions package"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "PROJECT_INSTRUCTIONS",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/claude-ai/REPORT.md"
     },
     {
       "id": "gemini-app",
@@ -541,7 +708,9 @@
       "docUrl": "https://support.google.com/gemini/answer/14579631",
       "retrievalDate": "2026-07-31",
       "testedVersion": "Gemini Advanced Web App 2026",
-      "supportedOS": ["all-web-platforms"],
+      "supportedOS": [
+        "all-web-platforms"
+      ],
       "nativePlugin": false,
       "nativeSkill": false,
       "customAgent": true,
@@ -559,9 +728,14 @@
       "commandExecutionAvailability": "none-code-execution-sandbox-only",
       "requiredAccountOrPlan": "gemini-advanced-subscription",
       "mcpRequirement": "unavailable",
-      "knownRestrictions": ["Gemini App is separate from Google Antigravity; uses custom Gem instructions"],
-      "evidenceStatus": "PASS",
-      "classification": "CUSTOM_ASSISTANT"
+      "knownRestrictions": [
+        "Gemini App is separate from Google Antigravity; uses custom Gem instructions"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "CUSTOM_ASSISTANT",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/gemini-app/REPORT.md"
     },
     {
       "id": "open-webui",
@@ -569,7 +743,11 @@
       "docUrl": "https://docs.openwebui.com/features/plugin",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.5.10",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": false,
       "customAgent": true,
@@ -587,9 +765,14 @@
       "commandExecutionAvailability": "server-python-execution",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["extension registered via Open WebUI Functions/Tools Python script"],
-      "evidenceStatus": "PASS",
-      "classification": "HOST_EXTENSION"
+      "knownRestrictions": [
+        "extension registered via Open WebUI Functions/Tools Python script"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "HOST_EXTENSION",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/open-webui/REPORT.md"
     },
     {
       "id": "librechat",
@@ -597,7 +780,11 @@
       "docUrl": "https://docs.librechat.ai/features/plugins",
       "retrievalDate": "2026-07-31",
       "testedVersion": "0.7.6",
-      "supportedOS": ["windows", "macos", "linux"],
+      "supportedOS": [
+        "windows",
+        "macos",
+        "linux"
+      ],
       "nativePlugin": true,
       "nativeSkill": false,
       "customAgent": true,
@@ -615,9 +802,14 @@
       "commandExecutionAvailability": "code-execution-tool",
       "requiredAccountOrPlan": "free-open-source",
       "mcpRequirement": "optional",
-      "knownRestrictions": ["extension provided as LibreChat custom tool preset"],
-      "evidenceStatus": "PASS",
-      "classification": "HOST_EXTENSION"
+      "knownRestrictions": [
+        "extension provided as LibreChat custom tool preset"
+      ],
+      "evidenceStatus": "PARTIAL",
+      "classification": "HOST_EXTENSION",
+      "evidenceType": "static-package",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidencePath": "evals/hosts/librechat/REPORT.md"
     }
   ]
 }

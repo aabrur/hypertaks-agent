@@ -1,146 +1,157 @@
-# Cross-AI Agent Distribution Phase Report: Hypertaks Phase 2
+# Cross-AI Distribution Wave 2 Implementation Report
 
-- **Author**: Principal Cross-Agent Distribution Engineer & AI Plugin Architect
-- **Tested Commit**: `b7fdaf9` (branch: `feat/cross-ai-distribution-wave-2`)
+- **Author**: codex (cross-ai-distribution-wave-2-execution agent)
+- **Tested Commit**: `d845cea` (worktree `cross-ai-distribution-wave-2-execution`, base `feat/cross-ai-distribution-wave-2` @ `688508a`)
 - **Date**: `2026-07-31`
 - **Product Version**: `4.5.0`
-- **Overall Release Status**: `CONFIRMED` (Distribution Wave 2 Implementation Complete)
+- **Overall Status**: `NEEDS_VERIFICATION` - Structural implementation complete; behavioral certification pending live host tests.
 
 ---
 
 ## Executive Summary
 
-This report documents the completion of the Phase 2 Cross-AI Agent Distribution implementation for Hypertaks (`hypertaks-agent`).
+This report records the cross-AI distribution evidence gathered during wave 2. The
+Hypertaks plugin now extends across **22 host targets** while preserving exactly five
+canonical public skills and the canonical SVG asset.
 
-Hypertaks has been expanded from 9 initial host targets to **22 total AI host targets** spanning native plugins, scanned skills, managed installations, host extensions, ChatGPT App SDK adapters, custom assistants, and project instruction sets.
+The behavioral conclusion for this wave is deliberately scoped:
 
-Throughout this expansion:
-1. **Canonical Product Identity**: Remains strictly bound to the exact five public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`). No sixth public skill has been created.
-2. **MCP Policy**: Preserved as an optional external capability except where host transport strictly requires it (such as ChatGPT Apps SDK integration).
-3. **Active Google Coding Target**: Google Antigravity is the primary active target. Gemini CLI claims have been removed. Gemini App is maintained separately as a Custom Assistant definition.
-4. **Canonical Logo Integrity**: `assets/Hypertask.svg` is copied without destructive tracing or redrawing.
-5. **Universal Installer**: A single unified CLI installer (`scripts/installer.py`) has been added and validated across fresh install, update, verify, uninstall, corrupt package detection, and reinstall lifecycles.
+- **Structural identity, adapters, installer, and conformance validators**: `CONFIRMED`.
+- **Canonical five-skill set, SVG hash, build, and ownership-aware install/verify/update/uninstall/reinstall**: `CONFIRMED` (Antigravity installer lifecycle).
+- **Live host skill discovery, direct or natural-language invocation, tool mapping, and behavioral execution**: `NOT_SUPPORTED` in this session (no host account or paid plan was authenticated; no live host application was exercised).
+
+No marketplace publication, merge to `main`, or pull request was performed without explicit owner approval.
 
 ---
 
-## Official Documentation Sources & Retrieval Matrix
+## Tested Commit and Changed Files
 
-| Host ID | Official Display Name | Documentation URL | Retrieval Date | Tested Version |
+| Area | Path |
+|---|---|
+| Validator (new) | `scripts/validate_host_capabilities.py` |
+| Validator tests (new) | `scripts/test_validate_host_capabilities.py` |
+| Installer hardening | `scripts/installer.py` |
+| Installer tests | `scripts/test_installer.py` |
+| Conformance validator | `scripts/validate_conformance.py` |
+| Conformance tests | `scripts/test_validate_conformance.py` |
+| Host capability records | `distribution/host-capabilities.json` |
+| Host matrix | `distribution/HOST-CAPABILITY-MATRIX.md` |
+| Adapter audit | `distribution/EXISTING-ADAPTER-AUDIT.md` |
+| Conformance data | `evals/cross-host/cases.jsonl`, `results.json`, `SUMMARY.md` |
+| Host reports | `evals/hosts/<host-id>/REPORT.md` (22) |
+| CI workflow | `.github/workflows/validate-distributions.yml` |
+| README | `README.md` |
+| Marketplace readiness | `marketplace/SUBMISSION-READINESS.md` |
+
+## Official Source List and Host Matrix
+
+| Host ID | Display Name | Documentation URL | Evidence Type | Verdict |
 |---|---|---|---|---|
-| `claude-code` | Claude Code | https://docs.anthropic.com/en/docs/agents-and-tools/claude-code | 2026-07-31 | `2.1.215` |
-| `codex` | Codex | https://github.com/openai/codex | 2026-07-31 | `0.146.0` |
-| `cursor` | Cursor | https://docs.cursor.com | 2026-07-31 | `0.45.0` |
-| `kimi-code` | Kimi Code | https://kimi.moonshot.cn/docs | 2026-07-31 | `1.2.0` |
-| `opencode` | OpenCode | https://opencode.ai/docs | 2026-07-31 | `0.9.4` |
-| `pi` | Pi | https://github.com/minds/pi | 2026-07-31 | `0.82.1` |
-| `openclaw` | OpenClaw | https://openclaw.ai/docs | 2026-07-31 | `2026.7.1-2` |
-| `hermes` | Hermes | https://github.com/hermes-agent/hermes | 2026-07-31 | `0.19.0` |
-| `antigravity` | Google Antigravity | https://cloud.google.com/antigravity/docs | 2026-07-31 | `1.4.0` |
-| `chatgpt` | ChatGPT | https://platform.openai.com/docs/actions | 2026-07-31 | Web/Apps SDK |
-| `github-copilot` | GitHub Copilot | https://docs.github.com/en/copilot | 2026-07-31 | `1.0.70` |
-| `windsurf` | Windsurf | https://codeium.com/windsurf/docs | 2026-07-31 | `1.9.1` |
-| `cline` | Cline | https://github.com/cline/cline | 2026-07-31 | `3.0.47` |
-| `roo-code` | Roo Code | https://github.com/RooVetGit/Roo-Code | 2026-07-31 | `3.8.0` |
-| `kilo-code` | Kilo Code | https://kilo.ai/docs | 2026-07-31 | `1.1.0` |
-| `aider` | Aider | https://aider.chat/docs | 2026-07-31 | `0.72.0` |
-| `goose` | Goose | https://block.github.io/goose/docs | 2026-07-31 | `1.0.2` |
-| `openhands` | OpenHands | https://github.com/All-Hands-AI/OpenHands | 2026-07-31 | `0.18.0` |
-| `claude-ai` | Claude.ai | https://support.anthropic.com/en/articles/9517377-about-projects | 2026-07-31 | Web App |
-| `gemini-app` | Gemini App | https://support.google.com/gemini/answer/14579631 | 2026-07-31 | Web App |
-| `open-webui` | Open WebUI | https://docs.openwebui.com/features/plugin | 2026-07-31 | `0.5.10` |
-| `librechat` | LibreChat | https://docs.librechat.ai/features/plugins | 2026-07-31 | `0.7.6` |
+| `claude-code` | Claude Code | https://docs.anthropic.com/en/docs/agents-and-tools/claude-code | static-package | PARTIAL |
+| `codex` | Codex | https://github.com/openai/codex | static-package | PARTIAL |
+| `cursor` | Cursor | https://docs.cursor.com | static-package | PARTIAL |
+| `kimi-code` | Kimi Code | https://kimi.moonshot.cn/docs | static-package | PARTIAL |
+| `opencode` | OpenCode | https://opencode.ai/docs | static-package | PARTIAL |
+| `pi` | Pi | https://github.com/minds/pi | static-package | PARTIAL |
+| `openclaw` | OpenClaw | https://openclaw.ai/docs | static-package | PARTIAL |
+| `hermes` | Hermes | https://github.com/hermes-agent/hermes | static-package | PARTIAL |
+| `antigravity` | Google Antigravity | https://cloud.google.com/antigravity/docs | installer-lifecycle | PARTIAL |
+| `chatgpt` | ChatGPT | https://platform.openai.com/docs/actions | static-package | PARTIAL |
+| `github-copilot` | GitHub Copilot | https://docs.github.com/en/copilot | static-package | PARTIAL |
+| `windsurf` | Windsurf | https://codeium.com/windsurf/docs | static-package | PARTIAL |
+| `cline` | Cline | https://github.com/cline/cline | static-package | PARTIAL |
+| `roo-code` | Roo Code | https://github.com/RooVetGit/Roo-Code | static-package | PARTIAL |
+| `kilo-code` | Kilo Code | https://kilo.ai/docs | static-package | PARTIAL |
+| `aider` | Aider | https://aider.chat/docs | static-package | PARTIAL |
+| `goose` | Goose | https://block.github.io/goose/docs | static-package | PARTIAL |
+| `openhands` | OpenHands | https://github.com/All-Hands-AI/OpenHands | static-package | PARTIAL |
+| `claude-ai` | Claude.ai | https://support.anthropic.com/en/articles/9517377-about-projects | static-package | PARTIAL |
+| `gemini-app` | Gemini App | https://support.google.com/gemini/answer/14579631 | static-package | PARTIAL |
+| `open-webui` | Open WebUI | https://docs.openwebui.com/features/plugin | static-package | PARTIAL |
+| `librechat` | LibreChat | https://docs.librechat.ai/features/plugins | static-package | PARTIAL |
 
----
+## Lifecycle Matrix
 
-## Supported Host & Classification Matrix
+| Host | Build | Install/Verify/Update/Uninstall/Reinstall (isolated) | Live host invocation |
+|---|---|---|---|
+| `antigravity` | CONFIRMED | CONFIRMED (installer-lifecycle) | NOT_SUPPORTED |
+| all other 21 | CONFIRMED (adapter manifest present) | NOT_SUPPORTED | NOT_SUPPORTED |
 
-- `claude-code`: `NATIVE_PLUGIN` (`CONFIRMED`)
-- `codex`: `NATIVE_PLUGIN` (`CONFIRMED`)
-- `cursor`: `NATIVE_PLUGIN` (`CONFIRMED`)
-- `kimi-code`: `NATIVE_PLUGIN` (`CONFIRMED`)
-- `opencode`: `PLUGIN_AND_SKILL` (`CONFIRMED`)
-- `pi`: `HOST_EXTENSION` (`CONFIRMED`)
-- `openclaw`: `NATIVE_SKILL` (`CONFIRMED`)
-- `hermes`: `NATIVE_SKILL` (`CONFIRMED`)
-- `antigravity`: `PLUGIN_AND_SKILL` (`CONFIRMED`)
-- `chatgpt`: `CHATGPT_APP_ADAPTER` (`CONFIRMED`)
-- `github-copilot`: `NATIVE_PLUGIN` (`CONFIRMED`)
-- `windsurf`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `cline`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `roo-code`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `kilo-code`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `aider`: `PROJECT_INSTRUCTIONS` (`CONFIRMED`)
-- `goose`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `openhands`: `MANAGED_INSTALL` (`CONFIRMED`)
-- `claude-ai`: `PROJECT_INSTRUCTIONS` (`CONFIRMED`)
-- `gemini-app`: `CUSTOM_ASSISTANT` (`CONFIRMED`)
-- `open-webui`: `HOST_EXTENSION` (`CONFIRMED`)
-- `librechat`: `HOST_EXTENSION` (`CONFIRMED`)
+Antigravity installer lifecycle was executed in an isolated temporary project root
+(`scripts/test_installer.py`); it never writes to the repository's own `.agents/`.
 
----
+## Marketplace Matrix
 
-## Live Antigravity Lifecycle Test Verdict
+| Host | Target Marketplace | Status |
+|---|---|---|
+| `antigravity` | Google Antigravity Plugin Catalog | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `chatgpt` | ChatGPT App Directory | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `claude-code` | Anthropic Claude Code Plugin Directory | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `codex` | Codex Plugin Marketplace | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `cursor` | Cursor Plugin Directory | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `github-copilot` | GitHub Marketplace | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `windsurf` | Windsurf Plugins Directory | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `cline` | VS Code Marketplace (Cline) | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `roo-code` | VS Code Marketplace (Roo Code) | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `goose` | Goose Extension Registry | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `librechat` | LibreChat Plugin Directory | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `open-webui` | Open WebUI Community Hub | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `openhands` | OpenHands Micro-Agent Registry | `READY_FOR_HUMAN_SUBMISSION` (structural) |
+| `kilo-code` | N/A (managed adapter) | `NO_PUBLIC_MARKETPLACE` |
+| `aider` | N/A (project instructions) | `NO_PUBLIC_MARKETPLACE` |
+| `claude-ai` | N/A (project knowledge) | `NO_PUBLIC_MARKETPLACE` |
+| `gemini-app` | N/A (custom gem) | `NO_PUBLIC_MARKETPLACE` |
+| `kimi-code`, `opencode`, `openclaw`, `hermes`, `pi` | N/A (direct/local install) | `NO_PUBLIC_MARKETPLACE` |
 
-- **Package Build**: `dist/antigravity/hypertaks` (`PASS` - `VERIFIED`)
-- **Validation Check**: `python scripts/build_distributions.py antigravity --check-only` (`PASS` - `VERIFIED`)
-- **Canonical SVG Verification**: Matches `assets/Hypertask.svg` sha256 (`PASS` - `VERIFIED`)
-- **Five Skills Discovered**: The generated package contains exactly the five canonical public skills (`PASS` - `VERIFIED`)
-- **Direct & Natural Language Invocation**: Inside build/installer test suite (`PASS` - `VERIFIED` at installer test level); inside actual Antigravity host application (`UNVERIFIED` - `NEEDS_MANUAL_HOST_TEST`)
-- **Update Reconciliation**: `scripts/update_hypertaks.py` guards and `scripts/installer.py` update lifecycle (`PASS` - `VERIFIED`)
-- **Uninstall Safety**: `scripts/installer.py` uninstall removes only Hypertaks files without touching user files (`PASS` - `VERIFIED`)
-- **Verdict**: `PARTIAL` - Structural, build, and installer-level lifecycle `VERIFIED`. Live host-app invocation, tool mapping, and behavioral execution inside the Antigravity application `UNVERIFIED` / `NEEDS_MANUAL_HOST_TEST`.
+`READY_FOR_HUMAN_SUBMISSION` denotes structural package/metadata readiness only; it does
+not imply `SUBMITTED`, `APPROVED`, or `PUBLISHED`. No submission occurred.
 
----
+## Conformance Results
 
-## Marketplace Submission Readiness Status
+| Field | Value |
+|---|---|
+| Total cases | 5 |
+| Passed cases | 0 |
+| Partial cases | 5 |
+| Aggregate verdict | `PARTIAL` |
 
-All 13 marketplace-supported targets have prepared submission packages in `marketplace/<host-id>/` with status set to `READY_FOR_HUMAN_SUBMISSION`:
+All five cases are spec-derived expectation checks with `evidenceType: static-package`.
+No case carries `real-host-lifecycle` evidence, so none may claim `PASS`. The conformance
+validator rejects any `PASS` case whose evidence is not live-host lifecycle and rejects a
+`results.json` whose totals or aggregate disagree with the cases.
 
-- `antigravity`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `claude-code`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `codex`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `cursor`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `chatgpt`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `github-copilot`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `windsurf`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `cline`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `roo-code`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `goose`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `openhands`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `open-webui`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
-- `librechat`: `READY_FOR_HUMAN_SUBMISSION` (`CONFIRMED`)
+## Security Findings
 
-No marketplace submission or publication has occurred without explicit human trigger (`PREPARE -> PREVIEW -> HUMAN APPROVAL -> COMMIT ONCE -> RECONCILE`).
+- **Path traversal**: `validate_owned_relative_path` rejects absolute or escaping
+  manifest paths; uninstall deletes only manifest-listed files and prunes empty dirs.
+  `test_uninstall_preserves_unknown_files` confirms an unrelated file survives uninstall.
+  `CONFIRMED`.
+- **Dirty/diverged/detached/wrong-remote**: `scripts/update_hypertaks.py` and its tests
+  reject unsafe Git states. `CONFIRMED`.
+- **No unneeded MCP/hooks**: the Antigravity package ships no `mcp_config.json` or
+  `hooks.json`. `CONFIRMED`.
+- **SVG integrity**: package SVG SHA256 matches `assets/Hypertask.svg`. `CONFIRMED`.
+- **Five-skill invariant**: `validate_skill.py` and `validate_public_skills.py` enforce
+  exactly five public skills and reject a sixth. `CONFIRMED`.
+- **Secret scanning**: no secrets added to reports, manifests, or commits. `CONFIRMED`.
 
----
+## Blockers
 
-## Cross-Host Behavioral Conformance
+- `BLOCKED` for all 22 live-host behavioral claims until a live host session is run with an
+  authenticated account and paid plan where required (ChatGPT, Claude.ai, Gemini App).
+- `BLOCKED` for any marketplace publication until explicit human owner approval for the
+  exact package version and target marketplace is obtained.
 
-The cross-host behavioral conformance test suite (`evals/cross-host/`) passed 5/5 invariant verification cases covering product identity, contract-bound tiering, execution fallback, capability relevance, security boundaries, and continuity (`CONFIRMED`).
+## Manual Owner Actions
 
----
+1. Run live host verification per `evals/hosts/<host-id>/REPORT.md` (at minimum Antigravity,
+   then the priority native-plugin hosts).
+2. Review the full branch and approve the merge of
+   `codex/cross-ai-distribution-wave-2-execution` to `main` (Task 7 PR preview).
+3. Provide explicit approval before submitting any package to any external marketplace.
 
-## Security Audit Summary
+## Exact Next Step
 
-- Path traversal attempts escaping workspace or Obsidian roots are rejected (`CONFIRMED`).
-- Prompt injections trying to spoof T1 boss approval are blocked (`CONFIRMED`).
-- Sensitive environment variables and secrets are masked in logs and handoffs (`CONFIRMED`).
-- Default install mode is non-escalated user/project level without automatic administrator elevation (`CONFIRMED`).
-
----
-
-## What Is and Is Not Complete
-
-### Complete (`CONFIRMED`)
-1. Capability matrix for all 22 host targets.
-2. Universal CLI installer (`scripts/installer.py`) with unit tests.
-3. Adapters for all 13 new host targets.
-4. Real Antigravity lifecycle test and evidence report.
-5. Audits for all eight existing host adapters.
-6. Marketplace packages and submission-readiness manifest (`READY_FOR_HUMAN_SUBMISSION`).
-7. Cross-host behavioral conformance suite (`evals/cross-host/`).
-8. Full documentation updates in `README.md`.
-
-### Manual Human Actions Still Required (`NEEDS_VERIFICATION`)
-1. Review and merge Pull Request from `feat/cross-ai-distribution-wave-2` to `main`.
-2. Provide explicit human approval prior to submitting any package to external marketplaces.
+Run the complete validation gate (Task 6, Step 3) and prepare the pull-request preview
+(Task 7) against `origin/main...HEAD`. The push and pull-request creation remain owner-approved
+external actions.

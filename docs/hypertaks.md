@@ -224,4 +224,3 @@ No marketplace, registry, or external host received a Hypertaks package, submiss
 ---
 
 *This document is the top-level evidence anchor for the Hypertaks Cross-AI Distribution Wave 2 implementation. Child evidence lives in `distribution/`, `evals/`, `marketplace/`, and `scripts/`.*
-

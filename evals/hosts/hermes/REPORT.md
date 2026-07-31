@@ -4,7 +4,7 @@
 - **Official Display Name**: Hermes
 - **Tested Version**: 0.19.0 (claimed in adapter metadata; not independently verified in this session)
 - **OS**: Windows 11 (build 26100) - host OS only
-- **Tested Commit**: `b7fdaf9` (branch: `feat/cross-ai-distribution-wave-2`)
+- **Tested Commit**: `d845cea` (branch: `feat/cross-ai-distribution-wave-2`)
 - **Timestamp**: `2026-07-31T01:16:00+07:00`
 - **Verdict**: `PARTIAL`
 - **Evidence Class**: Install guide structure VERIFIED; live lifecycle on Hermes application UNVERIFIED / NEEDS_MANUAL_HOST_TEST.
