@@ -2,18 +2,20 @@
 
 This checklist covers GitHub Copilot, Windsurf, Cline, Roo Code, Kilo Code, Aider, Goose, and OpenHands.
 
-A static package, copied directory, manifest, validator, or isolated installer lifecycle is not behavioral certification. `PASS` requires evidence from the named real host version.
+Wave 3 is plugin-first where the host provides a real plugin lifecycle. A fake `/plugin` command is not acceptable. Hosts without a verified plugin command must be certified through their official Skills, project-instruction, or recipe mechanism.
+
+A static package, manifest, plugin source file, copied skill directory, validator, or CI result is not behavioral certification. `PASS` requires evidence from the named real host version.
 
 ## Evidence record
 
 Record all of the following before changing a host from `PARTIAL`:
 
 - host name and exact application or CLI version;
+- host surface, such as CLI, VS Code, JetBrains, web, desktop, or self-hosted;
 - operating system and architecture;
 - Hypertaks commit SHA;
-- installation scope and destination;
 - exact installation command or UI steps;
-- discovery output showing the expected Hypertaks assets;
+- plugin or skill discovery output;
 - direct invocation result;
 - natural-language invocation result where supported;
 - permission or approval behavior for file and shell actions;
@@ -22,19 +24,6 @@ Record all of the following before changing a host from `PARTIAL`:
 - reinstall result;
 - sanitized logs or screenshots;
 - final verdict and remaining limitations.
-
-## Common lifecycle
-
-1. Start from a clean workspace and a clean host profile where practical.
-2. Install Hypertaks using the host-specific guide.
-3. Restart or reload the host when its documentation requires it.
-4. Confirm the expected five canonical skills or the documented instruction package is discoverable.
-5. Invoke the main Hypertaks entry point directly.
-6. Ask a natural-language founder-shaped task and confirm Hypertaks routing is selected.
-7. Confirm that mutating actions still respect the host permission boundary.
-8. Update from a newer reviewed Hypertaks commit and verify checksums or host listing again.
-9. Uninstall only Hypertaks-owned files and confirm unrelated host configuration remains.
-10. Reinstall and repeat discovery.
 
 ## Canonical skill IDs
 
@@ -46,66 +35,147 @@ hypertaks-graph
 hypertaks-continuity
 ```
 
+## Common lifecycle
+
+1. Start from a clean workspace and clean host profile where practical.
+2. Use the host-native plugin command when the host supports one.
+3. Otherwise use only the official host fallback named in the guide.
+4. Restart or reload the host when required.
+5. Confirm the plugin and exactly five canonical skills or instruction assets are discoverable.
+6. Invoke the main Hypertaks entry point directly.
+7. Ask a founder-shaped natural-language task and confirm Hypertaks routing is selected.
+8. Confirm mutating actions still respect the host permission boundary.
+9. Update to a newer reviewed Hypertaks commit and repeat discovery.
+10. Uninstall only Hypertaks-owned assets and confirm unrelated host configuration remains.
+11. Reinstall and repeat discovery.
+
 ## GitHub Copilot
 
-- Install the local plugin with `copilot plugin install ./.github-copilot`, or install the five skills in a supported Agent Skills directory.
-- Run `copilot plugin list` and `/skills list`.
-- Confirm the plugin or all five skills appear.
-- Test direct and natural-language invocation in Copilot CLI or another named Copilot surface.
-- Remove the plugin with the current Copilot plugin removal command, or remove only the five owned skill directories.
+Install:
+
+```bash
+copilot plugin install aabrur/hypertaks-agent
+```
+
+Interactive equivalent:
+
+```text
+/plugin install aabrur/hypertaks-agent
+```
+
+Verify:
+
+```text
+/plugin list
+/skills list
+```
+
+Update and uninstall:
+
+```text
+/plugin update hypertaks
+/plugin uninstall hypertaks
+```
+
+Capture both plugin discovery and all five skill IDs.
 
 ## Windsurf
 
-- Install the five skills under `.windsurf/skills/` or the documented global path.
+Windsurf has no verified custom `/plugin install` command for this package.
+
+- Open Cascade -> Customizations -> Skills.
+- Import the five folders with `+ Workspace` or `+ Global`.
 - Reload Cascade.
-- Confirm automatic matching and explicit `@hypertaks` invocation.
-- Verify unrelated Windsurf rules, workflows, memories, and skills remain untouched.
+- Confirm explicit `@hypertaks` and automatic matching.
+- Do not label this a plugin certification.
 
 ## Cline
 
-- Enable **Settings -> Features -> Enable Skills**.
-- Install the five skills under `.cline/skills/` or `~/.cline/skills/`.
-- Start a new session and confirm Cline exposes the skills.
-- Verify direct matching and `use_skill` behavior.
+Cline plugin certification applies to CLI, SDK, and Kanban only.
+
+Install:
+
+```bash
+cline plugin install --git https://github.com/aabrur/hypertaks-agent.git
+```
+
+Verify the plugin through `cline config`, then run:
+
+```text
+/hypertaks inspect this repository and state what remains unfinished
+```
+
+Update with the current `--force --git` lifecycle and remove only the Hypertaks plugin configuration during uninstall.
+
+Cline VS Code and JetBrains must be tested separately through Skills. Do not reuse CLI plugin evidence for those surfaces.
 
 ## Roo Code
 
-- Install under `.roo/skills/` or `~/.roo/skills/`.
-- Confirm all five skills are indexed in the selected mode.
-- Test invocation and verify project skills override global copies only when intended.
+Roo has no verified custom `/plugin install` command for this package.
+
+- Import the five skills under `.roo/skills/` or `.agents/skills/`.
+- Confirm all five skills are indexed in the selected Roo mode.
+- Test direct and automatic invocation.
+- Do not label this a plugin certification.
 
 ## Kilo Code
 
-- Install under `.kilo/skills/` or `~/.kilo/skills/`.
-- Start a new session or run `/reload`.
-- Confirm all five skill IDs and test explicit invocation.
+Register the local plugin module in `kilo.json` or `.kilo/opencode.jsonc`:
+
+```text
+file:///absolute/path/to/hypertaks-agent/plugins/kilo/hypertaks.ts
+```
+
+Verify with `kilo config check` and debug logs, then confirm the plugin injects Hypertaks context in a new session.
+
+Do not test or document `kilo plugin hypertaks` until a corresponding npm package is actually published and pinned.
 
 ## Aider
 
-Aider does not provide a native Agent Skills plugin loader.
+Aider has no native plugin lifecycle for this package.
 
-- Load the Hypertaks files read-only using `--read`, `/read`, or an reviewed `.aider.conf.yml` entry.
-- Confirm Aider applies the instructions without adding the Hypertaks files to the editable chat set.
-- Remove the explicit read references during uninstall.
-- Verdict wording must say `PROJECT_INSTRUCTIONS`, not native plugin certification.
+- Load all five `SKILL.md` files read-only through `--read`, `/read`, or `.aider.conf.yml`.
+- Confirm the files remain read-only and are not added to the editable chat set.
+- Remove only the Hypertaks read references during uninstall.
+- Verdict wording must say `PROJECT_INSTRUCTIONS`, not plugin certification.
 
 ## Goose
 
-- Install through the current Goose Skills Marketplace, compatible skill path, or a reviewed recipe.
-- Record the exact mechanism and Goose version used.
-- Confirm the selected assets are visible in a new Goose session.
-- Verify update and removal through the same mechanism.
+Goose has no verified generic `/plugin install` lifecycle for this package.
+
+- Install through the current Skills Marketplace or a reviewed recipe.
+- Record the exact Goose version and mechanism.
+- Confirm visibility in a new Goose session.
+- Update and remove through the same mechanism.
+- Do not treat MCP extension installation as equivalent to the Hypertaks instruction package.
 
 ## OpenHands
 
-- Prefer repository skills under `.agents/skills/`.
-- Start a new OpenHands conversation for the target repository.
-- Confirm the repository skills are loaded with the documented precedence.
-- Do not describe `.openhands/microagents/` as the current preferred path; it is deprecated.
+Install:
+
+```text
+/plugin install github:aabrur/hypertaks-agent
+```
+
+Verify:
+
+```text
+/plugin list
+```
+
+Test enable, disable, update or reinstall, and uninstall:
+
+```text
+/plugin enable hypertaks
+/plugin disable hypertaks
+/plugin uninstall hypertaks
+```
+
+Confirm OpenHands discovers `.plugin/plugin.json` and exactly five root skills.
 
 ## Verdict rules
 
-- `PASS`: complete real-host lifecycle evidence exists for the named version.
+- `PASS`: complete real-host lifecycle evidence exists for the named version and surface.
 - `PARTIAL`: package or some lifecycle stages work, but one or more real-host stages are missing.
 - `BLOCKED`: account, policy, platform, or environment prevents the test.
 - `FAIL`: the tested adapter does not work as documented.
