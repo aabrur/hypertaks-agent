@@ -63,7 +63,9 @@
     "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js",
     "build:distribution": "python scripts/build_distributions.py antigravity",
     "check:distribution": "python scripts/validate_distributions.py && python scripts/build_distributions.py antigravity --check-only",
-    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime"
+    "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt",
+    "start:chatgpt": "node runtime/chatgpt-mcp-server.mjs",
+    "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
   },
   "devDependencies": {
     "@types/node": "22.15.3",
