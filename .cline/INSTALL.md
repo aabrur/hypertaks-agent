@@ -1,47 +1,51 @@
 # Hypertaks for Cline
 
-Cline supports modular Skills, but the feature is experimental and must be enabled first.
+Hypertaks uses the native Cline plugin lifecycle for Cline CLI, SDK, and Kanban. No Python installer is required.
 
-## Enable Skills
+Cline plugins are not currently available in the VS Code or JetBrains extension surfaces. Those surfaces must continue using Cline Skills until plugin support arrives.
 
-Open Cline settings and enable:
-
-```text
-Settings -> Features -> Enable Skills
-```
-
-## Workspace installation
+## Install plugin from GitHub
 
 ```bash
-python scripts/installer.py install cline --scope project
+cline plugin install --git https://github.com/aabrur/hypertaks-agent.git
 ```
 
-The five canonical skills are prepared under:
+For project-scoped installation:
 
-```text
-.cline/skills/
+```bash
+cline plugin install --git https://github.com/aabrur/hypertaks-agent.git --cwd .
 ```
 
-Cline also documents `.clinerules/skills/` and `.claude/skills/` as compatible project locations.
-
-## Global installation
-
-Place the five skill folders under:
-
-```text
-~/.cline/skills/
-```
-
-Start a new Cline session after installation or update.
+The repository `package.json` declares `plugins/cline/hypertaks.ts` as the plugin entry point. The plugin registers the five canonical Hypertaks skill documents as Cline rules and exposes the `/hypertaks` command.
 
 ## Verify
 
-Ask Cline to use `hypertaks` explicitly, then test natural-language matching. Confirm the `use_skill` path loads the expected `SKILL.md` rather than an unrelated rule.
+```bash
+cline config
+```
 
-## Update and uninstall
+Confirm `hypertaks` appears in the plugin section, then start Cline and run:
 
-Refresh the reviewed source, replace only Hypertaks-owned skill files, and start a new session. During uninstall, preserve unrelated Cline rules and skills.
+```text
+/hypertaks inspect this repository and state what remains unfinished
+```
+
+## Update
+
+```bash
+cline plugin install --force --git https://github.com/aabrur/hypertaks-agent.git
+```
+
+Use `--cwd .` again for a project-scoped plugin.
+
+## Uninstall
+
+Use the current Cline plugin management screen or remove the `hypertaks` entry from the plugin configuration shown by `cline config`. Do not remove unrelated Cline plugins, rules, skills, or provider settings.
+
+## Extension fallback
+
+For Cline VS Code and JetBrains, enable Skills and import the five canonical folders into `.cline/skills/`. This is a skill fallback, not plugin certification.
 
 ## Certification
 
-Run the Cline section in `evals/managed-agents/LIVE-CERTIFICATION.md`. The status remains `PARTIAL` until the experimental feature is verified in a named Cline version.
+Run the Cline section in `evals/managed-agents/LIVE-CERTIFICATION.md`. Keep CLI/SDK plugin evidence separate from extension skill evidence.
