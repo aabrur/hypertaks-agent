@@ -399,10 +399,15 @@ async function handleRpc(message) {
   return jsonRpcError(message.id, -32601, `Method not found: ${message.method}`);
 }
 
-const server = createServer(async (request, response) => {
+export async function requestListener(request, response) {
   const requestUrl = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
+  const pathname = requestUrl.pathname === "/api/mcp"
+    ? "/mcp"
+    : requestUrl.pathname === "/api/healthz"
+      ? "/healthz"
+      : requestUrl.pathname;
 
-  if (requestUrl.pathname === "/healthz") {
+  if (pathname === "/healthz") {
     return sendJson(response, 200, {
       status: "ok",
       name: SERVER_NAME,
@@ -412,7 +417,7 @@ const server = createServer(async (request, response) => {
     });
   }
 
-  if (requestUrl.pathname === "/") {
+  if (pathname === "/") {
     return sendJson(response, 200, {
       name: SERVER_NAME,
       version: PRODUCT_VERSION,
@@ -421,7 +426,7 @@ const server = createServer(async (request, response) => {
     });
   }
 
-  if (requestUrl.pathname !== "/mcp") {
+  if (pathname !== "/mcp") {
     return sendJson(response, 404, { error: "Not found" });
   }
 
@@ -471,36 +476,46 @@ const server = createServer(async (request, response) => {
     const code = error instanceof SyntaxError ? -32700 : -32603;
     return sendJson(response, statusCode, jsonRpcError(null, code, error.message || "Internal error"));
   }
-});
-
-server.on("clientError", (_error, socket) => {
-  socket.end("HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\n");
-});
-
-server.listen(port, host, () => {
-  const address = server.address();
-  const listeningPort = typeof address === "object" && address ? address.port : port;
-  process.stdout.write(
-    JSON.stringify({
-      event: "ready",
-      name: SERVER_NAME,
-      version: PRODUCT_VERSION,
-      host,
-      port: listeningPort,
-      mcpUrl: `http://${host}:${listeningPort}/mcp`,
-      readOnly: true,
-    }) + "\n",
-  );
-});
-
-function shutdown(signal) {
-  server.close((error) => {
-    if (error) {
-      process.stderr.write(`${signal} shutdown failed: ${error.message}\n`);
-      process.exitCode = 1;
-    }
-  });
 }
 
-process.on("SIGINT", () => shutdown("SIGINT"));
-process.on("SIGTERM", () => shutdown("SIGTERM"));
+function isDirectExecution() {
+  return Boolean(process.argv[1]) && path.resolve(process.argv[1]) === __filename;
+}
+
+function startStandaloneServer() {
+  const server = createServer(requestListener);
+
+  server.on("clientError", (_error, socket) => {
+    socket.end("HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\n");
+  });
+
+  server.listen(port, host, () => {
+    const address = server.address();
+    const listeningPort = typeof address === "object" && address ? address.port : port;
+    process.stdout.write(
+      JSON.stringify({
+        event: "ready",
+        name: SERVER_NAME,
+        version: PRODUCT_VERSION,
+        host,
+        port: listeningPort,
+        mcpUrl: `http://${host}:${listeningPort}/mcp`,
+        readOnly: true,
+      }) + "\n",
+    );
+  });
+
+  function shutdown(signal) {
+    server.close((error) => {
+      if (error) {
+        process.stderr.write(`${signal} shutdown failed: ${error.message}\n`);
+        process.exitCode = 1;
+      }
+    });
+  }
+
+  process.on("SIGINT", () => shutdown("SIGINT"));
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+}
+
+if (isDirectExecution()) startStandaloneServer();
