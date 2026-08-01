@@ -119,7 +119,8 @@ def validate(catalog_path: Path = CATALOG, readme_path: Path = README, root: Pat
     else:
         if "python" in readme.lower():
             errors.append("README must not contain Python installation instructions")
-        for marker in ("22/22 PASS", "Wave 5", "production%20rollout-complete"):
+        compatibility_marker = f"{catalog.get('passedHosts')}/{catalog.get('totalHosts')}"
+        for marker in (compatibility_marker, "Package status", "Host compatibility"):
             if marker not in readme:
                 errors.append(f"README missing marker: {marker}")
 

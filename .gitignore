@@ -16,8 +16,10 @@ desktop.ini
 # Node / tooling
 node_modules/
 npm-debug.log*
+*.log
 dist/
 .build/
+coverage/
 *.tgz
 
 # Local env & secrets
@@ -30,6 +32,20 @@ dist/
 .venv/
 venv/
 env/
+*.secret
+*.secrets
+*.credential
+*.credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.sqlite
+*.sqlite3
+*.db
+secrets/
+credentials/
 
 # Build artifacts / archives
 *.zip
@@ -40,8 +56,15 @@ env/
 # Local agent state (never part of the plugin)
 .claude/
 .codex/
+.Claude/
+.Codex/
 .remember/
 .hypertaks/
+.private/
+private/
+
+# Local plugin installations and generated agent copies
+.agents/plugins/*/
 
 # Generated knowledge graphs
 **/graphify-out/
