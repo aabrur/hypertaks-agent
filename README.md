@@ -6,7 +6,7 @@
 
 ### Founder Operating System for AI agents
 
-**One plugin product, five public skills, and 22 documented host routes.**
+**One plugin product, five public skills, and 22/22 documented host routes.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Version](https://img.shields.io/badge/version-4.5.0-blue)
