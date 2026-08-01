@@ -228,24 +228,6 @@ Open **Admin Panel → Workspace → Tools or Functions**, then import the Hyper
 
 Register the Hypertaks adapter as an MCP server or OpenAPI Action in LibreChat configuration. Update or remove the corresponding entry from that configuration.
 
-## Marketplace package readiness
-
-The repository contains the manifests, metadata, adapters, logo asset, installation records, and compatibility catalog needed for supported plugin directories and direct Git installation.
-
-| Distribution surface | Package status |
-|---|---|
-| Claude Code marketplace | PASS |
-| Codex marketplace | PASS |
-| Cursor Plugins | PASS |
-| Kimi plugin manager | PASS |
-| GitHub Copilot plugins | PASS |
-| ChatGPT plugins and custom apps | PASS |
-| Claude plugins | PASS |
-| Goose Skills Marketplace | PASS |
-| Open WebUI Tools and Functions | PASS |
-| Repository and direct Git installation | PASS |
-
-Package readiness does not publish a listing. Each third-party listing still requires an action through that host’s account.
 
 ## Use the Founder Operating System
 
