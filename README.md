@@ -35,37 +35,6 @@ Hypertaks ships as one portable plugin with exactly five public skills:
 
 Repository validation rejects missing commands, duplicate commands, and a sixth public Hypertaks skill.
 
-## Compatibility status
-
-The repository records 22 registered host routes. Current result: 22/22 host routes pass the repository’s compatibility rule:
-
-| Host route | Status |
-|---|---|
-| Google Antigravity | PASS |
-| Claude Code | PASS |
-| Codex | PASS |
-| Cursor | PASS |
-| Kimi Code | PASS |
-| OpenCode | PASS |
-| Pi | PASS |
-| OpenClaw | PASS |
-| Hermes | PASS |
-| GitHub Copilot | PASS |
-| Windsurf | PASS |
-| Cline | PASS |
-| Roo Code | PASS |
-| Kilo Code | PASS |
-| Aider | PASS |
-| Goose | PASS |
-| OpenHands | PASS |
-| ChatGPT | PASS |
-| Claude.ai | PASS |
-| Gemini App | PASS |
-| Open WebUI | PASS |
-| LibreChat | PASS |
-
-`PASS` means the repository contains a matching adapter or package and the declared route has current host evidence in the tracked compatibility record. It does not mean that every third-party marketplace has published a Hypertaks listing.
-
 The machine-readable record is [`distribution/plugin-compatibility.json`](distribution/plugin-compatibility.json). Marketplace package readiness is tracked in [`distribution/marketplace-readiness.json`](distribution/marketplace-readiness.json).
 
 ## Install Hypertaks
