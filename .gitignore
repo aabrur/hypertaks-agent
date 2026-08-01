@@ -96,3 +96,5 @@ repomix-*.xml
 *.bak
 *.bak/
 .commandcode/
+
+.vercel
