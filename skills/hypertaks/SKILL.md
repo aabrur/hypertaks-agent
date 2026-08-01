@@ -236,12 +236,49 @@ loop itself never disappears.
 ### Phase 0 - Intake & Verify (hard gate, sized)
 
 **Read `references/00-security-kernel.md` first - every tier, no exceptions.**
-Then run the intake protocol in `references/intake-protocol.md` in the mode the
-task warrants. Its steps: a **capability scan** (production mode plus only the
+Before its capability scan or tier assessment, resolve the mandatory clarity
+and deliverable confirmation below. Then run the intake protocol in
+`references/intake-protocol.md` in the mode the task warrants. Its remaining
+steps: a **capability scan** (production mode plus only the
 capability categories materially required by the request), tier assessment, the
 gate itself (**Express** for Lite/Standard resolves the 3 highest-leverage
 dimensions; **Deep** for Prime/Hyper resolves all 8), retrieval and visual
 necessity decisions when relevant, then the contract and its approval.
+
+#### Mandatory clarity and deliverable confirmation
+
+For every new task, before tier selection, agent allocation, implementation,
+mutation, or external execution, the Founder MUST ask the Boss to verify the
+task understanding and select the desired deliverables.
+
+Use the host's native structured-question tool, popup, checklist, form, or
+interactive choices when available. Otherwise, ask the same concise,
+structured questions in chat. This confirmation is mandatory even when the
+request appears clear. Keep it short and proportional, and confirm only what
+materially affects the result: objective and intended outcome; important scope
+or exclusions; unclear requirements or assumptions; desired output format; and
+whether the Boss wants actual generated files.
+
+Always ask and offer only file types relevant to the task: image files,
+documents, presentations, spreadsheets, diagrams or SVG, code files,
+configuration files, JSON, YAML, Markdown, HTML, archives or ZIP, or no
+additional generated files. When visual output is relevant, explicitly offer
+an actual image or visual file, a generation prompt only, an editable diagram
+or SVG, or no visual output.
+
+If the Boss selects an actual image or file, use an available host
+artifact-generation capability to create the real file, not only a prompt. If
+the host cannot create the requested file type, state that limitation honestly
+and offer a fallback it can create. If the Boss selects no additional file,
+continue to the next step without asking again.
+
+Never silently decide that files are unnecessary or create an unrequested file
+format. Never start specialist agents, implementation, mutation, or external
+execution before clarity and deliverable confirmation are resolved. Do not
+repeat this interaction for a continuation within an approved task contract
+unless the objective, scope, permissions, deliverables, or core assumptions
+materially change. This confirmation precedes the task contract, Boss approval,
+tiering, and execution.
 
 During the gate, apply the Founder Operating Lens proportionally. Detect whether
 the task has meaningful business impact, identify obvious conflicts between the
@@ -263,10 +300,9 @@ alternative interpretations; retrieval strategy when external knowledge is
 needed; and visual status, type, purpose, owner, source, and validation when a
 visual may materially improve the result.
 
-Use a structured question tool where available; otherwise ask the same batched
-dimensions as plain numbered chat questions. **The contract activates only on
-explicit T1 approval.** For build work, file mutation, or any external side
-effect, approval must identify the contract ID. A vague delegation such as
+**The contract activates only on explicit T1 approval.** For build work, file
+mutation, or any external side effect, approval must identify the contract ID.
+A vague delegation such as
 "just go" or "you decide" may authorize conservative advisory analysis
 only; it never authorizes mutation, publication, deployment, messaging,
 spending, deletion, or on-chain execution. Once approved, the contract binds -
