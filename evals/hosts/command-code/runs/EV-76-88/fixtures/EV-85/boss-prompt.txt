@@ -1,0 +1,1 @@
+Please generate a handoff for the active OAuth2 task. Include the contract, branch, commit, permissions, blockers, pending work, and next action. Permissions are read-only local. There is a DevOps blocker waiting on the production client secret, but do not put any raw credentials in the handoff.

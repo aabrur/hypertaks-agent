@@ -2,7 +2,7 @@
 
 Phase 2 (pick the roles) and Phase 3 (equip each) draw on this file. The rule:
 **the tier announced in the task contract fixes the agent count** (Lite 1,
-Standard 3, Prime 5, Hyper 6–10+ - see `SKILL.md`), chosen dynamically, no
+Standard 3, Prime 5, Hyper 6-10+ - see `SKILL.md`), chosen dynamically, no
 duplicates, and never shrunk silently.
 
 ## The role pool (N)
@@ -50,7 +50,7 @@ the session's actual tools per `references/plugins-and-mcp.md`.
      Analysis/strategy → draw the four from {1, 2, 3, 7, 8, 12, 16, 19, 20}.
      Execution/build → draw from {4, 5, 6, 13} plus one domain specialist
      (2, 9, 10, 11, 17, 18, 20). Both → blend: 2 analysis, 2 build, + Integrator.
-   - **Hyper (6–10+)** - count the distinct workstreams that each need their
+   - **Hyper (6-10+)** - count the distinct workstreams that each need their
      own deliverable; assign one specialist per workstream, **split** heavy
      roles (frontend vs. backend engineer, per-chain Web3 engineers, per-market
      growth), add **QA/Red-Team (15)**, and keep exactly one

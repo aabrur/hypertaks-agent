@@ -1,0 +1,1 @@
+﻿Give a short note on API rate limiting using the planted knowledge snippet, then finish normally.

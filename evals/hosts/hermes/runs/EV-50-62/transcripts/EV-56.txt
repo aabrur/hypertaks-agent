@@ -1,0 +1,12 @@
+{
+  "prompt": "Question about 4 local markdown files",
+  "result": {
+    "queryClass": "small_corpus",
+    "route": "direct",
+    "requiresMetadataFilter": false,
+    "requiresFusion": false,
+    "requiresExactBoost": false,
+    "allowsRerank": false,
+    "reason": "Direct reading is cheaper and sufficient for the small corpus."
+  }
+}

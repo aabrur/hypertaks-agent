@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "4.5.0",
+  "id": "oauth2-integration",
+  "createdAt": "2026-08-01T10:00:00Z",
+  "objective": "Complete OAuth2 login flow for the public plans module (handle token <REDACTED_SECRET>)",
+  "contractId": "HT-CONTRACT-1",
+  "repository": {
+    "repositoryRoot": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
+    "repositoryId": "8fcb3ca3f247568a7e5544641de996fe449c8e1d73bdac2c8e1628dface1003c",
+    "branch": "main",
+    "commit": "a1103c6cfba1513963ceea093d3f4bed6be52990",
+    "changedFiles": []
+  },
+  "completed": ["design"],
+  "pending": ["wire OAuth callback", "e2e test login"],
+  "blockers": ["waiting on production client secret"],
+  "nextAction": "wire OAuth callback to /auth/callback",
+  "permissions": ["PERM_READ_LOCAL"],
+  "tests": [],
+  "acceptanceCriteria": []
+}

@@ -1,0 +1,12 @@
+{
+  "prompt": "Look up error code ERR_2048",
+  "result": {
+    "queryClass": "exact",
+    "route": "keyword",
+    "requiresMetadataFilter": false,
+    "requiresFusion": false,
+    "requiresExactBoost": false,
+    "allowsRerank": false,
+    "reason": "Token identity must be preserved."
+  }
+}

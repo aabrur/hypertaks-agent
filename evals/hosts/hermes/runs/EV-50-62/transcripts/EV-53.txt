@@ -1,0 +1,12 @@
+{
+  "prompt": "Tenant A support question",
+  "result": {
+    "queryClass": "structured",
+    "route": "direct",
+    "requiresMetadataFilter": true,
+    "requiresFusion": false,
+    "requiresExactBoost": false,
+    "allowsRerank": false,
+    "reason": "Structured filters constrain the corpus before ranking."
+  }
+}

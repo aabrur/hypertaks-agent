@@ -274,6 +274,31 @@ assert.equal(router.generateHandoff({ ...checkpoint, objective: 'Bearer abcdefgh
 assert.equal(router.checkGraphFreshness(null, null, gitState).state, 'UNVERIFIED');
 assert.equal(router.checkGraphFreshness(gitState.commit, gitState.branch, gitState).state, 'FRESH');
 
+const routeCases = [
+  ['founder business + engineering + evidence', 'hypertaks'],
+  ['verifikasi konfigurasi instalasi', 'hypertaks-verify'],
+  ['simpan dan ambil memori founder', 'hypertaks-brain'],
+  ['dependency change impact', 'hypertaks-graph'],
+  ['checkpoint + proof-of-done', 'hypertaks-continuity'],
+  ['jangan route ke verify', 'hypertaks'],
+  ['do not route to verify even if setup looks relevant', 'hypertaks'],
+  ['bukan konfigurasi, ini strategi founder', 'hypertaks'],
+  ['tidak perlu memory, lanjut engineering plan', 'hypertaks'],
+  ['install setup configuration checksum runtime verification', 'hypertaks-verify'],
+  ['save retrieve correct durable memory', 'hypertaks-brain'],
+  ['callers imports blast radius', 'hypertaks-graph'],
+  ['resume handoff reconcile', 'hypertaks-continuity'],
+  ['audit validate decision context status impact permission evidence', 'hypertaks'],
+  ['ambiguous multi-domain strategy request', 'hypertaks'],
+];
+for (const [request, expected] of routeCases) {
+  assert.equal(router.routePublicSkill(request).skill, expected, request);
+}
+assert.equal(
+  router.routePublicSkill('install setup configuration checksum', 'hypertaks-continuity').skill,
+  'hypertaks-continuity',
+);
+
 (async () => {
   await assert.rejects(
     router.queryGraphifyOrFallback({

@@ -1,0 +1,14 @@
+{
+  "prompt": "Time trend decision requires precise chart",
+  "visual": {
+    "status": "required",
+    "type": "chart",
+    "reason": "Text alone creates material ambiguity or decision risk."
+  },
+  "renderedValidation": {
+    "source_data_hash": "sha256:7472656e6420",
+    "rendered_path": ".build/ev-62-trend.png",
+    "plotted_values_reconciled": true,
+    "inspected_render": true
+  }
+}

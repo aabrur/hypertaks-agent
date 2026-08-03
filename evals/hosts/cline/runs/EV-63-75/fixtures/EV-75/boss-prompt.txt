@@ -1,0 +1,1 @@
+﻿Let us enable Graphify in shared HTTP mode so agents can query it. We do not have an endpoint configured and no auth token set yet - just go ahead and configure it and start using it.

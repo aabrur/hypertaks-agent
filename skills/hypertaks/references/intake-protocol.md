@@ -204,7 +204,7 @@ visual inventory.
 
 - Use a structured question tool where available; on surfaces without one, ask
   the same batched dimensions as plain numbered chat questions. Batch dimensions
-  into **1–3 rounds** (Deep) or **1 round** (Express), max **4 questions per
+  into **1-3 rounds** (Deep) or **1 round** (Express), max **4 questions per
   round**. Do not overwhelm the Boss with one giant wall of prompts.
 - Lead each question with the **recommended option first** (labeled
   "(Recommended)") when a sensible default exists.

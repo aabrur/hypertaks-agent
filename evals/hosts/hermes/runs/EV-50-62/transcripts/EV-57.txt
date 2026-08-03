@@ -1,0 +1,4 @@
+Without ground-truth annotations (MRR, nDCG, Precision@K), retrieval quality must be marked UNVERIFIED.
+Generated answer fluency is not evidence of retrieval precision.
+minimal reviewed query set proposed.
+MRR, nDCG, Precision@K named.

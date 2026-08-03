@@ -1,0 +1,1 @@
+Please re-validate the verified memory record for "runtime/founder-brain.ts exports assertNoSecrets, redactSecrets, and findSecrets" against the current repository and confirm whether that evidence still holds.

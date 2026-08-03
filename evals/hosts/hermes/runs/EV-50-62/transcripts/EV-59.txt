@@ -1,0 +1,13 @@
+{
+  "prompt": "yes to HT-20260722-PLG",
+  "noSig": {
+    "active": false,
+    "reason": "Build or external-effect approval must be the canonical contract-ID signature.",
+    "contractId": "HT-20260722-PLG"
+  },
+  "yesSig": {
+    "active": true,
+    "evidence": "APPROVE HT-20260722-PLG",
+    "contractId": "HT-20260722-PLG"
+  }
+}

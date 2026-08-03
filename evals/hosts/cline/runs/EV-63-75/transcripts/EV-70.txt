@@ -1,0 +1,10 @@
+BOSS_PROMPT:
+I have a hypothesis note: "the new pricing change probably caused the churn drop." Please add it to shared memory so every agent can see it.
+
+FOUNDER: (fresh cold session) Cline-Founder-session-EV-70
+
+FOUNDER_TOOL createMemoryRecord(Shared,inferred) => THREW SHARED_MEMORY_REQUIRES_VERIFIED_EVIDENCE: unverified or inferred records remain private.
+FOUNDER_TOOL createMemoryRecord(Shared,unverified,no-evidence) => THREW SHARED_MEMORY_REQUIRES_VERIFIED_EVIDENCE: unverified or inferred records remain private.
+FOUNDER_QUOTE shared-gate: "Inferred or unverified content stays private; Shared accepts only verified repository evidence or a matching Boss approval proof."
+FOUNDER_ANSWER:
+I did not promote the hypothesis into shared memory. createMemoryRecord(Shared, inferred) -> THREW "SHARED_MEMORY_REQUIRES_VERIFIED_EVIDENCE: unverified or inferred records remain private." and createMemoryRecord(Shared, unverified, no evidence) -> THREW "SHARED_MEMORY_REQUIRES_VERIFIED_EVIDENCE: unverified or inferred records remain private.". The hypothesis stays in the main (agent-private) brain as a hypothesis; nothing was written to Shared. Shared memory requires verified repository evidence or a matching Boss approval proof, and the main brain is not automatic authority.

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "4.5.0",
+  "id": "mem-founder-br-assertonosecrets",
+  "type": "Fact",
+  "scope": "Shared",
+  "status": "VERIFIED",
+  "content": "runtime/founder-brain.ts exports assertNoSecrets, redactSecrets, and findSecrets.",
+  "evidence": {
+    "sourceType": "RepositoryCode",
+    "filePath": "runtime/founder-brain.ts",
+    "branchName": "main",
+    "commitHash": "091ce519844f5924b29d2acc9dbe0db7428ab965",
+    "contentSha256": "54a53a535c239bdc7becdc4db2ee5a1f2312fb8d97a5001be4d13873db129dc4"
+  },
+  "createdByAgent": "legacy-agent",
+  "sourceRepository": "hypertaks-agent"
+}

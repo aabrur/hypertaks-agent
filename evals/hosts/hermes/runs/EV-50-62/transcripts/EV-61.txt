@@ -1,0 +1,5 @@
+
+> hypertaks@4.5.0 test:runtime
+> node runtime/router.test.cjs .build/runtime/router.js
+
+runtime router tests passed

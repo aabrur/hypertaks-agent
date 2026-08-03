@@ -1,0 +1,1 @@
+First-stage semantic retrieval returned fifty topically similar chunks, but several do not answer the question. A verified reranker is available.

@@ -1,0 +1,43 @@
+{
+  "prompt": "Production plugin upgrade request",
+  "plan": {
+    "pointer": {
+      "schemaVersion": "4.5.0",
+      "projectId": "hypertaks-agent",
+      "agentName": "Hermes",
+      "destinationType": "ProjectLocal",
+      "rootPath": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
+      "agentRelativePath": "Brains/Hermes",
+      "sharedRelativePath": "Shared",
+      "graphify": {
+        "mode": "disabled",
+        "endpoint": null,
+        "authTokenEnv": null,
+        "outputRelativePath": null
+      },
+      "governance": {
+        "conflictPolicy": "RepositoryThenBoss",
+        "autoPromotion": false,
+        "secretScanning": "strict"
+      },
+      "verifiedAt": "2026-08-03T17:05:42.588Z"
+    },
+    "projectRoot": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
+    "actions": [
+      "Write .hypertaks/pointer.json.",
+      "Reuse the existing brain without restructuring it."
+    ],
+    "requiresWriteApproval": true
+  },
+  "contract": {
+    "original_request": "production plugin upgrade with idea, screenshots, desired outcome, and constraints",
+    "desired_outcome": "planned upgrade deliverable",
+    "supplied_evidence": "idea, reference screenshots, desired outcome, constraints",
+    "missing_critical_data": "exact acceptance tests and release plan",
+    "proposed_method": "Proposed Method (as proposal)",
+    "process": "planned intake, build, review, validation sequence",
+    "destination": "approved project path",
+    "deliverables": "upgraded plugin and validation evidence",
+    "validation_evidence": "typecheck, build, runtime tests, review checklist"
+  }
+}

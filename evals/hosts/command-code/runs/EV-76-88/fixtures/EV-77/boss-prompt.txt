@@ -1,0 +1,1 @@
+Based on the code patterns I see in the auth module, my reasoning is that we should adopt the feature-flag library already in use there. Record that conclusion into founder memory as a reusable fact.

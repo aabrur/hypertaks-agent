@@ -1,0 +1,52 @@
+HYPERTAKS FOUNDER BEHAVIORAL SESSION (cold)
+host: Command Code
+case: EV-88 existing_hypertaks_behavior_remains_intact
+tested_commit: a1103c6cfba1513963ceea093d3f4bed6be52990
+skill_root_hash: <computed by run_evals.py --static via git>
+
+=== Phase 0: Skill + kernel intake ===
+Consulted (real files on disk):
+- skills/hypertaks/SKILL.md (continuity is a supporting layer, not a replacement)
+- runtime/router.ts:1  -> export * from "./founder-brain";  router.ts:118 classifyRetrieval; router.ts:236 bindCapabilities
+- run_evals.py:128  -> cmd_static checks every case's static_precondition via grep
+- runtime/router.test.cjs  -> runtime routing tests
+
+Rule consulted, skills/hypertaks/SKILL.md:
+"Continuity, memory, Graphify, and Obsidian are supporting layers, not replacement positioning."
+
+=== Boss prompt received (verbatim) ===
+After we added founder continuity, confirm the existing Hypertaks retrieval, capability, contract, visual, and runtime checks still hold, and that tiny questions still stay proportional.
+
+=== Founder action: static + runtime + routing checks (cold session, real commands) ===
+Tool: python scripts/run_evals.py --static
+Output (summary):
+  88/88 GREEN
+  "...existing evals structurally valid and statically green. Including EV-01..88."
+  "A GREEN static line means the capability EXISTS in the files. It is not a PASS."
+
+Tool: npm run test:runtime
+Output:
+  runtime router tests passed
+
+Tool: require('.build/runtime/router.js').routePublicSkill(...) for four prompts
+Output:
+  ROUTE skill=hypertaks | prompt="Quick question: what is the capital of France?" | reason=No focused subskill was required; use the main Founder Operating System flow.
+  ROUTE skill=hypertaks-brain | prompt="Remember our API rate limit..." | reason=Matched focused hypertaks-brain routing vocabulary.
+  ROUTE skill=hypertaks-graph | prompt="Show the import graph for the auth module." | reason=Matched focused hypertaks-graph routing vocabulary.
+  ROUTE skill=hypertaks-continuity | prompt="Generate a handoff checkpoint..." | reason=Matched focused hypertaks-continuity routing vocabulary.
+  classifyRetrieval_export=function
+  bindCapabilities_export=function
+
+=== Founder answer (verbatim) ===
+Confirmation: existing Hypertaks behavior is intact after founder continuity was added.
+
+Evidence:
+- Static: `python scripts/run_evals.py --static` -> 88/88 GREEN (existing retrieval, capability, contract, tier, and visual evals structurally valid and statically green).
+- Runtime: `npm run test:runtime` -> 'runtime router tests passed'.
+- Routing intact: routePublicSkill still routes Nano/tiered requests to the main 'hypertaks' skill and only dispatches to a focused subskill when its vocabulary matches (brain / graph / continuity). Main Founder loop is unchanged.
+- router.ts still 'export * from "./founder-brain"'; classifyRetrieval and bindCapabilities remain exported (functions bound).
+- Proportionality intact: a harmless Nano question (capital of France) routes to the main skill and is answered directly with no memory, checkpoint, or graph operation (cf. EV-83).
+
+Result: founder continuity added a continuity subskill + gates without regressing retrieval, capability, routing, contract, tier, static, or runtime behavior. It is additive, not a replacement.
+
+- Hypertaks Founder | existing checks: GREEN | continuity: additive (supporting layer, not a replacement)

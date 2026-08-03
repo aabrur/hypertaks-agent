@@ -1,0 +1,1 @@
+Merge these two ranked result lists into one combined ranking. One list is BM25-scored and the other is cosine-similarity scored.

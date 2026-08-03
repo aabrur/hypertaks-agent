@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "4.5.0",
+  "id": "api-rate-limit",
+  "type": "Fact",
+  "scope": "Project",
+  "status": "UNVERIFIED",
+  "content": "API rate limit is 500 req/min.",
+  "evidence": { "source": "Slack summary thread", "recordedAt": "2026-07-20T00:00:00Z", "by": "legacy-agent" },
+  "createdAt": "2026-07-20T00:00:00Z",
+  "createdByAgent": "legacy-agent",
+  "sourceRepository": "hypertaks-agent"
+}

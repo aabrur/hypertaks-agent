@@ -1,0 +1,12 @@
+{
+  "prompt": "Why was order ID 4172 cancelled?",
+  "result": {
+    "queryClass": "mixed",
+    "route": "hybrid",
+    "requiresMetadataFilter": false,
+    "requiresFusion": true,
+    "requiresExactBoost": true,
+    "allowsRerank": true,
+    "reason": "Exact and semantic signals both matter."
+  }
+}

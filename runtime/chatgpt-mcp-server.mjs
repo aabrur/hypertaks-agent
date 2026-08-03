@@ -8,7 +8,13 @@ import path from "node:path";
 
 const PRODUCT_NAME = "Hypertaks";
 const PRODUCT_VERSION = "4.5.0";
-const SERVER_NAME = "hypertaks-chatgpt-adapter";
+const SERVER_NAME = "hypertaks-mcp-adapter";
+const SERVER_TITLE = "Hypertaks MCP Adapter";
+const SERVER_DESCRIPTION =
+  "Read-only remote MCP transport for the five canonical Hypertaks skills.";
+const MCP_ROLE = "remote transport for MCP-compatible clients";
+const MCP_COMPATIBILITY =
+  "Compatible with AI agents and clients that support standard MCP Streamable HTTP.";
 const DEFAULT_PROTOCOL_VERSION = "2025-06-18";
 const SUPPORTED_PROTOCOL_VERSIONS = new Set([
   "2025-11-25",
@@ -25,6 +31,37 @@ const PUBLIC_SKILLS = Object.freeze([
   "hypertaks-brain",
   "hypertaks-graph",
   "hypertaks-continuity",
+]);
+
+const FOCUSED_SKILL_RULES = Object.freeze([
+  {
+    skill: "hypertaks-verify",
+    pattern:
+      /\b(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime\s+verification|verifikasi(?:\s+\w+){0,4}\s+(?:konfigurasi|instalasi|install(?:ation)?|setup|checksum|runtime)|(?:verify|verifikasi)\s+(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime))\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b|\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
+  },
+  {
+    skill: "hypertaks-brain",
+    pattern:
+      /\b(?:(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)\s+(?:\w+\s+){0,3}(?:memory|memori)|(?:memory|memori)\s+(?:\w+\s+){0,3}(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)|remember(?:\s+\w+){0,4}|ingat(?:kan)?(?:\s+\w+){0,4}|revalidate\s+memory|archive\s+memory)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:memory|memori|remember|ingat)\b|\b(?:memory|memori)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
+  },
+  {
+    skill: "hypertaks-graph",
+    pattern:
+      /\b(?:dependenc(?:y|ies)|dependensi|callers?|callees?|imports?|blast\s+radius|change\s+impact|dampak\s+perubahan|import\s+graph|dependency\s+graph)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:graph|dependenc(?:y|ies)|dependensi|callers?|imports?|blast\s+radius)\b/u,
+  },
+  {
+    skill: "hypertaks-continuity",
+    pattern:
+      /\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done)|bukti\s+selesai)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done))\b/u
+  },
 ]);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,7 +90,7 @@ const TOOLS = Object.freeze([
     name: "hypertaks_manifest",
     title: "Read Hypertaks Manifest",
     description:
-      "Return the Hypertaks product boundary, version, canonical public skill list, and ChatGPT adapter limitations.",
+      "Return the Hypertaks product boundary, version, canonical public skill list, and remote MCP adapter limitations.",
     inputSchema: { type: "object", additionalProperties: false },
     annotations: readOnlyAnnotations(),
   },
@@ -155,7 +192,7 @@ function isAllowedOrigin(origin) {
   }
   if (configuredOrigins.has(parsed.origin)) return true;
   if (parsed.protocol === "http:" && isLoopbackHost(parsed.hostname)) return true;
-  return parsed.origin === "https://chatgpt.com" || parsed.origin === "https://chat.openai.com";
+  return false;
 }
 
 function tokenMatches(headerValue) {
@@ -223,21 +260,28 @@ function negotiateProtocolVersion(requested) {
 
 function routeRequest(requestText, preferredSkill) {
   if (PUBLIC_SKILLS.includes(preferredSkill)) {
-    return { skill: preferredSkill, reason: "Explicit user-selected skill override." };
+    return { skill: preferredSkill, reason: "Explicit preferredSkill override." };
   }
 
   const normalized = requestText.toLowerCase();
-  const rules = [
-    ["hypertaks-verify", /\b(verify|audit|validate|evidence|integrity|configuration|config)\b/],
-    ["hypertaks-brain", /\b(brain|memory|remember|decision|context|revalidate|archive)\b/],
-    ["hypertaks-graph", /\b(graph|dependency|dependencies|impact|relationship|callers|callees)\b/],
-    ["hypertaks-continuity", /\b(continuity|checkpoint|resume|handoff|reconcile|status|proof of done)\b/],
-  ];
-  for (const [skill, pattern] of rules) {
-    if (pattern.test(normalized)) {
-      return { skill, reason: `Matched focused ${skill} routing vocabulary.` };
-    }
+  const matched = FOCUSED_SKILL_RULES.filter(
+    (rule) => rule.pattern.test(normalized) && !rule.negation.test(normalized),
+  ).map((rule) => rule.skill);
+
+  if (matched.length === 1) {
+    return {
+      skill: matched[0],
+      reason: `Matched focused ${matched[0]} routing vocabulary.`,
+    };
   }
+
+  if (matched.length > 1) {
+    return {
+      skill: "hypertaks",
+      reason: "Multiple focused skills matched; use the main Founder Operating System flow.",
+    };
+  }
+
   return {
     skill: "hypertaks",
     reason: "No focused subskill was required; use the main Founder Operating System flow.",
@@ -277,7 +321,7 @@ async function verifyInstallation() {
     publicSkillCount: discovered.length,
     files,
     logo: { path: path.relative(REPOSITORY_ROOT, LOGO_PATH), ...logo },
-    mcpRole: "ChatGPT host transport only",
+    mcpRole: MCP_ROLE,
   };
 }
 
@@ -304,11 +348,12 @@ async function callTool(name, args) {
       version: PRODUCT_VERSION,
       architecture: "plugin-plus-five-canonical-skills",
       publicSkills: PUBLIC_SKILLS,
-      mcpRole: "required ChatGPT transport, not Hypertaks product identity",
+      mcpRole: MCP_ROLE,
+      compatibility: MCP_COMPATIBILITY,
       capabilities: ["manifest", "skill-read", "request-routing", "installation-verification"],
       writeCapability: "not exposed by this adapter",
       limitation:
-        "This remote ChatGPT adapter cannot access or mutate a user's local repository. Use a coding-agent host or separately authorized connector for file changes.",
+        "This remote MCP adapter cannot access or mutate a user's local repository. Use a coding-agent host or separately authorized connector for file changes.",
     };
     return toolSuccess(manifest, JSON.stringify(manifest, null, 2));
   }
@@ -373,9 +418,9 @@ async function handleRpc(message) {
       capabilities: { tools: { listChanged: false } },
       serverInfo: {
         name: SERVER_NAME,
-        title: "Hypertaks ChatGPT Adapter",
+        title: SERVER_TITLE,
         version: PRODUCT_VERSION,
-        description: "Read-only MCP transport for the five canonical Hypertaks skills.",
+        description: SERVER_DESCRIPTION,
       },
       instructions:
         "Use hypertaks_route first for ambiguous requests, then hypertaks_get_skill. Do not claim local filesystem mutation from this remote adapter.",

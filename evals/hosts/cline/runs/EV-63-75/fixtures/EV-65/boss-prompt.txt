@@ -1,0 +1,1 @@
+﻿In src/config.json the retry timeout was typed as the string "30000" but it should be the integer 30. Please make that one small local correction. Nothing else is needed.

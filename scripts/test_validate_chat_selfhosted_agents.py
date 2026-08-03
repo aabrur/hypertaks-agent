@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 class ChatSelfHostedCatalogTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = Path(tempfile.mkdtemp(prefix="hypertaks-wave4-"))
-        shutil.copytree(ROOT, self.temp / "repo", dirs_exist_ok=True)
+        shutil.copytree(ROOT, self.temp / "repo", dirs_exist_ok=True, ignore=shutil.ignore_patterns("dist", ".git", "__pycache__", "node_modules", ".build"))
         self.root = self.temp / "repo"
         self.catalog = self.root / "distribution" / "chat-selfhosted-agents.json"
 

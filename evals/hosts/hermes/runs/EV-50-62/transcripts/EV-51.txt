@@ -1,0 +1,12 @@
+{
+  "prompt": "How do I stop an automatic renewal?",
+  "result": {
+    "queryClass": "semantic",
+    "route": "vector",
+    "requiresMetadataFilter": false,
+    "requiresFusion": false,
+    "requiresExactBoost": false,
+    "allowsRerank": true,
+    "reason": "Meaning and vocabulary mismatch dominate."
+  }
+}

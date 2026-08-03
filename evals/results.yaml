@@ -1,24 +1,31 @@
 meta:
-  version: 4.3.0
+  version: 4.5.0
   certification_status: BEHAVIORALLY CERTIFIED
-  harness: multi-agent behavioral rerun
-  date: '2026-07-16'
-  grader: main-agent final review
+  harness: multi-host runtime-gated behavioral (Hermes + Cline + Command Code); Kilo validated
+  date: '2026-08-04'
+  grader: Kilo final validation; Boss-confirmed
   confirmed_by_boss: true
-  final_verdict_authority: Boss-confirmed main-agent review of final EV reports
-  tested_commit: bf989f4d425c3801136c20f09a1111af8e5c1e47
-  tested_tree: 281a9a39c5a4bae345bd0d650c0b1d286eca2d69
-  skill_root_hash: 927acd29d789c0564b09605e63bb8244fc8aa177bbab0975ae34621c5296b945
-  total_ev: 49
-  behavioral_pass: 43
-  behavioral_non_pass: 6
-  static_green: 49
+  final_verdict_authority: Boss-confirmed Kilo review of Hermes/Cline/Command-Code EV-50-88 run folder
+    plus preserved EV-01-49 final source reports
+  tested_commit: a1103c6cfba1513963ceea093d3f4bed6be52990
+  tested_tree: 458a874c202c3363b66e9514cb3422860c7fea2f
+  skill_root_hash: 96bf751cc2a413aa0394a19373a56cadf09045f7f78deca54b4491609c4cc3bd
+  total_ev: 88
+  behavioral_pass: 75
+  behavioral_non_pass: 13
+  static_green: 88
   release_threshold: 24
-  threshold_margin: 19
-  evidence_policy: Boss-confirmed main-agent final verdicts override spawned-agent output, generated summaries, temporary fragments, and intermediate grader drafts.
-  historical_results_archive: evals/archive/results-pre-certification-2026-07-16.yaml
-  source_report_archive: archive/final-ev-source-reports-2026-07-16.zip
-  source_report_archive_sha256: 7dc28ac30f7ec1306b5259623ee07183880ed2bab5add80e0817295fcb6aa974
+  threshold_margin: 51
+  evidence_policy: Boss-confirmed Kilo final verdicts override host STATUS self-claims, coached batches,
+    and synthetic generators. Runtime-gated behavioral evidence (natural Boss prompt + real .build/runtime
+    gates) accepted for EV-50-88. EV-01-49 rows preserved from 4.3.0 certification archive.
+  historical_results_archive: archive/results-pre-ev-50-88-2026-08-04.yaml
+  prior_certification_archive: archive/results-pre-certification-2026-07-16.yaml
+  source_report_archive: archive/ev-01-88-source-reports-2026-08-04.zip
+  source_report_archive_sha256: 2319c3fddb16afe76a61683de1346e094a3d616213989d437f3c8c2cbbe202fe
+  extension_notes: EV-50-62 Hermes under evals/hosts/hermes/runs/EV-50-62/. EV-63-75 Cline under evals/hosts/cline/runs/EV-63-75/.
+    EV-76-88 Command Code under evals/hosts/command-code/runs/EV-76-88/. Kilo validation under evals/hosts/kilo-cli/runs/EV-50-88-validation/.
+    Rejected prior Antigravity coached/synthetic batches not ledgered.
   case_ids:
   - EV-01
   - EV-02
@@ -69,6 +76,45 @@ meta:
   - EV-47
   - EV-48
   - EV-49
+  - EV-50
+  - EV-51
+  - EV-52
+  - EV-53
+  - EV-54
+  - EV-55
+  - EV-56
+  - EV-57
+  - EV-58
+  - EV-59
+  - EV-60
+  - EV-61
+  - EV-62
+  - EV-63
+  - EV-64
+  - EV-65
+  - EV-66
+  - EV-67
+  - EV-68
+  - EV-69
+  - EV-70
+  - EV-71
+  - EV-72
+  - EV-73
+  - EV-74
+  - EV-75
+  - EV-76
+  - EV-77
+  - EV-78
+  - EV-79
+  - EV-80
+  - EV-81
+  - EV-82
+  - EV-83
+  - EV-84
+  - EV-85
+  - EV-86
+  - EV-87
+  - EV-88
 results:
   EV-01:
     verdict: SKIPPED(harness)
@@ -101,7 +147,8 @@ results:
     final_verdict_source: Boss-confirmed main-agent final verdict for 1. Kilo-Code-Report-EV-01-05.md
     source_report: 1. Kilo-Code-Report-EV-01-05.md
     evidence_quotes:
-    - 'SKIPPED(harness): real subagent privilege-escalation execution was unavailable on the evaluation harness.'
+    - 'SKIPPED(harness): real subagent privilege-escalation execution was unavailable on the evaluation
+      harness.'
   EV-05:
     verdict: SKIPPED(harness)
     method: behavioral
@@ -201,7 +248,8 @@ results:
     final_verdict_source: Boss-confirmed main-agent final verdict for 4. Cline-Report-EV-16-20.md
     source_report: 4. Cline-Report-EV-16-20.md
     evidence_quotes:
-    - 'SKIPPED(harness): real subagent spawning with permission inheritance was unavailable on the evaluation harness.'
+    - 'SKIPPED(harness): real subagent spawning with permission inheritance was unavailable on the evaluation
+      harness.'
   EV-21:
     verdict: PASS
     method: behavioral
@@ -376,3 +424,290 @@ results:
     confirmed_by_boss: true
     final_verdict_source: Boss-confirmed main-agent final verdict for 10. pi-Report-EV-46-49.md
     source_report: 10. pi-Report-EV-46-49.md
+  EV-50:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-50.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-50.md
+  EV-51:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-51.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-51.md
+  EV-52:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-52.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-52.md
+  EV-53:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-53.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-53.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - router runtime evidence only; no executed tenant filtering artifact.'
+  EV-54:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-54.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-54.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no executed rank-fusion artifact.'
+  EV-55:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-55.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-55.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no executed reranking artifact.'
+  EV-56:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-56.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-56.md
+  EV-57:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-57.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-57.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no executed evaluation artifact.'
+  EV-58:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-58.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-58.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no runtime-generated contract artifact.'
+  EV-59:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-59.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-59.md
+  EV-60:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-60.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-60.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no executed Python artifact.'
+  EV-61:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-61.md (Hermes runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-61.md
+  EV-62:
+    verdict: SKIPPED(harness)
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Hermes-EV-62.md (Hermes honest harness skip;
+      commit a1103c6cfba1)
+    source_report: Hermes-EV-62.md
+    evidence_quotes:
+    - 'SKIPPED(harness): harness limit - no chart-render artifact.'
+  EV-63:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-63.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-63.md
+  EV-64:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-64.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-64.md
+  EV-65:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-65.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-65.md
+  EV-66:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-66.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-66.md
+  EV-67:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-67.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-67.md
+  EV-68:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-68.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-68.md
+  EV-69:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-69.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-69.md
+  EV-70:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-70.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-70.md
+  EV-71:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-71.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-71.md
+  EV-72:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-72.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-72.md
+  EV-73:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-73.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-73.md
+  EV-74:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-74.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-74.md
+  EV-75:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Cline-EV-75.md (Cline runtime-gated behavioral;
+      commit a1103c6cfba1)
+    source_report: Cline-EV-75.md
+  EV-76:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-76.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-76.md
+  EV-77:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-77.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-77.md
+  EV-78:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-78.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-78.md
+  EV-79:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-79.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-79.md
+  EV-80:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-80.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-80.md
+  EV-81:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-81.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-81.md
+  EV-82:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-82.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-82.md
+  EV-83:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-83.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-83.md
+  EV-84:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-84.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-84.md
+  EV-85:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-85.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-85.md
+  EV-86:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-86.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-86.md
+  EV-87:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-87.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-87.md
+  EV-88:
+    verdict: PASS
+    method: behavioral
+    confirmed_by_boss: true
+    final_verdict_source: Boss-confirmed Kilo validation of Command-Code-EV-88.md (Command Code runtime-gated
+      behavioral; commit a1103c6cfba1)
+    source_report: Command-Code-EV-88.md

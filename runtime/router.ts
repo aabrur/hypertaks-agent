@@ -312,3 +312,92 @@ export function describeRoute(route: RetrievalRoute): string {
     default: return assertNever(route);
   }
 }
+
+export const PUBLIC_SKILLS = [
+  "hypertaks",
+  "hypertaks-verify",
+  "hypertaks-brain",
+  "hypertaks-graph",
+  "hypertaks-continuity",
+] as const;
+
+export type PublicSkill = (typeof PUBLIC_SKILLS)[number];
+
+export interface PublicSkillRoute {
+  readonly skill: PublicSkill;
+  readonly reason: string;
+}
+
+const FOCUSED_SKILL_RULES: readonly {
+  readonly skill: Exclude<PublicSkill, "hypertaks">;
+  readonly pattern: RegExp;
+  readonly negation: RegExp;
+}[] = [
+  {
+    skill: "hypertaks-verify",
+    pattern:
+      /\b(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime\s+verification|verifikasi(?:\s+\w+){0,4}\s+(?:konfigurasi|instalasi|install(?:ation)?|setup|checksum|runtime)|(?:verify|verifikasi)\s+(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime))\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b|\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
+  },
+  {
+    skill: "hypertaks-brain",
+    pattern:
+      /\b(?:(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)\s+(?:\w+\s+){0,3}(?:memory|memori)|(?:memory|memori)\s+(?:\w+\s+){0,3}(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)|remember(?:\s+\w+){0,4}|ingat(?:kan)?(?:\s+\w+){0,4}|revalidate\s+memory|archive\s+memory)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:memory|memori|remember|ingat)\b|\b(?:memory|memori)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
+  },
+  {
+    skill: "hypertaks-graph",
+    pattern:
+      /\b(?:dependenc(?:y|ies)|dependensi|callers?|callees?|imports?|blast\s+radius|change\s+impact|dampak\s+perubahan|import\s+graph|dependency\s+graph)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:graph|dependenc(?:y|ies)|dependensi|callers?|imports?|blast\s+radius)\b/u,
+  },
+  {
+    skill: "hypertaks-continuity",
+    pattern:
+      /\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done)|bukti\s+selesai)\b/u,
+    negation:
+      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done))\b/u,
+  },
+];
+
+export function routePublicSkill(
+  requestText: string,
+  preferredSkill?: string,
+): PublicSkillRoute {
+  if (
+    typeof preferredSkill === "string" &&
+    (PUBLIC_SKILLS as readonly string[]).includes(preferredSkill)
+  ) {
+    return {
+      skill: preferredSkill as PublicSkill,
+      reason: "Explicit preferredSkill override.",
+    };
+  }
+
+  const normalized = requestText.toLowerCase();
+  const matched = FOCUSED_SKILL_RULES.filter(
+    (rule) => rule.pattern.test(normalized) && !rule.negation.test(normalized),
+  ).map((rule) => rule.skill);
+
+  if (matched.length === 1) {
+    return {
+      skill: matched[0]!,
+      reason: `Matched focused ${matched[0]} routing vocabulary.`,
+    };
+  }
+
+  if (matched.length > 1) {
+    return {
+      skill: "hypertaks",
+      reason: "Multiple focused skills matched; use the main Founder Operating System flow.",
+    };
+  }
+
+  return {
+    skill: "hypertaks",
+    reason: "No focused subskill was required; use the main Founder Operating System flow.",
+  };
+}

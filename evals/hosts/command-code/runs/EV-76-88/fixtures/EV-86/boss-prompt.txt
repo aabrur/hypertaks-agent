@@ -1,0 +1,1 @@
+The other agent says we are done. Their checkpoint has no test command, no exit code, no timestamp, criterion AC-3 still pending, pending work and a CI blocker still open. Mark DONE?

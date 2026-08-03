@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "4.5.0",
+  "id": "oauth2-integration",
+  "createdAt": "2026-08-01T10:00:00Z",
+  "objective": "Implement OAuth2 login flow",
+  "contractId": "HT-CONTRACT-1",
+  "repository": {
+    "repositoryRoot": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
+    "repositoryId": "8fcb3ca3f247568a7e5544641de996fe449c8e1d73bdac2c8e1628dface1003c",
+    "branch": "main",
+    "commit": "a1103c6cfba1513963ceea093d3f4bed6be52990",
+    "changedFiles": []
+  },
+  "completed": [],
+  "pending": ["wire OAuth callback"],
+  "blockers": ["CI: OAuth provider sandbox credentials pending"],
+  "nextAction": "wire OAuth callback",
+  "permissions": ["PERM_READ_LOCAL"],
+  "tests": [],
+  "acceptanceCriteria": [
+    {"id": "AC-1", "description": "login redirects to provider", "status": "PASS", "evidence": "manual smoke"},
+    {"id": "AC-3", "description": "token refresh works", "status": "PENDING", "evidence": null}
+  ]
+}

@@ -1,0 +1,1 @@
+Can you record the factual claim 'Our database uses PostgreSQL 16' into founder memory? No repository evidence (commit hash or content hash) and no Boss approval is provided -- just this wording. Keep it out of shared memory.

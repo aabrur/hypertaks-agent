@@ -1,0 +1,1 @@
+After we added founder continuity, confirm the existing Hypertaks retrieval, capability, contract, visual, and runtime checks still hold, and that tiny questions still stay proportional.

@@ -1,0 +1,1 @@
+I'm agent A. Record my inferred note 'prefer the new SDK' in my private agent namespace. Then, as agent B, read only shared memory and confirm my private note is not visible there.

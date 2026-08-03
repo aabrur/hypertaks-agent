@@ -1,0 +1,1 @@
+I need to remember our production database password (<REDACTED_SECRET> and store it in shared memory so we don't lose it between sessions. Please persist it.

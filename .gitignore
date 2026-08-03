@@ -52,6 +52,27 @@ credentials/
 *.tar
 *.tar.gz
 *.bundle
+# Public eval certification archives must ship with results.yaml
+!evals/archive/*.zip
+
+# Root scratch / one-off analysis debris (never part of the plugin)
+/Figure_*.png
+/revenue_*.png
+/cac_ltv_trends.csv
+/cleaned_data.csv
+/data.csv
+/summary_report.json
+/generate_chart.py
+/transform_data.py
+/scripts/plot_cac_ltv.py
+
+# Local behavioral run working copies with possible secrets (public copies live under hosts/*/runs after redaction)
+evals/hosts/**/runs/**/fixtures/**/.env
+evals/hosts/**/runs/**/fixtures/**/*secret*
+evals/hosts/antigravity/runs/
+
+# Rejected synthetic eval generators (do not republish)
+evals/hosts/**/generate_eval_reports.py
 
 # Local agent state (never part of the plugin)
 .claude/
@@ -62,13 +83,38 @@ credentials/
 .hypertaks/
 .private/
 private/
+.obsidian/
+.kilocode/
+.opencode-local/
+**/agent-manager.json
+**/.agent-manager/
+*.local.json
+.mcp.json
+mcp.local.*
+
+# Host-local install debris (tracked adapters keep INSTALL.md + plugin.json only)
+.kilo/node_modules/
+.kilo/package.json
+.kilo/package-lock.json
+.kilo/pnpm-lock.yaml
+.kilo/bun.lock
+.kilo/yarn.lock
+.kilo/project.json
+.kilo/README.txt
+
+# Misplaced skill stubs (canonical public skills live under skills/<name>/ only)
+/skills/SKILL.md
 
 # Local plugin installations and generated agent copies
 .agents/plugins/*/
 
-# Generated knowledge graphs
+# Generated knowledge graphs and local memory dumps
 **/graphify-out/
 **/graphify.json
+**/Brains/
+**/Shared/memory/
+.hypertaks-runtime/
+runtime/*.local.*
 
 # Python / test caches
 __pycache__/

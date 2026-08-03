@@ -1,0 +1,1 @@
+I have two memory notes about our API rate limit. One says 1000 req/min, recalled from an old runbook paste. Another says 500 req/min, from a Slack summary thread. Which one should we treat as true?

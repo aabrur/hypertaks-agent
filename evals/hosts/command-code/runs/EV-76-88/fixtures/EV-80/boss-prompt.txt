@@ -1,0 +1,1 @@
+I found a graph fact recorded on branch feature/payments claiming that runtime/founder-brain.ts exports generateHandoff. We are now on main. Can I rely on that fact, or does it need revalidation?

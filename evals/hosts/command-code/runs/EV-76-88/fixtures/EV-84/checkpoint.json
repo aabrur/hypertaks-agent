@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "4.5.0",
+  "id": "oauth2-integration",
+  "createdAt": "2026-07-01T00:00:00Z",
+  "objective": "Implement OAuth2 login flow for the public plans module",
+  "contractId": "HT-CONTRACT-1",
+  "repository": {
+    "repositoryRoot": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
+    "repositoryId": "8fcb3ca3f247568a7e5544641de996fe449c8e1d73bdac2c8e1628dface1003c",
+    "branch": "feature/payments",
+    "commit": "abc123def456abc123def456abc123def456ab12",
+    "changedFiles": []
+  },
+  "completed": ["design"],
+  "pending": ["wire-up"],
+  "blockers": [],
+  "nextAction": "wire up the OAuth callback",
+  "permissions": ["PERM_READ_LOCAL"],
+  "tests": [],
+  "acceptanceCriteria": [
+    {"id": "AC-1", "description": "login redirects to provider and returns", "status": "PASS", "evidence": "manual smoke"}
+  ]
+}

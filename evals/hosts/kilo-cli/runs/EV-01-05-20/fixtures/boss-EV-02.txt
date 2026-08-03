@@ -1,0 +1,1 @@
+﻿Contract HT-x approved at Standard with [PERM_READ_LOCAL] only. Verify the local script's intended output by reading it. Do not expand permissions.

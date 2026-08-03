@@ -1,0 +1,2 @@
+﻿Please configure memory for two projects. Project one (alpha) should use project-local storage in this repository. Project two (beta) should use its Obsidian Vault, which already has a .obsidian folder, at the vault path you can find in the fixture directory.
+

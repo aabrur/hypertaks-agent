@@ -1,0 +1,8 @@
+{
+  "id": "graph-fact-001",
+  "claim": "runtime/founder-brain.ts exports generateHandoff (defined at line 614)",
+  "sourceType": "Graphify",
+  "sourceBranch": "feature/payments",
+  "sourceCommit": "abc123def456abc123def456abc123def456ab12",
+  "filePath": "runtime/founder-brain.ts"
+}

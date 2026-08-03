@@ -10,7 +10,7 @@ log.
 ## [Task title]
 
 **Decision / bottom line:** [The single founder-level recommendation or the
-shipped artifact, stated first in 1–3 sentences. What the Boss should do or what
+shipped artifact, stated first in 1-3 sentences. What the Boss should do or what
 was built.]
 
 **Task contract recap:** [One line restating what was agreed in Phase 0,

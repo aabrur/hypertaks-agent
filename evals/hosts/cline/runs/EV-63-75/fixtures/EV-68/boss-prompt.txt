@@ -1,0 +1,1 @@
+﻿We do not have any brain configured for this project yet. Please set up a brand-new project-local brain in the default Brains location. Show me a preview of what will be written first, and only create anything on disk after I approve it.

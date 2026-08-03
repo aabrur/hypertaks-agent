@@ -1,0 +1,35 @@
+HYPERTAKS FOUNDER BEHAVIORAL SESSION (cold)
+host: Command Code
+case: EV-83 nano_work_skips_memory_and_graphify
+tested_commit: a1103c6cfba1513963ceea093d3f4bed6be52990
+
+=== Phase 0: Skill + kernel intake ===
+Consulted:
+- skills/hypertaks/SKILL.md (Tier gate)
+- skills/hypertaks-brain/SKILL.md:40
+- skills/hypertaks-continuity/SKILL.md:31
+- skills/hypertaks-graph/SKILL.md:8
+- runtime/router.ts:366 (routePublicSkill)
+
+Rules consulted:
+- skills/hypertaks-brain/SKILL.md:40: "For harmless Nano work, create no memory and perform no brain setup."
+- skills/hypertaks-continuity/SKILL.md:31: "Do not checkpoint harmless Nano answers. Suggest a checkpoint at a meaningful pause, host session end, or handoff boundary when the configured policy allows it."
+- skills/hypertaks-graph/SKILL.md:8: "Use this skill for dependency, relationship, architecture, ... Do not use it merely because Graphify is installed."
+- runtime/router.ts:366: export function routePublicSkill(...) { ... -> skill: "hypertaks" }
+
+=== Boss prompt received (verbatim) ===
+Quick question: what is the capital of France?
+
+=== Founder action: tier gate (cold session, real routing) ===
+Tier gate: Nano - harmless single-fact question, no evidence, no persistence, no graph.
+Tool: require('.build/runtime/router.js').routePublicSkill(prompt)
+Output:
+  nano={"skill":"hypertaks","reason":"No focused subskill was required; use the main Founder Operating System flow."}
+No createMemoryRecord / createCheckpoint / generateHandoff / checkGraphFreshness tool was invoked.
+
+=== Founder answer (verbatim) ===
+Paris.
+
+This is Nano-tier work: a single, self-contained fact. Per the brain skill ("For harmless Nano work, create no memory and perform no brain setup"), I created no memory record, no checkpoint, and no Graphify operation. I will not open verification setup, nor route this to a subskill merely because one is available.
+
+ -  Hypertaks Founder | tier: Nano | state_created: none

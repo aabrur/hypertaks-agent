@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 class PluginCompatibilityTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp_dir = Path(tempfile.mkdtemp(prefix="hypertaks-plugin-compat-"))
-        shutil.copytree(ROOT, self.temp_dir / "repo", dirs_exist_ok=True)
+        shutil.copytree(ROOT, self.temp_dir / "repo", dirs_exist_ok=True, ignore=shutil.ignore_patterns("dist", ".git", "__pycache__", "node_modules", ".build"))
         self.root = self.temp_dir / "repo"
         self.catalog = self.root / "distribution" / "plugin-compatibility.json"
         self.readme = self.root / "README.md"

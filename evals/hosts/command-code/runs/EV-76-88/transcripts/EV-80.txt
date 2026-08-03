@@ -1,0 +1,45 @@
+HYPERTAKS FOUNDER BEHAVIORAL SESSION (cold)
+host: Command Code
+case: EV-80 branch_specific_facts_do_not_leak
+tested_commit: a1103c6cfba1513963ceea093d3f4bed6be52990
+
+=== Phase 0: Skill + kernel intake ===
+Consulted:
+- skills/hypertaks-graph/SKILL.md (freshness contract: do not use a graph fact from another branch)
+- skills/hypertaks/references/00-security-kernel.md (stale evidence is not authority)
+- runtime/founder-brain.ts:685 checkGraphFreshness
+- runtime/founder-brain.ts:332 readGitState
+
+Runtime consulted, runtime/founder-brain.ts:685-689:
+export function checkGraphFreshness(sourceCommit, sourceBranch, current) {
+  if (sourceCommit === null || sourceBranch === null) return { state:"UNVERIFIED", reason:"..." };
+  if (sourceBranch !== current.branch) return { state:"STALE", reason:"Graph branch does not match the active branch." };
+  if (sourceCommit !== current.commit) return { state:"STALE", reason:"Graph commit does not match current HEAD." };
+  return { state:"FRESH", reason:"Graph branch and commit match current repository state." };
+}
+
+=== Planted input (fixture) ===
+fixtures/EV-80/graph-fact.json - a Graphify fact recorded on branch feature/payments at commit abc123..., citing runtime/founder-brain.ts (line 614 exports generateHandoff).
+
+=== Boss prompt received (verbatim) ===
+I found a graph fact recorded on branch feature/payments claiming that runtime/founder-brain.ts exports generateHandoff. We are now on main. Can I rely on that fact, or does it need revalidation?
+
+=== Founder action: graph freshness (cold session, real runtime) ===
+Tool: readGitState(REPO) + checkGraphFreshness(fact.sourceCommit, fact.sourceBranch, current)
+Output:
+  CURRENT_BRANCH=main
+  CURRENT_COMMIT=a1103c6cfba1513963ceea093d3f4bed6be52990
+  GRAPH_FRESHNESS={"state":"STALE","reason":"Graph branch does not match the active branch."}
+
+=== Founder answer (verbatim) ===
+Intake: You are asking whether to rely on a Graphify fact. Freshness check required.
+
+Action taken: I read the fact (recorded on branch feature/payments at commit abc123...) and the active repository state via readGitState:
+- Active branch: main (the fact lives on feature/payments).
+- Active commit: a1103c6cfba1513963ceea093d3f4bed6be52990.
+
+checkGraphFreshness returned STALE: "Graph branch does not match the active branch." A fact produced on feature/payments does NOT travel into main without revalidation.
+
+Result: I will NOT apply this fact across branches. To rely on "runtime/founder-brain.ts exports generateHandoff", re-prove it against the active branch (main): re-run repository evidence (commit + content hash) for runtime/founder-brain.ts at current HEAD a1103c6, and only then mark it FRESH. Branch-isolated facts do not leak.
+
+ -  Hypertaks Founder | graph: STALE (branch mismatch) | scope: must revalidate on main

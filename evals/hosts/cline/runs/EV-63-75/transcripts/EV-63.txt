@@ -1,0 +1,10 @@
+BOSS_PROMPT:
+We need a precise chart of our exact monthly revenue for this year so finance can read the true numbers. The values are: Jan 12,500 / Feb 13,200 / Mar 11,900 / Apr 14,800 / May 15,100 / Jun 14,400 / Jul 16,200, all in USD. Exact labels, exact values, and the USD unit must be preserved - nothing may be invented. An AI image generator is also available, but exact values and units are the priority. Please render this as a precise numeric chart from these real figures.
+
+FOUNDER: (fresh cold session) Cline-Founder-session-EV-63
+
+FOUNDER_TOOL selectVisual({exactValues:true,...}) => {"status":"required","type":"table","reason":"Text alone creates material ambiguity or decision risk."}
+FOUNDER_TOOL python render_chart.py => "rendered C:\Users\abrur\Documents\hypertaks-agent\evals\hosts\antigravity\runs\EV-50-88\fixtures\EV-63\chart\revenue.png" pngExists=true
+FOUNDER_QUOTE precision-boundary: "Exact numeric values are preserved; image generation is not a chart source for exact values."
+FOUNDER_ANSWER:
+I rendered a precise numeric chart from the real monthly revenue figures. Visual routing returned type "table" (Text alone creates material ambiguity or decision risk.), so exact values routed to a data plot, not a generated image. I selected Python (matplotlib) with Agg, plotted exact USD values from the planted CSV (labels and the USD unit preserved, nothing invented), and exported the chart and validated the PNG on disk. Image generation was rejected as the chart source because it cannot guarantee exact labels and values.

@@ -1,0 +1,1 @@
+﻿We already have an existing main brain directory that holds our verified knowledge and we want to keep using it. Please reuse that existing brain root as-is when you configure our memory pointer - do not restructure it and do not create a replacement. First show me a preview of exactly what you would write, and only write the pointer after I approve it.

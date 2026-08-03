@@ -1,0 +1,2 @@
+Raw BM25 scores (unbounded) and cosine similarity values ([0,1]) cannot be added directly. Merging multi-route candidates requires Reciprocal Rank Fusion (RRF).
+`RRF(document) = sum over lists [1 / (k + rank_i(document))]`

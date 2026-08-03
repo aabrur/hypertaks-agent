@@ -1,0 +1,4 @@
+Reranking runs only against bounded top-k candidates (e.g. k=20..50).
+evaluation required before quality claims.
+latency or cost recorded.
+Close-but-wrong failures are a known failure mode.

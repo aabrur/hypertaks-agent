@@ -1,0 +1,1 @@
+Build a strict TypeScript plugin router that selects retrieval and visual routes.
