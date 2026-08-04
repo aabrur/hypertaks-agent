@@ -2,7 +2,7 @@
   "host": "codex",
   "displayName": "Codex",
   "packageId": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "shortDescription": "Hypertaks Founder OS plugin for Codex.",
   "longDescription": "Brings the Hypertaks five-skill founder operating system to Codex with secure continuity, memory, and routing.",
   "developer": "abrur <abrur_nic@yahoo.com>",

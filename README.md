@@ -9,7 +9,7 @@
 **One plugin product, five public skills, and 22/22 documented host routes.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-4.5.0-blue)
+![Version](https://img.shields.io/badge/version-4.5.1-blue)
 ![Host compatibility](https://img.shields.io/badge/host%20compatibility-22%2F22-brightgreen)
 ![Package status](https://img.shields.io/badge/package%20status-PASS-brightgreen)
 

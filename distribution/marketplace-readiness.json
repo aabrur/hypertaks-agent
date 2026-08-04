@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "wave": 5,
   "product": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "status": "PASS",
   "definition": "PASS means the repository contains the package metadata or adapter needed for submission or native direct installation. It does not mean the third-party listing has already been published.",
   "surfaces": [

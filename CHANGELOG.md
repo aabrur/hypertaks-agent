@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.1] - 2026-08-04
+
+### Fixed
+- Public-skill routing is single-sourced in `runtime/public-skill-router.ts` so
+  the TypeScript runtime and ChatGPT MCP adapter cannot drift.
+- Deterministic primary-intent routing with English and Indonesian locale packs,
+  clause-scoped negation, action-object eligibility, and false-positive
+  exclusions (for example memory leak, graph chart, generic application install).
+- Token-safe optional route diagnostics (`none` default, `compact`, `full`) and
+  immutable router identity (`routePolicyVersion`, `routerRulesDigest`,
+  build revision when supplied by the environment).
+
+### Added
+- Shared router regression matrix and local MCP stress coverage for bilingual
+  routing, preferredSkill override, invalid preferredSkill handling,
+  determinism, concurrency, and tool-boundary checks.
+- Machine-readable `supportedLocales` on the MCP manifest and installation
+  verification responses.
+
+### Security
+- Remote MCP adapter remains read-only with exactly four tools and
+  `mutationPerformed: false`.
+- Route diagnostics never expose bearer tokens, environment dumps, or raw
+  unrestricted request contents.
+
 ## [4.5.0] - 2026-07-25
 
 ### Added

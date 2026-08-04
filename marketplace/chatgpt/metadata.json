@@ -2,7 +2,7 @@
   "host": "chatgpt",
   "displayName": "ChatGPT",
   "packageId": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "shortDescription": "Read-only Hypertaks ChatGPT App adapter using MCP as host transport.",
   "developer": "abrur <abrur_nic@yahoo.com>",
   "repository": "https://github.com/aabrur/hypertaks-agent",

@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
@@ -98,7 +98,9 @@
     "test:plugin-compatibility": "python scripts/validate_plugin_compatibility.py && python -m unittest scripts.test_validate_plugin_compatibility -v",
     "test:marketplace-readiness": "python scripts/validate_marketplace_readiness.py && python -m unittest scripts.test_validate_marketplace_readiness -v",
     "test": "npm run typecheck && npm run build:runtime && npm run test:runtime && npm run test:chatgpt && npm run test:coding-hosts && npm run test:managed-hosts && npm run test:chat-hosts && npm run test:plugin-compatibility && npm run test:marketplace-readiness",
+    "prestart:chatgpt": "tsc -p tsconfig.json",
     "start:chatgpt": "node runtime/chatgpt-mcp-server.mjs",
+    "pretest:chatgpt": "tsc -p tsconfig.json",
     "test:chatgpt": "node --test runtime/chatgpt-mcp-server.test.cjs"
   },
   "peerDependencies": {

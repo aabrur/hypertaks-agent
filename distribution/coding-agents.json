@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "wave": 2,
   "product": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "canonicalSkills": [
     "hypertaks",
     "hypertaks-verify",
@@ -21,8 +21,16 @@
       "installInstruction": "/plugin marketplace add aabrur/hypertaks-agent, then /plugin install hypertaks@hypertaks-marketplace",
       "updateMechanism": "/plugin update hypertaks@hypertaks-marketplace",
       "uninstallMechanism": "/plugin uninstall hypertaks@hypertaks-marketplace",
-      "officialDocs": ["https://docs.anthropic.com/en/docs/claude-code/plugins"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://docs.anthropic.com/en/docs/claude-code/plugins"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -36,8 +44,17 @@
       "installInstruction": "codex plugin marketplace add https://github.com/aabrur/hypertaks-agent.git, then open /plugins and enable hypertaks@hypertaks-marketplace",
       "updateMechanism": "Use the Codex plugin marketplace upgrade flow, then refresh the Hypertaks plugin.",
       "uninstallMechanism": "Disable or remove hypertaks@hypertaks-marketplace from /plugins.",
-      "officialDocs": ["https://developers.openai.com/codex/plugins/", "https://github.com/openai/codex"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://developers.openai.com/codex/plugins/",
+        "https://github.com/openai/codex"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -51,8 +68,16 @@
       "installInstruction": "Run /add-plugin in Cursor and select or paste https://github.com/aabrur/hypertaks-agent.",
       "updateMechanism": "Update Hypertaks from Cursor Plugins.",
       "uninstallMechanism": "Remove Hypertaks from Cursor Plugins.",
-      "officialDocs": ["https://docs.cursor.com/plugins"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://docs.cursor.com/plugins"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -66,8 +91,16 @@
       "installInstruction": "/plugins install https://github.com/aabrur/hypertaks-agent.git",
       "updateMechanism": "/plugins reload hypertaks",
       "uninstallMechanism": "/plugins remove hypertaks",
-      "officialDocs": ["https://moonshotai.github.io/kimi-code/en/customization/plugins.html"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://moonshotai.github.io/kimi-code/en/customization/plugins.html"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -81,8 +114,16 @@
       "installInstruction": "Add the Hypertaks local plugin module to the plugin array in opencode.json.",
       "updateMechanism": "Update the Hypertaks checkout and restart OpenCode.",
       "uninstallMechanism": "Remove the Hypertaks entry from the OpenCode plugin array.",
-      "officialDocs": ["https://opencode.ai/docs/plugins"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://opencode.ai/docs/plugins"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -96,8 +137,16 @@
       "installInstruction": "pi install https://github.com/aabrur/hypertaks-agent.git",
       "updateMechanism": "pi update hypertaks",
       "uninstallMechanism": "pi remove hypertaks",
-      "officialDocs": ["https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -111,8 +160,17 @@
       "installInstruction": "openclaw plugins install git:github.com/aabrur/hypertaks-agent@main",
       "updateMechanism": "openclaw plugins update hypertaks",
       "uninstallMechanism": "openclaw plugins uninstall hypertaks",
-      "officialDocs": ["https://docs.openclaw.ai/plugins/manage-plugins", "https://docs.openclaw.ai/plugins/manifest"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://docs.openclaw.ai/plugins/manage-plugins",
+        "https://docs.openclaw.ai/plugins/manifest"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."
@@ -126,8 +184,16 @@
       "installInstruction": "hermes plugins install aabrur/hypertaks-agent --enable",
       "updateMechanism": "hermes plugins update hypertaks",
       "uninstallMechanism": "hermes plugins remove hypertaks",
-      "officialDocs": ["https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/plugins.md"],
-      "canonicalSkills": ["hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"],
+      "officialDocs": [
+        "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/plugins.md"
+      ],
+      "canonicalSkills": [
+        "hypertaks",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity"
+      ],
       "evidenceStatus": "PASS",
       "evidenceType": "official-native-compatibility",
       "evidenceNote": "Official host documentation or repository supports this plugin route and the matching Hypertaks adapter is tracked."

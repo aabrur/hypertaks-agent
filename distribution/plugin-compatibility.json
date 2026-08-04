@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "product": "hypertaks",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "certificationModel": "official-native-compatibility",
   "passRule": "PASS requires a current official host website, documentation, or repository that supports the declared plugin or plugin-compatible import route, plus a matching Hypertaks adapter or package path.",
   "totalHosts": 22,

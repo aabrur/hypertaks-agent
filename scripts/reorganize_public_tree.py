@@ -200,7 +200,7 @@ def move_batch(host_id: str, cfg: dict) -> dict[str, str]:
         host_report,
         "\n".join(
             [
-                f"# {cfg['label']} — behavioral {cfg['run']}",
+                f"# {cfg['label']} - behavioral {cfg['run']}",
                 "",
                 f"- host: {cfg['label']}",
                 f"- cases: EV-{cfg['ids'][0]}..EV-{cfg['ids'][-1]}",
@@ -244,7 +244,7 @@ def move_kilo_validation() -> None:
         dest / "README.md",
         "\n".join(
             [
-                "# Kilo validation — EV-50..88 multi-host",
+                "# Kilo validation - EV-50..88 multi-host",
                 "",
                 "Kilo validated host batches and Boss confirmed the ledger.",
                 "",

@@ -275,6 +275,7 @@ assert.equal(router.checkGraphFreshness(null, null, gitState).state, 'UNVERIFIED
 assert.equal(router.checkGraphFreshness(gitState.commit, gitState.branch, gitState).state, 'FRESH');
 
 const routeCases = [
+  // Baseline bilingual / negation matrix (A0/A1)
   ['founder business + engineering + evidence', 'hypertaks'],
   ['verifikasi konfigurasi instalasi', 'hypertaks-verify'],
   ['simpan dan ambil memori founder', 'hypertaks-brain'],
@@ -290,6 +291,40 @@ const routeCases = [
   ['resume handoff reconcile', 'hypertaks-continuity'],
   ['audit validate decision context status impact permission evidence', 'hypertaks'],
   ['ambiguous multi-domain strategy request', 'hypertaks'],
+  // Phase A2 required exact cases
+  ['Create a founder strategy covering business and engineering.', 'hypertaks'],
+  ['Verifikasi konfigurasi dan instalasi Hypertaks.', 'hypertaks-verify'],
+  ['Simpan dan ambil memori founder ini.', 'hypertaks-brain'],
+  ['Analyze dependency change impact and blast radius.', 'hypertaks-graph'],
+  ['Create a checkpoint, handoff, and proof-of-done.', 'hypertaks-continuity'],
+  ['Jangan route ke verify. Ini strategi founder.', 'hypertaks'],
+  ['Founder strategy with checkpoint and proof-of-done across business and engineering.', 'hypertaks'],
+  ['Scan-only Hypertaks installation verification.', 'hypertaks-verify'],
+  ['Build an MCP host that launches five servers.', 'hypertaks'],
+  ['Configure a new MCP server.', 'hypertaks'],
+  ['Verify the deployed Hypertaks MCP adapter.', 'hypertaks-verify'],
+  ['Install Python dependencies for the application.', 'hypertaks'],
+  ['Repair the Hypertaks memory pointer configuration.', 'hypertaks-verify'],
+  ['Inspect founder memory records.', 'hypertaks-brain'],
+  ['Fix a Node.js memory leak.', 'hypertaks'],
+  ['Store this approved product decision.', 'hypertaks-brain'],
+  ['Import customer records from CSV.', 'hypertaks'],
+  ['Trace module imports and dependency blast radius.', 'hypertaks-graph'],
+  ['Create a graph chart of monthly revenue.', 'hypertaks'],
+  ['Check graph freshness against the current commit.', 'hypertaks-graph'],
+  ['Create a checkpoint for the API implementation.', 'hypertaks-continuity'],
+  ['Design the API implementation with checkpoint requirements.', 'hypertaks'],
+  ['Verify proof-of-done evidence.', 'hypertaks-continuity'],
+  ['Founder strategy with dependency analysis and a project checkpoint.', 'hypertaks'],
+  ['Do not save memory. Analyze the founder plan.', 'hypertaks'],
+  ['Use hypertaks-brain to inspect the current memory target.', 'hypertaks-brain'],
+  ['Verify installation without writing files.', 'hypertaks-verify'],
+  ['Do not verify the installation. Create a founder plan instead.', 'hypertaks'],
+  // Punctuation / casing / bilingual variants
+  ['VERIFY Installation!!!', 'hypertaks-verify'],
+  ['  simpan, ambil, memori founder... ', 'hypertaks-brain'],
+  ['Dependency Change Impact - Blast Radius', 'hypertaks-graph'],
+  ['CREATE a Checkpoint + Handoff + Proof-Of-Done', 'hypertaks-continuity'],
 ];
 for (const [request, expected] of routeCases) {
   assert.equal(router.routePublicSkill(request).skill, expected, request);
@@ -298,6 +333,193 @@ assert.equal(
   router.routePublicSkill('install setup configuration checksum', 'hypertaks-continuity').skill,
   'hypertaks-continuity',
 );
+assert.equal(router.PUBLIC_SKILL_ROUTER_MODULE, 'public-skill-router');
+assert.equal(router.ROUTE_POLICY_VERSION, 'a2.1');
+assert.deepEqual([...router.SUPPORTED_LOCALES], ['en', 'id']);
+assert.equal(router.normalizeRequestText('Proof of Done!!!').includes('proof-of-done'), true);
+assert.deepEqual([...router.PUBLIC_SKILLS], [
+  'hypertaks',
+  'hypertaks-verify',
+  'hypertaks-brain',
+  'hypertaks-graph',
+  'hypertaks-continuity',
+]);
+
+// Phase A3: diagnostics determinism, negation suppression, founder primary, identity.
+{
+  const request = 'Jangan route ke verify. Ini strategi founder.';
+  const a = router.diagnosePublicSkillRoute(request);
+  const b = router.diagnosePublicSkillRoute(request);
+  assert.deepEqual(a, b);
+  assert.equal(a.skill, 'hypertaks');
+  assert.equal(a.primaryIntent, 'founder_strategy');
+  assert.ok(a.suppressedSkills.some((item) => item.skill === 'hypertaks-verify' && item.reason === 'explicit_negation'));
+  assert.equal(a.routePolicyVersion, router.ROUTE_POLICY_VERSION);
+  assert.match(a.routerRulesDigest, /^[a-f0-9]{64}$/);
+  assert.equal(a.mutationPerformed, false);
+  assert.equal(a.approvalRequiredForExternalMutation, true);
+  assert.equal(a.nextTool, 'hypertaks_get_skill');
+
+  const founderCheckpoint = router.diagnosePublicSkillRoute(
+    'Founder strategy with checkpoint and proof-of-done across business and engineering.',
+  );
+  assert.equal(founderCheckpoint.skill, 'hypertaks');
+  assert.equal(founderCheckpoint.primaryIntent, 'founder_strategy');
+
+  const noneShape = router.presentRouteDiagnostics(a, 'none');
+  assert.deepEqual(Object.keys(noneShape).sort(), [
+    'approvalRequiredForExternalMutation',
+    'mutationPerformed',
+    'nextTool',
+    'reason',
+    'skill',
+  ]);
+  assert.equal(Object.prototype.hasOwnProperty.call(noneShape, 'routerRulesDigest'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(noneShape, 'matchedSignals'), false);
+
+  const compactShape = router.presentRouteDiagnostics(a, 'compact');
+  assert.equal(compactShape.primaryIntent, 'founder_strategy');
+  assert.equal(Object.prototype.hasOwnProperty.call(compactShape, 'routerRulesDigest'), false);
+  assert.equal(Object.prototype.hasOwnProperty.call(compactShape, 'matchedSignals'), false);
+
+  const fullShape = router.presentRouteDiagnostics(a, 'full');
+  assert.ok(Array.isArray(fullShape.matchedSignals));
+  assert.ok(Array.isArray(fullShape.secondaryIntents));
+  assert.equal(fullShape.routerRulesDigest, a.routerRulesDigest);
+
+  const identity = router.getRouterRuntimeIdentity();
+  assert.equal(identity.routePolicyVersion, router.ROUTE_POLICY_VERSION);
+  assert.equal(identity.routerRulesDigest, router.getRouterRulesDigest());
+  assert.equal(identity.routerRulesDigest, router.computeRouterRulesDigest());
+  assert.match(identity.buildRevision, /^(unknown|[0-9a-f]{7,64})$/);
+  assert.match(identity.buildTimestamp, /^(unknown|\d{4}-\d{2}-\d{2}T)/);
+  assert.deepEqual([...identity.supportedLocales], ['en', 'id']);
+
+  // Secret-like env values must never appear in diagnostics/identity payloads.
+  const previousToken = process.env.HYPERTAKS_MCP_BEARER_TOKEN;
+  process.env.HYPERTAKS_MCP_BEARER_TOKEN = 'super-secret-token-value-should-not-leak';
+  try {
+    const leakedProbe = JSON.stringify({
+      route: router.diagnosePublicSkillRoute(request),
+      presented: router.presentRouteDiagnostics(router.diagnosePublicSkillRoute(request), 'full'),
+      identity: router.getRouterRuntimeIdentity(),
+    });
+    assert.equal(leakedProbe.includes('super-secret-token-value-should-not-leak'), false);
+  } finally {
+    if (previousToken === undefined) delete process.env.HYPERTAKS_MCP_BEARER_TOKEN;
+    else process.env.HYPERTAKS_MCP_BEARER_TOKEN = previousToken;
+  }
+}
+
+// Canonical focused-policy must exist exactly once under runtime/*.ts|*.mjs|*.cjs
+// (compiled .build output is excluded; tests are excluded).
+{
+  const runtimeDir = path.resolve(__dirname);
+  const sourceFiles = fs.readdirSync(runtimeDir)
+    .filter((name) => /\.(ts|mjs|cjs)$/.test(name) && !name.endsWith('.test.cjs'))
+    .map((name) => path.join(runtimeDir, name));
+  const definitionHits = [];
+  for (const filePath of sourceFiles) {
+    const text = fs.readFileSync(filePath, 'utf8');
+    const matches = text.match(/const FOCUSED_SKILL_RULES\b/g) || [];
+    for (let i = 0; i < matches.length; i += 1) {
+      definitionHits.push(path.basename(filePath));
+    }
+  }
+  assert.deepEqual(
+    definitionHits,
+    ['public-skill-router.ts'],
+    `expected one FOCUSED_SKILL_RULES definition, found: ${definitionHits.join(',') || '(none)'}`,
+  );
+  const canonical = path.join(runtimeDir, 'public-skill-router.ts');
+  assert.equal(fs.existsSync(canonical), true);
+  assert.match(
+    fs.readFileSync(canonical, 'utf8'),
+    /export function routePublicSkill/,
+  );
+}
+
+// Direct canonical module and router re-export must be the same function identity path.
+{
+  const canonicalModule = require(path.resolve(__dirname, '..', '.build', 'runtime', 'public-skill-router.js'));
+  assert.equal(canonicalModule.PUBLIC_SKILL_ROUTER_MODULE, 'public-skill-router');
+  assert.equal(router.routePublicSkill, canonicalModule.routePublicSkill);
+  for (const [request, expected] of routeCases) {
+    const fromCanonical = canonicalModule.routePublicSkill(request);
+    const fromRouter = router.routePublicSkill(request);
+    assert.deepEqual(fromRouter, fromCanonical, `parity failed for: ${request}`);
+    assert.equal(fromCanonical.skill, expected, request);
+  }
+}
+
+// Phase A4: complete regression matrix, determinism, locale coverage, identity.
+{
+  const matrix = require(path.join(__dirname, 'fixtures', 'public-skill-route-matrix.cjs'));
+  const unitReport = matrix.runUnitRouteMatrix((request, preferred) =>
+    router.routePublicSkill(request, preferred),
+  );
+  assert.equal(
+    unitReport.failCount,
+    0,
+    unitReport.failures
+      .map((row) => `${row.id}:${row.expected}->${row.actual}`)
+      .join('; ') || 'matrix failures',
+  );
+  assert.ok(unitReport.total >= 60, `expected broad matrix, got ${unitReport.total}`);
+
+  const detReport = matrix.runDeterminismSuite(
+    (request) => router.diagnosePublicSkillRoute(request),
+    matrix.DETERMINISM_REPEATS,
+  );
+  assert.equal(detReport.failCount, 0, JSON.stringify(detReport.failures));
+  assert.equal(detReport.repeats, 5);
+
+  const coverage = matrix.localeCoverageChecklist();
+  assert.deepEqual(coverage.missingCategories, []);
+  assert.deepEqual(coverage.supportedLocales, ['en', 'id']);
+  for (const skill of [
+    'hypertaks-verify',
+    'hypertaks-brain',
+    'hypertaks-graph',
+    'hypertaks-continuity',
+  ]) {
+    assert.ok(coverage.enFocusedSkills.includes(skill), `en missing ${skill}`);
+    assert.ok(coverage.idFocusedSkills.includes(skill), `id missing ${skill}`);
+  }
+
+  assert.deepEqual([...router.PUBLIC_SKILLS], [...matrix.PUBLIC_SKILLS]);
+  assert.deepEqual([...router.SUPPORTED_LOCALES], [...matrix.SUPPORTED_LOCALES]);
+  const identity = router.getRouterRuntimeIdentity();
+  assert.equal(identity.routePolicyVersion, router.ROUTE_POLICY_VERSION);
+  assert.match(identity.routerRulesDigest, /^[a-f0-9]{64}$/);
+  // Manifest-equivalent identity fields must be stable across repeated reads.
+  assert.deepEqual(router.getRouterRuntimeIdentity(), identity);
+
+  // Machine-readable A4 summary for the phase report (written next to continuity).
+  const summary = {
+    phase: 'A4',
+    totalCalls: unitReport.total + detReport.total * detReport.repeats,
+    matrixTotal: unitReport.total,
+    matrixPass: unitReport.passCount,
+    matrixFail: unitReport.failCount,
+    determinismCases: detReport.total,
+    determinismRepeats: detReport.repeats,
+    determinismPass: detReport.passCount,
+    routeDistribution: unitReport.distribution,
+    routerRulesDigest: identity.routerRulesDigest,
+    routePolicyVersion: identity.routePolicyVersion,
+    supportedLocales: identity.supportedLocales,
+    publicSkillCount: router.PUBLIC_SKILLS.length,
+    mutationPerformedAlwaysFalse: true,
+  };
+  const outDir = path.join(__dirname, '..', '.hypertaks', 'continuity');
+  fs.mkdirSync(outDir, { recursive: true });
+  fs.writeFileSync(
+    path.join(outDir, 'HT-20260804-A4-regression-summary.json'),
+    `${JSON.stringify(summary, null, 2)}\n`,
+    'utf8',
+  );
+}
 
 (async () => {
   await assert.rejects(

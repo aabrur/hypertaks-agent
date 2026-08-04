@@ -1,5 +1,27 @@
 # Release Notes
 
+## v4.5.1 - Router Integrity Hotfix
+
+Hypertaks 4.5.1 keeps the five-skill Founder Operating System boundary and fixes
+public-skill selection reliability for the local runtime and the read-only remote
+MCP adapter.
+
+### What changed
+- One canonical public-skill router module consumed by both `runtime/router.ts`
+  and `runtime/chatgpt-mcp-server.mjs`.
+- Deterministic intent policy with English and Indonesian locale packs.
+- Safer handling of negation, supporting checkpoint terms under founder strategy,
+  and common false positives such as memory leaks or chart graphs.
+- Optional token-safe route diagnostics and matching router policy identity on
+  manifest and installation verification.
+- Expanded local regression and MCP stress coverage before release.
+
+### What did not change
+- Exactly five public skills.
+- Exactly four read-only remote MCP tools.
+- No remote filesystem, shell, Git write, or other mutation tools.
+- Founder Brain, Graphify, Continuity, and Verify ownership boundaries.
+
 ## v4.5.0 - Founder Brain and Continuity System
 
 Hypertaks 4.5.0 strengthens the Founder Operating System with portable founder

@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 import { createHash, timingSafeEqual } from "node:crypto";
+import { existsSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { createServer } from "node:http";
+import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const PRODUCT_NAME = "Hypertaks";
-const PRODUCT_VERSION = "4.5.0";
+const PRODUCT_VERSION = "4.5.1";
 const SERVER_NAME = "hypertaks-mcp-adapter";
 const SERVER_TITLE = "Hypertaks MCP Adapter";
 const SERVER_DESCRIPTION =
@@ -25,50 +27,54 @@ const MAX_BODY_BYTES = 1024 * 1024;
 const DEFAULT_HOST = "127.0.0.1";
 const DEFAULT_PORT = 8787;
 
-const PUBLIC_SKILLS = Object.freeze([
-  "hypertaks",
-  "hypertaks-verify",
-  "hypertaks-brain",
-  "hypertaks-graph",
-  "hypertaks-continuity",
-]);
-
-const FOCUSED_SKILL_RULES = Object.freeze([
-  {
-    skill: "hypertaks-verify",
-    pattern:
-      /\b(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime\s+verification|verifikasi(?:\s+\w+){0,4}\s+(?:konfigurasi|instalasi|install(?:ation)?|setup|checksum|runtime)|(?:verify|verifikasi)\s+(?:install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum|runtime))\b/u,
-    negation:
-      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b|\b(?:verify|verifikasi|install(?:ation)?|instalasi|setup|configuration|konfigurasi|checksum)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
-  },
-  {
-    skill: "hypertaks-brain",
-    pattern:
-      /\b(?:(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)\s+(?:\w+\s+){0,3}(?:memory|memori)|(?:memory|memori)\s+(?:\w+\s+){0,3}(?:save|retrieve|correct|simpan|ambil|koreksi|durable|founder)|remember(?:\s+\w+){0,4}|ingat(?:kan)?(?:\s+\w+){0,4}|revalidate\s+memory|archive\s+memory)\b/u,
-    negation:
-      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:memory|memori|remember|ingat)\b|\b(?:memory|memori)\b[\s\S]{0,24}\b(?:jangan|bukan|tidak\s+perlu)\b/u,
-  },
-  {
-    skill: "hypertaks-graph",
-    pattern:
-      /\b(?:dependenc(?:y|ies)|dependensi|callers?|callees?|imports?|blast\s+radius|change\s+impact|dampak\s+perubahan|import\s+graph|dependency\s+graph)\b/u,
-    negation:
-      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:graph|dependenc(?:y|ies)|dependensi|callers?|imports?|blast\s+radius)\b/u,
-  },
-  {
-    skill: "hypertaks-continuity",
-    pattern:
-      /\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done)|bukti\s+selesai)\b/u,
-    negation:
-      /\b(?:jangan|do\s+not|don't|dont|never|bukan|tidak\s+perlu|no\s+need(?:\s+to|\s+for)?|without)\b[\s\S]{0,48}\b(?:checkpoint|resume|handoff|reconcil(?:e|iation)|rekonsiliasi|proof(?:\s+of\s+done|-of-done))\b/u
-  },
-]);
-
 const __filename = fileURLToPath(import.meta.url);
 const RUNTIME_DIR = path.dirname(__filename);
 const REPOSITORY_ROOT = path.resolve(RUNTIME_DIR, "..");
 const SKILLS_ROOT = path.join(REPOSITORY_ROOT, "skills");
 const LOGO_PATH = path.join(REPOSITORY_ROOT, "assets", "Hypertask.svg");
+const COMPILED_PUBLIC_SKILL_ROUTER = path.join(
+  REPOSITORY_ROOT,
+  ".build",
+  "runtime",
+  "public-skill-router.js",
+);
+
+function loadCanonicalPublicSkillRouter() {
+  if (!existsSync(COMPILED_PUBLIC_SKILL_ROUTER)) {
+    throw new Error(
+      "Missing compiled public-skill router at .build/runtime/public-skill-router.js. " +
+        "Run `npm run build:runtime` before starting the MCP adapter.",
+    );
+  }
+  const require = createRequire(import.meta.url);
+  const loaded = require(COMPILED_PUBLIC_SKILL_ROUTER);
+  if (
+    !loaded ||
+    !Array.isArray(loaded.PUBLIC_SKILLS) ||
+    typeof loaded.routePublicSkill !== "function" ||
+    typeof loaded.diagnosePublicSkillRoute !== "function" ||
+    typeof loaded.presentRouteDiagnostics !== "function" ||
+    typeof loaded.getRouterRuntimeIdentity !== "function" ||
+    loaded.PUBLIC_SKILL_ROUTER_MODULE !== "public-skill-router"
+  ) {
+    throw new Error(
+      "Compiled public-skill router is incomplete. Rebuild with `npm run build:runtime`.",
+    );
+  }
+  return loaded;
+}
+
+const {
+  PUBLIC_SKILLS: CANONICAL_PUBLIC_SKILLS,
+  routePublicSkill,
+  diagnosePublicSkillRoute,
+  presentRouteDiagnostics,
+  parseDiagnosticsLevel,
+  getRouterRuntimeIdentity,
+  getRouterRulesDigest,
+  ROUTE_POLICY_VERSION,
+} = loadCanonicalPublicSkillRouter();
+const PUBLIC_SKILLS = Object.freeze([...CANONICAL_PUBLIC_SKILLS]);
 
 const host = process.env.HYPERTAKS_MCP_HOST?.trim() || DEFAULT_HOST;
 const port = parsePort(process.env.HYPERTAKS_MCP_PORT);
@@ -131,6 +137,12 @@ const TOOLS = Object.freeze([
           type: "string",
           enum: PUBLIC_SKILLS,
           description: "Optional explicit skill override supplied by the user.",
+        },
+        diagnostics: {
+          type: "string",
+          enum: ["none", "compact", "full"],
+          description:
+            "Optional route diagnostics level. Default none returns the smallest backward-compatible response. compact adds primaryIntent and locale fields. full adds matchedSignals, secondaryIntents, and routerRulesDigest.",
         },
       },
       required: ["request"],
@@ -258,33 +270,20 @@ function negotiateProtocolVersion(requested) {
   return DEFAULT_PROTOCOL_VERSION;
 }
 
-function routeRequest(requestText, preferredSkill) {
-  if (PUBLIC_SKILLS.includes(preferredSkill)) {
-    return { skill: preferredSkill, reason: "Explicit preferredSkill override." };
-  }
+function routeRequest(requestText, preferredSkill, diagnosticsLevel = "none") {
+  // Narrow wrapper: all policy lives in the canonical public-skill router.
+  const diagnosed = diagnosePublicSkillRoute(requestText, preferredSkill);
+  return presentRouteDiagnostics(diagnosed, diagnosticsLevel);
+}
 
-  const normalized = requestText.toLowerCase();
-  const matched = FOCUSED_SKILL_RULES.filter(
-    (rule) => rule.pattern.test(normalized) && !rule.negation.test(normalized),
-  ).map((rule) => rule.skill);
-
-  if (matched.length === 1) {
-    return {
-      skill: matched[0],
-      reason: `Matched focused ${matched[0]} routing vocabulary.`,
-    };
-  }
-
-  if (matched.length > 1) {
-    return {
-      skill: "hypertaks",
-      reason: "Multiple focused skills matched; use the main Founder Operating System flow.",
-    };
-  }
-
+function runtimeIdentityFields() {
+  const identity = getRouterRuntimeIdentity();
   return {
-    skill: "hypertaks",
-    reason: "No focused subskill was required; use the main Founder Operating System flow.",
+    routePolicyVersion: identity.routePolicyVersion,
+    routerRulesDigest: identity.routerRulesDigest,
+    buildRevision: identity.buildRevision,
+    buildTimestamp: identity.buildTimestamp,
+    supportedLocales: identity.supportedLocales,
   };
 }
 
@@ -322,6 +321,7 @@ async function verifyInstallation() {
     files,
     logo: { path: path.relative(REPOSITORY_ROOT, LOGO_PATH), ...logo },
     mcpRole: MCP_ROLE,
+    ...runtimeIdentityFields(),
   };
 }
 
@@ -343,6 +343,7 @@ function toolFailure(message) {
 
 async function callTool(name, args) {
   if (name === "hypertaks_manifest") {
+    const identity = runtimeIdentityFields();
     const manifest = {
       product: PRODUCT_NAME,
       version: PRODUCT_VERSION,
@@ -354,6 +355,7 @@ async function callTool(name, args) {
       writeCapability: "not exposed by this adapter",
       limitation:
         "This remote MCP adapter cannot access or mutate a user's local repository. Use a coding-agent host or separately authorized connector for file changes.",
+      ...identity,
     };
     return toolSuccess(manifest, JSON.stringify(manifest, null, 2));
   }
@@ -375,14 +377,14 @@ async function callTool(name, args) {
       return toolFailure("request must be a non-empty string.");
     }
     if (args.request.length > 12000) return toolFailure("request exceeds 12000 characters.");
-    const routed = routeRequest(args.request, args.preferredSkill);
-    const result = {
-      ...routed,
-      nextTool: "hypertaks_get_skill",
-      mutationPerformed: false,
-      approvalRequiredForExternalMutation: true,
-    };
-    return toolSuccess(result, `Route the request through ${routed.skill}. ${routed.reason}`);
+    let diagnosticsLevel;
+    try {
+      diagnosticsLevel = parseDiagnosticsLevel(args?.diagnostics);
+    } catch (error) {
+      return toolFailure(error instanceof Error ? error.message : String(error));
+    }
+    const result = routeRequest(args.request, args.preferredSkill, diagnosticsLevel);
+    return toolSuccess(result, `Route the request through ${result.skill}. ${result.reason}`);
   }
 
   if (name === "hypertaks_verify_installation") {
