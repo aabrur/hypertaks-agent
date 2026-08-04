@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:runtime",
+  "outputDirectory": ".build/runtime",
   "functions": {
     "api/*.mjs": {
       "includeFiles": "{skills/**,assets/Hypertask.svg}"
