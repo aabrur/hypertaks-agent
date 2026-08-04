@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
 import { createHash, timingSafeEqual } from "node:crypto";
-import { existsSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { createServer } from "node:http";
-import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import canonicalPublicSkillRouter from "../.build/runtime/public-skill-router.js";
 
 const PRODUCT_NAME = "Hypertaks";
 const PRODUCT_VERSION = "4.5.1";
@@ -32,37 +31,6 @@ const RUNTIME_DIR = path.dirname(__filename);
 const REPOSITORY_ROOT = path.resolve(RUNTIME_DIR, "..");
 const SKILLS_ROOT = path.join(REPOSITORY_ROOT, "skills");
 const LOGO_PATH = path.join(REPOSITORY_ROOT, "assets", "Hypertask.svg");
-const COMPILED_PUBLIC_SKILL_ROUTER = path.join(
-  REPOSITORY_ROOT,
-  ".build",
-  "runtime",
-  "public-skill-router.js",
-);
-
-function loadCanonicalPublicSkillRouter() {
-  if (!existsSync(COMPILED_PUBLIC_SKILL_ROUTER)) {
-    throw new Error(
-      "Missing compiled public-skill router at .build/runtime/public-skill-router.js. " +
-        "Run `npm run build:runtime` before starting the MCP adapter.",
-    );
-  }
-  const require = createRequire(import.meta.url);
-  const loaded = require(COMPILED_PUBLIC_SKILL_ROUTER);
-  if (
-    !loaded ||
-    !Array.isArray(loaded.PUBLIC_SKILLS) ||
-    typeof loaded.routePublicSkill !== "function" ||
-    typeof loaded.diagnosePublicSkillRoute !== "function" ||
-    typeof loaded.presentRouteDiagnostics !== "function" ||
-    typeof loaded.getRouterRuntimeIdentity !== "function" ||
-    loaded.PUBLIC_SKILL_ROUTER_MODULE !== "public-skill-router"
-  ) {
-    throw new Error(
-      "Compiled public-skill router is incomplete. Rebuild with `npm run build:runtime`.",
-    );
-  }
-  return loaded;
-}
 
 const {
   PUBLIC_SKILLS: CANONICAL_PUBLIC_SKILLS,
@@ -73,7 +41,21 @@ const {
   getRouterRuntimeIdentity,
   getRouterRulesDigest,
   ROUTE_POLICY_VERSION,
-} = loadCanonicalPublicSkillRouter();
+  PUBLIC_SKILL_ROUTER_MODULE,
+} = canonicalPublicSkillRouter;
+
+if (
+  !Array.isArray(CANONICAL_PUBLIC_SKILLS) ||
+  typeof routePublicSkill !== "function" ||
+  typeof diagnosePublicSkillRoute !== "function" ||
+  typeof presentRouteDiagnostics !== "function" ||
+  typeof getRouterRuntimeIdentity !== "function" ||
+  PUBLIC_SKILL_ROUTER_MODULE !== "public-skill-router"
+) {
+  throw new Error(
+    "Compiled public-skill router is incomplete. Rebuild with `npm run build:runtime`.",
+  );
+}
 const PUBLIC_SKILLS = Object.freeze([...CANONICAL_PUBLIC_SKILLS]);
 
 const host = process.env.HYPERTAKS_MCP_HOST?.trim() || DEFAULT_HOST;
