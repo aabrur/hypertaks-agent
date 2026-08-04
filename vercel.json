@@ -1,8 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:runtime",
   "functions": {
     "api/*.mjs": {
-      "includeFiles": "{skills/**,assets/Hypertask.svg}"
+      "includeFiles": "{skills/**,assets/Hypertask.svg,.build/runtime/public-skill-router.js}"
     }
   }
 }
