@@ -6,7 +6,7 @@
 - **Tested Commit**: `76898e8` (built on `b7fdaf9`)
 - **Pull Request**: [#15](https://github.com/aabrur/hypertaks-agent/pull/15)
 - **Date**: `2026-07-31`
-- **Product Version**: `4.5.0`
+- **Product Version**: `4.5.1`
 - **Status**: `CONFIRMED`
 
 ---

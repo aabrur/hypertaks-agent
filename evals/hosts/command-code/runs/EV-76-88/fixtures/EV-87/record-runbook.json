@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "4.5.0",
+  "schemaVersion": "4.5.1",
   "id": "api-rate-limit",
   "type": "Fact",
   "scope": "Project",

@@ -190,7 +190,7 @@ assert.equal(router.verifyRepositoryEvidence(repo, evidence), false);
 runGit(repo, 'checkout', '--', 'tracked.txt');
 
 const pointer = {
-  schemaVersion: '4.5.0',
+  schemaVersion: '4.5.1',
   projectId: 'hypertaks-agent',
   agentName: 'Codex',
   destinationType: 'ProjectLocal',
@@ -219,7 +219,7 @@ assert.equal(fs.existsSync(memoryPath), true);
 assert.throws(() => router.writeMemoryRecord(root, pointer, { ...record, id: '../../../../escape' }), /INVALID_RECORD_ID/);
 
 const decision = {
-  schemaVersion: '4.5.0',
+  schemaVersion: '4.5.1',
   id: 'decision-001',
   title: 'Use five public commands',
   decision: 'Expose exactly five public Hypertaks skills.',

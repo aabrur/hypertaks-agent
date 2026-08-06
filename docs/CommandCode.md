@@ -4,7 +4,7 @@
 **Date:** 2026-07-31
 **Tested Commit:** `081116f2335fcebfe7312691e2d1023ad4aec45f`
 **Branch:** `feat/cross-ai-distribution-wave-2`
-**Product Version:** 4.5.0
+**Product Version:** 4.5.1
 **OS:** Windows (win32)
 **Python:** 3.11.15
 
@@ -25,7 +25,7 @@ One fix was needed during verification: `docs/abrur.md` was tracked by git but m
 | # | Check | Command | Result |
 |---|-------|---------|--------|
 | 1 | Public skills | `python scripts/validate_public_skills.py` | âœ… 5/5 OK |
-| 2 | Skill validation | `python scripts/validate_skill.py` | âœ… OK (v4.5.0) |
+| 2 | Skill validation | `python scripts/validate_skill.py` | âœ… OK (v4.5.1) |
 | 3 | Distribution validation | `python scripts/validate_distributions.py` | âœ… PASS |
 | 4 | Antigravity build check | `python scripts/build_distributions.py antigravity --check-only` | âœ… PASS |
 | 5 | Build tests | `python -m unittest scripts.test_build_distributions -v` | âœ… 3/3 OK |
@@ -189,7 +189,7 @@ Every host requires manual live testing:
 
 ## What Is Blocked
 
-- **Live behavioral certification for v4.5.0**: EV-50 through EV-88 still need fresh independent cold-session behavioral transcripts. The 4.3.0 ledger (43/49 PASS) is historical only.
+- **Live behavioral certification for v4.5.1**: EV-50 through EV-88 still need fresh independent cold-session behavioral transcripts. The 4.3.0 ledger (43/49 PASS) is historical only.
 - **Global installation scope on non-Windows**: `~/.gemini/config/plugins/hypertaks` path only tested structurally on Windows.
 - **ChatGPT App Directory**: Requires OpenAI review. Cannot be submitted without human approval.
 - **Claude Code Plugin Directory**: Requires Anthropic review. Cannot be submitted without human approval.

@@ -157,4 +157,4 @@ and session continuity.
 
 ## Work log
 
-`2026-07-25 | Hypertaks v4.5.0 release candidate: exactly five public skills, secure founder memory, optional Graphify and Obsidian integration, Git-aware continuity, proof of done, runtime hardening, and EV-66 through EV-88.`
+`2026-07-25 | Hypertaks v4.5.1 release candidate: exactly five public skills, secure founder memory, optional Graphify and Obsidian integration, Git-aware continuity, proof of done, runtime hardening, and EV-66 through EV-88.`

@@ -1,4 +1,4 @@
-# Hypertaks v4.5.0 Publish Readiness Report
+# Hypertaks v4.5.1 Publish Readiness Report
 
 **Date:** 2026-07-25
 **Decision:** MERGE PENDING FINAL CI
@@ -8,7 +8,7 @@
 
 ## Decision
 
-Hypertaks v4.5.0 may be merged into `main` only after the complete GitHub Actions
+Hypertaks v4.5.1 may be merged into `main` only after the complete GitHub Actions
 workflow passes on the exact final candidate commit. After a green merge gate,
 the source is suitable for the `Release Candidate` label. It is not suitable for
 stable behavioral certification because the new v4.5 behaviors do not yet have
@@ -23,7 +23,7 @@ apply all five skills identically.
 
 | Gate | Required result | Current evidence boundary |
 |---|---|---|
-| Version synchronization | PASS | Live package and inspected plugin records use 4.5.0 |
+| Version synchronization | PASS | Live package and inspected plugin records use 4.5.1 |
 | Main skill preservation | PASS | `/hypertaks` remains the Founder Operating System entry point |
 | Public skill boundary | PASS | Exactly five public Hypertaks skills are validated |
 | Skill structure | PASS | Repository validator must complete successfully |
@@ -61,7 +61,7 @@ The final candidate must continue to prove all of the following:
 After final CI passes, public source status may use language equivalent to:
 
 ```text
-Hypertaks v4.5.0 Release Candidate
+Hypertaks v4.5.1 Release Candidate
 Static suite: 88/88 GREEN
 Local Python and TypeScript verification: PASS
 Five public Hypertaks skills: VERIFIED
@@ -71,7 +71,7 @@ Independent behavioral certification for EV-50 through EV-88: pending
 It must not use:
 
 ```text
-Behaviorally Certified 4.5.0
+Behaviorally Certified 4.5.1
 All 88 behaviors proven across hosts
 Graphify verified on every host
 Obsidian application integration

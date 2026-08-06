@@ -25,7 +25,7 @@ python scripts/build_distributions.py antigravity --check-only
 
 Results:
 
-- Skill validation: `OK (version 4.5.0)`
+- Skill validation: `OK (version 4.5.1)`
 - Public Hypertaks skills: `OK` (exactly five: hypertaks, hypertaks-verify, hypertaks-brain, hypertaks-graph, hypertaks-continuity)
 - Host capabilities validation: `PASS`
 - Distribution validation: `PASS`

@@ -1,5 +1,5 @@
 meta:
-  version: 4.5.0
+  version: 4.5.1
   certification_status: BEHAVIORALLY CERTIFIED
   harness: multi-host runtime-gated behavioral (Hermes + Cline + Command Code); Kilo validated
   date: '2026-08-04'

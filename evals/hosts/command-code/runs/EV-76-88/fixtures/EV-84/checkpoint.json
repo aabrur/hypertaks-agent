@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "4.5.0",
+  "schemaVersion": "4.5.1",
   "id": "oauth2-integration",
   "createdAt": "2026-07-01T00:00:00Z",
   "objective": "Implement OAuth2 login flow for the public plans module",

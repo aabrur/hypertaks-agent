@@ -121,7 +121,7 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(self._install(), 0)
         traversal_manifest = {
             "product": "hypertaks",
-            "version": "4.5.0",
+            "version": "4.5.1",
             "host": "antigravity",
             "scope": "project",
             "files": [{"path": "../escape.txt", "sha256": "00"}],

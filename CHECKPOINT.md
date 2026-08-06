@@ -1,4 +1,4 @@
-# Hypertaks 4.5.0 Release Candidate Checkpoint
+# Hypertaks 4.5.1 Release Candidate Checkpoint
 
 Date: 2026-07-25
 Branch: `feat/v450-founder-brain-continuity-remediated`
@@ -28,7 +28,7 @@ completion claims.
    `.obsidian/`.
 9. Add Git-aware checkpoint, resume, handoff, reconciliation, and proof of done.
 10. Expand the eval inventory from 65 to 88 definitions.
-11. Synchronize live package and plugin records on 4.5.0.
+11. Synchronize live package and plugin records on 4.5.1.
 12. Preserve retrieval, capability, visual, contract, updater, and Founder
     behavior from 4.4.0.
 
@@ -62,14 +62,14 @@ The candidate branch contains:
 - adversarial runtime coverage in `runtime/router.test.cjs`;
 - exact-five public skill validation;
 - EV-66 through EV-88 tied to runtime and public-skill behavior;
-- synchronized 4.5.0 manifests and release documentation;
+- synchronized 4.5.1 manifests and release documentation;
 - GitHub Actions validation for skills, evals, Python, TypeScript, retrieval
   artifacts, and pull request diff formatting.
 
 ## Release evidence boundary
 
 The Boss-confirmed 4.3.0 ledger remains historical evidence for its exact
-certified commit. It is not behavioral certification for 4.5.0. EV-50 through
+certified commit. It is not behavioral certification for 4.5.1. EV-50 through
 EV-88 require fresh independent behavioral runs for their changed and new
 behavior.
 
@@ -97,7 +97,7 @@ Allowed release statuses:
 ## Claims deliberately not made
 
 - 88/88 behavioral PASS.
-- Behaviorally Certified for 4.5.0.
+- Behaviorally Certified for 4.5.1.
 - Real Graphify integration when only a mock or fallback ran.
 - Obsidian application integration when only an approved Vault filesystem is
   used.

@@ -60,7 +60,7 @@ function runEV84() {
   push(`FOUNDER_TOOL readGitState => branch=${actual.branch} commit=${actual.commit} repoId=${actual.repositoryId}\n`);
 
   const foreignCheckpoint = {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     id: "checkpoint-payments-001",
     createdAt: new Date().toISOString(),
     objective: "Finish payments work from last sprint",
@@ -217,7 +217,7 @@ function runEV86() {
 
   const actual = gitState();
   const weak = {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     id: "checkpoint-claim-done",
     createdAt: new Date().toISOString(),
     objective: "Ship feature X",

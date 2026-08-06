@@ -4,7 +4,7 @@
 **Date:** 2026-07-31
 **Tested Commit:** `e4c2c2e`
 **Branch:** `feat/cross-ai-distribution-wave-2`
-**Product Version:** 4.5.0
+**Product Version:** 4.5.1
 
 ---
 
@@ -95,7 +95,7 @@ Throughout this expansion:
 | Gate | Result |
 |------|--------|
 | validate_distributions.py | PASS |
-| validate_skill.py | PASS (v4.5.0) |
+| validate_skill.py | PASS (v4.5.1) |
 | validate_public_skills.py | PASS (5/5 skills) |
 | run_evals.py --check | 88/88 OK |
 | run_evals.py --static | 88/88 GREEN |

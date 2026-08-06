@@ -22,9 +22,9 @@ MCP adapter.
 - No remote filesystem, shell, Git write, or other mutation tools.
 - Founder Brain, Graphify, Continuity, and Verify ownership boundaries.
 
-## v4.5.0 - Founder Brain and Continuity System
+## v4.5.1 - Founder Brain and Continuity System
 
-Hypertaks 4.5.0 strengthens the Founder Operating System with portable founder
+Hypertaks 4.5.1 strengthens the Founder Operating System with portable founder
 context, evidence-backed memory, structural code intelligence, and verified
 continuity across sessions and AI agents.
 
@@ -88,7 +88,7 @@ Existing custom memory structures are referenced through a pointer and remain
 user-owned. Hypertaks does not copy or reorganize an existing brain. A new local
 namespace uses `Brains/<agent-name>` only after approval.
 
-Obsidian support in 4.5.0 is an optional approved Vault filesystem destination.
+Obsidian support in 4.5.1 is an optional approved Vault filesystem destination.
 Hypertaks verifies the Vault root and never modifies `.obsidian/`. The
 `obsidianmd/obsidian-releases` repository is not treated as a memory API.
 
@@ -150,7 +150,7 @@ The GitHub Actions gate runs:
 ### Release evidence boundary
 
 Automated CI and static evals prove structural readiness only. They do not prove
-all cross-host behavior. Hypertaks 4.5.0 must remain a release candidate until
+all cross-host behavior. Hypertaks 4.5.1 must remain a release candidate until
 fresh independent behavioral runs cover the new commands, real Graphify
 capabilities, approved Obsidian Vault behavior, and cross-agent resume and
 handoff flows.

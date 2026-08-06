@@ -2,7 +2,7 @@
   "prompt": "Production plugin upgrade request",
   "plan": {
     "pointer": {
-      "schemaVersion": "4.5.0",
+      "schemaVersion": "4.5.1",
       "projectId": "hypertaks-agent",
       "agentName": "Hermes",
       "destinationType": "ProjectLocal",

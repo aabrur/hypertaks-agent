@@ -32,7 +32,7 @@ export interface ToolEvidence {
 export type EvidenceSource = RepositoryEvidence | BossEvidence | ToolEvidence;
 
 export interface MemoryRecord {
-  readonly schemaVersion: "4.5.0";
+  readonly schemaVersion: "4.5.1";
   readonly id: string;
   readonly type: "Fact" | "Decision" | "Preference" | "Risk" | "CheckpointNote";
   readonly scope: MemoryScope;
@@ -45,7 +45,7 @@ export interface MemoryRecord {
 }
 
 export interface DecisionRecord {
-  readonly schemaVersion: "4.5.0";
+  readonly schemaVersion: "4.5.1";
   readonly id: string;
   readonly title: string;
   readonly decision: string;
@@ -55,7 +55,7 @@ export interface DecisionRecord {
 }
 
 export interface BrainPointerConfig {
-  readonly schemaVersion: "4.5.0";
+  readonly schemaVersion: "4.5.1";
   readonly projectId: string;
   readonly agentName: string;
   readonly destinationType: BrainDestinationType;
@@ -99,7 +99,7 @@ export interface AcceptanceCriterion {
 }
 
 export interface TaskCheckpoint {
-  readonly schemaVersion: "4.5.0";
+  readonly schemaVersion: "4.5.1";
   readonly id: string;
   readonly createdAt: string;
   readonly objective: string;
@@ -396,7 +396,7 @@ export function createMemoryRecord(input: {
     throw new Error("SHARED_MEMORY_REQUIRES_VERIFIED_EVIDENCE: unverified or inferred records remain private.");
   }
   return {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     id: input.id,
     type: input.type,
     scope: input.scope,
@@ -442,7 +442,7 @@ export function promoteDecisionToShared(input: {
     throw new Error("APPROVAL_MISMATCH: decision evidence does not match the T1 proof.");
   }
   const record: MemoryRecord = {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     id: validateRecordId(input.decision.id),
     type: "Decision",
     scope: "Shared",
@@ -458,7 +458,7 @@ export function promoteDecisionToShared(input: {
 
 export function validatePointer(value: unknown): asserts value is BrainPointerConfig {
   if (!isObject(value)) throw new Error("INVALID_POINTER: expected an object.");
-  if (value.schemaVersion !== "4.5.0") throw new Error("UNSUPPORTED_POINTER_VERSION.");
+  if (value.schemaVersion !== "4.5.1") throw new Error("UNSUPPORTED_POINTER_VERSION.");
   assertString(value.projectId, "projectId");
   assertString(value.agentName, "agentName");
   sanitizeAgentName(value.agentName);
@@ -501,7 +501,7 @@ export function buildVerifyPlan(input: VerifyPlanInput): VerifyPlan {
     if (input.graphifyAuthTokenEnv === null || !/^[A-Z_][A-Z0-9_]*$/u.test(input.graphifyAuthTokenEnv)) throw new Error("GRAPHIFY_HTTP_REQUIRES_AUTH_HANDLE.");
   }
   const pointer: BrainPointerConfig = {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     projectId: input.projectId,
     agentName,
     destinationType: input.destinationType,
@@ -555,7 +555,7 @@ export function createCheckpoint(input: {
   validateRecordId(input.id);
   const repository = readGitState(input.repositoryRoot);
   const checkpoint: TaskCheckpoint = {
-    schemaVersion: "4.5.0",
+    schemaVersion: "4.5.1",
     id: input.id,
     createdAt: new Date().toISOString(),
     objective: input.objective,
@@ -580,7 +580,7 @@ export function writeCheckpoint(root: string, relativePath: string, checkpoint: 
 export function readCheckpoint(root: string, relativePath: string): TaskCheckpoint {
   const file = resolveWithinApprovedRoot(root, relativePath, false);
   const parsed: unknown = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (!isObject(parsed) || parsed.schemaVersion !== "4.5.0") throw new Error("INVALID_CHECKPOINT.");
+  if (!isObject(parsed) || parsed.schemaVersion !== "4.5.1") throw new Error("INVALID_CHECKPOINT.");
   assertString(parsed.id, "checkpoint.id");
   if (!isObject(parsed.repository)) throw new Error("INVALID_CHECKPOINT: repository state missing.");
   return parsed as unknown as TaskCheckpoint;

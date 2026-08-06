@@ -23,7 +23,7 @@ HIST_RESULTS = ARCHIVE_DIR / "results-pre-ev-50-88-2026-08-04.yaml"
 COMMIT = "a1103c6cfba1513963ceea093d3f4bed6be52990"
 TREE = run_evals.git_tree(COMMIT)
 SKILL = run_evals.calc_skill_root_hash(COMMIT)
-VERSION = "4.5.0"
+VERSION = "4.5.1"
 TODAY = "2026-08-04"
 
 if not TREE or not SKILL:

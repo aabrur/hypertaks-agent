@@ -1,4 +1,4 @@
-# Hypertaks v4.5.0 Implementation Report
+# Hypertaks v4.5.1 Implementation Report
 
 **Date:** 2026-07-25
 **Release channel:** Release Candidate
@@ -10,13 +10,13 @@ deployment, or marketplace submission
 
 ## Executive summary
 
-Hypertaks v4.5.0 adds a secure Founder Brain and Continuity System while
+Hypertaks v4.5.1 adds a secure Founder Brain and Continuity System while
 preserving Hypertaks as a Founder Operating System. The release gives users a
 portable way to reuse a main brain, preserve verified founder decisions, ask
 structural code questions through optional Graphify capabilities, continue work
 across sessions and agents, and require evidence before declaring work done.
 
-The implementation replaces the rejected v4.5.0 candidate behavior rather than
+The implementation replaces the rejected v4.5.1 candidate behavior rather than
 trusting its implementation claims. The remediation directly addresses the
 independent audit's critical findings: path escape, fabricated Boss approval,
 unverified repository facts, secret persistence, Graphify false success,
@@ -177,7 +177,7 @@ The release intentionally excludes:
   automated tests use runtime executors and direct-search fallback rather than
   claiming universal cross-host support.
 - EV-50 through EV-88 do not yet have fresh independent cold-session behavioral
-  transcripts for the v4.5.0 candidate.
+  transcripts for the v4.5.1 candidate.
 - Behavioral certification remains pending after merge.
 
 ## Final implementation status

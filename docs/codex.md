@@ -4,7 +4,7 @@
 - **Branch**: `feat/cross-ai-distribution-wave-2` / `codex/cross-ai-distribution-wave-2-execution`
 - **Commit**: `688508a` (base) -> `ef21e50` (Task 5 tip), Task 6 pending
 - **Date**: `2026-07-31`
-- **Product Version**: `4.5.0`
+- **Product Version**: `4.5.1`
 - **Product Self-Reference**: Canonical five public skills; canonical SVG `assets/Hypertask.svg`.
 
 ## 1. Baseline Snapshot

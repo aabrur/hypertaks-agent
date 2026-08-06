@@ -50,7 +50,7 @@ python scripts/run_evals.py --report evals/results.yaml
 
 Ledger facts (Boss-confirmed 2026-08-04):
 
-- `meta.version`: 4.5.0
+- `meta.version`: 4.5.1
 - `meta.certification_status`: BEHAVIORALLY CERTIFIED
 - `meta.confirmed_by_boss`: true
 - `meta.case_ids`: EV-01 .. EV-88
@@ -129,7 +129,7 @@ invalid skill rejection, oversized body 413, unauthorized Origin 403,
 The existing `evals/results.yaml` already records `confirmed_by_boss: true` for
 the EV-01..EV-49 ledger and the release gate **PASSED** under that confirmation.
 
-Boss confirmation of a **new** 4.5.0 full-suite behavioral ledger requires:
+Boss confirmation of a **new** 4.5.1 full-suite behavioral ledger requires:
 
 1. Real behavioral runs (or main-agent review of final per-case source reports)
 2. Hashed source-report ZIP under `evals/archive/`

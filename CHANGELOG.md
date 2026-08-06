@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route diagnostics never expose bearer tokens, environment dumps, or raw
   unrestricted request contents.
 
-## [4.5.0] - 2026-07-25
+## [4.5.1] - 2026-07-25
 
 ### Added
 - Four focused public skills alongside the main `/hypertaks` entry point:
@@ -81,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The release may be merged only after the complete GitHub Actions validation
   workflow passes on the final candidate commit.
 - Fresh independent cross-host behavioral runs remain required before claiming
-  stable behavioral certification for the new v4.5.0 behaviors.
+  stable behavioral certification for the new v4.5.1 behaviors.
 
 ## [4.4.0] - 2026-07-22
 
