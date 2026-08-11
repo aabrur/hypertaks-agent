@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.2] - 2026-08-11
+
+### Added
+- A bounded Founder OS expansion lab with eight specialist research and
+  prototype tracks, one integrator decision map, and explicit production
+  no-go boundaries.
+- A resumable `RESEARCH` vertical slice with digest-bound checkpoints,
+  commit-once recovery, redacted handoff, Git-state reconciliation, and
+  proof-of-done fixtures.
+- Founder-grade README navigation and architecture diagrams for the product,
+  operating loop, evidence systems, installation routes, and release boundary.
+
+### Changed
+- Synchronized package, plugin, distribution, marketplace, skill-card, and
+  read-only MCP product metadata on version 4.5.2.
+- Corrected prototype report structure and Git provenance so shared-checkout
+  evidence is not described as an isolated worktree.
+- Kept the five-skill public surface and four-tool read-only remote MCP surface
+  unchanged.
+
+### Security
+- Replaced stored credential-shaped test values with runtime-generated
+  synthetic inputs and non-secret fixture handles.
+- Removed matched-value previews from prototype secret-scanner diagnostics.
+- Preserved the rule that prototype source remains non-production and cannot be
+  merged into runtime without a later approved implementation contract.
+
+### Release evidence
+- Structural validation, runtime tests, distribution checks, prototype suites,
+  compilation, text scans, link checks, and staged diff checks are the release
+  gate for 4.5.2.
+- Historical behavioral certification and current structural evidence remain
+  separate. This release does not claim fresh cross-host behavioral
+  certification for EV-50 through EV-88.
+
 ## [4.5.1] - 2026-08-04
 
 ### Fixed

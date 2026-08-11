@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-OVERFLOW-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "Compile large multi-document context exceeding soft token budget",
+    "query_class": "mixed",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 60,
+    "hard_token_limit": 120
+  },
+  "candidates": [
+    {
+      "doc_id": "HIGH-PRIO-01",
+      "title": "High Priority Security Kernel",
+      "content": "This high priority document contains critical security kernel rules for path containment and secret scanning.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "LOW-PRIO-02",
+      "title": "Low Priority Supplementary Notes",
+      "content": "This low priority supplementary document contains secondary background notes and general commentary.",
+      "evidence_class": "T6_GENERATED",
+      "authority": 5,
+      "freshness": "STALE"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "test": "git-state-reconciliation",
+  "expected": "ALIGNED",
+  "observed": "HEAD f6a02bda0443 on main, aligned with origin/main",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "branch=main",
+  "timestamp": 1786450453
+}

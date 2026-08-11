@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-SMALL-CORPUS-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "Direct scan of small 3-file corpus",
+    "query_class": "small_corpus",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "FILE-01",
+      "title": "Short Note 1",
+      "content": "First small file note.",
+      "evidence_class": "T4_REPO_EVIDENCE",
+      "authority": 4,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "FILE-02",
+      "title": "Short Note 2",
+      "content": "Second small file note.",
+      "evidence_class": "T4_REPO_EVIDENCE",
+      "authority": 4,
+      "freshness": "FRESH"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "all_passed": true,
+  "results": [
+    "approval-spoofing",
+    "prompt-injection-context",
+    "path-traversal",
+    "secret-propagation",
+    "capability-authorization",
+    "timeout-ambiguity",
+    "git-state-reconciliation",
+    "continuation-contract",
+    "malformed-capability-descriptor",
+    "scope-expansion-escalation"
+  ]
+}

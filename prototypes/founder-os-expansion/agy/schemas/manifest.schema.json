@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProjectContextManifest",
+  "type": "object",
+  "required": [
+    "manifest_id",
+    "contract_id",
+    "version",
+    "created_at",
+    "updated_at",
+    "document_count",
+    "documents",
+    "approved_root",
+    "security_policy"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^PCM-[A-Za-z0-9_-]+$"
+    },
+    "contract_id": {
+      "type": "string",
+      "pattern": "^HT-[0-9]{8}-[A-Za-z0-9_-]+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "document_count": {
+      "type": "integer",
+      "const": 13
+    },
+    "documents": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["doc_id", "filename", "purpose"],
+        "properties": {
+          "doc_id": { "type": "string" },
+          "filename": { "type": "string" },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "approved_root": {
+      "type": "string"
+    },
+    "security_policy": {
+      "type": "object",
+      "required": ["secret_scanning", "path_containment", "atomic_writes"],
+      "properties": {
+        "secret_scanning": { "type": "boolean", "const": true },
+        "path_containment": { "type": "boolean", "const": true },
+        "atomic_writes": { "type": "boolean", "const": true }
+      }
+    }
+  },
+  "additionalProperties": false
+}

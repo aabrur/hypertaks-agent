@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-STALE-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "Compare active policy versus historical deprecated spec",
+    "query_class": "mixed",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "CTX-08-SECURITY-KERNEL",
+      "title": "Active Security Kernel",
+      "content": "Active security policy rules.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "CTX-DEPRECATED-01",
+      "title": "Deprecated Legacy Spec",
+      "content": "Outdated security spec from 2024.",
+      "evidence_class": "T4_REPO_EVIDENCE",
+      "authority": 4,
+      "freshness": "DEPRECATED"
+    }
+  ]
+}

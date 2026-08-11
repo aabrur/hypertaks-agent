@@ -1,0 +1,17 @@
+{
+  "fixture": "malformed-descriptor",
+  "description": "A capability descriptor missing required fields and with an invalid sideEffect must be rejected at registry load. Fail closed.",
+  "invalidDescriptor": {
+    "capabilityId": "bad_capability",
+    "kind": "native",
+    "categories": [],
+    "operations": ["do_thing"],
+    "sideEffect": "writes",
+    "authState": "unauthenticated",
+    "externalBoundary": "none",
+    "contextCost": 0,
+    "availability": "available",
+    "fallback": "empty_result"
+  },
+  "expectedError": "INVALID_DESCRIPTOR"
+}

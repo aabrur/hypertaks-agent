@@ -1,0 +1,9 @@
+{
+  "test": "approval-spoofing",
+  "expected": "DENY",
+  "observed": "INJECTION_ATTEMPT recorded; action denied",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Fixture: injection-approval-spoof.fixture.md",
+  "timestamp": 1786450453
+}

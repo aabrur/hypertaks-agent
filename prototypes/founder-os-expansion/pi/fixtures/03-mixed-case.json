@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-MIXED-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "Find contract HT-20260811-FOS boundary rules and remote MCP tools",
+    "query_class": "mixed",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "CTX-02-ARCH-BOUNDARY",
+      "title": "Architecture Boundary",
+      "content": "Public skill surface with 5 skills and 4 read-only remote MCP tools.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "CTX-01-MANIFEST",
+      "title": "Project Context Manifest",
+      "content": "Master index for contract HT-20260811-FOS declaring 13 context files.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-SEMANTIC-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "How does the system prevent non-destructive fact deletion during contradictions?",
+    "query_class": "semantic",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "CTX-06-CONTRADICTION-LOG",
+      "title": "Contradiction Log Specification",
+      "content": "Non-destructive contradiction retention rules preserve opposing evidence without deleting historical nodes.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "CTX-12-EXECUTION-PROFILES",
+      "title": "Execution Profiles",
+      "content": "Specialist agent allocation profiles and tier execution boundaries.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH"
+    }
+  ]
+}

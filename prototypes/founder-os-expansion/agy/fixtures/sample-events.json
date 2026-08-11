@@ -1,0 +1,81 @@
+[
+  {
+    "event_id": "EVT-001",
+    "event_type": "EVENT_CREATE_ENTITY",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "entity_id": "ENT-BOSS-01",
+      "entity_type": "ENT_BOSS",
+      "label": "Founder Boss",
+      "authority": 1
+    }
+  },
+  {
+    "event_id": "EVT-002",
+    "event_type": "EVENT_CREATE_ENTITY",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "entity_id": "ENT-CONTRACT-01",
+      "entity_type": "ENT_CONTRACT",
+      "label": "HT-20260811-FOS",
+      "authority": 3
+    }
+  },
+  {
+    "event_id": "EVT-003",
+    "event_type": "EVENT_CREATE_ENTITY",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "entity_id": "ENT-TASK-3",
+      "entity_type": "ENT_TASK",
+      "label": "Ticket 3 Brief Agy Prototype",
+      "authority": 3
+    }
+  },
+  {
+    "event_id": "EVT-004",
+    "event_type": "EVENT_RELATE_ENTITIES",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "from_id": "ENT-BOSS-01",
+      "to_id": "ENT-CONTRACT-01",
+      "relation_type": "REL_AUTHORIZES"
+    }
+  },
+  {
+    "event_id": "EVT-005",
+    "event_type": "EVENT_RELATE_ENTITIES",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "from_id": "ENT-CONTRACT-01",
+      "to_id": "ENT-TASK-3",
+      "relation_type": "REL_PRODUCES"
+    }
+  },
+  {
+    "event_id": "EVT-006",
+    "event_type": "EVENT_CONTRADICT_FACT",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "contradiction_id": "CONTR-001",
+      "entity_a_id": "ENT-TASK-3",
+      "entity_b_id": "ENT-TASK-3",
+      "claim_a": "Task requires 12 context documents",
+      "claim_b": "Task requires exact 13 context documents",
+      "evidence_a_class": "T6_GENERATED",
+      "evidence_b_class": "T3_CONTRACT"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "test": "path-traversal",
+  "expected": "ALL DENIED",
+  "observed": "All 5 adversarial paths rejected",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Rejected: 5/5",
+  "timestamp": 1786450453
+}

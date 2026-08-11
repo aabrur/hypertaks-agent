@@ -2,7 +2,7 @@
   "host": "claude-code",
   "displayName": "Claude Code",
   "packageId": "hypertaks",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "shortDescription": "Hypertaks Founder OS plugin for Claude Code.",
   "longDescription": "Brings the Hypertaks five-skill founder operating system to Claude Code with secure continuity, memory, and routing.",
   "developer": "abrur <abrur_nic@yahoo.com>",

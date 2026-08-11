@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "description": "Executable ChatGPT plugin adapter for Hypertaks using host-required MCP Streamable HTTP transport.",
   "transport": "streamable-http",
   "mcpServer": {

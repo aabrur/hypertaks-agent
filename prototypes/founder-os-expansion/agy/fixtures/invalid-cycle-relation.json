@@ -1,0 +1,52 @@
+[
+  {
+    "event_id": "EVT-C01",
+    "event_type": "EVENT_CREATE_ENTITY",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "entity_id": "ENT-TASK-A",
+      "entity_type": "ENT_TASK",
+      "label": "Task A",
+      "authority": 1
+    }
+  },
+  {
+    "event_id": "EVT-C02",
+    "event_type": "EVENT_CREATE_ENTITY",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "entity_id": "ENT-TASK-B",
+      "entity_type": "ENT_TASK",
+      "label": "Task B",
+      "authority": 1
+    }
+  },
+  {
+    "event_id": "EVT-C03",
+    "event_type": "EVENT_RELATE_ENTITIES",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "from_id": "ENT-TASK-A",
+      "to_id": "ENT-TASK-B",
+      "relation_type": "REL_DEPENDS_ON"
+    }
+  },
+  {
+    "event_id": "EVT-C04",
+    "event_type": "EVENT_RELATE_ENTITIES",
+    "timestamp": "2026-08-11T18:41:16Z",
+    "agent_id": "AGY-TEST",
+    "contract_id": "HT-20260811-FOS",
+    "payload": {
+      "from_id": "ENT-TASK-B",
+      "to_id": "ENT-TASK-A",
+      "relation_type": "REL_DEPENDS_ON"
+    }
+  }
+]

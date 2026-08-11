@@ -1,5 +1,58 @@
 # Release Notes
 
+## v4.5.2 - Founder OS Expansion Lab
+
+Hypertaks 4.5.2 packages a founder-grade, evidence-first expansion program
+without widening the public product surface. The release adds audited research,
+isolated prototypes, a resumable `RESEARCH` thin slice, and an integration
+decision map that separates accepted internal contracts from production work
+that still requires a later approval.
+
+### What shipped
+
+- Eight specialist tracks covering target architecture, retrieval research,
+  Project Operating Context and ontology, adversarial security, context
+  compilation, knowledge and methodology selection, internal tool contracts,
+  and resumable workflow continuity.
+- One Codex Founder/Integrator synthesis that reconciles interfaces, records
+  rejected claims, defines staged implementation, and preserves explicit
+  no-go boundaries.
+- A deterministic `RESEARCH` prototype that demonstrates pause, snapshot,
+  restore, resume, commit-once recovery, evidence gating, continuation binding,
+  redaction, and proof of done.
+- A redesigned README with a visual operating model, clearer installation
+  routing, stronger evidence boundaries, and direct links to the expansion lab.
+- Synchronized 4.5.2 metadata across live package, plugin, distribution,
+  marketplace, skill-card, and remote MCP product records.
+
+### Acceptance repairs
+
+- Report headings now follow one exact ten-section contract.
+- Git provenance names the shared coordinator checkout honestly and binds
+  research reports to the observed base branch and commit.
+- Credential-shaped negative fixtures are assembled only at runtime; tracked
+  fixture files contain non-secret handles.
+- Secret-scanner diagnostics report the detected class without reproducing any
+  matched value.
+
+### Product boundary
+
+- Exactly five public Hypertaks skills.
+- Exactly four read-only remote MCP tools.
+- No new hosted service, daemon, bundled credential, mandatory vector database,
+  Graphify dependency, or Obsidian dependency.
+- Founder Brain schema version 4.5.1 remains compatible and is intentionally
+  not rewritten for a documentation and prototype release.
+- Expansion prototypes remain non-production evidence. They are not wired into
+  `runtime/` or the five public skills by this release.
+
+### Evidence boundary
+
+The 4.5.2 release gate is structural and executable local evidence. Historical
+behavioral certification remains historical, and EV-50 through EV-88 still
+require fresh independent cold-session runs before any new behavioral
+certification claim.
+
 ## v4.5.1 - Router Integrity Hotfix
 
 Hypertaks 4.5.1 keeps the five-skill Founder Operating System boundary and fixes

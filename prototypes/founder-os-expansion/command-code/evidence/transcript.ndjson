@@ -1,0 +1,36 @@
+{"t":"2026-08-11T14:55:52.430Z","kind":"start","prototype":"command-code","contract":"HT-20260811-FOS","node":"v24.15.0"}
+{"t":"2026-08-11T14:55:52.433Z","kind":"assertion","name":"public_mcp_surface_is_four_readonly_tools","ok":true}
+{"t":"2026-08-11T14:55:52.433Z","kind":"assertion","name":"public_tools_are_readonly_by_effect","ok":true}
+{"t":"2026-08-11T14:55:52.433Z","kind":"assertion","name":"no_public_native_capability","ok":true}
+{"t":"2026-08-11T14:55:52.434Z","kind":"reject","scenario":"malformed-descriptor","error":"INVALID_DESCRIPTOR: categories must be a non-empty array."}
+{"t":"2026-08-11T14:55:52.434Z","kind":"assertion","name":"malformed_descriptor_rejected","ok":true}
+{"t":"2026-08-11T14:55:52.435Z","kind":"assertion","name":"resolve_canonical_id","ok":true}
+{"t":"2026-08-11T14:55:52.435Z","kind":"assertion","name":"resolve_alias_context","ok":true}
+{"t":"2026-08-11T14:55:52.435Z","kind":"assertion","name":"resolve_alias_retrieve","ok":true}
+{"t":"2026-08-11T14:55:52.435Z","kind":"assertion","name":"resolve_unknown_rejected","ok":true}
+{"t":"2026-08-11T14:55:52.437Z","kind":"deny","scenario":"permission-denied","error":"PERMISSION_DENIED: effect shell requires explicit T1 approval and a granted permission; denied by default."}
+{"t":"2026-08-11T14:55:52.437Z","kind":"assertion","name":"permission_denied_by_effect","ok":true}
+{"t":"2026-08-11T14:55:52.437Z","kind":"assertion","name":"denied_records_no_effect","ok":true}
+{"t":"2026-08-11T14:55:52.438Z","kind":"assertion","name":"write_tx_requires_approval","ok":true}
+{"t":"2026-08-11T14:55:52.438Z","kind":"deny","scenario":"approval-spoofed","error":"APPROVAL_REQUIRED: use a proof minted from an active T1 approval."}
+{"t":"2026-08-11T14:55:52.438Z","kind":"assertion","name":"spoofed_proof_rejected","ok":true}
+{"t":"2026-08-11T14:55:52.438Z","kind":"assertion","name":"genuine_proof_accepted","ok":true}
+{"t":"2026-08-11T14:55:52.441Z","kind":"assertion","name":"duplicate_idempotency_key","ok":true}
+{"t":"2026-08-11T14:55:52.441Z","kind":"assertion","name":"commit_once_one_effect","ok":true}
+{"t":"2026-08-11T14:55:52.441Z","kind":"assertion","name":"second_commit_replayed","ok":true}
+{"t":"2026-08-11T14:55:52.442Z","kind":"assertion","name":"timeout_enters_reconcile","ok":true}
+{"t":"2026-08-11T14:55:52.442Z","kind":"assertion","name":"timeout_marked_ambiguous","ok":true}
+{"t":"2026-08-11T14:55:52.442Z","kind":"assertion","name":"timeout_committed_effect_recorded","ok":true}
+{"t":"2026-08-11T14:55:52.442Z","kind":"assertion","name":"timeout_reconcile_already_committed","ok":true}
+{"t":"2026-08-11T14:55:52.442Z","kind":"assertion","name":"timeout_retry_no_duplicate","ok":true}
+{"t":"2026-08-11T14:55:52.443Z","kind":"assertion","name":"secret_detected_by_shape","ok":true}
+{"t":"2026-08-11T14:55:52.443Z","kind":"assertion","name":"secret_redacted_from_result_text","ok":true}
+{"t":"2026-08-11T14:55:52.443Z","kind":"assertion","name":"redaction_marker_present_in_source_fixture","ok":true}
+{"t":"2026-08-11T14:55:52.443Z","kind":"assertion","name":"synthetic_handle_matches_pattern","ok":true}
+{"t":"2026-08-11T14:55:52.443Z","kind":"assertion","name":"synthetic_value_not_echoed","ok":true}
+{"t":"2026-08-11T14:55:52.444Z","kind":"assertion","name":"secret_not_persisted","ok":true}
+{"t":"2026-08-11T14:55:52.445Z","kind":"assertion","name":"retrieve_declared_fallback","ok":true}
+{"t":"2026-08-11T14:55:52.445Z","kind":"assertion","name":"fallback_executes_safely","ok":true}
+{"t":"2026-08-11T14:55:52.445Z","kind":"assertion","name":"fallback_no_external_effect","ok":true}
+{"t":"2026-08-11T14:55:52.446Z","kind":"assertion","name":"public_tool_mutation_performed_false","ok":true}
+{"t":"2026-08-11T14:55:52.446Z","kind":"summary","failures":0,"total":31}

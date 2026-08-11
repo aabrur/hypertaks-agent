@@ -1,0 +1,9 @@
+{
+  "claim": "COMPLETE",
+  "contract_id": "HT-20260811-FOS",
+  "task_id": "TICKET-08-CLINE",
+  "deliverables": ["non_existent_file.md"],
+  "test_evidence": [],
+  "exit_code": null,
+  "is_verified": false
+}

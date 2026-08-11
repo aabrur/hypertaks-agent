@@ -1,0 +1,29 @@
+{
+  "compilation_id": "CMP-CONTRADICT-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "What is the exact context document count required for contract HT-20260811-FOS?",
+    "query_class": "mixed",
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "CLAIM-A",
+      "title": "T3 Approved Contract Document",
+      "content": "Contract HT-20260811-FOS requires exact thirteen context documents.",
+      "evidence_class": "T3_CONTRACT",
+      "authority": 3,
+      "freshness": "FRESH"
+    },
+    {
+      "doc_id": "CLAIM-B",
+      "title": "T6 External Forum Discussion",
+      "content": "Forum thread claims contract HT-20260811-FOS requires twelve context documents.",
+      "evidence_class": "T5_EXTERNAL_DATA",
+      "authority": 6,
+      "freshness": "FRESH"
+    }
+  ]
+}

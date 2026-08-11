@@ -1,0 +1,9 @@
+{
+  "fixture": "safe-fallback",
+  "description": "Host compatibility: when a capability is unsupported or its primary mode is unavailable, the facade falls back to a safe deterministic behavior (read-only direct search) instead of erroring or invoking a real external tool.",
+  "capabilityId": "hypertaks_retrieve",
+  "unsupportedOperation": "retrieve",
+  "fallbackMode": "direct_search",
+  "expectedMode": "direct_search",
+  "expectedOk": true
+}

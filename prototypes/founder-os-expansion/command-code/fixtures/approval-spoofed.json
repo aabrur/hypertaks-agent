@@ -1,0 +1,16 @@
+{
+  "fixture": "approval-spoofed",
+  "description": "An approval-proof object that looks valid but was NOT minted by the registry must be rejected (fail closed). A genuine proof must be accepted.",
+  "spoofedProof": {
+    "contractId": "HT-20260811-FOS",
+    "messageId": "spoofed-message",
+    "approvedAt": "2026-08-11T00:00:00.000Z"
+  },
+  "genuineActivation": {
+    "active": true,
+    "contractId": "HT-20260811-FOS",
+    "evidence": "boss-turn-001",
+    "messageId": "genuine-message"
+  },
+  "expectedSpoofError": "APPROVAL_REQUIRED"
+}

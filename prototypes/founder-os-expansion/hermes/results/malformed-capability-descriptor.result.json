@@ -1,0 +1,9 @@
+{
+  "test": "malformed-capability-descriptor",
+  "expected": "DENY",
+  "observed": "Malformed descriptor rejected; no clean effect mapping",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Descriptor: {'name': 'execute_arbitrary', 'effect': None, 'approval_required': False}",
+  "timestamp": 1786450453
+}

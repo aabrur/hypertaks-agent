@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextDocumentHeader",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "timestamp",
+    "evidence_class",
+    "provenance",
+    "source_git_state",
+    "authority",
+    "freshness",
+    "status",
+    "lifecycle_state"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^CTX-[A-Za-z0-9_-]+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "evidence_class": {
+      "type": "string",
+      "enum": ["T0_SYSTEM", "T1_BOSS_DECISION", "T2_WORKSPACE_STANDARD", "T3_CONTRACT", "T4_REPO_EVIDENCE", "T5_EXTERNAL_DATA", "T6_GENERATED"]
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["agent_id", "source_file", "contract_id"],
+      "properties": {
+        "agent_id": { "type": "string" },
+        "source_file": { "type": "string" },
+        "contract_id": { "type": "string" }
+      }
+    },
+    "source_git_state": {
+      "type": "object",
+      "required": ["commit_sha", "branch", "clean_tree"],
+      "properties": {
+        "commit_sha": { "type": "string" },
+        "branch": { "type": "string" },
+        "clean_tree": { "type": "boolean" }
+      }
+    },
+    "authority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6
+    },
+    "freshness": {
+      "type": "string",
+      "enum": ["FRESH", "STALE", "DEPRECATED", "HISTORICAL"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "CONTRADICTED", "SUPERSEDED", "ARCHIVED"]
+    },
+    "lifecycle_state": {
+      "type": "string",
+      "enum": ["DRAFT", "PROPOSED", "VERIFIED", "COMMITTED", "RETIRED"]
+    }
+  },
+  "additionalProperties": false
+}

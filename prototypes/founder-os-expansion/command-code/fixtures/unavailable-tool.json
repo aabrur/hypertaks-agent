@@ -1,0 +1,18 @@
+{
+  "fixture": "unavailable-tool",
+  "description": "An unavailable capability must not execute; the facade returns its declared safe fallback without side effect.",
+  "descriptor": {
+    "capabilityId": "hypertaks_context",
+    "kind": "host_adapter",
+    "categories": ["context", "read"],
+    "operations": ["context_load"],
+    "sideEffect": "none",
+    "authState": "authenticated",
+    "externalBoundary": "local_repo_containment",
+    "contextCost": 0,
+    "availability": "unavailable",
+    "fallback": "empty_context",
+    "publicSurface": false
+  },
+  "expectedFallback": "empty_context"
+}

@@ -1,0 +1,19 @@
+{
+  "fixture": "permission-denied",
+  "description": "A mutation effect (shell) mapped by effect-to-permission must be denied by default even when granted permissions are absent. No effect is recorded.",
+  "descriptorOverride": {
+    "capabilityId": "commandcode_shell_exec",
+    "kind": "native",
+    "categories": ["exec", "write"],
+    "operations": ["run_shell"],
+    "sideEffect": "shell",
+    "authState": "authenticated",
+    "externalBoundary": "local_repo_containment",
+    "contextCost": 0,
+    "availability": "available",
+    "fallback": "empty_result",
+    "publicSurface": false
+  },
+  "grantedPermissions": [],
+  "expectedError": "PERMISSION_DENIED"
+}

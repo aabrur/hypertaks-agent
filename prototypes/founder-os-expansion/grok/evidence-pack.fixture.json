@@ -1,0 +1,345 @@
+{
+  "schema_version": "1.0.0-fos-ticket2",
+  "query_id": "HT-20260811-FOS-T2-research",
+  "retrieval_need": "mixed",
+  "corpus_scope": {
+    "collections": [
+      "skills/hypertaks/references/02-retrieval-and-evidence.md",
+      "skills/hypertaks/references/01-state-and-transactions.md",
+      "runtime/router.ts",
+      "arxiv:2307.03172",
+      "arxiv:2104.08663",
+      "arxiv:2309.15217",
+      "mcp-tools-spec",
+      "json-rpc-2.0",
+      "rfc9111"
+    ],
+    "filters": [
+      "primary_sources_preferred",
+      "provider_neutral",
+      "no_mandatory_vector_db"
+    ],
+    "freshness_window": "access_date_2026-08-11",
+    "trust_boundary": "approved_local_worktree_plus_read_only_public_primary_sources"
+  },
+  "retrieval_route": "hybrid",
+  "candidates": [
+    {
+      "source_id": "local-02-retrieval-and-evidence",
+      "rank": 1,
+      "score": null,
+      "route": "direct"
+    },
+    {
+      "source_id": "local-01-state-and-transactions",
+      "rank": 2,
+      "score": null,
+      "route": "direct"
+    },
+    {
+      "source_id": "local-router-ts",
+      "rank": 3,
+      "score": null,
+      "route": "keyword"
+    },
+    {
+      "source_id": "arxiv-2307.03172",
+      "rank": 4,
+      "score": null,
+      "route": "web"
+    },
+    {
+      "source_id": "arxiv-2104.08663",
+      "rank": 5,
+      "score": null,
+      "route": "web"
+    },
+    {
+      "source_id": "arxiv-2309.15217",
+      "rank": 6,
+      "score": null,
+      "route": "web"
+    },
+    {
+      "source_id": "mcp-tools-2025-11-25",
+      "rank": 7,
+      "score": null,
+      "route": "web"
+    },
+    {
+      "source_id": "jsonrpc-2.0",
+      "rank": 8,
+      "score": null,
+      "route": "web"
+    },
+    {
+      "source_id": "rfc9111",
+      "rank": 9,
+      "score": null,
+      "route": "web"
+    }
+  ],
+  "fusion": "none",
+  "reranker": null,
+  "selected_evidence": [
+    {
+      "source_id": "local-02-retrieval-and-evidence",
+      "why": "Defines canonical retrieval_need, retrieval_route, fusion posture, metrics, and evidence-pack fields.",
+      "authority_rank": "workspace_standard",
+      "provenance": {
+        "source_id": "local-02-retrieval-and-evidence",
+        "locator": "skills/hypertaks/references/02-retrieval-and-evidence.md",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": null,
+        "etag": null,
+        "review_date": null,
+        "publication_date": null,
+        "title": "Retrieval Intelligence and Evidence",
+        "source_type": "local_skill",
+        "http_status": null
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "local_worktree",
+        "reason": "Read from current worktree during Ticket #2 execution."
+      },
+      "claim_supported": "C4",
+      "material_limitation": "Skill text is policy, not an empirical IR benchmark."
+    },
+    {
+      "source_id": "local-01-state-and-transactions",
+      "why": "Defines action transaction states, idempotency, timeout reconciliation, and no false rollback.",
+      "authority_rank": "workspace_standard",
+      "provenance": {
+        "source_id": "local-01-state-and-transactions",
+        "locator": "skills/hypertaks/references/01-state-and-transactions.md",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": null,
+        "etag": null,
+        "review_date": null,
+        "publication_date": null,
+        "title": "State Capsule, Action Transactions, Loop Guards",
+        "source_type": "local_skill",
+        "http_status": null
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "local_worktree",
+        "reason": "Read from current worktree during Ticket #2 execution."
+      },
+      "claim_supported": "C5",
+      "material_limitation": "Does not specify host-specific tool transports."
+    },
+    {
+      "source_id": "local-router-ts",
+      "why": "Implements QueryClass and RetrievalRoute classification used by runtime.",
+      "authority_rank": "repo_evidence",
+      "provenance": {
+        "source_id": "local-router-ts",
+        "locator": "runtime/router.ts",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": null,
+        "etag": null,
+        "review_date": null,
+        "publication_date": null,
+        "title": "router.ts classifyRetrieval",
+        "source_type": "local_runtime",
+        "http_status": null
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "local_worktree",
+        "reason": "Read from current worktree during Ticket #2 execution."
+      },
+      "claim_supported": "C4",
+      "material_limitation": "Classifier does not execute hybrid fusion itself."
+    },
+    {
+      "source_id": "arxiv-2307.03172",
+      "why": "Shows mid-context underuse; forbids treating long windows as lossless authority storage.",
+      "authority_rank": "web",
+      "provenance": {
+        "source_id": "arxiv-2307.03172",
+        "locator": "https://arxiv.org/abs/2307.03172",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": "v3",
+        "etag": null,
+        "review_date": null,
+        "publication_date": "2023-07-06",
+        "title": "Lost in the Middle: How Language Models Use Long Contexts",
+        "source_type": "paper",
+        "http_status": 200
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "primary_paper_access",
+        "reason": "Abstract and metadata inspected via arXiv abs and Atom API on access date."
+      },
+      "claim_supported": "C1",
+      "material_limitation": "Effect size varies by model and task; full PDF body not fully transcribed in this pack."
+    },
+    {
+      "source_id": "arxiv-2104.08663",
+      "why": "BM25 remains a robust zero-shot baseline; neural retrieval is not automatically superior OOD.",
+      "authority_rank": "web",
+      "provenance": {
+        "source_id": "arxiv-2104.08663",
+        "locator": "https://arxiv.org/abs/2104.08663",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": "v4",
+        "etag": null,
+        "review_date": null,
+        "publication_date": "2021-04-17",
+        "title": "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models",
+        "source_type": "paper",
+        "http_status": 200
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "primary_paper_access",
+        "reason": "Abstract and metadata inspected via arXiv abs and Atom API on access date."
+      },
+      "claim_supported": "C2",
+      "material_limitation": "Benchmark domains are fixed; not a Hypertaks project label set."
+    },
+    {
+      "source_id": "arxiv-2309.15217",
+      "why": "Separates retrieval usefulness, faithfulness to context, and generation quality for RAG evaluation.",
+      "authority_rank": "web",
+      "provenance": {
+        "source_id": "arxiv-2309.15217",
+        "locator": "https://arxiv.org/abs/2309.15217",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": "v2",
+        "etag": null,
+        "review_date": null,
+        "publication_date": "2023-09-26",
+        "title": "Ragas: Automated Evaluation of Retrieval Augmented Generation",
+        "source_type": "paper",
+        "http_status": 200
+      },
+      "freshness": {
+        "state": "FRESH",
+        "policy_id": "primary_paper_access",
+        "reason": "Abstract and metadata inspected; HTML experimental page also returned HTTP 200."
+      },
+      "claim_supported": "C3",
+      "material_limitation": "Reference-free LLM judges can be biased; does not replace ExactMatch for identifiers."
+    },
+    {
+      "source_id": "jsonrpc-2.0",
+      "why": "Portable request/response/error envelope for host-neutral tool invocation.",
+      "authority_rank": "web",
+      "provenance": {
+        "source_id": "jsonrpc-2.0",
+        "locator": "https://www.jsonrpc.org/specification",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": "2.0",
+        "etag": null,
+        "review_date": null,
+        "publication_date": null,
+        "title": "JSON-RPC 2.0 Specification",
+        "source_type": "standard",
+        "http_status": null
+      },
+      "freshness": {
+        "state": "UNVERIFIED",
+        "policy_id": "link_check",
+        "reason": "Standard is stable; live HTTP status recorded by link-check.mjs when run."
+      },
+      "claim_supported": "portable_tool_envelope",
+      "material_limitation": "No approval, side-effect, or idempotency semantics."
+    },
+    {
+      "source_id": "rfc9111",
+      "why": "Freshness lifetime and validators provide a portable invalidation pattern for evidence caches.",
+      "authority_rank": "web",
+      "provenance": {
+        "source_id": "rfc9111",
+        "locator": "https://httpwg.org/specs/rfc9111.html",
+        "retrieved_at": "2026-08-11",
+        "version_or_commit": "RFC9111",
+        "etag": null,
+        "review_date": null,
+        "publication_date": null,
+        "title": "RFC 9111 HTTP Caching",
+        "source_type": "standard",
+        "http_status": null
+      },
+      "freshness": {
+        "state": "UNVERIFIED",
+        "policy_id": "link_check",
+        "reason": "Normative standard; live HTTP status recorded by link-check.mjs when run."
+      },
+      "claim_supported": "C8",
+      "material_limitation": "HTTP cache model is analogy for local corpora, not identity."
+    }
+  ],
+  "retrieval_metrics": {
+    "Recall@k": null,
+    "HitRate@k": null,
+    "MRR": null,
+    "nDCG@k": null,
+    "ExactMatch@k": null,
+    "latency_ms": null,
+    "cost": null,
+    "exact_token_retention": null,
+    "citation_retention": null,
+    "required_field_retention": null,
+    "abstention_rate": null,
+    "notes": "No labeled IR qrels for this research task. Primary sources verified by direct access and schema validity. Offline IR metrics remain UNVERIFIED."
+  },
+  "limitations": [
+    "No labeled relevance set for Hypertaks founder queries.",
+    "Vector and rerank adapters were not required and are optional.",
+    "MCP tools page body not fully captured; line-level protocol claims need Ticket #7 re-fetch if required.",
+    "RRF 2009 PDF body not fully retrieved; rank-fusion recommendation rests on local skill plus secondary discovery.",
+    "Absolute zero context loss is not claimed."
+  ],
+  "retrieval_fallback": "If optional web or vector routes are unavailable, use direct/keyword on local skills and runtime only, mark external claims UNVERIFIED, and abstain from unsupported firm conclusions.",
+  "budget": {
+    "hard_tokens": null,
+    "soft_tokens": null,
+    "retained_required_tokens": null,
+    "dropped": [
+      {
+        "source_id": "secondary-blog-rrf-explainers",
+        "reason": "Discovery only; not used for firm conclusions."
+      }
+    ]
+  },
+  "abstention": {
+    "allowed": true,
+    "triggered": false,
+    "reason": "Sufficient primary and local evidence for recommendations; incomplete bodies labeled rather than fabricated."
+  },
+  "evaluation_status": "UNVERIFIED",
+  "zero_context_loss_claim": "not_claimed",
+  "candidate_requirements": {
+    "ticket_5_pi": [
+      "R5.1 Keep QueryClass/RetrievalRoute enums",
+      "R5.2 Deterministic fallback without vector/network",
+      "R5.3 Exact-match boost before final rank",
+      "R5.4 Measure hard-budget required-field retention",
+      "R5.5 Position-aware packing for high-authority tokens",
+      "R5.6 Freshness state on selected sources",
+      "R5.7 UNVERIFIED unless labeled; ExactMatch and abstention fixtures",
+      "R5.8 No zero-context-loss claim"
+    ],
+    "ticket_6_kilo": [
+      "R6.1 Manifest provenance/authority/freshness/license",
+      "R6.2 Deterministic selection and load limits",
+      "R6.3 Explicit stale/conflict/unlicensed states",
+      "R6.4 Method selection binds output shape",
+      "R6.5 Knowledge below Boss decisions and contracts"
+    ],
+    "ticket_7_command_code": [
+      "R7.1 Align ToolDescriptor with CapabilityDescriptor",
+      "R7.2 Deny-by-default on side effect class",
+      "R7.3 PREPARE/PREVIEW/APPROVE/COMMIT/RECONCILE with idempotency",
+      "R7.4 Untrusted tool output and injection recording",
+      "R7.5 No new public MCP tools",
+      "R7.6 Secret redaction and structured evidence"
+    ]
+  }
+}

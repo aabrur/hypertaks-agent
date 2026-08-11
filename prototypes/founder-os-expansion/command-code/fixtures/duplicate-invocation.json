@@ -1,0 +1,8 @@
+{
+  "fixture": "duplicate-invocation",
+  "description": "Two invocations sharing an idempotency key must produce ONE committed effect (COMMIT ONCE). The second invocation replays the prior result.",
+  "capabilityId": "commandcode_write_note",
+  "arguments": { "path": "dup-case.md", "content": "duplicated" },
+  "duplicateCount": 2,
+  "expectedLedgerCount": 1
+}

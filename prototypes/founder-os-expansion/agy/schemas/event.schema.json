@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OntologyEvent",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "timestamp",
+    "agent_id",
+    "contract_id",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^EVT-[A-Za-z0-9_-]+$"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "EVENT_CREATE_ENTITY",
+        "EVENT_UPDATE_ENTITY",
+        "EVENT_RELATE_ENTITIES",
+        "EVENT_CONTRADICT_FACT",
+        "EVENT_INVALIDATE_FACT",
+        "EVENT_ARCHIVE_FACT",
+        "EVENT_RECONCILE_STATE"
+      ]
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,7 @@
+{
+  "checkpoint_id": "CHK-STALE-01",
+  "expected_commit": "0000000000000000000000000000000000000000",
+  "actual_commit": "f6a02bda04438fc0a3b5d764f474a360651dd78e",
+  "clean_tree_required": true,
+  "actual_clean_tree": false
+}

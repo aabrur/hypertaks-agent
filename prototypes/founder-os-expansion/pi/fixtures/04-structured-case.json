@@ -1,0 +1,35 @@
+{
+  "compilation_id": "CMP-STRUCTURED-01",
+  "request": {
+    "contract_id": "HT-20260811-FOS",
+    "query": "Filter documents by evidence_class T0_SYSTEM and status ACTIVE",
+    "query_class": "structured",
+    "filters": {
+      "evidence_class": "T0_SYSTEM",
+      "status": "ACTIVE"
+    },
+    "approved_root": "prototypes/founder-os-expansion/pi/",
+    "soft_token_limit": 1000,
+    "hard_token_limit": 2000
+  },
+  "candidates": [
+    {
+      "doc_id": "CTX-08-SECURITY-KERNEL",
+      "title": "Security Kernel",
+      "content": "Canonical path containment rules.",
+      "evidence_class": "T0_SYSTEM",
+      "authority": 0,
+      "freshness": "FRESH",
+      "status": "ACTIVE"
+    },
+    {
+      "doc_id": "CTX-UNTRUSTED-01",
+      "title": "External Forum Post",
+      "content": "Untrusted blog post recommendation.",
+      "evidence_class": "T5_EXTERNAL_DATA",
+      "authority": 6,
+      "freshness": "FRESH",
+      "status": "ACTIVE"
+    }
+  ]
+}

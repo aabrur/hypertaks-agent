@@ -1,0 +1,9 @@
+{
+  "fixture": "timeout-reconcile",
+  "description": "A commit that times out must enter RECONCILE as ambiguous. The facade must NOT roll back the committed effect (no false rollback). A subsequent retry reconciles via the ledger and does not duplicate the effect.",
+  "capabilityId": "commandcode_write_note",
+  "arguments": { "path": "timeout-case.md", "content": "timeout scenario" },
+  "simulateTimeout": true,
+  "expectedReconcileDecision": "already_committed",
+  "expectedLedgerCount": 1
+}

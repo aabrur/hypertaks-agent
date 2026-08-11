@@ -1,0 +1,9 @@
+{
+  "test": "continuation-contract",
+  "expected": "COMPLETE",
+  "observed": "State capsule complete; all 6 fields present",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Capsule: sample-state-capsule.yaml",
+  "timestamp": 1786450453
+}

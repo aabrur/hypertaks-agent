@@ -1,0 +1,9 @@
+{
+  "test": "capability-authorization",
+  "expected": "DENY",
+  "observed": "Denied capability PERM_PUBLISH cannot execute",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Granted: ['PERM_READ_LOCAL', 'PERM_FILE_WRITE', 'PERM_EXECUTE']; Denied: ['PERM_NET_READ', 'PERM_SEND_3P', 'PERM_PUBLISH', 'PERM_SPEND', 'PERM_ONCHAIN_WRITE', 'PERM_DELETE']",
+  "timestamp": 1786450453
+}

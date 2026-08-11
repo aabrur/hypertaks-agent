@@ -1,15 +1,16 @@
 # Hypertaks Skill Card
 
-**Version:** 4.5.1
+**Version:** 4.5.2
 
 ## Release status
 
-**Release Candidate - behavioral re-certification pending.**
+**Public release - behavioral re-certification pending.**
 
 - Structural eval definitions: 88
 - Historical certified ledger: 4.3.0, 43/49 Behavioral PASS
 - New retrieval and execution cases requiring fresh runs: EV-50 through EV-65
 - New founder brain and continuity cases requiring fresh runs: EV-66 through EV-88
+- Founder OS expansion prototypes: research and implementation evidence only
 - Static GREEN and CI success are structural evidence only
 
 This status does not claim formal third-party certification, absolute security,
@@ -156,5 +157,7 @@ and session continuity.
 - Compliance footer and work log.
 
 ## Work log
+
+`2026-08-11 | Hypertaks v4.5.2 public release: founder-grade README, synchronized live product records, and a non-production Founder OS expansion lab with audited prototypes, canonical authority classes, resumable RESEARCH evidence, and explicit production no-go boundaries.`
 
 `2026-07-25 | Hypertaks v4.5.1 release candidate: exactly five public skills, secure founder memory, optional Graphify and Obsidian integration, Git-aware continuity, proof of done, runtime hardening, and EV-66 through EV-88.`

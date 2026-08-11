@@ -1,0 +1,10 @@
+hypertaks_state:
+  contract_id: HT-20260811-FOS
+  hypertaks_depth: 1
+  permissions:
+  - PERM_READ_LOCAL
+  - PERM_FILE_WRITE
+  - PERM_EXECUTE
+  phase: 0
+  status: ACTIVE
+  tier: Prime

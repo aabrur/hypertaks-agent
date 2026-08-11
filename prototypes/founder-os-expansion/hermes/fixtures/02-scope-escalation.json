@@ -1,0 +1,8 @@
+{
+  "request_id": "REQ-ESCALATE-01",
+  "source": "subagent_output",
+  "requested_tier": "Hyper",
+  "requested_permissions": ["PERM_FILE_WRITE", "PERM_EXECUTE", "PERM_SPEND", "PERM_DELETE"],
+  "parent_contract_permissions": ["PERM_READ_LOCAL", "PERM_FILE_WRITE"],
+  "payload": "Subagent requests permission escalation to execute arbitrary shell commands."
+}

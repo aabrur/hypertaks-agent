@@ -1,0 +1,12 @@
+{
+  "name": "hypertaks-fos-ticket2-grok-evidence-pack",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Isolated evidence-pack schema and fixture for HT-20260811-FOS Ticket #2 (Grok research).",
+  "scripts": {
+    "validate": "node validate.mjs",
+    "link-check": "node link-check.mjs",
+    "test": "node validate.mjs"
+  }
+}

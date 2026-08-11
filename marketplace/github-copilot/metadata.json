@@ -2,7 +2,7 @@
   "host": "github-copilot",
   "displayName": "GitHub Copilot",
   "packageId": "hypertaks",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "shortDescription": "Hypertaks plugin for GitHub Copilot.",
   "developer": "abrur <abrur_nic@yahoo.com>",
   "repository": "https://github.com/aabrur/hypertaks-agent",

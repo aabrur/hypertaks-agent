@@ -1,0 +1,8 @@
+{
+  "transaction_id": "TXN-PAY-001",
+  "state": "PREVIEW",
+  "attempt": 2,
+  "last_status": "TIMEOUT_NO_RESPONSE",
+  "reconciled": false,
+  "action": "MUTATION_ACTION"
+}

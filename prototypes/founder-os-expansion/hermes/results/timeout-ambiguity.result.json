@@ -1,0 +1,9 @@
+{
+  "test": "timeout-ambiguity",
+  "expected": "RECONCILE_BEFORE_RETRY",
+  "observed": "Timeout triggers read-after-write via idempotency_key before retry; no blind re-send",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Protocol enforced per 01-state-and-transactions.md section 7",
+  "timestamp": 1786450453
+}

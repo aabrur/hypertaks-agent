@@ -1,0 +1,9 @@
+{
+  "test": "scope-expansion-escalation",
+  "expected": "DENY",
+  "observed": "Scope-expansion injection detected: ['PERM_PUBLISH', 'PERM_SPEND', 'PERM_DELETE', 'expand', 'authorized', 'delete the audit']",
+  "verdict": "PASS",
+  "exit_code": 0,
+  "details": "Patterns checked against untrusted injection text",
+  "timestamp": 1786450453
+}

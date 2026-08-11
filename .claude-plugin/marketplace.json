@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Hypertaks Founder Operating System with founder continuity, evidence-backed memory, and verified capability routing.",
-    "version": "4.5.1"
+    "version": "4.5.2"
   },
   "plugins": [
     {
@@ -17,7 +17,7 @@
         "ref": "main"
       },
       "description": "Founder Operating System with secure continuity, Graphify routing, Obsidian-compatible memory, and proof of done.",
-      "version": "4.5.1",
+      "version": "4.5.2",
       "license": "MIT",
       "keywords": [
         "founder",

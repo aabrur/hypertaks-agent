@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hypertaks.local/schemas/founder-os-expansion/evidence-pack.schema.json",
+  "title": "HypertaksEvidencePack",
+  "description": "Extended evidence pack for HT-20260811-FOS Ticket #2. Extends skills/hypertaks/references/02-retrieval-and-evidence.md without replacing canonical fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "query_id",
+    "retrieval_need",
+    "corpus_scope",
+    "retrieval_route",
+    "candidates",
+    "fusion",
+    "reranker",
+    "selected_evidence",
+    "retrieval_metrics",
+    "limitations",
+    "retrieval_fallback",
+    "evaluation_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0-fos-ticket2"
+    },
+    "query_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retrieval_need": {
+      "type": "string",
+      "enum": [
+        "none",
+        "exact",
+        "semantic",
+        "mixed",
+        "structured",
+        "small_corpus",
+        "unavailable"
+      ]
+    },
+    "corpus_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collections", "filters", "freshness_window", "trust_boundary"],
+      "properties": {
+        "collections": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "filters": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "freshness_window": {
+          "type": ["string", "null"]
+        },
+        "trust_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "retrieval_route": {
+      "type": "string",
+      "enum": ["none", "direct", "keyword", "vector", "hybrid", "fallback"]
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_id", "rank"],
+        "properties": {
+          "source_id": { "type": "string" },
+          "rank": { "type": "integer", "minimum": 1 },
+          "score": { "type": ["number", "null"] },
+          "route": {
+            "type": "string",
+            "enum": ["direct", "keyword", "vector", "hybrid", "fallback", "web", "local"]
+          }
+        }
+      }
+    },
+    "fusion": {
+      "type": "string",
+      "enum": ["none", "rank_fusion", "score_fusion"]
+    },
+    "reranker": {
+      "type": ["string", "null"]
+    },
+    "selected_evidence": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "why",
+          "authority_rank",
+          "provenance",
+          "freshness"
+        ],
+        "properties": {
+          "source_id": { "type": "string" },
+          "why": { "type": "string", "minLength": 1 },
+          "authority_rank": {
+            "type": "string",
+            "enum": [
+              "boss_decision",
+              "contract",
+              "workspace_standard",
+              "repo_evidence",
+              "memory",
+              "graph",
+              "web"
+            ]
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_id", "locator", "retrieved_at"],
+            "properties": {
+              "source_id": { "type": "string" },
+              "locator": { "type": "string" },
+              "retrieved_at": { "type": "string" },
+              "version_or_commit": { "type": ["string", "null"] },
+              "etag": { "type": ["string", "null"] },
+              "review_date": { "type": ["string", "null"] },
+              "publication_date": { "type": ["string", "null"] },
+              "title": { "type": ["string", "null"] },
+              "source_type": {
+                "type": "string",
+                "enum": [
+                  "local_skill",
+                  "local_runtime",
+                  "paper",
+                  "standard",
+                  "protocol_doc",
+                  "secondary"
+                ]
+              },
+              "http_status": { "type": ["integer", "null"] }
+            }
+          },
+          "freshness": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state"],
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": ["FRESH", "STALE", "UNVERIFIED"]
+              },
+              "policy_id": { "type": ["string", "null"] },
+              "reason": { "type": ["string", "null"] }
+            }
+          },
+          "claim_supported": { "type": ["string", "null"] },
+          "material_limitation": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "retrieval_metrics": {
+      "oneOf": [
+        {
+          "type": "string",
+          "const": "UNVERIFIED"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "Recall@k": { "type": ["number", "null"] },
+            "HitRate@k": { "type": ["number", "null"] },
+            "MRR": { "type": ["number", "null"] },
+            "nDCG@k": { "type": ["number", "null"] },
+            "ExactMatch@k": { "type": ["number", "null"] },
+            "latency_ms": { "type": ["number", "null"] },
+            "cost": { "type": ["number", "null"] },
+            "exact_token_retention": { "type": ["number", "null"] },
+            "citation_retention": { "type": ["number", "null"] },
+            "required_field_retention": { "type": ["number", "null"] },
+            "abstention_rate": { "type": ["number", "null"] },
+            "notes": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "retrieval_fallback": {
+      "type": "string",
+      "minLength": 1
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hard_tokens": { "type": ["integer", "null"] },
+        "soft_tokens": { "type": ["integer", "null"] },
+        "retained_required_tokens": { "type": ["integer", "null"] },
+        "dropped": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_id", "reason"],
+            "properties": {
+              "source_id": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "abstention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowed": { "type": "boolean" },
+        "triggered": { "type": "boolean" },
+        "reason": { "type": ["string", "null"] }
+      }
+    },
+    "evaluation_status": {
+      "type": "string",
+      "enum": ["MEASURED", "UNVERIFIED"]
+    },
+    "zero_context_loss_claim": {
+      "type": "string",
+      "const": "not_claimed",
+      "description": "Absolute zero context loss must never be asserted as verified."
+    },
+    "candidate_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ticket_5_pi": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ticket_6_kilo": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ticket_7_command_code": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
