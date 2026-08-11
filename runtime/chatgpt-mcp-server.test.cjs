@@ -98,6 +98,25 @@ test("health endpoint and MCP initialization are generic", async (t) => {
   assert.equal(healthBody.readOnly, true);
   assert.equal(healthBody.name, "hypertaks-mcp-adapter");
   assert.equal(healthBody.endpoint, "/mcp");
+  assert.equal(healthBody.manifestEndpoint, "/manifest");
+
+  const manifestResponse = await fetch(`${server.baseUrl}/manifest`);
+  assert.equal(manifestResponse.status, 200);
+  const publicManifest = await manifestResponse.json();
+  assert.equal(publicManifest.schema, "hypertaks.public-manifest.v1");
+  assert.equal(publicManifest.product, "Hypertaks");
+  assert.equal(publicManifest.publicSkills.length, 5);
+  assert.equal(publicManifest.mcp.tools.length, 4);
+  assert.equal(publicManifest.mcp.readOnly, true);
+  assert.equal(publicManifest.mcp.endpoints.manifest, "/manifest");
+  assert.equal(publicManifest.documentedHostRoutes, 22);
+  assert.match(publicManifest.releaseTag, /^v\d+\.\d+\.\d+$/);
+  assert.doesNotMatch(JSON.stringify(publicManifest), /\u2014/);
+
+  const root = await fetch(`${server.baseUrl}/`);
+  assert.equal(root.status, 200);
+  const rootBody = await root.json();
+  assert.equal(rootBody.manifestEndpoint, "/manifest");
 
   for (const protocolVersion of ["2025-03-26", "2025-06-18", "2025-11-25"]) {
     const initialized = await rpc(server.baseUrl, {

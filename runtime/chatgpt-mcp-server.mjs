@@ -269,6 +269,58 @@ function runtimeIdentityFields() {
   };
 }
 
+function buildPublicManifest() {
+  const identity = runtimeIdentityFields();
+  return {
+    schema: "hypertaks.public-manifest.v1",
+    product: PRODUCT_NAME,
+    version: PRODUCT_VERSION,
+    releaseTag: `v${PRODUCT_VERSION}`,
+    releaseUrl: `https://github.com/aabrur/hypertaks-agent/releases/tag/v${PRODUCT_VERSION}`,
+    repositoryUrl: "https://github.com/aabrur/hypertaks-agent",
+    architecture: "plugin-plus-five-canonical-skills",
+    positioning: "Founder Operating System for AI agents",
+    publicSkills: [...PUBLIC_SKILLS],
+    skillCommands: PUBLIC_SKILLS.map((skill) => `/${skill}`),
+    mcp: {
+      role: MCP_ROLE,
+      compatibility: MCP_COMPATIBILITY,
+      transport: "streamable-http",
+      readOnly: true,
+      writeCapability: "not exposed by this adapter",
+      limitation:
+        "This remote MCP adapter cannot access or mutate a user's local repository. Use a coding-agent host or separately authorized connector for file changes.",
+      tools: TOOLS.map((tool) => ({
+        name: tool.name,
+        title: tool.title,
+        description: tool.description,
+        readOnly: true,
+      })),
+      endpoints: {
+        mcp: "/mcp",
+        healthz: "/healthz",
+        manifest: "/manifest",
+      },
+    },
+    packageStatus: {
+      publicProduct: "Five canonical Hypertaks skills",
+      remoteMcpSurface: "Four read-only tools; no mutating remote tool is exposed",
+      founderRuntime: "Existing runtime behavior with synchronized release metadata",
+      expansionLab: "Non-production research, prototypes, fixtures, and evidence",
+      behavioralCertification:
+        "Documented host routes are compatibility records, not universal live host certification",
+    },
+    documentedHostRoutes: 22,
+    license: "MIT",
+    website: {
+      preferredHealthUrl: "https://hypertaks.crimsonriftstudio.com/healthz",
+      preferredManifestUrl: "https://hypertaks.crimsonriftstudio.com/manifest",
+      preferredMcpUrl: "https://hypertaks.crimsonriftstudio.com/mcp",
+    },
+    ...identity,
+  };
+}
+
 async function sha256File(filePath) {
   const data = await readFile(filePath);
   return {
@@ -325,19 +377,22 @@ function toolFailure(message) {
 
 async function callTool(name, args) {
   if (name === "hypertaks_manifest") {
-    const identity = runtimeIdentityFields();
+    const publicManifest = buildPublicManifest();
     const manifest = {
-      product: PRODUCT_NAME,
-      version: PRODUCT_VERSION,
-      architecture: "plugin-plus-five-canonical-skills",
-      publicSkills: PUBLIC_SKILLS,
-      mcpRole: MCP_ROLE,
-      compatibility: MCP_COMPATIBILITY,
+      product: publicManifest.product,
+      version: publicManifest.version,
+      architecture: publicManifest.architecture,
+      publicSkills: publicManifest.publicSkills,
+      mcpRole: publicManifest.mcp.role,
+      compatibility: publicManifest.mcp.compatibility,
       capabilities: ["manifest", "skill-read", "request-routing", "installation-verification"],
-      writeCapability: "not exposed by this adapter",
-      limitation:
-        "This remote MCP adapter cannot access or mutate a user's local repository. Use a coding-agent host or separately authorized connector for file changes.",
-      ...identity,
+      writeCapability: publicManifest.mcp.writeCapability,
+      limitation: publicManifest.mcp.limitation,
+      routePolicyVersion: publicManifest.routePolicyVersion,
+      routerRulesDigest: publicManifest.routerRulesDigest,
+      buildRevision: publicManifest.buildRevision,
+      buildTimestamp: publicManifest.buildTimestamp,
+      supportedLocales: publicManifest.supportedLocales,
     };
     return toolSuccess(manifest, JSON.stringify(manifest, null, 2));
   }
@@ -428,13 +483,16 @@ async function handleRpc(message) {
   return jsonRpcError(message.id, -32601, `Method not found: ${message.method}`);
 }
 
+function normalizePathname(pathname) {
+  if (pathname === "/api/mcp") return "/mcp";
+  if (pathname === "/api/healthz") return "/healthz";
+  if (pathname === "/api/manifest") return "/manifest";
+  return pathname;
+}
+
 export async function requestListener(request, response) {
   const requestUrl = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
-  const pathname = requestUrl.pathname === "/api/mcp"
-    ? "/mcp"
-    : requestUrl.pathname === "/api/healthz"
-      ? "/healthz"
-      : requestUrl.pathname;
+  const pathname = normalizePathname(requestUrl.pathname);
 
   if (pathname === "/healthz") {
     return sendJson(response, 200, {
@@ -442,8 +500,32 @@ export async function requestListener(request, response) {
       name: SERVER_NAME,
       version: PRODUCT_VERSION,
       endpoint: "/mcp",
+      manifestEndpoint: "/manifest",
       readOnly: true,
     });
+  }
+
+  if (pathname === "/manifest") {
+    if (request.method === "OPTIONS") {
+      return sendEmpty(response, 204, {
+        allow: "GET, HEAD, OPTIONS",
+        "access-control-allow-methods": "GET, HEAD, OPTIONS",
+        "access-control-allow-headers": "content-type, accept",
+        "access-control-allow-origin": "*",
+      });
+    }
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return sendEmpty(response, 405, { allow: "GET, HEAD, OPTIONS" });
+    }
+    return sendJson(
+      response,
+      200,
+      buildPublicManifest(),
+      {
+        "access-control-allow-origin": "*",
+        "cache-control": "public, max-age=60",
+      },
+    );
   }
 
   if (pathname === "/") {
@@ -452,6 +534,7 @@ export async function requestListener(request, response) {
       version: PRODUCT_VERSION,
       mcpEndpoint: "/mcp",
       healthEndpoint: "/healthz",
+      manifestEndpoint: "/manifest",
     });
   }
 
