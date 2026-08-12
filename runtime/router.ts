@@ -1,3 +1,4 @@
+import { bootstrapProjectWorkspace } from "./founder-brain";
 export * from "./founder-brain";
 
 export type QueryClass =
@@ -105,6 +106,7 @@ export interface ContractActivationInput {
   readonly bossMessage: string;
   readonly isBossTurn: boolean;
   readonly requiresMutationOrExternalEffect: boolean;
+  readonly projectRoot?: string;
 }
 
 export type ContractActivation =
@@ -283,6 +285,7 @@ export function activateContract(input: ContractActivationInput): ContractActiva
   if (/\b(?:not approved|do not proceed|don't proceed|never proceed|not authorized|reject(?:ed)?)\b/u.test(lower)) {
     return { active: false, reason: "The Boss message contains explicit negation or rejection.", contractId: input.contractId };
   }
+  let result: ContractActivation = { active: false, reason: "The Boss message is not an explicit standalone affirmative.", contractId: input.contractId };
   if (input.requiresMutationOrExternalEffect) {
     const expected = `APPROVE ${input.contractId}`.toUpperCase();
     const signature = normalized.match(/^APPROVE\s+([A-Z0-9-]+)\s*[.!]?$/iu);
@@ -293,12 +296,21 @@ export function activateContract(input: ContractActivationInput): ContractActiva
         contractId: input.contractId,
       };
     }
-    return { active: true, evidence: expected, contractId: input.contractId };
+    result = { active: true, evidence: expected, contractId: input.contractId };
+  } else if (/^(?:yes|approved|approve|go|proceed)(?:[.!])?$/iu.test(normalized)) {
+    result = { active: true, evidence: normalized, contractId: input.contractId };
   }
-  if (/^(?:yes|approved|approve|go|proceed)(?:[.!])?$/iu.test(normalized)) {
-    return { active: true, evidence: normalized, contractId: input.contractId };
+
+  if (result.active && input.projectRoot) {
+    try {
+      const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
+      bootstrapProjectWorkspace(input.projectRoot, cleanProjectId);
+    } catch {
+      // workspace bootstrap is fail-safe
+    }
   }
-  return { active: false, reason: "The Boss message is not an explicit standalone affirmative.", contractId: input.contractId };
+
+  return result;
 }
 
 export function describeRoute(route: RetrievalRoute): string {

@@ -1,0 +1,25 @@
+id: EV-89
+name: hidden_deliverable_foundation_workspace_bootstrap
+group: contract
+setup: |
+  For every sufficiently substantial project, task, initiative, investigation, or build, Hypertaks automatically creates an internal project workspace under `.hypertaks/projects/<project-id>/` containing all 13 exact Project Operating Context documents (`Vision.ctx.md`, `Requirements.ctx.md`, `U-Experience.ctx.md`, `architecture.ctx.md`, `law.ctx.md`, `database.ctx.md`, `design.ctx.md`, `api.ctx.md`, `coding-rules.ctx.md`, `roadmap.ctx.md`, `preference.ctx.md`, `prompt-build-continunity-prompt.ctx.md`, `security.ctx.md`).
+expect_pass:
+  - Automatically creates `.hypertaks/projects/<project-id>/` workspace directory without burdening the user
+  - Populates all 13 exact context files with YAML frontmatter and living document headers
+  - Includes `Vision.ctx.md`, `Requirements.ctx.md`, `U-Experience.ctx.md`, `architecture.ctx.md`, `law.ctx.md`, `database.ctx.md`, `design.ctx.md`, `api.ctx.md`, `coding-rules.ctx.md`, `roadmap.ctx.md`, `preference.ctx.md`, `prompt-build-continunity-prompt.ctx.md`, and `security.ctx.md`
+expect_fail:
+  - Fails to create the workspace directory or omits any of the 13 required context files
+  - Demands manual user creation of internal project context directories or files
+static_precondition:
+  description: Bootstrap module and runtime founder brain declare the 13 exact context file names.
+  must_match:
+    - file: scripts/bootstrap-project-context.js
+      pattern: "Vision.ctx.md"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "Requirements.ctx.md"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "U-Experience.ctx.md"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "prompt-build-continunity-prompt.ctx.md"
+    - file: runtime/founder-brain.ts
+      pattern: "PROJECT_OPERATING_CONTEXT_FILES"

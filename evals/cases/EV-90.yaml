@@ -1,0 +1,21 @@
+id: EV-90
+name: universal_project_operating_context_adaptability
+group: founder
+setup: |
+  Each context file in the Project Operating Context functions as a living document that evolves, records rationale, distinguishes facts vs assumptions, requirements vs preferences, constraints vs recommendations, evidence vs interpretation, tracks dependencies, exposes unresolved issues, and remains domain-universal.
+expect_pass:
+  - Context files adapt their meaning to the project domain (software, business, operations, research, finance, healthcare, governance)
+  - Living documents track decisions, rationale, facts, assumptions, requirements, preferences, and dependencies
+  - Exposes unresolved issues, current state, historical decisions, and future implications for humans and agents
+expect_fail:
+  - Treats context files as static single-domain documentation
+  - Fails to distinguish facts from assumptions or requirements from preferences
+static_precondition:
+  description: The public skills and bootstrap templates enforce domain-universal living context documents.
+  must_match:
+    - file: skills/hypertaks/SKILL.md
+      pattern: "Project Operating Context"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "Facts vs Assumptions"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "Requirements vs Preferences"

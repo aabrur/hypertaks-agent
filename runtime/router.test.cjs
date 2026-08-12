@@ -86,13 +86,19 @@ const exactVisual = router.selectVisual({
 });
 assert.equal(exactVisual.type, 'table');
 
+const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hypertaks-root-'));
+fs.mkdirSync(path.join(root, 'safe'), { recursive: true });
+
 const approvedActivation = router.activateContract({
   contractId: 'HT-20260725-BRN',
   bossMessage: 'APPROVE HT-20260725-BRN',
   isBossTurn: true,
   requiresMutationOrExternalEffect: true,
+  projectRoot: root,
 });
 assert.equal(approvedActivation.active, true);
+assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'Vision.ctx.md')));
+assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'prompt-build-continunity-prompt.ctx.md')));
 assert.equal(router.activateContract({
   contractId: 'HT-20260725-BRN',
   bossMessage: 'DO NOT APPROVE HT-20260725-BRN',
@@ -166,8 +172,6 @@ assert.throws(() => router.sanitizeAgentName('../escape'), /INVALID_AGENT_NAME/)
 assert.throws(() => router.sanitizeAgentName('CON'), /INVALID_AGENT_NAME/);
 assert.throws(() => router.validateRecordId('../../escape'), /INVALID_RECORD_ID/);
 
-const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hypertaks-root-'));
-fs.mkdirSync(path.join(root, 'safe'), { recursive: true });
 assert.throws(() => router.resolveWithinApprovedRoot(root, '../escape.json', true), /PATH_OUTSIDE_APPROVED_ROOT/);
 
 const fakeProof = Object.freeze({ contractId: 'HT-20260725-BRN', messageId: 'msg-fake', approvedAt: new Date().toISOString() });
@@ -549,6 +553,24 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   });
   assert.equal(fallback.modeUsed, 'direct_search');
   assert.equal(fallback.success, true);
+
+  // Hidden Deliverable Foundation & Project Operating Context workspace tests
+  assert.equal(router.PROJECT_OPERATING_CONTEXT_FILES.length, 13);
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Vision.ctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Requirements.ctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('U-Experience.ctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('prompt-build-continunity-prompt.ctx.md'));
+
+  const createdFiles = router.bootstrapProjectWorkspace(repo, 'test-poc-workspace');
+  assert.equal(createdFiles.length, 13);
+  for (const filename of router.PROJECT_OPERATING_CONTEXT_FILES) {
+    const filePath = path.join(repo, '.hypertaks', 'projects', 'test-poc-workspace', filename);
+    assert.ok(fs.existsSync(filePath), `Expected file ${filename} to exist`);
+    const text = fs.readFileSync(filePath, 'utf8');
+    assert.ok(text.includes('Project Operating Context'), `File ${filename} missing living context header`);
+    assert.ok(text.includes('Facts vs Assumptions'), `File ${filename} missing Facts vs Assumptions section`);
+  }
+
   console.log('runtime router tests passed');
 })().catch((error) => {
   console.error(error);

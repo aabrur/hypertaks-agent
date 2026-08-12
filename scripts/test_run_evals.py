@@ -138,10 +138,10 @@ class TestEvalInventory(unittest.TestCase):
             ["EV-45", "EV-46", "EV-47", "EV-48", "EV-49", "EV-64", "EV-73", "EV-83"],
         )
 
-    def test_suite_contains_88_case_definitions(self):
+    def test_suite_contains_90_case_definitions(self):
         cases, errors = run_evals.load_cases()
         self.assertEqual(errors, [])
-        self.assertEqual(len(cases), 88)
+        self.assertEqual(len(cases), 90)
 
     def test_v440_new_cases_are_contiguous(self):
         cases, errors = run_evals.load_cases()
@@ -157,9 +157,10 @@ class TestEvalInventory(unittest.TestCase):
         self.assertEqual(errors, [])
         ids = [case["id"] for case in cases]
         self.assertEqual(
-            [case_id for case_id in ids if 66 <= int(case_id.split("-")[1]) <= 88],
-            [f"EV-{number:02d}" for number in range(66, 89)],
+            [case_id for case_id in ids if 66 <= int(case_id.split("-")[1]) <= 90],
+            [f"EV-{number:02d}" for number in range(66, 91)],
         )
+
 
 
 class TestBossConfirmedReport(unittest.TestCase):

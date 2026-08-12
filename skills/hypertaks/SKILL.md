@@ -308,6 +308,40 @@ only; it never authorizes mutation, publication, deployment, messaging,
 spending, deletion, or on-chain execution. Once approved, the contract binds -
 see **Contract violations & rollback** below.
 
+#### Hidden Deliverable Foundation & Project Operating Context
+
+For every sufficiently substantial project, task, initiative, investigation, or build, Hypertaks automatically creates its internal project workspace folder under `.hypertaks/projects/<project-id>/` without burdening the user.
+
+Every project workspace MUST contain the 13 exact context living documents:
+1. `Vision.ctx.md`
+2. `Requirements.ctx.md`
+3. `U-Experience.ctx.md`
+4. `architecture.ctx.md`
+5. `law.ctx.md`
+6. `database.ctx.md`
+7. `design.ctx.md`
+8. `api.ctx.md`
+9. `coding-rules.ctx.md`
+10. `roadmap.ctx.md`
+11. `preference.ctx.md`
+12. `prompt-build-continunity-prompt.ctx.md`
+13. `security.ctx.md`
+
+This directory becomes the project's Project Operating Context. It is not merely documentation; it is the persistent operating foundation used by Hypertaks and any participating agent to understand, build, operate, modify, and continue the project.
+
+Each context file functions as a living document that:
+- evolves as the project evolves;
+- records decisions and their rationale;
+- distinguishes facts from assumptions;
+- distinguishes requirements from preferences;
+- distinguishes constraints from recommendations;
+- distinguishes evidence from interpretation;
+- tracks dependencies with other context files;
+- exposes unresolved issues;
+- records current state and historical decisions;
+- identifies future implications;
+- remains universal across software, business, operational, healthcare, financial, research, and governance domains.
+
 ### Phase 1 - Frame
 
 Restate the approved task in 1-2 lines, confirm its shape (analysis /

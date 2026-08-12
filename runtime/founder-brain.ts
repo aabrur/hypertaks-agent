@@ -688,3 +688,95 @@ export function checkGraphFreshness(sourceCommit: string | null, sourceBranch: s
   if (sourceCommit !== current.commit) return { state: "STALE", reason: "Graph commit does not match current HEAD." };
   return { state: "FRESH", reason: "Graph branch and commit match current repository state." };
 }
+
+export const PROJECT_OPERATING_CONTEXT_FILES: readonly string[] = [
+  "Vision.ctx.md",
+  "Requirements.ctx.md",
+  "U-Experience.ctx.md",
+  "architecture.ctx.md",
+  "law.ctx.md",
+  "database.ctx.md",
+  "design.ctx.md",
+  "api.ctx.md",
+  "coding-rules.ctx.md",
+  "roadmap.ctx.md",
+  "preference.ctx.md",
+  "prompt-build-continunity-prompt.ctx.md",
+  "security.ctx.md",
+];
+
+export function bootstrapProjectWorkspace(
+  projectRoot: string,
+  projectId: string,
+  agentName = "Hypertaks-Founder"
+): readonly string[] {
+  validateRecordId(projectId);
+  const targetDir = path.posix.join(".hypertaks", "projects", projectId);
+  const canonicalRoot = normalizeRoot(projectRoot, false);
+  const created: string[] = [];
+
+  for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
+    const relativePath = path.posix.join(targetDir, filename);
+    const fullPath = resolveWithinApprovedRoot(canonicalRoot, relativePath, true);
+    if (!fs.existsSync(fullPath)) {
+      const title = filename.replace(".ctx.md", "");
+      const timestamp = new Date().toISOString();
+      const content = `---
+id: ${title}
+version: 1.0.0
+timestamp: ${timestamp}
+evidence_class: T6_GENERATED
+provenance:
+  agent_id: ${agentName}
+  source_file: .hypertaks/projects/${projectId}/${filename}
+  contract_id: HT-${projectId}
+authority: 6
+freshness: FRESH
+status: ACTIVE
+lifecycle_state: VERIFIED
+---
+
+# ${title} - Project Operating Context
+
+## Domain Adaptation & Purpose
+Universal living context document for ${title} adaptively serving software, business, operational, healthcare, financial, or governance domains.
+
+## Current State & Evolution
+- Status: Active Living Document
+- Last Verified: ${timestamp}
+
+## Decisions & Rationale
+### Facts vs Assumptions
+- Facts: Verified primary evidence from repository and active Boss turns.
+- Assumptions: Working hypotheses subject to empirical verification.
+
+### Requirements vs Preferences
+- Requirements: Core non-negotiables, contract bounds, and explicit Boss directives.
+- Preferences: Flexible choices and aesthetic directions.
+
+### Constraints vs Recommendations
+- Constraints: Hard security, legal, architectural, and financial invariants.
+- Recommendations: Operational guidance and best practices.
+
+### Evidence vs Interpretation
+- Evidence: Verifiable primary source data.
+- Interpretation: Analytical conclusions and strategic synthesis.
+
+## Dependencies & Context Bindings
+- Inter-file links to sibling *.ctx.md context documents within .hypertaks/projects/${projectId}/.
+
+## Unresolved Issues & Historical Decisions
+- Historical Decisions: Workspace initialized.
+- Unresolved Issues: None pending.
+
+## Future Implications & Directives
+- Persistent foundation for human operators and participating agents.
+`;
+      atomicWriteText(canonicalRoot, relativePath, content);
+      created.push(fullPath);
+    }
+  }
+
+  return created;
+}
+
