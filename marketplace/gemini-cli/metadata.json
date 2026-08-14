@@ -1,0 +1,15 @@
+{
+  "host": "gemini-cli",
+  "displayName": "Gemini CLI Extension Gallery",
+  "packageId": "hypertaks",
+  "version": "4.5.2",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
+  "repository": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
+  "license": "MIT",
+  "logoSvg": "assets/Hypertask.svg",
+  "shortDescription": "Gemini CLI extension package for Hypertaks Founder Operating System.",
+  "status": "READY_FOR_SUBMISSION"
+}
