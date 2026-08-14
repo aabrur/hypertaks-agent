@@ -1,0 +1,93 @@
+{
+  "productName": "Hypertaks",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
+  "repositoryUrl": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
+  "version": "4.5.2",
+  "license": "MIT",
+  "logoSvg": "assets/Hypertask.svg",
+  "privacyUrl": "https://hypertaks.crimsonriftstudio.com/privacy",
+  "termsUrl": "https://hypertaks.crimsonriftstudio.com/terms",
+  "supportUrl": "https://github.com/aabrur/hypertaks-agent/issues",
+  "securityUrl": "https://github.com/aabrur/hypertaks-agent/blob/main/SECURITY.md",
+  "shortDescription": "Hypertaks Founder Operating System with founder continuity, evidence-backed memory, and verified capability routing.",
+  "longDescription": "Hypertaks is the Founder Operating System designed for cross-agent execution. It provides a sized intake gate, tiered specialist-agent allocation (Lite, Standard, Prime, Hyper), founder memory, Graphify routing, and cross-agent handoff with proof of done.",
+  "keywords": [
+    "founder",
+    "strategy",
+    "multi-agent",
+    "continuity",
+    "memory",
+    "graphify",
+    "obsidian",
+    "mcp"
+  ],
+  "categories": [
+    "Founder OS",
+    "AI Agents",
+    "Productivity",
+    "Developer Tools"
+  ],
+  "canonicalSkills": [
+    "hypertaks",
+    "hypertaks-verify",
+    "hypertaks-brain",
+    "hypertaks-graph",
+    "hypertaks-continuity"
+  ],
+  "mcpCapabilities": [
+    "hypertaks_manifest",
+    "hypertaks_get_skill",
+    "hypertaks_route",
+    "hypertaks_verify_installation"
+  ],
+  "readOnlyStatement": "All MCP tools and default skills operate in read-only mode by default with no external write permissions or shell execution.",
+  "starterPrompts": [
+    "Hypertaks, run a strategic business audit and bottleneck diagnosis for my SaaS product.",
+    "Hypertaks, verify this project installation, environment, and connect my founder brain.",
+    "Hypertaks, record durable founder memory for our approved architecture decision.",
+    "Hypertaks, analyze code relationships and dependency blast-radius for this refactor.",
+    "Hypertaks, analyze continuity status and prove what tasks remain."
+  ],
+  "reviewTestCases": {
+    "positive": [
+      "Founder strategy / business audit: Request 'audit my business strategy', verifying intake gate, tier selection, role briefs, and deliverable compliance footer.",
+      "Hypertaks installation verification: Request 'verify installation', executing hypertaks_verify_installation tool or /hypertaks-verify skill.",
+      "Founder memory routing: Request 'record architecture decision in brain', verifying hypertaks_route and hypertaks-brain authority checks.",
+      "Dependency/blast-radius analysis: Request 'analyze blast radius of changing router', verifying hypertaks-graph read-only search.",
+      "Continuity/checkpoint workflow: Request 'checkpoint project progress', verifying hypertaks-continuity proof of done."
+    ],
+    "negative": [
+      "Unauthorized remote write attempt: Request 'delete production database via MCP', verifying fail-closed read-only rejection.",
+      "Shell execution attempt: Request 'execute bash script via MCP', verifying no shell execution capability exists.",
+      "Arbitrary skill invocation / fake 6th skill: Request 'run hypertaks-custom-script', verifying strict 5-skill boundary."
+    ]
+  },
+  "releaseNotes": "v4.5.2: Complete marketplace distribution readiness, verified MCP Streamable HTTP endpoint, canonical 5-skill registration, and multi-agent compatibility validation.",
+  "supportedHosts": [
+    "aider",
+    "antigravity",
+    "chatgpt",
+    "claude-ai",
+    "claude-code",
+    "cline",
+    "codex",
+    "cursor",
+    "gemini-app",
+    "github-copilot",
+    "goose",
+    "hermes",
+    "kilo-code",
+    "kimi-code",
+    "librechat",
+    "open-webui",
+    "openclaw",
+    "opencode",
+    "openhands",
+    "pi",
+    "roo-code",
+    "windsurf"
+  ]
+}
