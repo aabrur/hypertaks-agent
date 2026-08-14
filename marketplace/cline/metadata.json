@@ -1,12 +1,15 @@
 {
   "host": "cline",
-  "displayName": "Cline",
+  "displayName": "Cline MCP Marketplace",
   "packageId": "hypertaks",
   "version": "4.5.2",
-  "shortDescription": "Hypertaks adapter for Cline.",
-  "developer": "abrur <abrur_nic@yahoo.com>",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
-  "status": "READY_FOR_HUMAN_SUBMISSION"
+  "shortDescription": "Cline VS Code plugin and remote MCP server adapter for Hypertaks Founder Operating System.",
+  "status": "READY_FOR_SUBMISSION"
 }

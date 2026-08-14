@@ -1,14 +1,17 @@
 {
   "name": "hypertaks",
-  "displayName": "Hypertaks Founder",
+  "displayName": "Hypertaks Founder Operating System",
+  "publisher": "Crimson Rift Studio",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "version": "4.5.2",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com"
   },
-  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "homepage": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
   "license": "MIT",
   "keywords": [
     "founder",
@@ -16,7 +19,8 @@
     "memory",
     "graphify",
     "obsidian",
-    "retrieval"
+    "retrieval",
+    "mcp"
   ],
   "skills": "./skills/"
 }
