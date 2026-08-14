@@ -1,7 +1,13 @@
 {
   "name": "hypertaks",
+  "displayName": "Hypertaks Founder Operating System",
+  "publisher": "Crimson Rift Studio",
   "version": "4.5.2",
-  "description": "Executable ChatGPT plugin adapter for Hypertaks using host-required MCP Streamable HTTP transport.",
+  "description": "Executable ChatGPT App adapter for Hypertaks using host-required MCP Streamable HTTP transport.",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
+  "repositoryUrl": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
   "transport": "streamable-http",
   "mcpServer": {
     "command": "node",
@@ -28,6 +34,17 @@
   "readOnlyByDefault": true,
   "writeToolsExposed": false,
   "requiresUserConfirmationForWrite": true,
+  "privacyUrl": "https://hypertaks.crimsonriftstudio.com/privacy",
+  "termsUrl": "https://hypertaks.crimsonriftstudio.com/terms",
+  "supportUrl": "https://github.com/aabrur/hypertaks-agent/issues",
+  "securityUrl": "https://github.com/aabrur/hypertaks-agent/blob/main/SECURITY.md",
+  "starterPrompts": [
+    "Hypertaks, run a strategic business audit and bottleneck diagnosis for my SaaS product.",
+    "Hypertaks, verify this project installation, environment, and connect my founder brain.",
+    "Hypertaks, record durable founder memory for our approved architecture decision.",
+    "Hypertaks, analyze code relationships and dependency blast-radius for this refactor.",
+    "Hypertaks, analyze continuity status and prove what tasks remain."
+  ],
   "productionSubmissionRequires": [
     "stable-public-https-endpoint",
     "production-authentication-if-user-data-is-added",

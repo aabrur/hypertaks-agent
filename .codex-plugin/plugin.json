@@ -2,12 +2,13 @@
   "name": "hypertaks",
   "version": "4.5.2",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
+  "publisher": "Crimson Rift Studio",
   "author": {
     "name": "abrur",
     "email": "abrur_nic@yahoo.com",
     "url": "https://github.com/aabrur"
   },
-  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "homepage": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
   "license": "MIT",
   "keywords": [
@@ -25,17 +26,16 @@
     "displayName": "Hypertaks Founder",
     "shortDescription": "Founder OS with verified continuity and execution.",
     "longDescription": "Turns your agent into the Hypertaks Founder: a contract-bound operating protocol that preserves founder decisions, routes retrieval and Graphify by need, reuses approved Obsidian-compatible memory, and verifies completion evidence.",
-    "developerName": "abrur",
+    "developerName": "Crimson Rift Studio",
     "category": "Coding",
     "capabilities": [
       "Interactive",
-      "Read",
-      "Write"
+      "Read"
     ],
     "defaultPrompt": [
       "Hypertaks, verify this project and connect my main brain.",
-      "Hypertaks, resume the current project and prove what remains unfinished."
+      "Hypertaks, resume the current project and prove what tasks remain."
     ],
-    "websiteURL": "https://github.com/aabrur/hypertaks-agent"
+    "websiteURL": "https://hypertaks.crimsonriftstudio.com"
   }
 }

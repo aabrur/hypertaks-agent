@@ -1,12 +1,20 @@
 {
   "host": "chatgpt",
-  "displayName": "ChatGPT",
+  "displayName": "ChatGPT Custom Apps and MCP Integration",
   "packageId": "hypertaks",
   "version": "4.5.2",
-  "shortDescription": "Read-only Hypertaks ChatGPT App adapter using MCP as host transport.",
-  "developer": "abrur <abrur_nic@yahoo.com>",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
+  "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
+  "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
-  "status": "BLOCKED_BY_ACCOUNT"
+  "shortDescription": "Read-only Hypertaks ChatGPT App adapter using MCP Streamable HTTP transport.",
+  "status": "BLOCKED_BY_ACCOUNT",
+  "blocker": "Requires account workspace approval and live developer portal registration",
+  "humanActionRequired": {
+    "portalUrl": "https://platform.openai.com",
+    "action": "Register custom MCP endpoint https://hypertaks.crimsonriftstudio.com/mcp in ChatGPT App Settings"
+  }
 }
