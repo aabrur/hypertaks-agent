@@ -1,12 +1,13 @@
 {
   "host": "goose",
-  "displayName": "Goose",
+  "displayName": "Goose Extension Registry",
   "packageId": "hypertaks",
   "version": "4.5.2",
-  "shortDescription": "Hypertaks extension for Goose.",
-  "developer": "abrur <abrur_nic@yahoo.com>",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
-  "status": "READY_FOR_HUMAN_SUBMISSION"
+  "shortDescription": "Goose extension package for Hypertaks Founder Operating System.",
+  "status": "READY_FOR_SUBMISSION"
 }

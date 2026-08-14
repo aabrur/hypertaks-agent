@@ -7,6 +7,13 @@
   "definition": "PASS means the repository contains the package metadata or adapter needed for submission or native direct installation. It does not mean the third-party listing has already been published.",
   "surfaces": [
     {
+      "hostId": "mcp-registry",
+      "displayName": "Official MCP Registry",
+      "packagePath": "marketplace/mcp-registry/server.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
       "hostId": "claude-code",
       "displayName": "Claude Code marketplace",
       "packagePath": ".claude-plugin/marketplace.json",
@@ -66,6 +73,13 @@
       "hostId": "open-webui",
       "displayName": "Open WebUI Tools and Functions",
       "packagePath": ".open-webui/plugin.json",
+      "readinessStatus": "PASS",
+      "evidenceType": "repository-package-readiness"
+    },
+    {
+      "hostId": "gemini-cli",
+      "displayName": "Gemini CLI Extension Gallery",
+      "packagePath": "gemini-extension.json",
       "readinessStatus": "PASS",
       "evidenceType": "repository-package-readiness"
     }

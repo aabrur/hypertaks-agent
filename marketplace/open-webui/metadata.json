@@ -1,12 +1,13 @@
 {
   "host": "open-webui",
-  "displayName": "Open WebUI",
+  "displayName": "Open WebUI Community Hub",
   "packageId": "hypertaks",
   "version": "4.5.2",
-  "shortDescription": "Hypertaks extension tool for Open WebUI.",
-  "developer": "abrur <abrur_nic@yahoo.com>",
+  "publisher": "Crimson Rift Studio",
+  "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
-  "status": "READY_FOR_HUMAN_SUBMISSION"
+  "shortDescription": "Open WebUI tools and functions package for Hypertaks Founder Operating System.",
+  "status": "READY_FOR_SUBMISSION"
 }
