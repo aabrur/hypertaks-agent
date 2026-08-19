@@ -1,6 +1,6 @@
 {
-  "host": "chatgpt",
-  "displayName": "ChatGPT Custom Apps and MCP Integration",
+  "host": "openai",
+  "displayName": "OpenAI Plugins Directory",
   "packageId": "hypertaks",
   "version": "4.5.2",
   "publisher": "Crimson Rift Studio",
@@ -10,11 +10,11 @@
   "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
-  "shortDescription": "Read-only Hypertaks ChatGPT App adapter using MCP Streamable HTTP transport.",
+  "shortDescription": "Read-only Hypertaks MCP adapter for the OpenAI Plugins Directory using Streamable HTTP.",
   "status": "BLOCKED_BY_ACCOUNT",
   "blocker": "Requires account workspace approval and live developer portal registration",
   "humanActionRequired": {
-    "portalUrl": "https://platform.openai.com",
-    "action": "Register custom MCP endpoint https://hypertaks.crimsonriftstudio.com/mcp in ChatGPT App Settings"
+    "portalUrl": "https://platform.openai.com/plugins",
+    "action": "Register the Hypertaks MCP endpoint and upload the five independent skill ZIP packages from .build/plugins/openai/"
   }
 }

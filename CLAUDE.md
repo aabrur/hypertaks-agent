@@ -1,5 +1,9 @@
 # CLAUDE.md - Hypertaks plugin repo
 
+This file is a thin host-compatibility layer. Canonical repository guidance is
+[`AGENTS.md`](AGENTS.md). Canonical skill guidance is
+[`docs/canonical-skill-guidance.md`](docs/canonical-skill-guidance.md).
+
 This repository packages the **Hypertaks Founder Operating System** as a cross-agent plugin with exactly five public skills.
 
 - Read [`skills/hypertaks/SKILL.md`](skills/hypertaks/SKILL.md) first. It remains the default entry point and owns the Founder loop.

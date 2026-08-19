@@ -5,8 +5,8 @@ ChatGPT consumes the Hypertaks plugin through its tracked HTTPS MCP adapter. The
 ## Prepare the plugin endpoint
 
 ```bash
-npm run test:chatgpt
-npm run start:chatgpt
+npm run test:mcp
+npm run start:mcp
 ```
 
 Default local endpoints:

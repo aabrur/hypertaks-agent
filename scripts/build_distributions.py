@@ -6,9 +6,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import tempfile
+import zipfile
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -273,16 +275,132 @@ def validate_antigravity_package(package_root: Path) -> None:
             raise ValueError(f"generated manifest hash differs: {relative}")
 
 
+CANONICAL_SKILLS = (
+    "hypertaks",
+    "hypertaks-verify",
+    "hypertaks-brain",
+    "hypertaks-graph",
+    "hypertaks-continuity",
+)
+OPENAI_OUTPUT_ROOT = ROOT / ".build" / "plugins" / "openai"
+SKILL_PACKAGE_FOLDERS = ("references", "scripts", "assets", "agents")
+FORBIDDEN_SKILL_PACKAGE_NAMES = {
+    "AGENTS.md",
+    "RELEASE-NOTES.md",
+    "hypertaks-skill-card.md",
+    "SKILL-core.md",
+    "package.json",
+}
+FRONTMATTER_NAME_RE = re.compile(
+    r"^---\n.*?\nname:\s*([a-z0-9-]+)\s*$",
+    re.DOTALL | re.MULTILINE,
+)
+
+
+def iter_skill_package_files(skill_name: str) -> list[Path]:
+    skill_root = ROOT / "skills" / skill_name
+    skill_md = skill_root / "SKILL.md"
+    if not skill_md.is_file():
+        raise FileNotFoundError(f"missing SKILL.md for {skill_name}")
+    files = [skill_md]
+    for folder in SKILL_PACKAGE_FOLDERS:
+        directory = skill_root / folder
+        if not directory.is_dir():
+            continue
+        for path in sorted(directory.rglob("*")):
+            if path.is_file() and not path.name.startswith("."):
+                files.append(path)
+    openai_yaml = skill_root / "agents" / "openai.yaml"
+    if openai_yaml not in files:
+        raise FileNotFoundError(f"missing agents/openai.yaml for {skill_name}")
+    return files
+
+
+def build_openai_skill_zips(output_root: Path | None = None) -> Path:
+    destination = (output_root or OPENAI_OUTPUT_ROOT).resolve()
+    destination.mkdir(parents=True, exist_ok=True)
+    for skill_name in CANONICAL_SKILLS:
+        files = iter_skill_package_files(skill_name)
+        zip_path = destination / f"{skill_name}.zip"
+        if zip_path.exists():
+            zip_path.unlink()
+        skill_root = ROOT / "skills" / skill_name
+        with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for path in files:
+                arcname = Path(skill_name) / path.relative_to(skill_root)
+                archive.write(path, arcname.as_posix())
+        validate_openai_skill_zip(zip_path, skill_name)
+    return destination
+
+
+def validate_openai_skill_zip(zip_path: Path, skill_name: str) -> None:
+    with zipfile.ZipFile(zip_path) as archive:
+        names = [
+            name
+            for name in archive.namelist()
+            if name and not name.endswith("/") and not name.startswith("__MACOSX")
+        ]
+        texts = {
+            name: archive.read(name).decode("utf-8")
+            for name in names
+            if name.endswith(".md")
+        }
+    if not names:
+        raise ValueError(f"empty OpenAI skill zip: {zip_path.name}")
+    tops = {name.split("/")[0] for name in names}
+    if tops != {skill_name}:
+        raise ValueError(
+            f"{zip_path.name} must contain exactly one skill root "
+            f"{skill_name}/, got {sorted(tops)}"
+        )
+    required = {f"{skill_name}/SKILL.md", f"{skill_name}/agents/openai.yaml"}
+    missing = sorted(required - set(names))
+    if missing:
+        raise ValueError(f"{zip_path.name} missing {', '.join(missing)}")
+    forbidden: list[str] = []
+    for name in names:
+        base = Path(name).name
+        if base in FORBIDDEN_SKILL_PACKAGE_NAMES:
+            forbidden.append(name)
+        if "/marketplace/" in name or "/.git/" in name or "/node_modules/" in name:
+            forbidden.append(name)
+        if name.endswith(".md"):
+            match = FRONTMATTER_NAME_RE.search(texts[name])
+            if match:
+                found_name = match.group(1)
+                if found_name.startswith("hypertaks") and found_name != skill_name:
+                    raise ValueError(
+                        f"{zip_path.name} contains a second public skill name: "
+                        f"{found_name} in {name}"
+                    )
+    if forbidden:
+        raise ValueError(
+            f"{zip_path.name} contains forbidden package paths: {forbidden}"
+        )
+
+
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("host", choices=("antigravity",))
-    parser.add_argument("--output-root", type=Path, default=DEFAULT_OUTPUT_ROOT)
+    parser.add_argument("host", choices=("antigravity", "openai"))
+    parser.add_argument("--output-root", type=Path, default=None)
     parser.add_argument("--check-only", action="store_true")
     return parser.parse_args(argv)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
+    if args.host == "openai":
+        output_root = args.output_root or OPENAI_OUTPUT_ROOT
+        if args.check_only:
+            with tempfile.TemporaryDirectory(prefix="hypertaks-openai-check-") as temp_dir:
+                package = build_openai_skill_zips(Path(temp_dir))
+                print("OpenAI skill package check: PASS")
+                print(package)
+            return 0
+        package = build_openai_skill_zips(output_root)
+        print(package)
+        return 0
+
     if args.check_only:
         with tempfile.TemporaryDirectory(
             prefix="hypertaks-distribution-check-"
@@ -291,7 +409,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             validate_antigravity_package(package)
             print("Antigravity distribution check: PASS")
         return 0
-    package = build_antigravity(args.output_root)
+    package = build_antigravity(args.output_root or DEFAULT_OUTPUT_ROOT)
     validate_antigravity_package(package)
     print(package)
     return 0

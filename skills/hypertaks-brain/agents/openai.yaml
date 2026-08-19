@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hypertaks Brain"
+  short_description: "Inspect, record, correct, and safely forget evidence-backed founder memory."
+  default_prompt: "Hypertaks, record durable founder memory for our approved architecture decision."
+policy:
+  allow_implicit_invocation: true

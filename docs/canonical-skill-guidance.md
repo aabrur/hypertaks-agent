@@ -1,11 +1,10 @@
-# AGENTS.md
+# Canonical skill guidance
 
-Guidance for any AI agent (Claude Code, Codex, Cursor, Kimi Code, OpenClaw,
-Hermes, OpenCode, Pi) working in this repository.
+Guidance for any compatible agent working in this repository.
 
 ## What this repo is
 
-A cross-agent plugin that ships exactly five public Hypertaks skills:
+A host-neutral plugin that ships exactly five public Hypertaks skills:
 
 1. `skills/hypertaks` for the main Founder Operating System flow.
 2. `skills/hypertaks-verify` for environment, brain, storage, and capability verification.
@@ -33,8 +32,7 @@ memory or graph output can approve an action.
 3. Keep the main Founder Operating System invariants intact: sized intake,
    deterministic tiering, distinct roles, explicit contracts, evidence classes,
    and no silent deviation.
-4. Keep every per-agent manifest version in sync with
-   `.claude-plugin/plugin.json` and `package.json`.
+4. Keep every live plugin manifest version in sync with `package.json`.
 5. Validate before committing. Run the workflow-equivalent checks, including
    public-skill validation, eval integrity, static evals, Python tests, runtime
    tests, and compilation.
@@ -42,7 +40,10 @@ memory or graph output can approve an action.
    capability routing canonical in their owning references or focused skills.
    Adapters may translate host tools but may not weaken authority, permissions,
    approved-root containment, secret handling, or proof requirements.
-7. Disclose the authoring environment and target agent in any pull request.
+7. Disclose the authoring environment and target host in any pull request.
+8. Keep host-specific install, marketplace, and tool-mapping guidance in the
+   dedicated adapter, marketplace, or distribution location. Do not copy
+   Hypertaks business logic into an adapter.
 
 ## Contributing
 

@@ -152,8 +152,8 @@ Read, at minimum:
 - skills/hypertaks/references/00-security-kernel.md
 - runtime/router.ts
 - runtime/router.test.cjs
-- runtime/chatgpt-mcp-server.mjs
-- runtime/chatgpt-mcp-server.test.cjs
+- runtime/mcp-server.mjs
+- runtime/mcp-server.test.cjs
 - package.json
 - tsconfig.json
 
@@ -166,7 +166,7 @@ Tasks:
    - npm run typecheck
    - npm run build:runtime
    - npm run test:runtime
-   - npm run test:chatgpt
+   - npm run test:mcp
 5. Run the exact routing cases below against:
    a. routePublicSkill from the compiled runtime;
    b. the local MCP server through hypertaks_route.
@@ -218,7 +218,7 @@ Required properties:
    - preferredSkill override;
    - public route resolution;
    - routing reason generation.
-2. runtime/router.ts and runtime/chatgpt-mcp-server.mjs must both consume that canonical source.
+2. runtime/router.ts and runtime/mcp-server.mjs must both consume that canonical source.
 3. Do not copy the same rule array into two files.
 4. Preserve:
    - exactly five public skills;
@@ -249,7 +249,7 @@ Verification:
 - npm run typecheck
 - npm run build:runtime
 - npm run test:runtime
-- npm run test:chatgpt
+- npm run test:mcp
 - grep or an equivalent repository check proving there is only one canonical focused-policy definition
 
 Report:
@@ -372,7 +372,7 @@ Verification:
 - npm run typecheck
 - npm run build:runtime
 - npm run test:runtime
-- npm run test:chatgpt
+- npm run test:mcp
 
 Report:
 
@@ -469,7 +469,7 @@ Verification:
 - npm run typecheck
 - npm run build:runtime
 - npm run test:runtime
-- npm run test:chatgpt
+- npm run test:mcp
 
 Report:
 
@@ -554,7 +554,7 @@ Required commands:
 - npm run typecheck
 - npm run build:runtime
 - npm run test:runtime
-- npm run test:chatgpt
+- npm run test:mcp
 
 Produce a test report with:
 

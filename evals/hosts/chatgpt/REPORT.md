@@ -9,7 +9,7 @@
 ## Verified in Wave 1
 
 1. Hypertaks still exposes exactly five canonical public skills.
-2. `.chatgpt/plugin.json` points to the executable runtime at `runtime/chatgpt-mcp-server.mjs`.
+2. `.chatgpt/plugin.json` points to the executable runtime at `runtime/mcp-server.mjs`.
 3. MCP is used only as the ChatGPT host transport. It does not replace the canonical skill core.
 4. The runtime exposes exactly four read-only tools:
    - `hypertaks_manifest`

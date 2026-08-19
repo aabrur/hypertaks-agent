@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hypertaks Graph"
+  short_description: "Analyze code relationships and change impact with verified graph or direct search."
+  default_prompt: "Hypertaks, analyze code relationships and dependency blast-radius for this refactor."
+policy:
+  allow_implicit_invocation: true

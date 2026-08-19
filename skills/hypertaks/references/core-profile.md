@@ -1,11 +1,8 @@
----
-name: hypertaks-core
-description: "Use when running on a smaller LLM that cannot handle the full context of the main Hypertaks skill."
----
-
 # Hypertaks CORE Profile
 
-This is the CORE profile for small models. It enforces the Safety Kernel and Deterministic Runtime without loading the heavy quantitative Domain Packs.
+This is the CORE profile for small models and tight-context hosts. It enforces
+the Safety Kernel and Deterministic Runtime without loading the heavy
+quantitative Domain Packs. It is not a sixth public skill.
 
 ## 1. Safety Kernel (P0)
 

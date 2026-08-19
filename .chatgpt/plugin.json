@@ -12,7 +12,7 @@
   "mcpServer": {
     "command": "node",
     "args": [
-      "runtime/chatgpt-mcp-server.mjs"
+      "runtime/mcp-server.mjs"
     ],
     "endpoint": "/mcp",
     "healthEndpoint": "/healthz",

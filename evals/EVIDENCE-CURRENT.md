@@ -11,7 +11,7 @@ Authority: repository eval rules in `evals/README.md` and `evals/rubric.md`.
 | Structure | `python scripts/run_evals.py --check` | OK / INVALID | No |
 | Static capability | `python scripts/run_evals.py --static` | GREEN / RED | **No** |
 | Behavioral ledger | `python scripts/run_evals.py --report evals/results.yaml` | PASS / FAIL / SKIPPED | Yes |
-| Automated runtime | `npm run typecheck`, `build:runtime`, `test:runtime`, `test:chatgpt` | pass/fail | Engineering evidence only |
+| Automated runtime | `npm run typecheck`, `build:runtime`, `test:runtime`, `test:mcp` | pass/fail | Engineering evidence only |
 
 A GREEN static line is never a behavioral PASS.
 
@@ -103,7 +103,7 @@ python scripts/validate_public_skills.py
 npm run typecheck          # exit 0
 npm run build:runtime      # exit 0
 npm run test:runtime       # runtime router tests passed, exit 0
-npm run test:chatgpt       # 8/8 pass, exit 0
+npm run test:mcp       # 8/8 pass, exit 0
 ```
 
 MCP suite covers: generic adapter metadata, 3 protocol versions, 4 tools,
@@ -149,7 +149,7 @@ python scripts/validate_public_skills.py
 npm run typecheck
 npm run build:runtime
 npm run test:runtime
-npm run test:chatgpt
+npm run test:mcp
 ```
 
 All commands above returned exit 0 in this evidence session for the listed

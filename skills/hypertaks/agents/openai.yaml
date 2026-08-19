@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hypertaks"
+  short_description: "Founder Operating System for strategy, engineering, marketing, finance, and operations."
+  default_prompt: "Hypertaks, run a strategic business audit and bottleneck diagnosis for my SaaS product."
+policy:
+  allow_implicit_invocation: true

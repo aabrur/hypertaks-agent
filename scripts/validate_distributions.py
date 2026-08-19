@@ -155,20 +155,45 @@ def main() -> int:
     expected_chatgpt_files = {
         "manifest": ".chatgpt/plugin.json",
         "installGuide": ".chatgpt/INSTALL.md",
-        "runtime": "runtime/chatgpt-mcp-server.mjs",
-        "runtimeTest": "runtime/chatgpt-mcp-server.test.cjs",
+        "runtime": "runtime/mcp-server.mjs",
+        "runtimeTest": "runtime/mcp-server.test.cjs",
     }
     for field, expected in expected_chatgpt_files.items():
         if chatgpt_host.get(field) != expected or not (ROOT / expected).is_file():
             errors.append(f"ChatGPT {field} must reference existing {expected}")
-    if chatgpt_host.get("testCommand") != "npm run test:chatgpt":
-        errors.append("ChatGPT testCommand must be npm run test:chatgpt")
+    if chatgpt_host.get("testCommand") != "npm run test:mcp":
+        errors.append("ChatGPT testCommand must be npm run test:mcp")
+    if (ROOT / "runtime" / "chatgpt-mcp-server.mjs").exists():
+        errors.append("canonical runtime must not keep ChatGPT-specific naming")
+    if not (ROOT / "marketplace" / "openai" / "metadata.json").is_file():
+        errors.append("OpenAI marketplace metadata missing: marketplace/openai/metadata.json")
+    if (ROOT / "marketplace" / "chatgpt").exists():
+        errors.append("OpenAI marketplace material must live under marketplace/openai")
     if chatgpt_manifest.get("canonicalSkills") != EXPECTED_SKILLS:
         errors.append("ChatGPT manifest must declare exactly five canonical skills")
     if chatgpt_manifest.get("transport") != "streamable-http":
         errors.append("ChatGPT manifest must declare streamable-http transport")
     if chatgpt_manifest.get("readOnlyByDefault") is not True or chatgpt_manifest.get("writeToolsExposed") is not False:
         errors.append("ChatGPT adapter must remain read-only")
+
+    mcp_source = (ROOT / "runtime" / "mcp-server.mjs").read_text(encoding="utf-8")
+    for tool_name in (
+        "hypertaks_manifest",
+        "hypertaks_get_skill",
+        "hypertaks_route",
+        "hypertaks_verify_installation",
+    ):
+        if f'name: "{tool_name}"' not in mcp_source:
+            errors.append(f"canonical MCP runtime missing tool {tool_name}")
+    declared = re.findall(r'^\s*name: "(hypertaks_[a-z0-9_]+)"\s*,?\s*$', mcp_source, re.MULTILINE)
+    if declared != [
+        "hypertaks_manifest",
+        "hypertaks_get_skill",
+        "hypertaks_route",
+        "hypertaks_verify_installation",
+    ]:
+        errors.append(f"canonical MCP runtime must expose exactly four tools, found {declared}")
+
 
     brand = product.get("brand")
     canonical_svg = brand.get("canonicalSvg") if isinstance(brand, Mapping) else None

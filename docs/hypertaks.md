@@ -125,7 +125,7 @@ Evidence:
 
 Marketplace metadata packages present for 13 hosts with public or semi-public marketplaces:
 - `marketplace/antigravity/metadata.json`
-- `marketplace/chatgpt/metadata.json`
+- `marketplace/openai/metadata.json`
 - `marketplace/claude-code/metadata.json`
 - `marketplace/cline/metadata.json`
 - `marketplace/codex/metadata.json`

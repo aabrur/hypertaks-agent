@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hypertaks Verify"
+  short_description: "Verify Hypertaks setup, storage roots, and optional Graphify or Obsidian integration."
+  default_prompt: "Hypertaks, verify this project installation, environment, and connect my founder brain."
+policy:
+  allow_implicit_invocation: true

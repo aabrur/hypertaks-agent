@@ -7,7 +7,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const root = path.resolve(__dirname, "..");
-const serverPath = path.join(__dirname, "chatgpt-mcp-server.mjs");
+const serverPath = path.join(__dirname, "mcp-server.mjs");
 
 async function startServer(extraEnv = {}) {
   const child = spawn(process.execPath, [serverPath], {

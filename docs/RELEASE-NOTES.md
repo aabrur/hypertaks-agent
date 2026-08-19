@@ -61,7 +61,7 @@ MCP adapter.
 
 ### What changed
 - One canonical public-skill router module consumed by both `runtime/router.ts`
-  and `runtime/chatgpt-mcp-server.mjs`.
+  and `runtime/mcp-server.mjs`.
 - Deterministic intent policy with English and Indonesian locale packs.
 - Safer handling of negation, supporting checkpoint terms under founder strategy,
   and common false positives such as memory leaks or chart graphs.

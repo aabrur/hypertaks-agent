@@ -1,6 +1,6 @@
-# OpenAI ChatGPT App / MCP Submission Readiness Guide
+# OpenAI Plugins Directory Submission Readiness Guide
 
-This document provides the complete submission materials and verification checklist for integrating Hypertaks with the OpenAI ChatGPT Apps / MCP Directory.
+This document provides the complete submission materials and verification checklist for integrating Hypertaks with the OpenAI Plugins Directory (shared by ChatGPT and Codex).
 
 ## Product & Publisher Identity
 
@@ -72,6 +72,24 @@ This document provides the complete submission materials and verification checkl
 1. **Remote Write Attempt:** Request database deletion or file modification via MCP -> fails closed with read-only error.
 2. **Shell Execution:** Request arbitrary bash/shell command execution -> fails closed as unsupported tool.
 3. **Non-Canonical Skill:** Request `hypertaks-unknown-skill` -> fails closed adhering to strict 5-skill boundary.
+
+## Skill upload packages
+
+Build five independent OpenAI skill ZIP files so the uploader never has to infer nested roots:
+
+```bash
+python scripts/build_distributions.py openai
+```
+
+Output (gitignored):
+
+- `.build/plugins/openai/hypertaks.zip`
+- `.build/plugins/openai/hypertaks-verify.zip`
+- `.build/plugins/openai/hypertaks-brain.zip`
+- `.build/plugins/openai/hypertaks-graph.zip`
+- `.build/plugins/openai/hypertaks-continuity.zip`
+
+Each archive contains exactly one top-level skill directory with `SKILL.md` and `agents/openai.yaml`.
 
 ## Submission Status
 

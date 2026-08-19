@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hypertaks Continuity"
+  short_description: "Checkpoint, resume, hand off, reconcile, and prove completion of Hypertaks work."
+  default_prompt: "Hypertaks, analyze continuity status and prove what tasks remain."
+policy:
+  allow_implicit_invocation: true

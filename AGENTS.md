@@ -22,3 +22,6 @@ Do not add a sixth public skill whose name starts with `hypertaks`.
 - Keep retrieval behavior canonical in `skills/hypertaks/references/02-retrieval-and-evidence.md`, execution profiles in `03-professional-execution.md`, visual routing in `04-visual-delivery.md`, and founder continuity behavior in the four focused public skills plus `runtime/founder-brain.ts`.
 - Keep changes surgical. Do not add hosted services, bundled credentials, background daemons, mandatory vector databases, or silent Graphify/Obsidian installation.
 - Use focused commits and preserve exact test evidence.
+- Keep host-specific install, marketplace, and tool-mapping guidance in adapter,
+  marketplace, or distribution locations. Canonical skills and `runtime/` stay
+  host-neutral.

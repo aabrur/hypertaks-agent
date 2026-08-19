@@ -2,7 +2,7 @@
  * Canonical public-skill router.
  * Single source of truth for PUBLIC_SKILLS, focused routing policy,
  * preferredSkill override, resolution, and reason strings.
- * Consumers: runtime/router.ts (re-export) and runtime/chatgpt-mcp-server.mjs
+ * Consumers: runtime/router.ts (re-export) and runtime/mcp-server.mjs
  * (createRequire of the compiled CommonJS build).
  *
  * Phase A2: deterministic primary-intent policy with locale packs.

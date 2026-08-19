@@ -415,8 +415,8 @@ before publication.
 ## Release and project documents
 
 - [`CHANGELOG.md`](CHANGELOG.md): versioned changes and evidence boundaries.
-- [`skills/hypertaks/RELEASE-NOTES.md`](skills/hypertaks/RELEASE-NOTES.md): product-facing release notes.
-- [`skills/hypertaks/hypertaks-skill-card.md`](skills/hypertaks/hypertaks-skill-card.md): current capability and certification status.
+- [`docs/RELEASE-NOTES.md`](docs/RELEASE-NOTES.md): product-facing release notes.
+- [`docs/hypertaks-skill-card.md`](docs/hypertaks-skill-card.md): current capability and certification status.
 - [`PUBLISH-READINESS-REPORT.md`](PUBLISH-READINESS-REPORT.md): historical v4.5.1 readiness evidence.
 - [`docs/HYPERTAKS-ROADMAP.md`](docs/HYPERTAKS-ROADMAP.md): staged product roadmap.
 
