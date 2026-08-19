@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Hypertaks",
+    "subtitle": "Founder OS for AI agents",
+    "description": "Hypertaks helps ChatGPT route founder work to one of five canonical skills, read that skill, verify the installed skill set, and inspect product limits through a read-only MCP adapter.",
+    "category": "DEVELOPER_TOOLS"
+  },
+  "tools": {
+    "hypertaks_manifest": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Returns product version, the five public skills, and adapter limits without creating or changing any records.",
+        "open_world_justification": "Does not post, publish, or write to public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "hypertaks_get_skill": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Reads one canonical Hypertaks skill file by exact name and returns its text.",
+        "open_world_justification": "Does not publish skill content or write to external third-party systems.",
+        "destructive_justification": "Does not modify or delete skill files or any other stored data."
+      }
+    },
+    "hypertaks_route": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Selects the smallest matching public skill for a request and returns routing guidance only.",
+        "open_world_justification": "Does not send messages, create tickets, push code, or change third-party systems.",
+        "destructive_justification": "Does not mutate files, revoke access, or execute irreversible actions."
+      }
+    },
+    "hypertaks_verify_installation": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Checks that exactly five canonical skill files and the product logo are present and returns hashes.",
+        "open_world_justification": "Does not register, publish, or update any external service.",
+        "destructive_justification": "Does not repair, overwrite, or delete installation files."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Route a founder business diagnosis request to the main Hypertaks skill.",
+      "user_prompt": "Hypertaks, diagnose why churn is high in my SaaS and find the operational bottleneck.",
+      "file_attachment_urls": null,
+      "tools_triggered": "hypertaks_route",
+      "expected_output": "Routes the request to the hypertaks skill and explains that this is a founder diagnosis workflow, without changing any files or external systems.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Verify the Hypertaks installation and exact five public skills.",
+      "user_prompt": "Hypertaks, verify this Hypertaks installation and confirm the five public skills.",
+      "file_attachment_urls": null,
+      "tools_triggered": "hypertaks_verify_installation",
+      "expected_output": "Reports whether the checkout contains exactly the five canonical skills plus the product logo, with integrity hashes and no file changes.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Retrieve one canonical Hypertaks skill by exact name.",
+      "user_prompt": "Hypertaks, load the hypertaks-verify skill so I can see the setup steps.",
+      "file_attachment_urls": null,
+      "tools_triggered": "hypertaks_get_skill",
+      "expected_output": "Returns the hypertaks-verify skill content and confirms it is one of the five public skills.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Route a founder-shaped request when the user has not named a specific skill.",
+      "user_prompt": "Hypertaks, which Hypertaks skill should handle a checkpoint and proof of done review?",
+      "file_attachment_urls": null,
+      "tools_triggered": "hypertaks_route",
+      "expected_output": "Selects hypertaks-continuity as the smallest matching entry point and states that the adapter only routes.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Route a founder memory request through the supported MCP interface.",
+      "user_prompt": "Hypertaks, how should I record an approved architecture decision in founder memory?",
+      "file_attachment_urls": null,
+      "tools_triggered": "hypertaks_route",
+      "expected_output": "Routes the request to hypertaks-brain and does not write memory or any other state through the remote MCP adapter.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not trigger for personal calendar questions.",
+      "user_prompt": "What meetings do I have tomorrow?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because the request is a calendar lookup outside Hypertaks workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for generic weather questions.",
+      "user_prompt": "What is the weather in Jakarta today?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because weather lookup is outside Hypertaks founder workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for generic coding help that does not name Hypertaks.",
+      "user_prompt": "Write a Python function that reverses a string.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because the request is ordinary coding help, not Hypertaks routing, verification, or skill retrieval.",
+      "expected_output_url": null
+    }
+  ]
+}
