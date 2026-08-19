@@ -1,0 +1,10 @@
+{
+  "name": "hypertaks",
+  "version": "4.5.2",
+  "description": "Founder Operating System for AI agents",
+  "author": {
+    "name": "aabrur / Crimson Rift Studio"
+  },
+  "homepage": "https://github.com/aabrur/hypertaks-agent",
+  "keywords": ["hypertaks", "founder-os", "agent-operating-system"]
+}
