@@ -102,8 +102,8 @@ mcp.local.*
 .kilo/project.json
 .kilo/README.txt
 
-# Misplaced skill stubs (canonical public skills live under skills/<name>/ only)
-/skills/SKILL.md
+# Canonical public skills live under skills/<name>/. skills/SKILL.md is the
+# pack index, not a sixth public skill.
 
 # Local plugin installations and generated agent copies
 .agents/plugins/*/

@@ -43,7 +43,10 @@ def collect_frontmatter_skill_names(
     if not skills_root.is_dir():
         return found, [f"Missing skills directory: {skills_root}"]
 
+    pack_index = skills_root / "SKILL.md"
     for skill_file in sorted(skills_root.rglob("*.md")):
+        if skill_file == pack_index:
+            continue
         name = read_name(skill_file)
         if name is None or not name.startswith("hypertaks"):
             continue
@@ -122,6 +125,30 @@ def _yaml_quoted(text: str, key: str) -> str | None:
     return match.group(1) if match else None
 
 
+def validate_pack_index(skills_root: Path = SKILLS) -> list[str]:
+    errors: list[str] = []
+    pack_index = skills_root / "SKILL.md"
+    if not pack_index.is_file():
+        return [f"Missing skills-pack index: {pack_index}"]
+    name = read_name(pack_index)
+    if name != "hypertaks":
+        errors.append(
+            "skills/SKILL.md must use name hypertaks as the pack index, "
+            "not a sixth public skill"
+        )
+    text = pack_index.read_text(encoding="utf-8")
+    for required in (
+        "hypertaks/SKILL.md",
+        "hypertaks-verify",
+        "hypertaks-brain",
+        "hypertaks-graph",
+        "hypertaks-continuity",
+    ):
+        if required not in text:
+            errors.append(f"skills/SKILL.md must point at {required}")
+    return errors
+
+
 def validate_openai_agent_metadata(skills_root: Path = SKILLS) -> list[str]:
     errors: list[str] = []
     displays: dict[str, str] = {}
@@ -155,6 +182,7 @@ def validate_openai_agent_metadata(skills_root: Path = SKILLS) -> list[str]:
 
 def validate_public_skills(skills_root: Path = SKILLS) -> int:
     _found, errors = collect_frontmatter_skill_names(skills_root)
+    errors.extend(validate_pack_index(skills_root))
     errors.extend(validate_skill_roots(skills_root))
     errors.extend(validate_openai_agent_metadata(skills_root))
     if errors:
