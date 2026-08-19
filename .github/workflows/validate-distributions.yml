@@ -40,17 +40,23 @@ jobs:
       - name: Build-check Antigravity package
         run: python scripts/build_distributions.py antigravity --check-only
 
+      - name: Build-check OpenAI skill packages
+        run: python scripts/build_distributions.py openai --check-only
+
       - name: Validate cross-host conformance records
         run: python scripts/validate_conformance.py
 
       - name: Validate host capability evidence
         run: python scripts/validate_host_capabilities.py
 
-      - name: Validate ChatGPT MCP runtime syntax
-        run: node --check runtime/chatgpt-mcp-server.mjs
+      - name: Install Node dependencies
+        run: npm install --ignore-scripts
 
-      - name: Test ChatGPT MCP runtime
-        run: node --test runtime/chatgpt-mcp-server.test.cjs
+      - name: Validate MCP runtime syntax
+        run: node --check runtime/mcp-server.mjs
+
+      - name: Test MCP runtime
+        run: npm run test:mcp
 
       - name: Test compatibility catalogs
         run: >-
