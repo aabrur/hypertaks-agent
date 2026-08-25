@@ -124,6 +124,8 @@ export interface ApprovalActivation {
   readonly active: boolean;
   readonly contractId: string;
   readonly evidence: string;
+  readonly bootstrapStatus?: "SUCCESS" | "DEGRADED" | "SKIPPED";
+  readonly bootstrapReason?: string;
 }
 
 export interface VerifyPlanInput {
@@ -277,19 +279,80 @@ export function redactSecrets(value: string): string {
   return result;
 }
 
-export function atomicWriteText(root: string, relativePath: string, content: string): string {
+export interface AtomicFsOperations {
+  readonly writeFileSync?: typeof fs.writeFileSync;
+  readonly renameSync?: typeof fs.renameSync;
+  readonly rmSync?: typeof fs.rmSync;
+  readonly existsSync?: typeof fs.existsSync;
+}
+
+export function atomicWriteText(
+  root: string,
+  relativePath: string,
+  content: string,
+  fsOps?: AtomicFsOperations
+): string {
   assertNoSecrets(content);
   const target = resolveWithinApprovedRoot(root, relativePath, true);
+  const writeFileSync = fsOps?.writeFileSync ?? fs.writeFileSync;
+  const renameSync = fsOps?.renameSync ?? fs.renameSync;
+  const rmSync = fsOps?.rmSync ?? fs.rmSync;
+  const existsSync = fsOps?.existsSync ?? fs.existsSync;
+
   const temporary = `${target}.${process.pid}.${crypto.randomUUID()}.tmp`;
-  fs.writeFileSync(temporary, content, { encoding: "utf8", flag: "wx", mode: 0o600 });
+  writeFileSync(temporary, content, { encoding: "utf8", flag: "wx", mode: 0o600 });
+
   try {
-    fs.renameSync(temporary, target);
-  } catch (error) {
-    if (fs.existsSync(target)) fs.rmSync(target, { force: true });
-    fs.renameSync(temporary, target);
-    if (error instanceof Error && !fs.existsSync(target)) throw error;
+    if (!existsSync(target)) {
+      try {
+        renameSync(temporary, target);
+        return target;
+      } catch (err) {
+        if (existsSync(temporary)) {
+          try { rmSync(temporary, { force: true }); } catch { /* ignore */ }
+        }
+        throw err;
+      }
+    }
+
+    try {
+      renameSync(temporary, target);
+      return target;
+    } catch (initialRenameError) {
+      const backup = `${target}.${process.pid}.${crypto.randomUUID()}.bak`;
+      try {
+        renameSync(target, backup);
+      } catch (backupError) {
+        if (existsSync(temporary)) {
+          try { rmSync(temporary, { force: true }); } catch { /* ignore */ }
+        }
+        throw backupError;
+      }
+
+      try {
+        renameSync(temporary, target);
+        try { rmSync(backup, { force: true }); } catch { /* ignore */ }
+        return target;
+      } catch (replacementError) {
+        try {
+          if (existsSync(backup) && !existsSync(target)) {
+            renameSync(backup, target);
+          }
+        } catch {
+          // preserve backup if restore rename also encounters an issue
+        }
+        if (existsSync(temporary)) {
+          try { rmSync(temporary, { force: true }); } catch { /* ignore */ }
+        }
+        throw replacementError;
+      }
+    }
+  } catch (outerError) {
+    if (existsSync(temporary)) {
+      try { rmSync(temporary, { force: true }); } catch { /* ignore */ }
+    }
+    throw outerError;
   }
-  return target;
 }
 
 export function atomicWriteJson(root: string, relativePath: string, value: unknown): string {

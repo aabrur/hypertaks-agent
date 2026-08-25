@@ -179,6 +179,87 @@ assert.throws(() => router.assertValidApprovalProof(fakeProof), /APPROVAL_REQUIR
 const proof = router.mintBossApprovalProof(approvedActivation, 'msg-001');
 router.assertValidApprovalProof(proof, 'HT-20260725-BRN');
 
+// A1: Atomic persistence durability regression tests
+const persistDir = fs.mkdtempSync(path.join(os.tmpdir(), 'hypertaks-persist-'));
+
+// 1. Initial write
+const initialPath = router.atomicWriteText(persistDir, 'initial.txt', 'initial-data');
+assert.equal(fs.readFileSync(initialPath, 'utf8'), 'initial-data');
+
+// 2. Normal replacement
+const replacedPath = router.atomicWriteText(persistDir, 'initial.txt', 'replaced-data');
+assert.equal(fs.readFileSync(replacedPath, 'utf8'), 'replaced-data');
+
+// 3. First rename failure with successful backup replacement (Windows simulation)
+let firstRenameAttempt = true;
+const customFsFallback = {
+  renameSync(from, to) {
+    if (firstRenameAttempt && to.endsWith('initial.txt') && !from.includes('.bak')) {
+      firstRenameAttempt = false;
+      const err = new Error('EPERM: operation not permitted, rename');
+      err.code = 'EPERM';
+      throw err;
+    }
+    return fs.renameSync(from, to);
+  }
+};
+router.atomicWriteText(persistDir, 'initial.txt', 'fallback-success-data', customFsFallback);
+assert.equal(fs.readFileSync(initialPath, 'utf8'), 'fallback-success-data');
+
+// 4. Replacement failure: old data MUST remain intact and readable, temporary cleaned up
+const customFsFatal = {
+  renameSync(from, to) {
+    if (from.endsWith('.tmp') && to.endsWith('initial.txt')) {
+      const err = new Error('EPERM: lock error');
+      err.code = 'EPERM';
+      throw err;
+    }
+    return fs.renameSync(from, to);
+  }
+};
+assert.throws(() => {
+  router.atomicWriteText(persistDir, 'initial.txt', 'corrupted-data', customFsFatal);
+}, /EPERM/);
+// Old data MUST still be intact!
+assert.equal(fs.readFileSync(initialPath, 'utf8'), 'fallback-success-data');
+// No orphan temporary files left in persistDir
+const tempFiles = fs.readdirSync(persistDir).filter(f => f.endsWith('.tmp') || f.endsWith('.bak'));
+assert.equal(tempFiles.length, 0);
+
+// 5. Secret detection prevents write
+assert.throws(() => {
+  router.atomicWriteText(persistDir, 'secret.txt', 'sk-12345678901234567890123456');
+}, /SECURITY_VIOLATION/);
+assert.equal(fs.existsSync(path.join(persistDir, 'secret.txt')), false);
+
+// 6. Approved-root enforcement prevents write outside root
+assert.throws(() => {
+  router.atomicWriteText(persistDir, '../outside.txt', 'outside-data');
+}, /PATH_OUTSIDE_APPROVED_ROOT/);
+
+// A2: Contract activation bootstrap status regression tests
+assert.equal(approvedActivation.bootstrapStatus, 'SUCCESS');
+
+const noRootActivation = router.activateContract({
+  contractId: 'HT-20260725-NOROOT',
+  bossMessage: 'APPROVE HT-20260725-NOROOT',
+  isBossTurn: true,
+  requiresMutationOrExternalEffect: true,
+});
+assert.equal(noRootActivation.active, true);
+assert.equal(noRootActivation.bootstrapStatus, 'SKIPPED');
+
+const degradedActivation = router.activateContract({
+  contractId: 'HT-20260725-FAIL',
+  bossMessage: 'APPROVE HT-20260725-FAIL',
+  isBossTurn: true,
+  requiresMutationOrExternalEffect: true,
+  projectRoot: path.join(persistDir, 'non_existent_root_dir_without_create'),
+});
+assert.equal(degradedActivation.active, true);
+assert.equal(degradedActivation.bootstrapStatus, 'DEGRADED');
+assert.ok(degradedActivation.bootstrapReason && degradedActivation.bootstrapReason.length > 0);
+
 const repo = fs.mkdtempSync(path.join(os.tmpdir(), 'hypertaks-repo-'));
 runGit(repo, 'init');
 runGit(repo, 'config', 'user.email', 'test@example.com');

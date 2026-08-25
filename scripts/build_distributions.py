@@ -130,6 +130,33 @@ def file_manifest(root: Path) -> list[dict[str, object]]:
     return records
 
 
+def _clean_directory(path: Path) -> None:
+    import stat
+    import os
+    if not path.exists():
+        return
+    for root_dir, dirs, files in os.walk(path, topdown=False):
+        for f in files:
+            p = os.path.join(root_dir, f)
+            try:
+                os.chmod(p, stat.S_IWRITE)
+                os.unlink(p)
+            except Exception:
+                pass
+        for d in dirs:
+            p = os.path.join(root_dir, d)
+            try:
+                os.chmod(p, stat.S_IWRITE)
+                os.rmdir(p)
+            except Exception:
+                pass
+    try:
+        os.chmod(path, stat.S_IWRITE)
+        os.rmdir(path)
+    except Exception:
+        pass
+
+
 def replace_directory(source: Path, target: Path) -> None:
     target_parent = target.parent.resolve()
     resolved_target = target.resolve(strict=False)
@@ -138,8 +165,14 @@ def replace_directory(source: Path, target: Path) -> None:
     if target.is_symlink():
         raise ValueError(f"distribution target must not be a symlink: {target}")
     if target.exists():
-        shutil.rmtree(target)
-    source.replace(target)
+        _clean_directory(target)
+    try:
+        source.replace(target)
+    except (OSError, PermissionError):
+        if target.exists():
+            _clean_directory(target)
+        shutil.copytree(source, target, dirs_exist_ok=True)
+        _clean_directory(source)
 
 
 def build_antigravity(output_root: Path = DEFAULT_OUTPUT_ROOT) -> Path:

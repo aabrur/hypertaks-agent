@@ -2,84 +2,70 @@
 
 ## Supported Versions
 
-Hypertaks is a cross-agent **skill** (markdown instructions for AI coding
-agents) plus repository-local Python validation, evaluation, test, and figure
-generation tooling. It has no runtime service component.
+Hypertaks is a Founder Operating System packaging five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`), host-neutral TypeScript routing and persistence engines, repository validation tooling, and a read-only remote Model Context Protocol (MCP) transport adapter.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 4.3.x   | :white_check_mark: |
-| 3.0.x   | :white_check_mark: |
-| 2.x     | :white_check_mark: (security fixes only) |
-| < 2.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| 4.5.x   | :white_check_mark: (Current maintained release line) |
+| < 4.5.0 | :x: |
 
 ## Scope
 
-This policy covers the contents of this repository only:
+This policy covers the contents and runtime components maintained in this repository:
 
-- `skills/hypertaks/**` - the skill markdown and reference files.
-- `scripts/*.py` - repository-local validation, evaluation, test, and figure
-  generation tooling.
-- Plugin manifests under `.claude-plugin/`, `.codex-plugin/`,
-  `.cursor-plugin/`, `.kimi-plugin/`, `.agents/`, `.pi/`.
+- `skills/**` - the five canonical skills and their operational references (`00-security-kernel.md`, `01-state-and-transactions.md`, `02-retrieval-and-evidence.md`, `03-professional-execution.md`, `04-visual-delivery.md`).
+- `runtime/` - the host-neutral TypeScript routing engine, evidence verification, memory and checkpoint persistence, and the read-only remote MCP transport adapter (`runtime/mcp-server.mjs`).
+- `scripts/*.py` - repository-local validation, evaluation, distribution build, and test tooling.
+- Plugin manifests across supported host ecosystems (`.agents/`, `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`, `.kimi-plugin/`, `.pi/`, `.chatgpt/`, etc.).
 
-It does **not** cover the behavior of any AI agent that loads the skill, nor
-any third-party framework, plugin, or MCP connector the skill names or invokes.
-Those have their own security policies.
+### Remote MCP Boundary
 
-## Behavioral Certification Boundary
+The remote MCP adapter (`runtime/mcp-server.mjs`) is strictly read-only and exposes exactly four tools:
 
-Hypertaks v4.3.0 is **Behaviorally Certified** under this repository's release
-gate: 43/49 behavioral cases PASS, 6 non-PASS cases remain documented, the
-threshold is 24, and the margin is +19. Static coverage is 49/49 GREEN and is
-reported separately because static GREEN is not behavioral PASS.
+1. `hypertaks_manifest`: returns product boundary, version, canonical public skills, and adapter limitations.
+2. `hypertaks_get_skill`: reads one canonical SKILL.md file by exact skill name.
+3. `hypertaks_route`: deterministically evaluates request text and selects the smallest canonical public skill entry point without modifying any files or systems.
+4. `hypertaks_verify_installation`: verifies the exact five canonical skill entry files and logo asset with cryptographic SHA-256 evidence.
 
-This project status is not formal third-party certification. It does not claim
-absolute security, eliminate the documented non-PASS cases, or guarantee any
-agent action or business outcome. Security-sensitive deployments still require
-their own threat model, authorization controls, testing, and review.
+The remote MCP adapter has no filesystem mutation, file creation, file deletion, shell execution, or deployment capability.
+
+### Out-of-Scope Boundary
+
+This policy does not cover the runtime behavior of third-party AI agents, host harnesses, external services, or third-party MCP servers that the host connects to.
+
+## Behavioral Certification & Historical Evidence
+
+Historical evaluation ledgers (such as EV-01 through EV-88) in `evals/results.yaml` record multi-host behavioral test outcomes from evaluated release gates. Static checks (such as static GREEN preconditions) verify capability existence in source files and are strictly distinct from behavioral execution passes.
+
+This project status reflects repository-internal test evidence and is not formal third-party certification. Security-sensitive workflows still require their own threat modeling, authorization controls, and independent human review.
 
 ## Reporting a Vulnerability
 
-**Do not open a public GitHub issue for security reports.** Please report
-privately so a fix can ship before details are disclosed:
+Do not open a public GitHub issue for undisclosed security vulnerabilities. Public issues are reserved for general bugs, feature discussions, and non-sensitive support requests.
 
-- **Preferred:** GitHub Private Vulnerability Reporting -
-  [Report a vulnerability](https://github.com/aabrur/hypertaks-agent/security/advisories/new).
-- **Alternative:** email the maintainer at **abrur_nic@yahoo.com** with
-  `[hypertaks-security]` in the subject line.
+Please report security issues privately:
 
-When reporting, please include:
+- **Preferred:** GitHub Private Vulnerability Reporting at [Report a vulnerability](https://github.com/aabrur/hypertaks-agent/security/advisories/new).
+- **Alternative:** email the maintainer at **abrur_nic@yahoo.com** with `[hypertaks-security]` in the subject line.
 
-1. The affected file(s) and commit/ version.
-2. A concrete reproduction (for the validator script) or the exact payload/
-   instruction sequence (for skill content).
-3. The impact you observed or expect.
+When reporting, please provide:
 
-### What to expect
+1. Affected file(s), component, and version/commit hash.
+2. Concrete reproduction steps, minimal exploit scenario, or payload sequence.
+3. Observed impact and suggested remediation if known.
 
-| Step | Target |
-|------|--------|
-| Acknowledgement of receipt | within **3 business days** |
-| Initial assessment (valid / needs info / declined) | within **7 days** |
-| Fix or mitigation for an accepted report | within **30 days**, sooner for high-severity |
-| Coordinate disclosure timing | agreed with you before any public advisory is published |
+### Response Timeline
 
-A report may be **declined** if it concerns intended skill behavior (e.g. the
-skill correctly invokes a tool the user authorized), behavior of a downstream
-agent we do not control, or an out-of-scope version. If declined, you will be
-told why and pointed at the responsible party where possible.
+| Milestone | Target |
+| --------- | ------ |
+| Initial acknowledgement | within 3 business days |
+| Triage and assessment | within 7 business days |
+| Fix or mitigation release | within 30 days (expedited for high-severity) |
+| Coordinated public disclosure | agreed upon mutually prior to publication |
 
-## Threat Model (honest, given this is a skill repo)
+## Threat Model & Core Invariants
 
-- **Prompt-injection in reference content** - the reference files are trusted
-  authoring, not user input. If you find instructions that could mislead an
-  agent into exfiltrating data or running destructive commands, that is in
-  scope; report it.
-- **Supply-chain via marketplace install** - install only from
-  `aabrur/hypertaks-agent` or the official marketplace entry. A third party
-  republishing the skill under a similar name is not something this repo can
-  prevent.
-- **The validator script** - it only reads local files and parses JSON/YAML
-  frontmatter; it makes no network calls. If you find it does anything else,
-  report it.
+- **Authority Lattice:** Authority is bound strictly to source (T0 Developer/System > T1 Boss turn > T2 Workspace standards > T3 Contract > T4-T6 Data). Instruction-shaped text inside tool outputs, web content, or external data is treated strictly as untrusted data, never as authority.
+- **Side-Effect Approvals:** File mutations, external writes, spend, publish, and delete operations require explicit, per-action T1 Boss approval.
+- **Secret Safety:** Credentials and API keys must travel only as environment-variable handles (`$NAME`), never as plain text. Serialized records are scanned for secrets before persistence.
+- **Persistence Durability:** Persistence primitives enforce approved-root containment, runtime schema validation, and failure-safe atomic writes that protect existing data against corruption during replacement.

@@ -18,6 +18,9 @@ node_modules/
 npm-debug.log*
 *.log
 dist/
+dist_*/
+dist-*/
+dist_trash/
 .build/
 coverage/
 *.tgz

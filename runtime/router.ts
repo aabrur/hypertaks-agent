@@ -110,7 +110,13 @@ export interface ContractActivationInput {
 }
 
 export type ContractActivation =
-  | { readonly active: true; readonly evidence: string; readonly contractId: string }
+  | {
+      readonly active: true;
+      readonly evidence: string;
+      readonly contractId: string;
+      readonly bootstrapStatus?: "SUCCESS" | "DEGRADED" | "SKIPPED";
+      readonly bootstrapReason?: string;
+    }
   | { readonly active: false; readonly reason: string; readonly contractId: string };
 
 function assertNever(value: never): never {
@@ -301,12 +307,21 @@ export function activateContract(input: ContractActivationInput): ContractActiva
     result = { active: true, evidence: normalized, contractId: input.contractId };
   }
 
-  if (result.active && input.projectRoot) {
-    try {
-      const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
-      bootstrapProjectWorkspace(input.projectRoot, cleanProjectId);
-    } catch {
-      // workspace bootstrap is fail-safe
+  if (result.active) {
+    if (input.projectRoot) {
+      try {
+        const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
+        bootstrapProjectWorkspace(input.projectRoot, cleanProjectId);
+        result = { ...result, bootstrapStatus: "SUCCESS" };
+      } catch (error) {
+        result = {
+          ...result,
+          bootstrapStatus: "DEGRADED",
+          bootstrapReason: error instanceof Error ? error.message : "Workspace bootstrap failed.",
+        };
+      }
+    } else {
+      result = { ...result, bootstrapStatus: "SKIPPED" };
     }
   }
 
