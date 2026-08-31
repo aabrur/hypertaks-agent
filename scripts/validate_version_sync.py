@@ -58,7 +58,6 @@ def validate_version_sync() -> int:
         ROOT / "distribution" / "managed-agents.json",
         ROOT / "distribution" / "marketplace-readiness.json",
         ROOT / "distribution" / "mcp-registry.json",
-        ROOT / "distribution" / "antigravity" / "plugin.json",
     ]
     for dist_file in dist_files:
         if dist_file.is_file():

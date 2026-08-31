@@ -5,7 +5,7 @@
   "repositoryUrl": "https://github.com/aabrur/hypertaks-agent",
   "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
   "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
-  "version": "4.5.5",
+  "version": "4.5.6",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
   "privacyUrl": "https://hypertaks.crimsonriftstudio.com/privacy",

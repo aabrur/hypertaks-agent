@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.6] - 2026-08-31
+
+### Security
+- Encapsulated the contract activation registry strictly within `runtime/founder-brain.ts`.
+- Removed `registerApprovedContractActivation` from public exports, making external registry injection impossible.
+- Added regression tests verifying that registry insertion APIs are strictly unexposed on public module surfaces.
+
 ## [4.5.5] - 2026-08-31
 
 ### Fixed

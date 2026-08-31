@@ -10,7 +10,7 @@
 
 **Turn a request into a governed contract, specialist execution, verified evidence, and a founder-grade result.**
 
-[![Release](https://img.shields.io/badge/release-v4.5.5-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.5)
+[![Release](https://img.shields.io/badge/release-v4.5.6-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.6)
 [![Public skills](https://img.shields.io/badge/public%20skills-5-111827)](#the-five-public-skills)
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b)](LICENSE)

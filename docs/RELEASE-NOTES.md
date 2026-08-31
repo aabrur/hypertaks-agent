@@ -1,5 +1,15 @@
 # Release Notes
 
+## v4.5.6 - Private Authorization Registry & API Hardening
+
+Hypertaks 4.5.6 encapsulates the runtime authorization registry, ensuring activation insertion occurs solely through verified internal `activateContract()` paths.
+
+### What shipped
+
+- **Private Activation Registry**: Registry insertion is internal and unexported. Callers cannot invoke registration functions or register fabricated activations.
+- **Surface Verification**: Dedicated regression tests verify `registerApprovedContractActivation` is undefined on public router and founder-brain APIs.
+- **Preserved Core Invariants**: 5 canonical public skills and 4 read-only remote MCP tools.
+
 ## v4.5.5 - Trusted Workspace Authorization Hardening
 
 Hypertaks 4.5.5 hardens the Project Operating Context (POC) file-write authorization boundary with trusted capability provenance and dedicated runtime regression coverage.

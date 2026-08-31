@@ -99,9 +99,20 @@ const pocDir = (repo, projectId) => path.join(repo, '.hypertaks', 'projects', pr
   );
 }
 
-// D: forged activation object passed to mintWorkspaceWriteGrant -> rejected
+// D: registerApprovedContractActivation is not exported; forged activation object rejected
 {
   const repo = makeRepo();
+  assert.equal(
+    router.registerApprovedContractActivation,
+    undefined,
+    'D: registerApprovedContractActivation must not be exposed on public router API',
+  );
+  const founderBrain = require(path.resolve(path.dirname(compiledPath), 'founder-brain.js'));
+  assert.equal(
+    founderBrain.registerApprovedContractActivation,
+    undefined,
+    'D: registerApprovedContractActivation must not be exposed on founder-brain module',
+  );
   assert.throws(
     () => router.mintWorkspaceWriteGrant({ active: true, contractId: 'HT-FORGED', evidence: 'APPROVE HT-FORGED', contractPermissions: ['PERM_FILE_WRITE'] }, 'FORGED', repo),
     /PERMISSION_DENIED/,
