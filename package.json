@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.5.4",
+  "version": "4.5.5",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
@@ -89,7 +89,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build:runtime": "tsc -p tsconfig.json",
-    "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js",
+    "test:poc": "node runtime/poc.test.cjs .build/runtime/router.js",
+    "test:runtime": "node runtime/router.test.cjs .build/runtime/router.js && node runtime/poc.test.cjs .build/runtime/router.js",
     "check:version-sync": "python scripts/validate_version_sync.py",
     "check:distribution": "python scripts/validate_version_sync.py && python scripts/validate_distributions.py && python scripts/validate_coding_agents.py && python scripts/validate_managed_agents.py && python scripts/validate_chat_selfhosted_agents.py && python scripts/validate_plugin_compatibility.py && python scripts/validate_marketplace_readiness.py && python scripts/build_distributions.py antigravity --check-only && python scripts/build_distributions.py openai --check-only",
     "build:distribution": "python scripts/build_distributions.py antigravity",

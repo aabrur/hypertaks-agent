@@ -15,10 +15,10 @@
         "source": "github",
         "repo": "aabrur/hypertaks-agent",
         "ref": "main",
-        "version": "4.5.4"
+        "version": "4.5.5"
       },
       "description": "Founder Operating System with secure continuity, Graphify routing, Obsidian-compatible memory, and proof of done.",
-      "version": "4.5.4",
+      "version": "4.5.5",
       "license": "MIT",
       "keywords": [
         "founder",

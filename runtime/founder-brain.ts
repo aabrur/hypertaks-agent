@@ -385,6 +385,105 @@ export function assertValidApprovalProof(proof: BossApprovalProof | null, contra
   }
 }
 
+/**
+ * Effect-based authorization capability for Project Operating Context creation.
+ * Grants are minted only from an authentic T1 contract activation whose approved
+ * permission list explicitly includes PERM_FILE_WRITE, and are registered in a
+ * process-local WeakSet so forged, fabricated, or lookalike grant objects are
+ * rejected at the filesystem mutation boundary.
+ */
+export interface WorkspaceWriteGrant {
+  readonly grantKind: "hypertaks.workspace-write.v1";
+  readonly contractId: string;
+  readonly projectId: string;
+  readonly approvedRoot: string;
+  readonly permission: "PERM_FILE_WRITE";
+  readonly evidence: string;
+  readonly mintedAt: string;
+}
+
+const workspaceWriteGrantRegistry = new WeakSet<object>();
+const approvedActivationRegistry = new WeakSet<object>();
+
+export interface ContractActivationSource {
+  readonly active: boolean;
+  readonly contractId: string;
+  readonly evidence?: string | undefined;
+  readonly contractPermissions?: readonly string[] | undefined;
+  readonly projectRoot?: string | undefined;
+  readonly bootstrapStatus?: "SUCCESS" | "DEGRADED" | "SKIPPED" | "DENIED" | undefined;
+  readonly bootstrapReason?: string | undefined;
+}
+
+export function registerApprovedContractActivation(activation: ContractActivationSource): void {
+  if (activation && typeof activation === "object" && activation.active === true) {
+    approvedActivationRegistry.add(activation);
+  }
+}
+
+export function isApprovedContractActivation(activation: unknown): activation is ContractActivationSource {
+  return typeof activation === "object" && activation !== null && approvedActivationRegistry.has(activation);
+}
+
+export function mintWorkspaceWriteGrant(
+  activation: ContractActivationSource,
+  projectId: string,
+  projectRoot: string,
+): WorkspaceWriteGrant {
+  if (!isApprovedContractActivation(activation)) {
+    throw new Error(
+      "PERMISSION_DENIED: Workspace write grant requires an authentic T1 contract activation produced by activateContract."
+    );
+  }
+  if (!activation.active || !activation.contractId || !activation.evidence) {
+    throw new Error(
+      "PERMISSION_DENIED: Workspace creation requires an active T1 contract approval."
+    );
+  }
+  if (!activation.contractPermissions?.includes("PERM_FILE_WRITE")) {
+    throw new Error(
+      "PERMISSION_DENIED: The approved contract does not grant PERM_FILE_WRITE."
+    );
+  }
+  validateRecordId(projectId);
+  const canonicalRoot = normalizeRoot(projectRoot, false);
+  const grant: WorkspaceWriteGrant = Object.freeze({
+    grantKind: "hypertaks.workspace-write.v1",
+    contractId: activation.contractId,
+    projectId,
+    approvedRoot: canonicalRoot,
+    permission: "PERM_FILE_WRITE",
+    evidence: activation.evidence,
+    mintedAt: new Date().toISOString(),
+  });
+  workspaceWriteGrantRegistry.add(grant);
+  return grant;
+}
+
+export function assertWorkspaceWriteGrant(
+  grant: WorkspaceWriteGrant | null | undefined,
+  projectId: string,
+  projectRoot?: string,
+): asserts grant is WorkspaceWriteGrant {
+  if (grant === null || grant === undefined || typeof grant !== "object" || !workspaceWriteGrantRegistry.has(grant)) {
+    throw new Error(
+      "PERMISSION_DENIED: Project Operating Context creation requires a trusted workspace-write grant minted from an active contract that grants PERM_FILE_WRITE."
+    );
+  }
+  if (grant.grantKind !== "hypertaks.workspace-write.v1" || grant.permission !== "PERM_FILE_WRITE") {
+    throw new Error("PERMISSION_DENIED: The workspace-write grant does not carry PERM_FILE_WRITE.");
+  }
+  if (grant.projectId !== projectId) {
+    throw new Error("PERMISSION_DENIED: The workspace-write grant does not cover this project id.");
+  }
+  if (projectRoot !== undefined) {
+    const canonicalRoot = normalizeRoot(projectRoot, false);
+    if (grant.approvedRoot !== canonicalRoot) {
+      throw new Error("PERMISSION_DENIED: The workspace-write grant is bound to a different project root.");
+    }
+  }
+}
+
 function git(repoRoot: string, args: readonly string[]): string {
   return execFileSync("git", ["-C", repoRoot, ...args], {
     encoding: "utf8",
@@ -768,43 +867,41 @@ export const PROJECT_OPERATING_CONTEXT_FILES: readonly string[] = [
   "security.ctx.md",
 ];
 
-export interface BootstrapWorkspaceOptions {
-  readonly agentName?: string;
-  readonly permissions?: readonly string[];
-  readonly allowFileWrite?: boolean;
+export interface ContextGitState {
+  readonly commit: string;
+  readonly branch: string;
+  readonly clean: boolean;
 }
 
-export function bootstrapProjectWorkspace(
-  projectRoot: string,
-  projectId: string,
-  agentNameOrOptions?: string | BootstrapWorkspaceOptions
-): readonly string[] {
-  validateRecordId(projectId);
-  const options: BootstrapWorkspaceOptions =
-    typeof agentNameOrOptions === "string"
-      ? { agentName: agentNameOrOptions }
-      : (agentNameOrOptions ?? {});
-  const agentName = options.agentName ?? "Hypertaks-Founder";
-
-  const hasFileWritePermission = Boolean(
-    options.allowFileWrite ||
-    (Array.isArray(options.permissions) && options.permissions.includes("PERM_FILE_WRITE"))
-  );
-  if (!hasFileWritePermission) {
-    throw new Error("PERMISSION_DENIED: Project workspace bootstrap requires explicit PERM_FILE_WRITE authorization.");
+export function safeContextGitState(projectRoot: string): ContextGitState {
+  try {
+    return {
+      commit: git(projectRoot, ["rev-parse", "HEAD"]),
+      branch: git(projectRoot, ["rev-parse", "--abbrev-ref", "HEAD"]),
+      clean: git(projectRoot, ["status", "--porcelain"]).length === 0,
+    };
+  } catch {
+    return { commit: "unknown", branch: "unknown", clean: false };
   }
+}
 
-  const targetDir = path.posix.join(".hypertaks", "projects", projectId);
-  const canonicalRoot = normalizeRoot(projectRoot, false);
-  const created: string[] = [];
-
-  for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
-    const relativePath = path.posix.join(targetDir, filename);
-    const fullPath = resolveWithinApprovedRoot(canonicalRoot, relativePath, true);
-    if (!fs.existsSync(fullPath)) {
-      const title = filename.replace(".ctx.md", "");
-      const timestamp = new Date().toISOString();
-      const content = `---
+/**
+ * Canonical single source of truth for generated Project Operating Context
+ * documents. Both the runtime bootstrap and the standalone CLI script render
+ * through this function so the two generation paths cannot drift.
+ *
+ * Generated documents are unverified scaffolding: they begin as DRAFT, never
+ * claim verified evidence, and never claim that no unresolved issues exist.
+ */
+export function generateProjectContextDocument(
+  filename: string,
+  projectId: string,
+  agentName: string,
+  gitState: ContextGitState,
+): string {
+  const title = filename.replace(".ctx.md", "");
+  const timestamp = new Date().toISOString();
+  return `---
 id: ${title}
 version: 1.0.0
 timestamp: ${timestamp}
@@ -813,20 +910,26 @@ provenance:
   agent_id: ${agentName}
   source_file: .hypertaks/projects/${projectId}/${filename}
   contract_id: HT-${projectId}
+source_git_state:
+  commit_sha: ${gitState.commit}
+  branch: ${gitState.branch}
+  clean_tree: ${gitState.clean}
 authority: 6
 freshness: FRESH
 status: ACTIVE
 lifecycle_state: DRAFT
+verification: UNVERIFIED
 ---
 
 # ${title} - Project Operating Context
 
 ## Domain Adaptation & Purpose
-Universal living context document for ${title} adaptively serving software, business, operational, healthcare, financial, or governance domains.
+Universal living context document for ${title} adaptively serving software, business, operational, healthcare, financial, research, or governance domains.
 
 ## Current State & Evolution
-- Status: Active Living Document (Scaffolded)
-- Lifecycle: Initialized stub pending project execution
+- Status: Active living document (generated scaffold, not yet verified)
+- Generated At: ${timestamp}
+- Verification: UNVERIFIED - no project-specific evidence has been assessed yet. The freshness timestamp describes generation time only, not evidentiary verification.
 
 ## Decisions & Rationale
 ### Facts vs Assumptions
@@ -849,13 +952,41 @@ Universal living context document for ${title} adaptively serving software, busi
 - Inter-file links to sibling *.ctx.md context documents within .hypertaks/projects/${projectId}/.
 
 ## Unresolved Issues & Historical Decisions
-- Historical Decisions: Workspace structure initialized.
-- Unresolved Issues: Scaffold initialized pending domain implementation and empirical verification.
+- Historical Decisions: Workspace initialized from a generated scaffold.
+- Unresolved Issues: Not yet assessed. This document was generated without project-specific evidence; assessment is required before any issue can be declared resolved or none pending.
+
+## Evidence Promotion
+- lifecycle_state advances from DRAFT to VERIFIED only when actual project evidence or explicit Boss review is recorded in this document. Generated scaffolding never self-promotes.
 
 ## Future Implications & Directives
 - Persistent foundation for human operators and participating agents.
 `;
-      atomicWriteText(canonicalRoot, relativePath, content);
+}
+
+export function bootstrapProjectWorkspace(
+  projectRoot: string,
+  projectId: string,
+  grant: WorkspaceWriteGrant | null | undefined,
+  agentName: string = "Hypertaks-Founder",
+  fsOps?: AtomicFsOperations,
+): readonly string[] {
+  // Authorization first: no filesystem effect may occur without a trusted grant
+  // minted from an authentic T1 contract activation that grants PERM_FILE_WRITE.
+  // This closes direct call bypass at the actual mutation boundary.
+  assertWorkspaceWriteGrant(grant, projectId, projectRoot);
+  validateRecordId(projectId);
+  const sanitizedAgent = sanitizeAgentName(agentName);
+  const targetDir = path.posix.join(".hypertaks", "projects", projectId);
+  const canonicalRoot = normalizeRoot(projectRoot, false);
+  const gitState = safeContextGitState(canonicalRoot);
+  const created: string[] = [];
+
+  for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
+    const relativePath = path.posix.join(targetDir, filename);
+    const fullPath = resolveWithinApprovedRoot(canonicalRoot, relativePath, true);
+    if (!fs.existsSync(fullPath)) {
+      const content = generateProjectContextDocument(filename, projectId, sanitizedAgent, gitState);
+      atomicWriteText(canonicalRoot, relativePath, content, fsOps);
       created.push(fullPath);
     }
   }

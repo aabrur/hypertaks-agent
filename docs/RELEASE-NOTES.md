@@ -1,5 +1,22 @@
 # Release Notes
 
+## v4.5.5 - Trusted Workspace Authorization Hardening
+
+Hypertaks 4.5.5 hardens the Project Operating Context (POC) file-write authorization boundary with trusted capability provenance and dedicated runtime regression coverage.
+
+### What shipped
+
+- **Trusted Capability Provenance**: Project Operating Context filesystem creation now requires a `WorkspaceWriteGrant` capability minted exclusively from authentic T1 Boss activations with explicit `PERM_FILE_WRITE` authorization.
+- **Direct-Call Bypass Closure**: Direct invocations of `bootstrapProjectWorkspace` cannot bypass authorization via booleans, caller-supplied raw permission arrays, or fabricated grant/activation objects.
+- **Canonical Bootstrap Delegation**: `scripts/bootstrap-project-context.js` is unified as a thin CLI wrapper over the compiled runtime generator, eliminating duplicate templates.
+- **Dedicated POC Regression Suite**: `runtime/poc.test.cjs` runs as part of standard runtime validation, verifying all 14 POC security invariants.
+
+### Product boundary
+
+- Exactly five canonical public skills.
+- Exactly four read-only remote MCP tools.
+- Zero remote mutation, filesystem write, or arbitrary shell execution capabilities on public MCP surfaces.
+
 ## v4.5.4 - Security Hardening & Release Integrity
 
 Hypertaks 4.5.4 is a patch release focused on authorization hardening, Project Operating Context (POC) evidence truthfulness, intake protocol consistency, release metadata synchronization, and automated validation coverage.

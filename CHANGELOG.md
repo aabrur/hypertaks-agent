@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.5] - 2026-08-31
+
+### Fixed
+- Hardened Project Operating Context (POC) filesystem authorization by requiring internally trusted capability grants bound to verified T1 Boss approvals, approved project roots, and explicit `PERM_FILE_WRITE`.
+- Closed direct `bootstrapProjectWorkspace` bypasses from raw permission arrays, boolean flags (`allowFileWrite`), and forged capability or activation objects.
+- Unified `scripts/bootstrap-project-context.js` CLI to delegate directly to the canonical compiled runtime generator.
+
+### Added
+- Dedicated runtime POC security regression suite (`runtime/poc.test.cjs`) covering 14 authorization boundaries, traversal protections, symlink escapes, partial failures, and idempotency.
+
+### Changed
+- Preserved the invariant of exactly four read-only MCP remote tools and five canonical public skills.
+
 ## [4.5.4] - 2026-08-31
 
 ### Fixed

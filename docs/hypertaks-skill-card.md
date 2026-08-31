@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** 4.5.4
+**Version:** 4.5.5
 
 ## Release status
 
@@ -158,6 +158,7 @@ and session continuity.
 
 ## Work log
 
+`2026-08-31 | Hypertaks v4.5.5 patch release: trusted workspace write capability provenance, direct bootstrap bypass closure, and dedicated POC regression suite.`
 `2026-08-31 | Hypertaks v4.5.4 public release: hardened authorization, POC evidence truthfulness, intake protocol consistency, and release metadata synchronization.`
 `2026-08-11 | Hypertaks v4.5.2 public release: founder-grade README, synchronized live product records, and a non-production Founder OS expansion lab with audited prototypes, canonical authority classes, resumable RESEARCH evidence, and explicit production no-go boundaries.`
 

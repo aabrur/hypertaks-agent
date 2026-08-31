@@ -95,6 +95,7 @@ const approvedActivation = router.activateContract({
   isBossTurn: true,
   requiresMutationOrExternalEffect: true,
   projectRoot: root,
+  contractPermissions: ['PERM_FILE_WRITE'],
 });
 assert.equal(approvedActivation.active, true);
 assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'Vision.ctx.md')));
@@ -255,6 +256,7 @@ const degradedActivation = router.activateContract({
   isBossTurn: true,
   requiresMutationOrExternalEffect: true,
   projectRoot: path.join(persistDir, 'non_existent_root_dir_without_create'),
+  contractPermissions: ['PERM_FILE_WRITE'],
 });
 assert.equal(degradedActivation.active, true);
 assert.equal(degradedActivation.bootstrapStatus, 'DEGRADED');
@@ -642,16 +644,23 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('U-Experience.ctx.md'));
   assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('prompt-build-continunity-prompt.ctx.md'));
 
-  // Permission boundary: bootstrap without PERM_FILE_WRITE must throw PERMISSION_DENIED
+  // Permission boundary: bootstrap without a trusted grant must throw PERMISSION_DENIED
   assert.throws(
-    () => router.bootstrapProjectWorkspace(repo, 'unauthorized-test-poc'),
+    () => router.bootstrapProjectWorkspace(repo, 'unauthorized-test-poc', null),
     /PERMISSION_DENIED/
   );
 
-  const createdFiles = router.bootstrapProjectWorkspace(repo, 'test-poc-workspace', {
-    permissions: ['PERM_FILE_WRITE'],
+  const activation = router.activateContract({
+    contractId: 'HT-test-poc-workspace',
+    bossMessage: 'APPROVE HT-test-poc-workspace',
+    isBossTurn: true,
+    requiresMutationOrExternalEffect: true,
+    projectRoot: repo,
+    contractPermissions: ['PERM_FILE_WRITE'],
   });
-  assert.equal(createdFiles.length, 13);
+  assert.equal(activation.active, true);
+  assert.equal(activation.bootstrapStatus, 'SUCCESS');
+
   for (const filename of router.PROJECT_OPERATING_CONTEXT_FILES) {
     const filePath = path.join(repo, '.hypertaks', 'projects', 'test-poc-workspace', filename);
     assert.ok(fs.existsSync(filePath), `Expected file ${filename} to exist`);

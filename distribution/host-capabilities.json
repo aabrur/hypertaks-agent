@@ -629,7 +629,7 @@
       "evidenceStatus": "PARTIAL",
       "classification": "MANAGED_INSTALL",
       "evidenceType": "static-package",
-       "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
+      "evidenceNote": "Adapter package present and structurally validated; real host lifecycle not observed.",
       "evidencePath": "evals/hosts/goose/REPORT.md"
     },
     {

@@ -1,4 +1,8 @@
-import { bootstrapProjectWorkspace } from "./founder-brain";
+import {
+  bootstrapProjectWorkspace,
+  mintWorkspaceWriteGrant,
+  registerApprovedContractActivation,
+} from "./founder-brain";
 export * from "./founder-brain";
 
 export type QueryClass =
@@ -107,6 +111,7 @@ export interface ContractActivationInput {
   readonly isBossTurn: boolean;
   readonly requiresMutationOrExternalEffect: boolean;
   readonly projectRoot?: string;
+  readonly contractPermissions?: readonly string[];
   readonly grantedPermissions?: readonly string[];
 }
 
@@ -115,8 +120,10 @@ export type ContractActivation =
       readonly active: true;
       readonly evidence: string;
       readonly contractId: string;
-      readonly bootstrapStatus?: "SUCCESS" | "DEGRADED" | "SKIPPED";
-      readonly bootstrapReason?: string;
+      readonly contractPermissions?: readonly string[] | undefined;
+      readonly projectRoot?: string | undefined;
+      readonly bootstrapStatus?: "SUCCESS" | "DEGRADED" | "SKIPPED" | "DENIED" | undefined;
+      readonly bootstrapReason?: string | undefined;
     }
   | { readonly active: false; readonly reason: string; readonly contractId: string };
 
@@ -292,6 +299,9 @@ export function activateContract(input: ContractActivationInput): ContractActiva
   if (/\b(?:not approved|do not proceed|don't proceed|never proceed|not authorized|reject(?:ed)?)\b/u.test(lower)) {
     return { active: false, reason: "The Boss message contains explicit negation or rejection.", contractId: input.contractId };
   }
+
+  const permissions = input.contractPermissions ?? input.grantedPermissions;
+
   let result: ContractActivation = { active: false, reason: "The Boss message is not an explicit standalone affirmative.", contractId: input.contractId };
   if (input.requiresMutationOrExternalEffect) {
     const expected = `APPROVE ${input.contractId}`.toUpperCase();
@@ -303,31 +313,43 @@ export function activateContract(input: ContractActivationInput): ContractActiva
         contractId: input.contractId,
       };
     }
-    result = { active: true, evidence: expected, contractId: input.contractId };
+    result = {
+      active: true,
+      evidence: expected,
+      contractId: input.contractId,
+      contractPermissions: permissions,
+      projectRoot: input.projectRoot,
+    };
   } else if (/^(?:yes|approved|approve|go|proceed)(?:[.!])?$/iu.test(normalized)) {
-    result = { active: true, evidence: normalized, contractId: input.contractId };
+    result = {
+      active: true,
+      evidence: normalized,
+      contractId: input.contractId,
+      contractPermissions: permissions,
+      projectRoot: input.projectRoot,
+    };
   }
 
   if (result.active) {
+    registerApprovedContractActivation(result);
+
     if (input.projectRoot) {
-      const hasWritePermission = Boolean(
-        input.grantedPermissions?.includes("PERM_FILE_WRITE") ||
-        (input.requiresMutationOrExternalEffect && result.active)
-      );
-      if (!hasWritePermission) {
+      const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
+      // Effect-based permission law: Project Operating Context creation is a
+      // filesystem mutation and requires PERM_FILE_WRITE to be explicitly
+      // granted by the approved contract. Authorization is enforced here AND
+      // re-proven at the mutation boundary via a registered grant, so a caller
+      // cannot bypass it by supplying projectRoot alone.
+      if (!permissions?.includes("PERM_FILE_WRITE")) {
         result = {
           ...result,
-          bootstrapStatus: "SKIPPED",
-          bootstrapReason: "Bootstrap skipped: contract does not have PERM_FILE_WRITE authorization.",
+          bootstrapStatus: "DENIED",
+          bootstrapReason: "PERMISSION_DENIED: the approved contract does not grant PERM_FILE_WRITE; no Project Operating Context files were created.",
         };
       } else {
         try {
-          const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
-          bootstrapProjectWorkspace(input.projectRoot, cleanProjectId, {
-            agentName: "Hypertaks-Founder",
-            permissions: input.grantedPermissions || ["PERM_FILE_WRITE"],
-            allowFileWrite: true,
-          });
+          const grant = mintWorkspaceWriteGrant(result, cleanProjectId, input.projectRoot);
+          bootstrapProjectWorkspace(input.projectRoot, cleanProjectId, grant);
           result = { ...result, bootstrapStatus: "SUCCESS" };
         } catch (error) {
           result = {
@@ -340,6 +362,7 @@ export function activateContract(input: ContractActivationInput): ContractActiva
     } else {
       result = { ...result, bootstrapStatus: "SKIPPED" };
     }
+    registerApprovedContractActivation(result);
   }
 
   return result;

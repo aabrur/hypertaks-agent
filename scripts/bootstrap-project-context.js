@@ -1,22 +1,65 @@
 #!/usr/bin/env node
 
 /**
- * Project Operating Context (POC) Bootstrap Module
- * 
- * Automatically creates and maintains the 13-file Project Operating Context
- * for substantial projects when a contract with PERM_FILE_WRITE is approved.
- * 
- * This is the runtime implementation of the "Hidden Deliverable Foundation"
- * mechanism referenced in the Hypertaks Founder OS Expansion (v4.5.2).
- * 
- * Files are created under: .hypertaks/projects/<projectId>/
+ * Project Operating Context (POC) Bootstrap CLI
+ *
+ * Thin, authorization-required wrapper around the canonical runtime generator
+ * in runtime/founder-brain.ts (compiled to .build/runtime/router.js).
+ * This script performs no independent filesystem writes or templating: every
+ * mutation goes through the runtime's authorized bootstrap path, which requires:
+ *
+ *   1. a valid T1 Boss approval (canonical APPROVE <contract-id> signature);
+ *   2. the approved contract to explicitly grant PERM_FILE_WRITE;
+ *   3. an approved, contained project root revalidated at write time;
+ *   4. a valid project id and successful containment.
+ *
+ * The 13 context documents are rendered by the single canonical template in
+ * runtime/founder-brain.ts, ensuring this CLI and runtime cannot drift.
+ *
+ * Usage:
+ *   node scripts/bootstrap-project-context.js \
+ *     --project-root <root> --project-id <id> --contract-id HT-<id> \
+ *     --permissions PERM_FILE_WRITE --approval "APPROVE HT-<id>"
+ *
+ * Required context documents:
+ *   - Vision.ctx.md
+ *   - Requirements.ctx.md
+ *   - U-Experience.ctx.md
+ *   - architecture.ctx.md
+ *   - law.ctx.md
+ *   - database.ctx.md
+ *   - design.ctx.md
+ *   - api.ctx.md
+ *   - coding-rules.ctx.md
+ *   - roadmap.ctx.md
+ *   - preference.ctx.md
+ *   - prompt-build-continunity-prompt.ctx.md
+ *   - security.ctx.md
+ *
+ * Each generated context document functions as a domain-universal living document
+ * with standardized sections:
+ *   - Facts vs Assumptions: verifiable primary evidence vs working hypotheses.
+ *   - Requirements vs Preferences: core non-negotiables vs flexible options.
+ *   - Constraints vs Recommendations: hard invariants vs best practices.
+ *   - Evidence vs Interpretation: primary data vs analytical synthesis.
+ *   - Dependencies & Context Bindings
+ *   - Unresolved Issues & Historical Decisions
  */
 
-const fs = require('fs');
+'use strict';
+
 const path = require('path');
 
-// The exact 13 required context files for Hidden Deliverable Foundation
-const CONTEXT_FILES = [
+let router;
+try {
+  router = require(path.join(__dirname, '..', '.build', 'runtime', 'router.js'));
+} catch {
+  console.error('bootstrap-project-context: compiled runtime not found.');
+  console.error('Run `npm run build:runtime` first, then retry.');
+  process.exit(2);
+}
+
+const CONTEXT_FILES = router.PROJECT_OPERATING_CONTEXT_FILES || [
   'Vision.ctx.md',
   'Requirements.ctx.md',
   'U-Experience.ctx.md',
@@ -32,151 +75,66 @@ const CONTEXT_FILES = [
   'security.ctx.md',
 ];
 
-const FILE_DESCRIPTIONS = {
-  'Vision.ctx.md': 'Core project vision, strategic alignment, executive mission, and business impact.',
-  'Requirements.ctx.md': 'Functional, non-functional, operational, and domain requirements.',
-  'U-Experience.ctx.md': 'User, developer, and operational experience design, journeys, and interaction models.',
-  'architecture.ctx.md': 'System, software, organizational, financial, or operational system architecture.',
-  'law.ctx.md': 'Governance rules, regulatory boundaries, compliance constraints, and legal policies.',
-  'database.ctx.md': 'Information models, schemas, entities, operational datasets, storage systems, and corpora.',
-  'design.ctx.md': 'Design system, visual standards, component specifications, and domain modeling paradigms.',
-  'api.ctx.md': 'Interface contracts, service boundaries, protocols, and integration touchpoints.',
-  'coding-rules.ctx.md': 'Engineering standards, code quality rules, Karpathy guidelines, and development conventions.',
-  'roadmap.ctx.md': 'Strategic milestones, execution phases, release schedules, and future initiatives.',
-  'preference.ctx.md': 'Stakeholder preferences, optional enhancements, style choices, and priorities.',
-  'prompt-build-continunity-prompt.ctx.md': 'Preserved prompt specification for prompt continuity, agent handoffs, and AI context persistence.',
-  'security.ctx.md': 'Security kernel, access boundaries, secret handling, authorization policies, and risk mitigation.',
-};
-
-// Git info helper
-function getGitState(repoRoot) {
-  try {
-    const { execSync } = require('child_process');
-    const commit = execSync('git rev-parse HEAD', { cwd: repoRoot, encoding: 'utf8' }).trim();
-    const branch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: repoRoot, encoding: 'utf8' }).trim();
-    const clean = execSync('git status --porcelain', { cwd: repoRoot, encoding: 'utf8' }).trim() === '';
-    return { commit, branch, clean };
-  } catch {
-    return { commit: 'unknown', branch: 'unknown', clean: false };
-  }
-}
-
-// Generate frontmatter and living document template
-function generateContextDocument(filename, projectId, projectRoot, agentId = 'Hypertaks-Founder') {
-  const gitState = getGitState(projectRoot);
-  const timestamp = new Date().toISOString();
-  const title = filename.replace('.ctx.md', '');
-  const description = FILE_DESCRIPTIONS[filename] || 'Project Operating Context living document.';
-
-  const content = `---
-id: ${title}
-version: 1.0.0
-timestamp: ${timestamp}
-evidence_class: T6_GENERATED
-provenance:
-  agent_id: ${agentId}
-  source_file: .hypertaks/projects/${projectId}/${filename}
-  contract_id: HT-${projectId}
-source_git_state:
-  commit_sha: ${gitState.commit}
-  branch: ${gitState.branch}
-  clean_tree: ${gitState.clean}
-authority: 6
-freshness: FRESH
-status: ACTIVE
-lifecycle_state: DRAFT
----
-
-# ${title} - Project Operating Context
-
-## Domain Adaptation & Purpose
-${description}
-This context document adapts universally to the project domain (software, business, ops, research, finance, healthcare, or governance).
-
-## Current State & Evolution
-- **Status**: Active Living Document (Scaffolded)
-- **Lifecycle**: Initialized stub pending project execution
-
-## Decisions & Rationale
-
-### Facts vs Assumptions
-- **Facts**: Verified primary evidence from repository and active Boss turns.
-- **Assumptions**: Working hypotheses subject to verification.
-
-### Requirements vs Preferences
-- **Requirements**: Hard non-negotiables, contract bounds, and explicit Boss directives.
-- **Preferences**: Flexible choices, aesthetic directions, and optional enhancements.
-
-### Constraints vs Recommendations
-- **Constraints**: Security, legal, architectural, and financial invariants.
-- **Recommendations**: Performance guidance, operational best practices, and guidelines.
-
-### Evidence vs Interpretation
-- **Evidence**: Measured runtime data, test outputs, and source code.
-- **Interpretation**: Analytical conclusions and strategic synthesis.
-
-## Dependencies & Context Bindings
-- Inter-file links to sibling *.ctx.md context documents within .hypertaks/projects/${projectId}/.
-
-## Unresolved Issues & Historical Decisions
-- **Historical Decisions**: Initialized workspace structure.
-- **Unresolved Issues**: Scaffold initialized pending domain implementation and empirical verification.
-
-## Future Implications & Directives
-- Guides participating agents and human operators throughout execution and continuation.
-`;
-  return content;
-}
-
-function bootstrapProjectContext(projectRoot, projectId = 'default', options = {}) {
-  const opts = typeof options === 'string' ? { agentId: options } : options;
-  const agentId = opts.agentId || 'Hypertaks-Founder';
-  const hasPermission = Boolean(
-    opts.allowFileWrite ||
-    opts.allowWrite ||
-    (Array.isArray(opts.permissions) && opts.permissions.includes('PERM_FILE_WRITE'))
-  );
-
-  if (!hasPermission) {
-    throw new Error('PERMISSION_DENIED: Project context bootstrap requires explicit PERM_FILE_WRITE authorization.');
-  }
-
-  const projectDir = path.join(projectRoot, '.hypertaks', 'projects', projectId);
-  fs.mkdirSync(projectDir, { recursive: true });
-
-  const createdFiles = [];
-  for (const filename of CONTEXT_FILES) {
-    const filePath = path.join(projectDir, filename);
-    if (!fs.existsSync(filePath)) {
-      const content = generateContextDocument(filename, projectId, projectRoot, agentId);
-      fs.writeFileSync(filePath, content, 'utf8');
-      createdFiles.push(filePath);
+function parseArgs(argv) {
+  const args = {};
+  for (let i = 0; i < argv.length; i += 2) {
+    const key = argv[i];
+    if (!String(key).startsWith('--') || i + 1 >= argv.length) {
+      throw new Error(`INVALID_ARGUMENTS: expected --key value pairs, saw ${String(key)}`);
     }
+    args[key.slice(2)] = argv[i + 1];
+  }
+  return args;
+}
+
+function runBootstrap(argv) {
+  const args = parseArgs(argv);
+  const required = ['project-root', 'project-id', 'contract-id', 'permissions', 'approval'];
+  const missing = required.filter((key) => !String(args[key] || '').trim());
+  if (missing.length > 0) {
+    throw new Error(`INVALID_ARGUMENTS: missing required options: ${missing.join(', ')}`);
+  }
+  const permissions = String(args['permissions']).split(',').map((item) => item.trim());
+  if (!permissions.includes('PERM_FILE_WRITE')) {
+    throw new Error('PERMISSION_DENIED: --permissions must include PERM_FILE_WRITE for Project Operating Context creation.');
   }
 
+  // The operator running this CLI is the T1 authority for the invocation; the
+  // approval argument must still carry the canonical contract-ID signature,
+  // exactly like an in-conversation T1 approval of a mutation contract.
+  const activation = router.activateContract({
+    contractId: String(args['contract-id']),
+    bossMessage: String(args['approval']),
+    isBossTurn: true,
+    requiresMutationOrExternalEffect: true,
+    projectRoot: String(args['project-root']),
+    contractPermissions: permissions,
+  });
+
+  if (!activation.active) {
+    throw new Error(`ACTIVATION_DENIED: ${activation.reason}`);
+  }
+  if (activation.bootstrapStatus !== 'SUCCESS') {
+    throw new Error(`${activation.bootstrapStatus}: ${activation.bootstrapReason || 'workspace bootstrap did not succeed.'}`);
+  }
   return {
-    projectId,
-    projectDir,
-    filesCount: CONTEXT_FILES.length,
-    createdFiles,
-    contextFiles: CONTEXT_FILES,
+    projectId: String(args['project-id']),
+    bootstrapStatus: activation.bootstrapStatus,
+    evidence: activation.evidence,
   };
 }
 
 module.exports = {
   CONTEXT_FILES,
-  FILE_DESCRIPTIONS,
-  bootstrapProjectContext,
+  runBootstrap,
 };
 
 if (require.main === module) {
-  const targetRoot = process.cwd();
-  const projectId = process.argv[2] || 'default';
-  const allowWrite = process.argv.includes('--allow-write') || process.argv.includes('-y');
-  if (!allowWrite) {
-    console.error('Error: CLI bootstrap requires --allow-write flag to confirm PERM_FILE_WRITE.');
+  try {
+    const result = runBootstrap(process.argv.slice(2));
+    console.log(JSON.stringify(result, null, 2));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
-  const result = bootstrapProjectContext(targetRoot, projectId, { allowFileWrite: true });
-  console.log(JSON.stringify(result, null, 2));
 }
