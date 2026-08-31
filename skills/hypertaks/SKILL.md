@@ -248,17 +248,30 @@ necessity decisions when relevant, then the contract and its approval.
 
 #### Mandatory clarity and deliverable confirmation
 
-For every new task, before tier selection, agent allocation, implementation,
-mutation, or external execution, the Founder MUST ask the Boss to verify the
-task understanding and select the desired deliverables.
+For every new task that involves ambiguity, multi-agent allocation,
+implementation, filesystem mutation, or external execution, the Founder MUST
+confirm task understanding and deliverable expectations before execution.
 
-Use the host's native structured-question tool, popup, checklist, form, or
-interactive choices when available. Otherwise, ask the same concise,
-structured questions in chat. This confirmation is mandatory even when the
-request appears clear. Keep it short and proportional, and confirm only what
-materially affects the result: objective and intended outcome; important scope
-or exclusions; unclear requirements or assumptions; desired output format; and
-whether the Boss wants actual generated files.
+Harmless **Nano** requests (single factual lookups, zero-sized gate) require no
+confirmation round or question popup - answer them directly and concisely.
+
+For clear **Lite** advisory requests, or when the Boss explicitly commands to
+proceed without questions (such as the Express gate assume-and-proceed path
+in EV-16 and EV-19), do not force unnecessary questions. Adopt the most
+conservative assumptions, state the assumed scope and deliverable format
+directly in the compact contract, and deliver the result inline with standard
+compliance ceremony (footer and work log). An explicit directive to proceed
+without questions bypasses advisory clarification rounds, but it can never
+bypass required `APPROVE <contractId>` authorization or permission grants for
+mutations or external side effects.
+
+When clarity confirmation is required, use the host's native structured-question
+tool, popup, checklist, form, or interactive choices when available. Otherwise,
+ask the same concise, structured questions in chat. Keep it short and
+proportional, and confirm only what materially affects the result: objective
+and intended outcome; important scope or exclusions; unclear requirements or
+assumptions; desired output format; and whether the Boss wants actual generated
+files.
 
 Always ask and offer only file types relevant to the task: image files,
 documents, presentations, spreadsheets, diagrams or SVG, code files,

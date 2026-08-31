@@ -205,7 +205,7 @@ def main() -> int:
         for error in errors:
             print(f"  - {error}")
         return 1
-    print("Distribution validation: PASS (22/22 native compatibility)")
+    print("Distribution validation: PASS (22 documented compatible host routes across multiple integration classifications)")
     return 0
 
 

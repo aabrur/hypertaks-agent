@@ -1,5 +1,23 @@
 # Release Notes
 
+## v4.5.4 - Security Hardening & Release Integrity
+
+Hypertaks 4.5.4 is a patch release focused on authorization hardening, Project Operating Context (POC) evidence truthfulness, intake protocol consistency, release metadata synchronization, and automated validation coverage.
+
+### What shipped
+
+- Hardened `bootstrapProjectWorkspace` with mandatory `PERM_FILE_WRITE` permission checks at the mutation boundary.
+- Updated scaffolded POC context documents to declare `lifecycle_state: DRAFT` stubs, eliminating false `VERIFIED` claims on initial scaffolding.
+- Reconciled Mandatory Clarity to allow zero-overhead Nano lookups and Express assume-and-proceed workflows while maintaining strict contract approval for mutations.
+- Synchronized all 22 adapter manifests, distribution files, marketplace records, and documentation on v4.5.4.
+- Added deterministic version synchronization validation to continuous integration.
+
+### Product boundary
+
+- Exactly five canonical public skills.
+- Exactly four read-only remote MCP tools.
+- Zero remote mutation, filesystem write, or arbitrary shell execution capabilities on public MCP surfaces.
+
 ## v4.5.2 - Founder OS Expansion Lab
 
 Hypertaks 4.5.2 packages a founder-grade, evidence-first expansion program

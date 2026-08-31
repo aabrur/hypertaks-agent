@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.4] - 2026-08-31
+
+### Fixed
+- Enforced explicit `PERM_FILE_WRITE` authorization at the actual filesystem mutation boundary for Project Operating Context (POC) bootstrap.
+- Corrected POC initial scaffolding metadata to truthful `lifecycle_state: DRAFT` and removed unsupported verified assertions on freshly generated stubs.
+- Reconciled Mandatory Clarity in `skills/hypertaks/SKILL.md` with Nano zero-gate execution and Express gate assume-and-proceed paths while preserving strict build authorization invariants.
+- Synchronized release version metadata across package manifests, plugin definitions, distribution catalogs, marketplace entries, and documentation.
+
+### Added
+- Automated version synchronization validator (`scripts/validate_version_sync.py`) to prevent future manifest drift.
+- Security regression tests for unauthorized filesystem write paths and permission boundaries.
+
+### Changed
+- Preserved historical behavioral certification provenance (EV-01 through EV-88) without conflating static capability checks with live behavioral passes.
+
 ## [4.5.2] - 2026-08-11
 
 ### Added

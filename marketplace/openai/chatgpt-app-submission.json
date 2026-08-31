@@ -124,5 +124,6 @@
       "expected_output": "The app should not be invoked because the request is ordinary coding help, not Hypertaks routing, verification, or skill retrieval.",
       "expected_output_url": null
     }
-  ]
+  ],
+  "version": "4.5.4"
 }

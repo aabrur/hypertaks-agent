@@ -642,7 +642,15 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('U-Experience.ctx.md'));
   assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('prompt-build-continunity-prompt.ctx.md'));
 
-  const createdFiles = router.bootstrapProjectWorkspace(repo, 'test-poc-workspace');
+  // Permission boundary: bootstrap without PERM_FILE_WRITE must throw PERMISSION_DENIED
+  assert.throws(
+    () => router.bootstrapProjectWorkspace(repo, 'unauthorized-test-poc'),
+    /PERMISSION_DENIED/
+  );
+
+  const createdFiles = router.bootstrapProjectWorkspace(repo, 'test-poc-workspace', {
+    permissions: ['PERM_FILE_WRITE'],
+  });
   assert.equal(createdFiles.length, 13);
   for (const filename of router.PROJECT_OPERATING_CONTEXT_FILES) {
     const filePath = path.join(repo, '.hypertaks', 'projects', 'test-poc-workspace', filename);
@@ -650,6 +658,8 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
     const text = fs.readFileSync(filePath, 'utf8');
     assert.ok(text.includes('Project Operating Context'), `File ${filename} missing living context header`);
     assert.ok(text.includes('Facts vs Assumptions'), `File ${filename} missing Facts vs Assumptions section`);
+    assert.ok(text.includes('lifecycle_state: DRAFT'), `File ${filename} should have lifecycle_state: DRAFT`);
+    assert.ok(!text.includes('lifecycle_state: VERIFIED'), `File ${filename} must not claim VERIFIED on initial scaffolding`);
   }
 
   console.log('runtime router tests passed');

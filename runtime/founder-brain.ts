@@ -768,12 +768,32 @@ export const PROJECT_OPERATING_CONTEXT_FILES: readonly string[] = [
   "security.ctx.md",
 ];
 
+export interface BootstrapWorkspaceOptions {
+  readonly agentName?: string;
+  readonly permissions?: readonly string[];
+  readonly allowFileWrite?: boolean;
+}
+
 export function bootstrapProjectWorkspace(
   projectRoot: string,
   projectId: string,
-  agentName = "Hypertaks-Founder"
+  agentNameOrOptions?: string | BootstrapWorkspaceOptions
 ): readonly string[] {
   validateRecordId(projectId);
+  const options: BootstrapWorkspaceOptions =
+    typeof agentNameOrOptions === "string"
+      ? { agentName: agentNameOrOptions }
+      : (agentNameOrOptions ?? {});
+  const agentName = options.agentName ?? "Hypertaks-Founder";
+
+  const hasFileWritePermission = Boolean(
+    options.allowFileWrite ||
+    (Array.isArray(options.permissions) && options.permissions.includes("PERM_FILE_WRITE"))
+  );
+  if (!hasFileWritePermission) {
+    throw new Error("PERMISSION_DENIED: Project workspace bootstrap requires explicit PERM_FILE_WRITE authorization.");
+  }
+
   const targetDir = path.posix.join(".hypertaks", "projects", projectId);
   const canonicalRoot = normalizeRoot(projectRoot, false);
   const created: string[] = [];
@@ -796,7 +816,7 @@ provenance:
 authority: 6
 freshness: FRESH
 status: ACTIVE
-lifecycle_state: VERIFIED
+lifecycle_state: DRAFT
 ---
 
 # ${title} - Project Operating Context
@@ -805,8 +825,8 @@ lifecycle_state: VERIFIED
 Universal living context document for ${title} adaptively serving software, business, operational, healthcare, financial, or governance domains.
 
 ## Current State & Evolution
-- Status: Active Living Document
-- Last Verified: ${timestamp}
+- Status: Active Living Document (Scaffolded)
+- Lifecycle: Initialized stub pending project execution
 
 ## Decisions & Rationale
 ### Facts vs Assumptions
@@ -829,8 +849,8 @@ Universal living context document for ${title} adaptively serving software, busi
 - Inter-file links to sibling *.ctx.md context documents within .hypertaks/projects/${projectId}/.
 
 ## Unresolved Issues & Historical Decisions
-- Historical Decisions: Workspace initialized.
-- Unresolved Issues: None pending.
+- Historical Decisions: Workspace structure initialized.
+- Unresolved Issues: Scaffold initialized pending domain implementation and empirical verification.
 
 ## Future Implications & Directives
 - Persistent foundation for human operators and participating agents.

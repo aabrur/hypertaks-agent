@@ -3,7 +3,7 @@
   "name": "com.crimsonriftstudio/hypertaks",
   "title": "Hypertaks Founder Operating System",
   "description": "Hypertaks Founder Operating System remote MCP server delivering verified skill routing, founder memory, and read-only diagnostics.",
-  "version": "4.5.3",
+  "version": "4.5.4",
   "publisher": "Crimson Rift Studio",
   "websiteUrl": "https://hypertaks.crimsonriftstudio.com",
   "repository": "https://github.com/aabrur/hypertaks-agent",

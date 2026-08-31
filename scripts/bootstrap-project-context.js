@@ -84,7 +84,7 @@ source_git_state:
 authority: 6
 freshness: FRESH
 status: ACTIVE
-lifecycle_state: VERIFIED
+lifecycle_state: DRAFT
 ---
 
 # ${title} - Project Operating Context
@@ -94,9 +94,8 @@ ${description}
 This context document adapts universally to the project domain (software, business, ops, research, finance, healthcare, or governance).
 
 ## Current State & Evolution
-- **Status**: Active Living Document
-- **Lifecycle**: Evolves continuously as work progresses
-- **Last Verified**: ${timestamp}
+- **Status**: Active Living Document (Scaffolded)
+- **Lifecycle**: Initialized stub pending project execution
 
 ## Decisions & Rationale
 
@@ -121,7 +120,7 @@ This context document adapts universally to the project domain (software, busine
 
 ## Unresolved Issues & Historical Decisions
 - **Historical Decisions**: Initialized workspace structure.
-- **Unresolved Issues**: None pending at initialization.
+- **Unresolved Issues**: Scaffold initialized pending domain implementation and empirical verification.
 
 ## Future Implications & Directives
 - Guides participating agents and human operators throughout execution and continuation.
@@ -129,7 +128,19 @@ This context document adapts universally to the project domain (software, busine
   return content;
 }
 
-function bootstrapProjectContext(projectRoot, projectId = 'default', agentId = 'Hypertaks-Founder') {
+function bootstrapProjectContext(projectRoot, projectId = 'default', options = {}) {
+  const opts = typeof options === 'string' ? { agentId: options } : options;
+  const agentId = opts.agentId || 'Hypertaks-Founder';
+  const hasPermission = Boolean(
+    opts.allowFileWrite ||
+    opts.allowWrite ||
+    (Array.isArray(opts.permissions) && opts.permissions.includes('PERM_FILE_WRITE'))
+  );
+
+  if (!hasPermission) {
+    throw new Error('PERMISSION_DENIED: Project context bootstrap requires explicit PERM_FILE_WRITE authorization.');
+  }
+
   const projectDir = path.join(projectRoot, '.hypertaks', 'projects', projectId);
   fs.mkdirSync(projectDir, { recursive: true });
 
@@ -161,6 +172,11 @@ module.exports = {
 if (require.main === module) {
   const targetRoot = process.cwd();
   const projectId = process.argv[2] || 'default';
-  const result = bootstrapProjectContext(targetRoot, projectId);
+  const allowWrite = process.argv.includes('--allow-write') || process.argv.includes('-y');
+  if (!allowWrite) {
+    console.error('Error: CLI bootstrap requires --allow-write flag to confirm PERM_FILE_WRITE.');
+    process.exit(1);
+  }
+  const result = bootstrapProjectContext(targetRoot, projectId, { allowFileWrite: true });
   console.log(JSON.stringify(result, null, 2));
 }

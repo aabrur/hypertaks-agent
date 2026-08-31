@@ -107,6 +107,7 @@ export interface ContractActivationInput {
   readonly isBossTurn: boolean;
   readonly requiresMutationOrExternalEffect: boolean;
   readonly projectRoot?: string;
+  readonly grantedPermissions?: readonly string[];
 }
 
 export type ContractActivation =
@@ -309,16 +310,32 @@ export function activateContract(input: ContractActivationInput): ContractActiva
 
   if (result.active) {
     if (input.projectRoot) {
-      try {
-        const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
-        bootstrapProjectWorkspace(input.projectRoot, cleanProjectId);
-        result = { ...result, bootstrapStatus: "SUCCESS" };
-      } catch (error) {
+      const hasWritePermission = Boolean(
+        input.grantedPermissions?.includes("PERM_FILE_WRITE") ||
+        (input.requiresMutationOrExternalEffect && result.active)
+      );
+      if (!hasWritePermission) {
         result = {
           ...result,
-          bootstrapStatus: "DEGRADED",
-          bootstrapReason: error instanceof Error ? error.message : "Workspace bootstrap failed.",
+          bootstrapStatus: "SKIPPED",
+          bootstrapReason: "Bootstrap skipped: contract does not have PERM_FILE_WRITE authorization.",
         };
+      } else {
+        try {
+          const cleanProjectId = input.contractId.replace(/^HT-/iu, "") || input.contractId;
+          bootstrapProjectWorkspace(input.projectRoot, cleanProjectId, {
+            agentName: "Hypertaks-Founder",
+            permissions: input.grantedPermissions || ["PERM_FILE_WRITE"],
+            allowFileWrite: true,
+          });
+          result = { ...result, bootstrapStatus: "SUCCESS" };
+        } catch (error) {
+          result = {
+            ...result,
+            bootstrapStatus: "DEGRADED",
+            bootstrapReason: error instanceof Error ? error.message : "Workspace bootstrap failed.",
+          };
+        }
       }
     } else {
       result = { ...result, bootstrapStatus: "SKIPPED" };
