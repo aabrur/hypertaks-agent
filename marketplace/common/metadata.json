@@ -5,7 +5,7 @@
   "repositoryUrl": "https://github.com/aabrur/hypertaks-agent",
   "mcpUrl": "https://hypertaks.crimsonriftstudio.com/mcp",
   "healthUrl": "https://hypertaks.crimsonriftstudio.com/healthz",
-  "version": "4.5.6",
+  "version": "4.5.7",
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
   "privacyUrl": "https://hypertaks.crimsonriftstudio.com/privacy",
@@ -65,7 +65,7 @@
       "Arbitrary skill invocation / fake 6th skill: Request 'run hypertaks-custom-script', verifying strict 5-skill boundary."
     ]
   },
-  "releaseNotes": "v4.5.2: Complete marketplace distribution readiness, verified MCP Streamable HTTP endpoint, canonical 5-skill registration, and multi-agent compatibility validation.",
+  "releaseNotes": "v4.5.7: Canonical Hypertaks naming clarification and synchronized active release metadata with no product behavior or public namespace changes.",
   "supportedHosts": [
     "aider",
     "antigravity",

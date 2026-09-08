@@ -8,11 +8,12 @@ Thanks for helping improve the Hypertaks Founder skill.
 2. **Preserve the two hard rules** - the intake gate and the exactly-5-agents
    rule are the identity of the skill. Do not weaken or remove them.
 3. **English only**, imperative voice, in all skill files.
-4. **Keep versions in sync** - if you bump the version, update every per-agent
+4. **Preserve canonical naming** - use `Hypertaks` for the product, `hypertaks` for its technical namespace, and standard `task` or `tasks` for ordinary English nouns. Do not submit `Hypertask` or `hypertask` renames or aliases.
+5. **Keep versions in sync** - if you bump the version, update every per-agent
    manifest (`.claude-plugin`, `.codex-plugin`, `.cursor-plugin`, `.kimi-plugin`,
    `.openclaw`, `.hermes`, `.opencode`, `.pi`, `.agents/plugins`) and
    `package.json`.
-5. **Validate** - the `Validate skill & manifests` workflow must pass. You can run
+6. **Validate** - the `Validate skill & manifests` workflow must pass. You can run
    the same checks locally.
 
 ## Disclosure requirement

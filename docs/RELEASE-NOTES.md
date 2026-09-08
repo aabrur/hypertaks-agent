@@ -1,5 +1,19 @@
 # Release Notes
 
+## v4.5.7 - Canonical naming clarification
+
+Hypertaks 4.5.7 documents `Hypertaks` as the product name and `hypertaks` as the established technical namespace. Ordinary English prose continues to use `task` and `tasks`.
+
+### What changed
+
+- Added concise naming guidance for developers, AI agents, and contributors.
+- Synchronized active release metadata on version 4.5.7.
+- Retained `assets/Hypertask.svg` as a legacy compatibility filename because existing tracked consumers depend on its path.
+
+### Product boundary
+
+This maintenance release does not change Founder Operating System behavior, public skill slugs, MCP tool names, package identifiers, aliases, redirects, security claims, or behavioral certification status.
+
 ## v4.5.6 - Private Authorization Registry & API Hardening
 
 Hypertaks 4.5.6 encapsulates the runtime authorization registry, ensuring activation insertion occurs solely through verified internal `activateContract()` paths.

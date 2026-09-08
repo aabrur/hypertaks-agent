@@ -10,7 +10,7 @@
 
 **Turn a request into a governed contract, specialist execution, verified evidence, and a founder-grade result.**
 
-[![Release](https://img.shields.io/badge/release-v4.5.6-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.6)
+[![Release](https://img.shields.io/badge/release-v4.5.7-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.7)
 [![Public skills](https://img.shields.io/badge/public%20skills-5-111827)](#the-five-public-skills)
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b)](LICENSE)
@@ -28,6 +28,10 @@ allowed, what evidence is required, and whether the result is actually complete.
 The Boss remains the final human authority. Hypertaks acts as the accountable
 Founder and Integrator for the work without claiming consciousness, ownership,
 or independent legal authority.
+
+Hypertaks is the product name, and `hypertaks` is the canonical technical
+namespace. In ordinary English prose, `task` and `tasks` retain their standard
+spelling.
 
 | Decide | Execute | Remember | Prove |
 |---|---|---|---|

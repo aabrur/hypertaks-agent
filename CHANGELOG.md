@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.7] - 2026-09-08
+
+### Changed
+- Documented `Hypertaks` as the canonical product name and `hypertaks` as the established technical namespace while preserving standard English `task` and `tasks`.
+- Synchronized active package, plugin, distribution, marketplace, skill-card, and MCP release metadata on version 4.5.7.
+- Retained `assets/Hypertask.svg` as a legacy compatibility filename because tracked build, runtime, validation, marketplace, and deployment-include consumers depend on that path.
+
+### Product boundary
+- No Founder Operating System behavior, public skill slug, MCP tool name, package identifier, alias, or redirect changed.
+
 ## [4.5.6] - 2026-08-31
 
 ### Security

@@ -13,6 +13,8 @@ Do not add a sixth public skill whose name starts with `hypertaks`.
 ## Working on this repo
 
 - Preserve Hypertaks as a Founder Operating System. Continuity, memory, Graphify, and Obsidian are supporting layers, not replacement positioning.
+- Treat `Hypertaks` as the canonical product name and `hypertaks` as the canonical technical namespace. Never normalize either to `Hypertask` or `hypertask`; use `task` and `tasks` for ordinary English nouns.
+- Retain `assets/Hypertask.svg` as a legacy compatibility filename. Registry, marketplace, build, runtime, validation, deployment-include, and documentation consumers depend on that path; the filename does not define the product name.
 - Keep the plugin self-contained and portable. Graphify, Obsidian, MCP, external memory, and persistent memory are optional.
 - All prose stays in **English** and tracked text must not contain U+2014.
 - Treat memory and graph output as evidence below active Boss decisions, workspace standards, approved contracts, and current repository evidence.

@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** 4.5.6
+**Version:** 4.5.7
 
 ## Release status
 
@@ -158,6 +158,7 @@ and session continuity.
 
 ## Work log
 
+`2026-09-08 | Hypertaks v4.5.7 maintenance release: canonical naming guidance and synchronized active release metadata with the legacy logo filename retained for compatibility.`
 `2026-08-31 | Hypertaks v4.5.6 patch release: private authorization registry encapsulation and removal of public activation injection APIs.`
 `2026-08-31 | Hypertaks v4.5.5 patch release: trusted workspace write capability provenance, direct bootstrap bypass closure, and dedicated POC regression suite.`
 `2026-08-31 | Hypertaks v4.5.4 public release: hardened authorization, POC evidence truthfulness, intake protocol consistency, and release metadata synchronization.`
