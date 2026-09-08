@@ -15,7 +15,7 @@
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b)](LICENSE)
 
-[Why Hypertaks](#why-hypertaks) · [How it works](#operating-model) · [Install](#installation-routes) · [Use it](#start-a-founder-session) · [Verify](#verify-a-checkout) · [v4.5.2](#v452-founder-os-expansion-lab)
+[Why Hypertaks](#why-hypertaks) · [How it works](#operating-model) · [Install](#installation-routes) · [Use it](#start-a-founder-session) · [Verify](#verify-a-checkout) · [Expansion lab](#v452-founder-os-expansion-lab)
 
 </div>
 
@@ -122,7 +122,7 @@ or inspect the
 
 ## Package status
 
-| Surface | v4.5.2 status |
+| Surface | v4.5.7 status |
 |---|---|
 | Public product | Five canonical Hypertaks skills |
 | Remote MCP surface | Four read-only tools; no mutating remote tool was added |
