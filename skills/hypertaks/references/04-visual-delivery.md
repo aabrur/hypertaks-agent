@@ -10,31 +10,33 @@ Assign one status before selecting a medium:
 
 | Status | Test |
 |---|---|
-| **Required** | Without a visual, a material relationship, process, trend, topology, or comparison is likely to be misunderstood. |
+| **Required** | Without a visual, a material relationship, process, trend, topology, formula, scale, or comparison is likely to be misunderstood. Also Required whenever context explicitly or functionally calls for an infographic, formula, map, scale, diagram, table, or visual artifact. |
 | **Recommended** | The visual materially improves comprehension speed or decision quality, but text can still carry the result. |
 | **Optional** | The visual mainly improves presentation or brand polish. |
 | **Not needed** | Text, code, or a compact table is clearer and cheaper. |
 
-A required visual belongs in the contract. A recommended visual is proposed with
-its benefit and cost. Optional visuals never delay the core deliverable.
+A required visual belongs in the contract and must produce a verified artifact. When the context warrants an infographic, mathematical formula, domain map, comparative scale, workflow diagram, data table, or illustrative media, the visual status must not be downgraded to optional.
 
 ## 2. Medium selection
 
 | Information structure | Medium |
 |---|---|
 | exact values and lookup | table |
-| category comparison | bar chart |
-| trend over ordered time | line chart |
-| distribution or outliers | histogram or box plot |
-| relationship between numeric variables | scatter plot |
-| cumulative contribution | Pareto chart |
-| sequential process | flowchart |
-| system components and interfaces | architecture diagram |
-| entity relationships | ERD |
-| dependencies over time | timeline or Gantt |
-| branching decision logic | decision tree |
+| category comparison | bar chart (Python Matplotlib) |
+| trend over ordered time | line chart (Python Matplotlib) |
+| distribution or outliers | histogram or box plot (Python Matplotlib) |
+| relationship between numeric variables | scatter plot (Python Matplotlib) |
+| comparative scale or metric range | scaled interval or range plot (Python Matplotlib) |
+| mathematical or quantitative relations | KaTeX or LaTeX formula block |
+| cumulative contribution | Pareto chart (Python Matplotlib) |
+| sequential process | flowchart (Mermaid or SVG) |
+| system components and interfaces | architecture diagram (Mermaid or SVG) |
+| geographic, network, or domain map | topological map or graph diagram (Mermaid or SVG) |
+| entity relationships | ERD (Mermaid) |
+| dependencies over time | timeline or Gantt (Mermaid or table) |
+| branching decision logic | decision tree (Mermaid) |
 | screen behavior or interaction | wireframe, prototype, or UI state map |
-| creative concept or illustrative media | generated or designed image |
+| creative concept or illustrative media | generated image (generate_image tool) |
 
 Do not use a pie chart when exact ranking matters, when categories exceed a
 small set, or when the parts do not form one meaningful total.

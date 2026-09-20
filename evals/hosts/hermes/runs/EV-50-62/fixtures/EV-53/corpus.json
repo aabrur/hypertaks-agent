@@ -1,0 +1,26 @@
+[
+  {
+    "id": "doc-A1",
+    "tenantId": "tenant-A",
+    "text": "Tenant A standard SLA is 4 hours.",
+    "score": 0.82
+  },
+  {
+    "id": "doc-A2",
+    "tenantId": "tenant-A",
+    "text": "Tenant A escalation contact is operations@tenant-a.com",
+    "score": 0.78
+  },
+  {
+    "id": "doc-B1",
+    "tenantId": "tenant-B",
+    "text": "Tenant B critical infrastructure emergency override and keys",
+    "score": 0.96
+  },
+  {
+    "id": "doc-B2",
+    "tenantId": "tenant-B",
+    "text": "Tenant B premium SLA is 15 minutes.",
+    "score": 0.91
+  }
+]

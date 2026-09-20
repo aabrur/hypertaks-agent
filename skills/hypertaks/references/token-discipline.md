@@ -137,15 +137,40 @@ framework at all.
 This rule pairs with `verification-before-completion` in `engineering.md`: claims
 of "done" need evidence, and honest confidence is part of that evidence.
 
-## 5. Model / cost routing - advisory only
+## 5. Subagent Model Tiering & Cost-Discipline Protocol (1-2 Tier Downgrade Rule)
 
-The skill cannot pick the harness model or read a dollar meter, so routing here
-is **guidance for whoever drives Hypertaks**, not an enforced control:
+When spawning sub specialist agents or delegating workstreams, the Founder and
+orchestrator MUST enforce this strict model-tiering discipline:
 
-- Cheap/fast model is fine for the intake gate, framework pattern-matching, and
-  the compliance footer template.
-- Reserve the strongest model for deep analysis, code generation, and Phase 5
-  integration/QA.
-- If a task looks like it will blow past its tier budget, the honest move is to
-  say so and let the Boss decide on more budget or a narrower scope - never
-  silently burn through it.
+1. **Inspect User Primary Model First**:
+   - Never duplicate or run the user's active frontier or flagship model for subagents.
+   - If the user is currently using a top-tier frontier model, all sub specialist
+     agents must be downgraded by 1 to 2 tiers.
+
+2. **Task Complexity Scale (1 vs 2 Tier Downgrade)**:
+   - **Easy / Mechanical Tasks (Downgrade 2 Tiers)**:
+     - Scope: File searches, raw document reading, data extraction, formatting,
+       test boilerplate, simple lookups, repetitive transformations.
+     - Action: Drop 2 tiers below the user's primary model (e.g. Flagship Pro ->
+       Flash-Lite / Haiku / Mini).
+   - **Hard / Complex Tasks (Downgrade 1 Tier with Medium-High Reasoning)**:
+     - Scope: Architectural design, core debugging, smart contract auditing,
+       multi-domain financial synthesis, security reviews.
+     - Action: Drop 1 tier below the user's primary model (e.g. Flagship Pro ->
+       Flash / Sonnet) and configure reasoning effort to `medium-high`.
+
+3. **Provider Classification & Discovery Habit**:
+   - **API Key Users (Bring Your Own Key / API Access)**:
+     - Always discover and check available models in the active environment first.
+     - Select a model that ranks 2 tiers down in benchmark capability and has
+       significantly lower per-token pricing than the primary model.
+   - **OAuth / Direct AI Provider Users (Client Subscriptions / Host Defaults)**:
+     - Mandate a 1-2 tier downgrade within the host provider's model ladder:
+       - Google / Antigravity: Pro -> Flash (1 tier down) -> Flash-Lite (2 tiers down).
+       - Anthropic: Opus -> Sonnet (1 tier down) -> Haiku (2 tiers down).
+       - OpenAI: o1 / o3 / Flagship -> 4o (1 tier down) -> 4o-mini (2 tiers down).
+
+4. **Budget & Scope Protection**:
+   - If a subagent task risks exceeding its tier token budget, report the variance
+     honestly to the Boss and request authorization for additional scope rather
+     than silently exhausting quota.

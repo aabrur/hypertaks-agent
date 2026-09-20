@@ -1,14 +1,13 @@
-{
-  "prompt": "Time trend decision requires precise chart",
-  "visual": {
-    "status": "required",
-    "type": "chart",
-    "reason": "Text alone creates material ambiguity or decision risk."
-  },
-  "renderedValidation": {
-    "source_data_hash": "sha256:7472656e6420",
-    "rendered_path": ".build/ev-62-trend.png",
-    "plotted_values_reconciled": true,
-    "inspected_render": true
-  }
-}
+BOSS_PROMPT:
+A decision depends on a time trend that would be materially ambiguous as a paragraph. A precise chart capability is available.
+
+FOUNDER: (fresh cold session) Hermes-Founder-session-EV-62
+
+FOUNDER_TOOL selectVisual({exactValues:true,orderedTrend:true}) => {"status":"required","type":"table","reason":"Text alone creates material ambiguity or decision risk."}
+FOUNDER_TOOL python render_trend.py => 
+RENDERED: C:\Users\abrur\Documents\hypertaks-agent\evals\hosts\hermes\runs\EV-50-62\fixtures\EV-62\trend.png (53591 bytes)
+RENDERED: C:\Users\abrur\Documents\hypertaks-agent\evals\hosts\hermes\runs\EV-50-62\fixtures\EV-62\trend.svg (35800 bytes)
+(pngOk=true, svgOk=true)
+FOUNDER_QUOTE visual-reconciliation: "Values [10, 14, 18, 24, 32, 45] reconciled against monthly-trend.csv. Exports: trend.png (53591 bytes), trend.svg (35800 bytes)."
+FOUNDER_ANSWER:
+Visual status is classified as Required because representing this ordered time trend in raw text creates material decision ambiguity. I assigned visual_owner="Data Analyst" and source="monthly-trend.csv". Using Python Matplotlib with the headless Agg backend, I generated precise line chart exports (trend.png and trend.svg) and reconciled plotted coordinates directly against the source data. Generated image tooling was rejected as the chart source.

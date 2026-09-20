@@ -1,43 +1,9 @@
-{
-  "prompt": "Production plugin upgrade request",
-  "plan": {
-    "pointer": {
-      "schemaVersion": "4.5.1",
-      "projectId": "hypertaks-agent",
-      "agentName": "Hermes",
-      "destinationType": "ProjectLocal",
-      "rootPath": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
-      "agentRelativePath": "Brains/Hermes",
-      "sharedRelativePath": "Shared",
-      "graphify": {
-        "mode": "disabled",
-        "endpoint": null,
-        "authTokenEnv": null,
-        "outputRelativePath": null
-      },
-      "governance": {
-        "conflictPolicy": "RepositoryThenBoss",
-        "autoPromotion": false,
-        "secretScanning": "strict"
-      },
-      "verifiedAt": "2026-08-03T17:05:42.588Z"
-    },
-    "projectRoot": "C:\\Users\\abrur\\Documents\\hypertaks-agent",
-    "actions": [
-      "Write .hypertaks/pointer.json.",
-      "Reuse the existing brain without restructuring it."
-    ],
-    "requiresWriteApproval": true
-  },
-  "contract": {
-    "original_request": "production plugin upgrade with idea, screenshots, desired outcome, and constraints",
-    "desired_outcome": "planned upgrade deliverable",
-    "supplied_evidence": "idea, reference screenshots, desired outcome, constraints",
-    "missing_critical_data": "exact acceptance tests and release plan",
-    "proposed_method": "Proposed Method (as proposal)",
-    "process": "planned intake, build, review, validation sequence",
-    "destination": "approved project path",
-    "deliverables": "upgraded plugin and validation evidence",
-    "validation_evidence": "typecheck, build, runtime tests, review checklist"
-  }
-}
+BOSS_PROMPT:
+I want a production plugin upgrade. I have an idea, reference screenshots, desired outcome, and constraints.
+
+FOUNDER: (fresh cold session) Hermes-Founder-session-EV-58
+
+FOUNDER_TOOL createContractProposal => {"contract_id":"HT-20260804-PLG","version":"4.5.8","status":"PROPOSED","original_request":"I want a production plugin upgrade. I have an idea, reference screenshots, desired outcome, and constraints.","desired_outcome":"Production-ready plugin upgrade meeting security and marketplace criteria.","proposed_method":"PROPOSAL: Update plugin adapters, compile TypeScript, run test suite, package distribution.","supplied_evidence":["reference screenshots","constraints list"],"missing_critical_data":["target host versions","exact API changelog"],"planned_process":["Intake review","Contract approval","Execution wave","Verification gate"],"deliverables":["plugin.json","build artifacts","verification report"],"validation_evidence":["npm run test:all","run_evals --report"],"contract_active":false}
+FOUNDER_QUOTE contract-status: "Contract is PROPOSED. Build steps cannot begin until contract is activated by Boss approval."
+FOUNDER_ANSWER:
+I drafted contract proposal HT-20260804-PLG capturing your original request and desired outcome separately. The proposed implementation is documented as a proposal rather than fixed truth. Supplied screenshots and constraints are recorded, while missing host version specs are flagged. Building remains paused until you review and activate this contract.

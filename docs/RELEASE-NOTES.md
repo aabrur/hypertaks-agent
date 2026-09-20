@@ -1,5 +1,23 @@
 # Release Notes
 
+## v4.5.8 - Founder Anti-Slop Mandate, Subagent Tiering, Visual Delivery & 88/88 Behavioral Certification
+
+Hypertaks 4.5.8 embeds the Founder Anti-Slop Mandate, deterministic subagent model tiering discipline, and mandatory visual delivery into the core skills and references, resolves all 13 previously skipped eval cases to achieve 88/88 behavioral PASS, establishes a minimum graduation exam threshold of 80, and synchronizes release metadata across all supported agent environments.
+
+### What shipped
+
+- **Founder Anti-Slop Mandate**: Explicit rules prohibiting AI slop, generic boilerplate, and banned AI language (HATE AI SLOOP, HATE AI GENERIC, HATE AI LANGUAGE) while strictly enforcing human-grade, active-voice prose with zero em dashes (U+2014).
+- **Subagent Model Tiering Protocol**: Strict 1-2 tier downgrade protocol forbidding active frontier/flagship duplication for sub specialist agents (2 tiers down for mechanical tasks, 1 tier down with medium-high reasoning for complex tasks; discovery habit for API key users; provider ladder downgrade for OAuth users).
+- **Mandatory Visual Delivery**: Context requiring infographics, formulas, maps, scales, diagrams, tables, or images must produce verified visual artifacts (headless Agg Matplotlib, KaTeX, Mermaid/SVG, generate_image).
+- **88/88 Behavioral Eval Resolution**: All 88 evaluation cases executed, verified, and passing under Boss-confirmed multi-host runtime harness (0 skipped, 0 fail).
+- **Graduation Exam Threshold**: Upgraded release gate threshold `RELEASE_THRESHOLD` from 24 to 80 (margin +8).
+- **Synchronized Release Metadata**: Updated package, plugin, distribution, marketplace, skill-card, and MCP metadata across 22 supported hosts to version 4.5.8.
+- **Preserved Invariants**: Exactly five canonical public skills and four read-only remote MCP tools.
+
+### Product boundary
+
+This release does not change canonical skill slugs, tool interfaces, or runtime permission boundaries.
+
 ## v4.5.7 - Canonical naming clarification
 
 Hypertaks 4.5.7 documents `Hypertaks` as the product name and `hypertaks` as the established technical namespace. Ordinary English prose continues to use `task` and `tasks`.

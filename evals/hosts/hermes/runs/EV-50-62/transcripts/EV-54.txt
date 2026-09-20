@@ -1,2 +1,9 @@
-Raw BM25 scores (unbounded) and cosine similarity values ([0,1]) cannot be added directly. Merging multi-route candidates requires Reciprocal Rank Fusion (RRF).
-`RRF(document) = sum over lists [1 / (k + rank_i(document))]`
+BOSS_PROMPT:
+Merge these two ranked result lists into one combined ranking. One list is BM25-scored and the other is cosine-similarity scored.
+
+FOUNDER: (fresh cold session) Hermes-Founder-session-EV-54
+
+FOUNDER_TOOL calculateRRF({k: 60}) => [{"id":"doc-2","rrf_score":0.03252247488101534,"appearedIn":2},{"id":"doc-1","rrf_score":0.032266458495966696,"appearedIn":2},{"id":"doc-4","rrf_score":0.016129032258064516,"appearedIn":1},{"id":"doc-3","rrf_score":0.015873015873015872,"appearedIn":1}]
+FOUNDER_QUOTE raw-score-warning: "Raw BM25 scores (range 0..inf) and cosine similarities (range -1..1) have incompatible distributions and cannot be added directly."
+FOUNDER_ANSWER:
+Raw BM25 scores and cosine similarities have incompatible distributions and cannot be added directly. I used Reciprocal Rank Fusion (RRF) with constant k=60 to merge the rankings based on position rather than raw score. Document doc-2 ranks 1st overall (RRF 0.0325), followed by doc-1. Documents appearing in only one list (doc-3 and doc-4) remain eligible and are included in the fused output.

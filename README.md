@@ -10,7 +10,7 @@
 
 **Turn a request into a governed contract, specialist execution, verified evidence, and a founder-grade result.**
 
-[![Release](https://img.shields.io/badge/release-v4.5.7-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.7)
+[![Release](https://img.shields.io/badge/release-v4.5.8-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v4.5.8)
 [![Public skills](https://img.shields.io/badge/public%20skills-5-111827)](#the-five-public-skills)
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b)](LICENSE)
@@ -122,13 +122,13 @@ or inspect the
 
 ## Package status
 
-| Surface | v4.5.7 status |
+| Surface | v4.5.8 status |
 |---|---|
 | Public product | Five canonical Hypertaks skills |
 | Remote MCP surface | Four read-only tools; no mutating remote tool was added |
 | Founder runtime | Existing runtime behavior preserved with synchronized release metadata |
 | Expansion Lab | Published as non-production research, prototypes, fixtures, and evidence |
-| Behavioral certification | Existing recorded evidence retained; this release makes no new universal host claim |
+| Behavioral certification | 88/88 behavioral PASS (graduation threshold min 80, margin +8); 90/90 static GREEN |
 
 ## Start a Founder session
 

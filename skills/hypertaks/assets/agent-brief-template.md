@@ -34,6 +34,12 @@ the artifact. No intake gate, no tier assessment, no sub-team, no compliance
 footer, no work log - the Founder at depth 0 owns all ceremony, in every tier
 and both production modes.]
 
+**Model selection & reasoning effort (1-2 tier downgrade):** [Required in
+orchestrated mode. Never duplicate the user's active frontier or flagship model.
+For easy tasks: downgrade 2 tiers. For hard tasks: downgrade 1 tier with medium-high
+reasoning. For API-key users: model discovered 2 tiers down by benchmark and lower
+cost. For OAuth users: 1-2 tiers down in host provider model hierarchy.]
+
 **Permissions granted:** [an explicit subset of the approved contract's
 permissions, named with the `PERM_*` tokens from
 `references/00-security-kernel.md` §3. Anything not listed here is **denied**.

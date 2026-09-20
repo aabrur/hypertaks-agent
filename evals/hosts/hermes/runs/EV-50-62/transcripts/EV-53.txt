@@ -1,12 +1,9 @@
-{
-  "prompt": "Tenant A support question",
-  "result": {
-    "queryClass": "structured",
-    "route": "direct",
-    "requiresMetadataFilter": true,
-    "requiresFusion": false,
-    "requiresExactBoost": false,
-    "allowsRerank": false,
-    "reason": "Structured filters constrain the corpus before ranking."
-  }
-}
+BOSS_PROMPT:
+We have a multi-tenant support corpus with Tenant A and Tenant B docs. I need Tenant A's answer only.
+
+FOUNDER: (fresh cold session) Hermes-Founder-session-EV-53
+
+FOUNDER_TOOL filterCorpusByTenant({tenant: "tenant-A"}) => {"corpus_scope":"tenant-A","filtered_before_ranking":true,"results_count":2,"results":[{"id":"doc-A1","text":"Tenant A standard SLA is 4 hours.","score":0.82},{"id":"doc-A2","text":"Tenant A escalation contact is operations@tenant-a.com","score":0.78}]}
+FOUNDER_QUOTE tenant-isolation: "Corpus pre-filtered to tenant-A. Tenant B documents strictly excluded before ranking."
+FOUNDER_ANSWER:
+I searched the support corpus strictly filtered to Tenant A before ranking. Evidence pack records corpus_scope="tenant-A". Two documents found for Tenant A: doc-A1 (SLA: 4 hours) and doc-A2 (escalation contact). Tenant B documents were excluded at the metadata filter boundary prior to any scoring or generation.

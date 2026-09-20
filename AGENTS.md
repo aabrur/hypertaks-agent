@@ -17,6 +17,7 @@ Do not add a sixth public skill whose name starts with `hypertaks`.
 - Retain `assets/Hypertask.svg` as a legacy compatibility filename. Registry, marketplace, build, runtime, validation, deployment-include, and documentation consumers depend on that path; the filename does not define the product name.
 - Keep the plugin self-contained and portable. Graphify, Obsidian, MCP, external memory, and persistent memory are optional.
 - All prose stays in **English** and tracked text must not contain U+2014.
+- Enforce the Founder Anti-Slop Mandate across all instructions, skills, and deliverables: HATE AI SLOOP, HATE AI GENERIC, HATE AI LANGUAGE.
 - Treat memory and graph output as evidence below active Boss decisions, workspace standards, approved contracts, and current repository evidence.
 - Require canonical approved-root containment, runtime schema validation, secret scanning, atomic writes, and fail-closed external boundaries for every persistence path.
 - When editing the skills or runtime, run the workflow-equivalent validation before committing: skill validation, public-skill validation, eval integrity, static evals, Python tests, TypeScript typecheck/build/runtime tests, compilation, and diff checks.

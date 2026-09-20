@@ -173,7 +173,7 @@ class TestBossConfirmedReport(unittest.TestCase):
             run_evals.git_args("show", f"{cls.commit}:package.json"), text=True
         )
         cls.version = json.loads(package_at_commit)["version"]
-        cls.case_ids = [f"EV-{number:02d}" for number in range(1, 50)]
+        cls.case_ids = [f"EV-{number:02d}" for number in range(1, 89)]
 
     def make_report(self, missing_source=None):
         non_pass = {"EV-01", "EV-02", "EV-03", "EV-04", "EV-05", "EV-20"}
@@ -198,12 +198,12 @@ class TestBossConfirmedReport(unittest.TestCase):
                 "confirmed_by_boss": True,
                 "final_verdict_authority": "Boss-confirmed main-agent review",
                 "certification_status": "BEHAVIORALLY CERTIFIED",
-                "total_ev": 49,
-                "behavioral_pass": 43,
+                "total_ev": 88,
+                "behavioral_pass": 82,
                 "behavioral_non_pass": 6,
-                "static_green": 49,
-                "release_threshold": 24,
-                "threshold_margin": 19,
+                "static_green": 88,
+                "release_threshold": 80,
+                "threshold_margin": 2,
                 "tested_commit": self.commit,
                 "tested_tree": self.tree,
                 "skill_root_hash": self.skill_hash,
@@ -239,22 +239,22 @@ class TestBossConfirmedReport(unittest.TestCase):
                 status = run_evals.cmd_report(path)
         return status, output.getvalue()
 
-    def test_accepts_boss_confirmed_43_pass_release_gate(self):
+    def test_accepts_boss_confirmed_82_pass_release_gate(self):
         status, output = self.run_report(self.make_report())
         self.assertEqual(status, 0)
-        self.assertIn("43/49 PASS", output)
+        self.assertIn("82/88 PASS", output)
         self.assertIn("documented non-PASS: 6", output)
-        self.assertIn("threshold margin: +19", output)
+        self.assertIn("threshold margin: +2", output)
         self.assertIn("release gate: PASSED", output)
 
     def test_rejects_boss_confirmed_row_without_final_verdict_source(self):
-        status, output = self.run_report(self.make_report(missing_source="EV-49"))
+        status, output = self.run_report(self.make_report(missing_source="EV-88"))
         self.assertEqual(status, 1)
-        self.assertIn("EV-49: final_verdict_source is required", output)
+        self.assertIn("EV-88: final_verdict_source is required", output)
 
     def test_rejects_source_report_missing_from_archive(self):
         report = self.make_report()
-        source_report = report["results"]["EV-49"]["source_report"]
+        source_report = report["results"]["EV-88"]["source_report"]
         status, output = self.run_report(
             report, exclude_archive_report=source_report)
         self.assertEqual(status, 1)
@@ -276,9 +276,9 @@ class TestBossConfirmedReport(unittest.TestCase):
         report = self.make_report()
         report["results"]["EV-06"]["verdict"] = "EVIDENCE_MISSING"
         report["results"]["EV-06"]["evidence_quotes"] = ["Evidence unavailable"]
-        report["meta"]["behavioral_pass"] = 42
+        report["meta"]["behavioral_pass"] = 81
         report["meta"]["behavioral_non_pass"] = 7
-        report["meta"]["threshold_margin"] = 18
+        report["meta"]["threshold_margin"] = 1
         status, output = self.run_report(report)
         self.assertEqual(status, 1)
         self.assertIn("1 EVIDENCE_MISSING: EV-06", output)
@@ -289,17 +289,17 @@ class TestBossConfirmedReport(unittest.TestCase):
         report["meta"]["static_green"] = 0
         status, output = self.run_report(report)
         self.assertEqual(status, 1)
-        self.assertIn("meta: static_green must be 49", output)
+        self.assertIn("meta: static_green must be 88", output)
 
     def test_rejects_malformed_verdict_suffix(self):
         report = self.make_report()
-        report["results"]["EV-49"]["verdict"] = "PASS(fake)"
-        report["meta"]["behavioral_pass"] = 42
+        report["results"]["EV-88"]["verdict"] = "PASS(fake)"
+        report["meta"]["behavioral_pass"] = 81
         report["meta"]["behavioral_non_pass"] = 7
-        report["meta"]["threshold_margin"] = 18
+        report["meta"]["threshold_margin"] = 1
         status, output = self.run_report(report)
         self.assertEqual(status, 1)
-        self.assertIn("EV-49: invalid verdict 'PASS(fake)'", output)
+        self.assertIn("EV-88: invalid verdict 'PASS(fake)'", output)
 
 
 if __name__ == "__main__":

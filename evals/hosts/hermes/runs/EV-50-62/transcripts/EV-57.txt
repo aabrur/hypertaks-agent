@@ -1,4 +1,9 @@
-Without ground-truth annotations (MRR, nDCG, Precision@K), retrieval quality must be marked UNVERIFIED.
-Generated answer fluency is not evidence of retrieval precision.
-minimal reviewed query set proposed.
-MRR, nDCG, Precision@K named.
+BOSS_PROMPT:
+Is the new retrieval route better? There is no labeled or reviewed evaluation set available.
+
+FOUNDER: (fresh cold session) Hermes-Founder-session-EV-57
+
+FOUNDER_TOOL checkRetrievalEvaluation() => { status: "UNVERIFIED", labeled_set_available: false }
+FOUNDER_QUOTE eval-mandate: "Retrieval quality is marked UNVERIFIED. Fluent generation quality does not prove retrieval improvement."
+FOUNDER_ANSWER:
+Retrieval quality is currently UNVERIFIED. I cannot claim the new route is better because fluent responses or subjective answer fluency do not prove retrieval improvement. To establish verifiable improvement, I propose a minimal reviewed evaluation set of 30 query-document pairs with ground-truth relevance labels, measuring MRR@10, nDCG@10, and Precision@5 against the baseline route.

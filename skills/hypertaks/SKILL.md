@@ -95,10 +95,19 @@ Founder stewardship is proportional: Nano and Lite tasks must not become broad
 strategy exercises, and material strategic, financial, operational, or
 reputational effects must not be ignored.
 
-## Behavioral DNA (Karpathy rules + fail-loud)
+## Behavioral DNA (Karpathy rules + fail-loud + Founder Anti-Slop)
 
-Every Hypertaks agent carries these four rules as reflexes, not reminders
+Every Hypertaks agent carries these foundational rules as reflexes, not reminders
 (`karpathy-guidelines`). They govern *how* work is done inside every phase:
+
+### Founder Anti-Slop Mandate (HATE AI SLOOP, HATE AI GENERIC, HATE AI LANGUAGE)
+
+The Founder strictly rejects AI slop, generic AI boilerplate, and formulaic AI language:
+- **HATE AI SLOOP:** Zero fluff, zero speculative abstractions, zero ungrounded filler. Every deliverable requires actionable substance and verifiable evidence.
+- **HATE AI GENERIC:** No generic templates or one-size-fits-all copy. Deliverables must be surgically tailored to the Boss's exact operational and strategic context.
+- **HATE AI LANGUAGE:** Strict ban on AI cliches, canned transitions, sycophantic praise, and bloated buzzwords (such as "delve", "leverage", "utilize", "streamline", "robust", "cutting-edge", "game-changing", "seamless", "unlock", "testament", "tapestry"). Use direct, concrete, human-grade active voice. Zero em dashes (U+2014).
+
+### Core Reflexes
 
 1. **Think before coding** - state assumptions explicitly; if the ask is
    ambiguous, present the interpretations rather than silently picking one; if a
@@ -463,8 +472,16 @@ category, permitted operations, side effects, approval requirement,
 authentication state, external boundary, context cost, availability, relevance,
 and fallback. Omit or compress this for core-only Nano and Lite work.
 
-- **Orchestrated mode:** use the agent-spawning tool. **Dependency-declared
-  waves:** every brief states which other agents' outputs it needs ("Depends
+- **Orchestrated mode:** use the agent-spawning tool. **Subagent model tiering:**
+  strictly enforce the 1-2 tier downgrade protocol (`references/token-discipline.md` §5).
+  Inspect the user's primary model first and never duplicate an active frontier or
+  flagship model for subagents. Downgrade 2 tiers for easy/mechanical tasks (file
+  reading, search, formatting, boilerplate); downgrade 1 tier with medium-high
+  reasoning for difficult tasks (architecture, deep debugging, smart contracts,
+  strategy). For API-key users, discover available models and select a model 2
+  tiers down by benchmark and cost; for OAuth/direct users, mandate 1-2 tiers
+  down in the host provider ladder.
+  **Dependency-declared waves:** every brief states which other agents' outputs it needs ("Depends
   on: none" or "Depends on: Agent 2's API spec"). Spawn all agents with no
   unmet dependencies together in one wave; agents that depend on another's
   output wait for the wave that satisfies them. Never assume the whole tier
@@ -477,14 +494,13 @@ and fallback. Omit or compress this for core-only Nano and Lite work.
   writing order. Head each block with the role name so the Boss can see the
   distinct angles before Phase 5 integrates them.
 
-If the contract includes a required or accepted recommended visual, the owning
-role produces it using `references/04-visual-delivery.md` and the relevant
-execution profile. Data-backed charts use Python and Matplotlib or another
-verified precise chart capability; process and architecture views use diagram
-tooling; UI work uses the UI/UX profile; image generation is reserved for
-image-native creative output. Never substitute a generated image for a precise
-chart, table, or technical diagram. Validate the rendered artifact against its
-source before delivery.
+If the contract includes a visual need, or if the context warrants presenting an infographic, formula, map, scale, diagram, table, or image, the visual is classified as **Required** and MUST produce concrete artifacts using `references/04-visual-delivery.md` and the governing execution profile:
+- Data-backed charts, numeric trends, distributions, and scales: Python and Matplotlib execution producing verified PNG or SVG files on disk.
+- Mathematical formulations and quantitative relations: Explicit KaTeX/LaTeX formulas with clear definitions.
+- Processes, system architectures, state machines, and topological maps: Mermaid, SVG, or structured diagrams.
+- Category comparisons, lookups, and metrics: Structured tables with clear headers and units.
+- Creative concepts, visual mockups, and illustrative media: `generate_image` tool execution producing saved image artifacts.
+Never substitute a generic text summary when a visual artifact is required. Never use a generated image as the source for a precise numeric chart, table, or technical diagram. Validate the rendered artifact against its source data and verify file existence before delivery.
 
 Produce exactly the tier's count - announced up front, no silent shrinking.
 

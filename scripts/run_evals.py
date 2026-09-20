@@ -48,7 +48,7 @@ GROUPS = {"security", "loop", "transaction", "tier", "quantitative",
           "output-shape", "recursion", "founder", "capability", "retrieval",
           "contract", "execution", "visual"}
 VERDICTS = {"PASS", "FAIL", "SKIPPED", "SKIPPED(harness)", "EVIDENCE_MISSING"}
-RELEASE_THRESHOLD = 24
+RELEASE_THRESHOLD = 80
 
 
 def load_cases():

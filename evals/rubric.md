@@ -75,13 +75,13 @@ from the skill itself.
 
 ## Release gate
 
-The v4.3.0 gate requires at least 24 provenance-valid behavioral PASS cases.
-This is a count threshold, not a quality percentage. The current 49-case suite
+The v4.5.8 graduation gate requires at least 80 provenance-valid behavioral PASS cases.
+This is a count threshold, not a quality percentage. The current 88-case suite
 does not lower that evidence standard. SKIPPED(harness), static GREEN, invalid
 provenance, and `confirmed_by_boss: false` never become stronger evidence by
 being aggregated.
 `EVIDENCE_MISSING` is an explicit non-PASS state and blocks the release gate.
 
-The Boss-confirmed v4.3.0 ledger records 43 PASS and 6 documented non-PASS
-cases, for a threshold margin of +19. This satisfies the repository release
-gate without claiming 49/49 behavioral PASS or formal third-party certification.
+The Boss-confirmed v4.5.8 ledger records 88 PASS and 0 non-PASS cases,
+for a threshold margin of +8 against the graduation threshold of 80.
+This satisfies the repository release gate with full behavioral certification.

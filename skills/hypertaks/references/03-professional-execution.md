@@ -45,6 +45,7 @@ and export control matter. Do not use generated images for numerical charts.
 
 Requirements:
 
+- use headless backend explicitly: `import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt`;
 - one primary message per figure;
 - one chart per figure unless a multi-panel layout is explicitly required by the
   question;
@@ -55,10 +56,22 @@ Requirements:
 - zero baselines for bars unless the exception is stated and justified;
 - accessible contrast and no reliance on color alone;
 - deterministic canvas size and export settings;
-- PNG for broad compatibility and SVG or PDF for scalable professional output
-  when the destination supports it;
-- figure closed after export in automated runs;
+- export to disk in PNG format for broad compatibility, and SVG or PDF for
+  vector scalability;
+- verify file existence and non-zero byte size (`size > 0`) immediately after export;
+- figure closed after export (`plt.close('all')`) to release memory;
 - artifact opened or inspected before completion is claimed.
+
+### Matplotlib evidence block
+
+```text
+FIGURE: [title and primary message]
+DATA SOURCE: [file or computation]
+POINTS PLOTTED: [count and value range]
+EXPORTS: [PNG / SVG file paths and sizes in bytes]
+RECONCILIATION: [independent verification against source data]
+STATUS: [PASS / FAIL / NOT RUN]
+```
 
 Choose chart by information structure:
 
@@ -158,7 +171,9 @@ Do not use image generation for:
 - a visual that can be created more accurately from source data or code.
 
 Generated output must be inspected against the brief. A successful tool call is
-not proof that the image is usable.
+not proof that the image is usable. Invoke the `generate_image` tool directly,
+record the generated artifact path, and confirm the image matches the approved
+creative parameters without hallucinations or unwanted artifacts.
 
 ## 6. Execution selection
 

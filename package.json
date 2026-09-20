@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.5.7",
+  "version": "4.5.8",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
@@ -104,7 +104,13 @@
     "prestart:mcp": "tsc -p tsconfig.json",
     "start:mcp": "node runtime/mcp-server.mjs",
     "pretest:mcp": "tsc -p tsconfig.json",
-    "test:mcp": "node --test runtime/mcp-server.test.cjs"
+    "test:mcp": "node --test runtime/mcp-server.test.cjs",
+    "test:stress": "node --test runtime/stress.test.cjs",
+    "test:security": "node --test runtime/security.test.cjs .build/runtime/router.js",
+    "test:skill-integrity": "node --test runtime/skill-integrity.test.cjs",
+    "test:edge": "node --test runtime/router-edge.test.cjs .build/runtime/router.js",
+    "benchmark": "node runtime/benchmark.cjs",
+    "test:all": "npm run test && npm run test:stress && npm run test:security && npm run test:skill-integrity && npm run test:edge"
   },
   "peerDependencies": {
     "@cline/sdk": "*",

@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.8] - 2026-09-20
+
+### Added
+- Embedded the Founder Anti-Slop Mandate (HATE AI SLOOP, HATE AI GENERIC, HATE AI LANGUAGE) into core skills, AGENTS.md, and workspace rules.
+- Codified Subagent Model Tiering Protocol (1-2 tier downgrade rule, provider ladder mapping, and API key discovery habit).
+- Codified Mandatory Visual Delivery (headless Agg Matplotlib, KaTeX, Mermaid/SVG, generate_image, tables).
+- Resolved all 13 previously skipped eval cases to achieve 88/88 behavioral PASS under Boss-confirmed multi-host runtime harness.
+- Established minimum graduation exam threshold of 80 (margin +8) in evaluation runner and rubric.
+
+### Changed
+- Synchronized active package, plugin, distribution, marketplace, skill-card, and MCP release metadata on version 4.5.8.
+- Preserved exactly four public MCP tools and five canonical public skills with zero em dashes (U+2014).
+
+### Product boundary
+- No Founder Operating System behavior, public skill slug, MCP tool name, package identifier, alias, or redirect changed.
+
 ## [4.5.7] - 2026-09-08
 
 ### Changed
