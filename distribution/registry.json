@@ -3,7 +3,7 @@
   "product": {
     "id": "hypertaks",
     "displayName": "Hypertaks",
-    "version": "4.5.8",
+    "version": "0.0.4.5.9",
     "canonicalSkillsRoot": "skills",
     "canonicalPublicSkills": [
       "hypertaks",

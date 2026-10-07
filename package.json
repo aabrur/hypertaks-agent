@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "4.5.8",
+  "version": "0.0.4.5.9",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "license": "MIT",
   "author": "abrur <abrur_nic@yahoo.com>",
@@ -110,7 +110,9 @@
     "test:skill-integrity": "node --test runtime/skill-integrity.test.cjs",
     "test:edge": "node --test runtime/router-edge.test.cjs .build/runtime/router.js",
     "benchmark": "node runtime/benchmark.cjs",
-    "test:all": "npm run test && npm run test:stress && npm run test:security && npm run test:skill-integrity && npm run test:edge"
+    "cli": "node .build/runtime/cli.js",
+    "test:v2": "node --test runtime/version-v2.test.cjs runtime/repo-identity.test.cjs runtime/repo-bootstrap-v2.test.cjs runtime/repository-intelligence.test.cjs runtime/graph-index.test.cjs runtime/graph-incremental.test.cjs runtime/graph-impact.test.cjs runtime/orchestrator-v2.test.cjs runtime/orchestrator-resume.test.cjs runtime/agency-agents-provider.test.cjs runtime/provider-registry.test.cjs runtime/security-v2.test.cjs runtime/evals-v2.test.cjs",
+    "test:all": "npm run test && npm run test:v2 && npm run test:stress && npm run test:security && npm run test:skill-integrity && npm run test:edge"
   },
   "peerDependencies": {
     "@cline/sdk": "*",

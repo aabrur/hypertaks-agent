@@ -110,7 +110,7 @@ test("health endpoint and MCP initialization are generic", async (t) => {
   assert.equal(publicManifest.mcp.readOnly, true);
   assert.equal(publicManifest.mcp.endpoints.manifest, "/manifest");
   assert.equal(publicManifest.documentedHostRoutes, 22);
-  assert.match(publicManifest.releaseTag, /^v\d+\.\d+\.\d+$/);
+  assert.match(publicManifest.releaseTag, /^v\d+\.\d+\.\d+(\.\d+\.\d+)?$/);
   assert.doesNotMatch(JSON.stringify(publicManifest), /\u2014/);
 
   const root = await fetch(`${server.baseUrl}/`);

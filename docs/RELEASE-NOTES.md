@@ -1,5 +1,26 @@
 # Release Notes
 
+## v0.0.4.5.9 - Repository Operating Vault, Local Intelligence Graph, Orchestrator V2 & Worker Governance
+
+Hypertaks 0.0.4.5.9 introduces the Repository Operating Vault, Local Intelligence Graph, Orchestrator V2, and Worker Governance, establishing an offline-first, evidence-backed workspace operating system while preserving the five canonical public skills and four public MCP tools.
+
+### What shipped
+
+- **Repository Operating Vault**: Mandatory `.hypertaks/` local workspace with architecture pack (`ARCHITECTURE.md`, `FUNCTION-MAP.md`, `DATA-MODEL.md`, `NETWORK-DEPENDENCIES.md`, `ASSET-INDEX.md`) while preserving all 13 Project Operating Context living documents.
+- **Repository Topological Scanner (RTS)**: Multi-language AST and structural scanner for TypeScript, JavaScript, Python, and SQL with automated secret redaction.
+- **Local Intelligence Graph**: First-party offline graph indexing (`nodes.jsonl`, `edges.jsonl`, `graph.json`, `graph.meta.json`, `GRAPH_REPORT.md`) with Git-aware freshness checking and blast-radius impact analysis.
+- **Orchestrator V2**: Persistent execution runs under `.hypertaks/runs/<run-id>/`, topological DAG compilation, dependency waves, and interrupted run checkpointing and resume.
+- **Worker Governance**: Generic provider abstraction with Agency Agents provider, T6 untrusted evidence boundary, and anti-prompt-injection containment.
+- **Local CLI**: Command surface (`init`, `status`, `sync`, `architecture`, `graph`) for repository vault operations.
+- **Security V2 & Behavioral Evals**: 8 security regression tests and behavioral evaluations EV-91 through EV-112.
+- **Unified Version SSOT**: Release version single source of truth in `release/version.json` synchronized across all manifests, adapters, and registries.
+
+### Preserved invariants
+
+- Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
+- Exactly four read-only public remote MCP tools.
+- Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
+
 ## v4.5.8 - Founder Anti-Slop Mandate, Subagent Tiering, Visual Delivery & 88/88 Behavioral Certification
 
 Hypertaks 4.5.8 embeds the Founder Anti-Slop Mandate, deterministic subagent model tiering discipline, and mandatory visual delivery into the core skills and references, resolves all 13 previously skipped eval cases to achieve 88/88 behavioral PASS, establishes a minimum graduation exam threshold of 80, and synchronizes release metadata across all supported agent environments.

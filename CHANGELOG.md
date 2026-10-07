@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4.5.9] - 2026-10-08
+
+### Added
+- Repository Operating Vault: mandatory `.hypertaks/` local workspace with architecture pack (`ARCHITECTURE.md`, `FUNCTION-MAP.md`, `DATA-MODEL.md`, `NETWORK-DEPENDENCIES.md`, `ASSET-INDEX.md`) while preserving existing 13 Project Operating Context living documents.
+- Repository Topological Scanner (RTS): multi-language AST and structural scanner for TypeScript, JavaScript, Python, and SQL with automated secret redaction.
+- Local Intelligence Graph: first-party offline graph indexing (`nodes.jsonl`, `edges.jsonl`, `graph.json`, `graph.meta.json`, `GRAPH_REPORT.md`) with Git-aware freshness checking and impact/blast-radius analysis.
+- Orchestrator V2: persistent run state under `.hypertaks/runs/<run-id>/`, topological DAG building, dependency waves, and interrupted run checkpointing and resume.
+- Worker Governance: generic provider abstraction with Agency Agents provider, T6 untrusted evidence boundary, and anti-injection security containment.
+- Local CLI: command surface (`init`, `status`, `sync`, `architecture`, `graph`) for repository vault operations.
+- Security V2 & Behavioral Evals: 8 security regression tests and behavioral evaluations EV-91 through EV-112.
+
+### Changed
+- Transitioned version identity to `0.0.4.5.9` (`v0.0.4.5.9`) with release single source of truth in `release/version.json`.
+- Preserved exactly five public skills and four public MCP tools with zero em dashes across all files.
+
 ## [4.5.8] - 2026-09-20
 
 ### Added

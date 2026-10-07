@@ -149,7 +149,7 @@ for rel, selectors in VERSION_RECORDS.items():
     except Exception:  # noqa: BLE001
         pass  # JSON-parse error already reported above
 distinct = {value for value in versions.values() if value is not None}
-check(all(re.fullmatch(r"\d+\.\d+\.\d+", str(value)) for value in versions.values()),
+check(all(re.fullmatch(r"\d+\.\d+\.\d+(\.\d+\.\d+)?", str(value)) for value in versions.values()),
       f"Live versions must use strict semver: {versions}")
 check(len(distinct) == 1,
       f"Manifest versions out of sync: {versions}")

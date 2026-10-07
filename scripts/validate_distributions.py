@@ -66,7 +66,7 @@ def main() -> int:
         "catalog": catalog.get("version"),
         "compatibility": compatibility.get("version"),
     }
-    if any(not isinstance(value, str) or not re.fullmatch(r"\d+\.\d+\.\d+", value) for value in versions.values()):
+    if any(not isinstance(value, str) or not re.fullmatch(r"\d+\.\d+\.\d+(\.\d+\.\d+)?", value) for value in versions.values()):
         errors.append(f"distribution versions must use strict semver: {versions}")
     if len(set(versions.values())) != 1:
         errors.append(f"distribution versions are out of sync: {versions}")

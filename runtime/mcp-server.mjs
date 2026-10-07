@@ -8,7 +8,7 @@ import path from "node:path";
 import canonicalPublicSkillRouter from "../.build/runtime/public-skill-router.js";
 
 const PRODUCT_NAME = "Hypertaks";
-const PRODUCT_VERSION = "4.5.8";
+const PRODUCT_VERSION = "0.0.4.5.9";
 const SERVER_NAME = "hypertaks-mcp-adapter";
 const SERVER_TITLE = "Hypertaks MCP Adapter";
 const SERVER_DESCRIPTION =

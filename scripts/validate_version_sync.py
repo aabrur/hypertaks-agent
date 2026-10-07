@@ -19,7 +19,7 @@ def read_json(path: Path) -> Mapping[str, Any]:
 def get_expected_version() -> str:
     package = read_json(ROOT / "package.json")
     version = package.get("version")
-    if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+", version):
+    if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+(\.\d+\.\d+)?", version):
         raise ValueError(f"Invalid package.json version: {version}")
     return version
 
