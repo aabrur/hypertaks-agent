@@ -17,6 +17,9 @@ import {
   resolveWithinApprovedRoot,
   BossApprovalProof,
   assertValidApprovalProof,
+  activateContract,
+  mintBossApprovalProof,
+  ApprovalActivation,
 } from "./founder-brain";
 
 export interface RepoBootstrapGrant {
@@ -37,9 +40,11 @@ export interface RepoBootstrapGrant {
   readonly issued_at: string;
   readonly signature: string;
   readonly revoked: boolean;
+  readonly proof_message_id?: string;
 }
 
 let processScopedBootstrapSecret: string | null = null;
+const VAULT_KEY_RELATIVE_PATH = path.join(".hypertaks", "state", "bootstrap.key");
 
 export function getInternalBootstrapSecret(): string {
   if (process.env.HYPERTAKS_BOOTSTRAP_SECRET) {
@@ -49,6 +54,108 @@ export function getInternalBootstrapSecret(): string {
     processScopedBootstrapSecret = crypto.randomBytes(32).toString("hex");
   }
   return processScopedBootstrapSecret;
+}
+
+export function getOrCreatePersistentVaultKey(
+  canonicalRoot: string,
+  options?: { rotate?: boolean; createIfMissing?: boolean }
+): string | null {
+  if (process.env.HYPERTAKS_BOOTSTRAP_SECRET) {
+    return process.env.HYPERTAKS_BOOTSTRAP_SECRET;
+  }
+  try {
+    const keyPath = resolveWithinApprovedRoot(canonicalRoot, VAULT_KEY_RELATIVE_PATH, false);
+    if (fs.existsSync(keyPath) && !options?.rotate) {
+      const existing = fs.readFileSync(keyPath, "utf8").trim();
+      if (/^[0-9a-f]{64}$/iu.test(existing)) {
+        return existing;
+      }
+    }
+    if (options?.rotate || options?.createIfMissing) {
+      const newKey = crypto.randomBytes(32).toString("hex");
+      const parent = path.dirname(keyPath);
+      if (!fs.existsSync(parent)) {
+        fs.mkdirSync(parent, { recursive: true });
+      }
+      fs.writeFileSync(keyPath, newKey + "\n", { encoding: "utf8", mode: 0o600 });
+      return newKey;
+    }
+  } catch {
+    // Uninitialized vault, permission issue, or traversal blocked
+  }
+  return null;
+}
+
+export function resolveBootstrapSecret(
+  canonicalRoot?: string,
+  options?: { allowProcessFallback?: boolean; createIfMissing?: boolean }
+): string {
+  if (process.env.HYPERTAKS_BOOTSTRAP_SECRET) {
+    return process.env.HYPERTAKS_BOOTSTRAP_SECRET;
+  }
+  if (canonicalRoot) {
+    const keyOpts: { rotate?: boolean; createIfMissing?: boolean } = {};
+    if (options?.createIfMissing !== undefined) {
+      keyOpts.createIfMissing = options.createIfMissing;
+    }
+    const vaultKey = getOrCreatePersistentVaultKey(canonicalRoot, keyOpts);
+    if (vaultKey) {
+      return vaultKey;
+    }
+  }
+  if (options?.allowProcessFallback !== false) {
+    return getInternalBootstrapSecret();
+  }
+  throw new Error("SECRET_UNAVAILABLE: No persistent vault key or process secret available.");
+}
+
+export function rotateBootstrapKey(canonicalRoot: string): boolean {
+  const newKey = getOrCreatePersistentVaultKey(canonicalRoot, { rotate: true });
+  if (!newKey) return false;
+  const existingGrant = readStoredGrant(canonicalRoot);
+  if (existingGrant && !existingGrant.revoked) {
+    const updatedSignature = computeGrantSignature(
+      existingGrant.repo_id,
+      existingGrant.canonical_root_fingerprint,
+      existingGrant.issued_from_t1_contract,
+      existingGrant.issued_at,
+      newKey,
+      existingGrant.allowed_path,
+      existingGrant.allowed_operations,
+      existingGrant.forbidden_operations,
+    );
+    const updatedGrant: RepoBootstrapGrant = {
+      ...existingGrant,
+      signature: updatedSignature,
+    };
+    saveStoredGrant(canonicalRoot, updatedGrant);
+  }
+  return true;
+}
+
+export function mintBootstrapProof(
+  contractId: string,
+  messageId = "msg-t1-boss"
+): BossApprovalProof {
+  const activation = activateContract({
+    contractId,
+    bossMessage: `APPROVE ${contractId}`,
+    isBossTurn: true,
+    requiresMutationOrExternalEffect: true,
+    contractPermissions: ["PERM_FILE_WRITE"],
+  });
+  if (!activation.active) {
+    throw new Error(`Failed to activate contract: ${activation.reason}`);
+  }
+  if (!activation.evidence) {
+    throw new Error("Failed to activate contract: missing evidence");
+  }
+  const approvalActivation: ApprovalActivation = {
+    active: true,
+    contractId: activation.contractId,
+    evidence: activation.evidence,
+  };
+  return mintBossApprovalProof(approvalActivation, messageId);
 }
 
 export function computeGrantSignature(
@@ -75,21 +182,41 @@ export function computeGrantSignature(
   return crypto.createHmac("sha256", effectiveSalt).update(payload).digest("hex");
 }
 
+export interface IssueBootstrapGrantOptions {
+  readonly proof?: BossApprovalProof | null;
+  readonly salt?: string;
+  readonly isEphemeral?: boolean;
+}
+
 export function issueBootstrapGrant(
   canonicalRoot: string,
   repoId: string,
   contractId: string,
-  salt?: string,
-  options?: {
-    readonly proof?: BossApprovalProof | null;
-    readonly requireApprovalProof?: boolean;
-  },
+  saltOrOptions?: string | IssueBootstrapGrantOptions | BossApprovalProof,
+  maybeOptions?: IssueBootstrapGrantOptions,
 ): RepoBootstrapGrant {
-  if (options?.proof !== undefined && options.proof !== null) {
-    assertValidApprovalProof(options.proof, contractId);
-  } else if (options?.requireApprovalProof) {
+  let proof: BossApprovalProof | undefined;
+  let salt: string | undefined;
+
+  if (typeof saltOrOptions === "string") {
+    salt = saltOrOptions;
+    proof = maybeOptions?.proof ?? undefined;
+  } else if (saltOrOptions && typeof saltOrOptions === "object") {
+    if ("contractId" in saltOrOptions && "messageId" in saltOrOptions) {
+      proof = saltOrOptions as BossApprovalProof;
+    } else {
+      const opts = saltOrOptions as IssueBootstrapGrantOptions;
+      proof = opts.proof ?? undefined;
+      salt = opts.salt;
+    }
+  }
+
+  if (!proof) {
     throw new Error("APPROVAL_REQUIRED: an active T1 contract approval proof is required.");
   }
+  assertValidApprovalProof(proof, contractId);
+
+  const effectiveSalt = salt ?? resolveBootstrapSecret(canonicalRoot);
   const rootFingerprint = computeRootFingerprint(canonicalRoot);
   const issuedAt = new Date().toISOString();
   const allowedOps = ["create", "update"] as const;
@@ -107,7 +234,7 @@ export function issueBootstrapGrant(
     rootFingerprint,
     contractId,
     issuedAt,
-    salt,
+    effectiveSalt,
     allowedPath,
     allowedOps,
     forbiddenOps,
@@ -124,6 +251,7 @@ export function issueBootstrapGrant(
     issued_at: issuedAt,
     signature,
     revoked: false,
+    proof_message_id: proof.messageId,
   };
 }
 
@@ -176,18 +304,32 @@ export function verifyBootstrapGrant(
       return { valid: false, reason: `Missing required security boundary: ${req}` };
     }
   }
+  const effectiveSalt = salt ?? resolveBootstrapSecret(canonicalRoot);
   const expectedSignature = computeGrantSignature(
     grant.repo_id,
     grant.canonical_root_fingerprint,
     grant.issued_from_t1_contract,
     grant.issued_at,
-    salt,
+    effectiveSalt,
     grant.allowed_path,
     grant.allowed_operations,
     grant.forbidden_operations,
   );
   if (grant.signature !== expectedSignature) {
-    return { valid: false, reason: "Grant signature verification failed (tampered grant)" };
+    const processFallbackSecret = getInternalBootstrapSecret();
+    const fallbackSignature = computeGrantSignature(
+      grant.repo_id,
+      grant.canonical_root_fingerprint,
+      grant.issued_from_t1_contract,
+      grant.issued_at,
+      processFallbackSecret,
+      grant.allowed_path,
+      grant.allowed_operations,
+      grant.forbidden_operations,
+    );
+    if (grant.signature !== fallbackSignature) {
+      return { valid: false, reason: "Grant signature verification failed (tampered grant)" };
+    }
   }
 
   return { valid: true };
@@ -220,8 +362,23 @@ export function saveStoredGrant(canonicalRoot: string, grant: RepoBootstrapGrant
     path.join(".hypertaks", "state", "bootstrap-grant.json"),
     true,
   );
+  const vaultKey = getOrCreatePersistentVaultKey(canonicalRoot);
+  let grantToSave = grant;
+  if (vaultKey) {
+    const signatureWithVaultKey = computeGrantSignature(
+      grant.repo_id,
+      grant.canonical_root_fingerprint,
+      grant.issued_from_t1_contract,
+      grant.issued_at,
+      vaultKey,
+      grant.allowed_path,
+      grant.allowed_operations,
+      grant.forbidden_operations,
+    );
+    grantToSave = { ...grant, signature: signatureWithVaultKey };
+  }
   const tempPath = `${grantPath}.tmp.${crypto.randomBytes(4).toString("hex")}`;
-  fs.writeFileSync(tempPath, JSON.stringify(grant, null, 2) + "\n", "utf8");
+  fs.writeFileSync(tempPath, JSON.stringify(grantToSave, null, 2) + "\n", "utf8");
   fs.renameSync(tempPath, grantPath);
 }
 
@@ -288,6 +445,9 @@ export function bootstrapRepoVault(
 
   // Grant verified! Now persist identity and initialize the vault.
   const { identity } = loadOrInitRepoIdentity(canonicalRoot);
+
+  // Ensure persistent vault key exists for future process restarts
+  getOrCreatePersistentVaultKey(canonicalRoot, { createIfMissing: true });
 
   // Ensure all vault directories exist within approved root
   let dotHypertaks: string;
@@ -404,6 +564,8 @@ Do not commit sensitive keys, passwords, or personal credentials into this folde
         preservedFiles.push(relPath);
       }
     }
+
+    saveStoredGrant(canonicalRoot, grant);
 
     return {
       success: true,

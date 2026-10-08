@@ -7,7 +7,7 @@ const os = require("node:os");
 const { buildLocalGraph, saveLocalGraph } = require("../.build/runtime/graph/local-graph-provider.js");
 const { scanRepository } = require("../.build/runtime/repository-intelligence/scanner.js");
 const { resolveCanonicalRoot, loadOrInitRepoIdentity } = require("../.build/runtime/repo-identity.js");
-const { issueBootstrapGrant, bootstrapRepoVault } = require("../.build/runtime/repo-bootstrap.js");
+const { issueBootstrapGrant, bootstrapRepoVault, mintBootstrapProof } = require("../.build/runtime/repo-bootstrap.js");
 
 test("graph-index: builds local graph nodes and edges from repository scan", () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-graph-test-"));
@@ -27,7 +27,9 @@ test("graph-index: builds local graph nodes and edges from repository scan", () 
     );
 
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-GRAPH-01");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-GRAPH-01", {
+      proof: mintBootstrapProof("HT-GRAPH-01"),
+    });
     bootstrapRepoVault(canonical, grant);
 
     const scan = scanRepository(canonical);

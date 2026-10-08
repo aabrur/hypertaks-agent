@@ -12,7 +12,7 @@ const {
 const { buildLocalGraph, saveLocalGraph } = require("../.build/runtime/graph/local-graph-provider.js");
 const { scanRepository } = require("../.build/runtime/repository-intelligence/scanner.js");
 const { resolveCanonicalRoot, loadOrInitRepoIdentity } = require("../.build/runtime/repo-identity.js");
-const { issueBootstrapGrant, bootstrapRepoVault } = require("../.build/runtime/repo-bootstrap.js");
+const { issueBootstrapGrant, bootstrapRepoVault, mintBootstrapProof } = require("../.build/runtime/repo-bootstrap.js");
 
 test("graph-incremental: evaluates graph freshness against cached hashes", () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-freshness-test-"));
@@ -23,7 +23,9 @@ test("graph-incremental: evaluates graph freshness against cached hashes", () =>
     fs.writeFileSync(path.join(canonical, "src", "file1.ts"), "export const a = 1;\n", "utf8");
 
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-FRESH-01");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-FRESH-01", {
+      proof: mintBootstrapProof("HT-FRESH-01"),
+    });
     bootstrapRepoVault(canonical, grant);
 
     const scan = scanRepository(canonical);

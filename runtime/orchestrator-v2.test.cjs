@@ -68,7 +68,7 @@ test("orchestrator-v2: computes execution waves and executes DAG in order", asyn
     const executedOrder = [];
     const meta = await engine.executeWaveSchedule(dag, async (node) => {
       executedOrder.push(node.id);
-      return { success: true, output: `Result of ${node.id}` };
+      return { success: true, output: `Result of ${node.id}`, verifiedEvidence: true };
     });
 
     assert.equal(meta.status, "COMPLETED");

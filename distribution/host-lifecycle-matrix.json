@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "product": "hypertaks",
+  "version": "0.0.4.5.9",
+  "governanceModel": "Founder Operating System Zero-Consent Write Guard",
+  "totalHosts": 22,
+  "executionPolicy": {
+    "detection": "AUTOMATIC_ZERO_COMMAND",
+    "preflight": "READ_ONLY_UNAUTHENTICATED",
+    "mutation": "AUTHENTIC_T1_BOSS_APPROVAL_REQUIRED",
+    "storageBoundary": ".hypertaks/**"
+  },
+  "lifecycleCategories": [
+    {
+      "category": "plugin-sdk",
+      "description": "Programmatic lifecycle hooks executed on agent workspace opening or session initiation.",
+      "hosts": ["cline", "pi", "kilo-code", "roo-code"]
+    },
+    {
+      "category": "workspace-open",
+      "description": "Workspace root inspection executed automatically when agent attaches to repository.",
+      "hosts": ["antigravity", "cursor", "windsurf", "openhands", "goose"]
+    },
+    {
+      "category": "command-instruction",
+      "description": "Instruction and CLI lifecycle preflight executed at conversation turn or agent launch.",
+      "hosts": ["claude-code", "codex", "hermes", "opencode", "openclaw", "kimi-code", "aider"]
+    },
+    {
+      "category": "managed-and-chat",
+      "description": "Instruction prompt and context attachment with remote MCP or local preflight verification.",
+      "hosts": ["github-copilot", "chatgpt", "claude-ai", "gemini-app", "librechat", "open-webui"]
+    }
+  ],
+  "matrix": [
+    {
+      "id": "antigravity",
+      "displayName": "Google Antigravity",
+      "category": "workspace-open",
+      "detectionTrigger": "Workspace load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": "distribution/antigravity/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "category": "command-instruction",
+      "detectionTrigger": "Session start / command hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".claude-plugin/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex",
+      "category": "command-instruction",
+      "detectionTrigger": "Session start / command hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".codex-plugin/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "category": "workspace-open",
+      "detectionTrigger": "Workspace open / rules scan",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".cursor-plugin/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "windsurf",
+      "displayName": "Windsurf",
+      "category": "workspace-open",
+      "detectionTrigger": "Workspace open / Cascade rules",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".windsurf/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "cline",
+      "displayName": "Cline",
+      "category": "plugin-sdk",
+      "detectionTrigger": "Plugin SDK lifecycle hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".cline/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "pi",
+      "displayName": "Pi",
+      "category": "plugin-sdk",
+      "detectionTrigger": "Extension lifecycle hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".pi/extensions/hypertaks.ts",
+      "status": "PASS"
+    },
+    {
+      "id": "kilo-code",
+      "displayName": "Kilo Code",
+      "category": "plugin-sdk",
+      "detectionTrigger": "Plugin SDK lifecycle hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".kilo/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "roo-code",
+      "displayName": "Roo Code",
+      "category": "plugin-sdk",
+      "detectionTrigger": "Extension lifecycle hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".roo/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "openhands",
+      "displayName": "OpenHands",
+      "category": "workspace-open",
+      "detectionTrigger": "Container workspace boot",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".openhands/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "goose",
+      "displayName": "Goose",
+      "category": "workspace-open",
+      "detectionTrigger": "Session start preflight",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".goose/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "hermes",
+      "displayName": "Hermes",
+      "category": "command-instruction",
+      "detectionTrigger": "Session start / skill invocation",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".hermes/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "category": "command-instruction",
+      "detectionTrigger": "Agent session start",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".opencode/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "openclaw",
+      "displayName": "OpenClaw",
+      "category": "command-instruction",
+      "detectionTrigger": "Skill workspace scan",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".openclaw/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "category": "command-instruction",
+      "detectionTrigger": "Workspace command hook",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".kimi-plugin/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "aider",
+      "displayName": "Aider",
+      "category": "command-instruction",
+      "detectionTrigger": "Repo opening preflight",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".aider/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "github-copilot",
+      "displayName": "GitHub Copilot",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Workspace instruction load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".github-copilot/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "chatgpt",
+      "displayName": "ChatGPT",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Custom GPT action / prompt load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".chatgpt/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "claude-ai",
+      "displayName": "Claude.ai",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Project knowledge context load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".claude-ai/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "gemini-app",
+      "displayName": "Google Gemini App",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Gem system instruction load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".gemini-app/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "librechat",
+      "displayName": "LibreChat",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Agent preset configuration",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".librechat/plugin.json",
+      "status": "PASS"
+    },
+    {
+      "id": "open-webui",
+      "displayName": "Open WebUI",
+      "category": "managed-and-chat",
+      "detectionTrigger": "Model system context load",
+      "preflightMode": "Automatic read-only",
+      "mutationProtocol": "Boss APPROVE prompt on T1 turn",
+      "adapterPath": ".open-webui/plugin.json",
+      "status": "PASS"
+    }
+  ]
+}

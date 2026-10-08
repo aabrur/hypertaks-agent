@@ -163,7 +163,33 @@ export class OrchestratorEngine {
               const res = await executor(node);
               const workerEvidence = (res as any).verifiedEvidence;
               const hasExplicitEvidenceFailure = workerEvidence === false || workerEvidence === null;
-              const hasMissingDeliverable = node.expectedOutputs.length > 0 && (!res.output || res.output.trim().length === 0);
+              const requiresDeliverables = node.expectedOutputs.length > 0;
+              const hasMissingDeliverable = requiresDeliverables && (!res.output || res.output.trim().length === 0);
+
+              let missingOrEmptyFile: string | null = null;
+              if (requiresDeliverables) {
+                for (const exp of node.expectedOutputs) {
+                  const isFilePath = exp.includes(".") || exp.includes("/") || exp.includes("\\");
+                  if (isFilePath) {
+                    try {
+                      const fullPath = resolveWithinApprovedRoot(this.canonicalRoot, exp, false);
+                      if (!fs.existsSync(fullPath)) {
+                        missingOrEmptyFile = `Declared deliverable file missing: ${exp}`;
+                        break;
+                      }
+                      if (fs.statSync(fullPath).size === 0) {
+                        missingOrEmptyFile = `Declared deliverable file empty: ${exp}`;
+                        break;
+                      }
+                    } catch (err: any) {
+                      missingOrEmptyFile = `Declared deliverable path invalid: ${exp}`;
+                      break;
+                    }
+                  }
+                }
+              }
+
+              const hasMissingEvidence = requiresDeliverables && (workerEvidence === undefined || workerEvidence === false || workerEvidence === null);
 
               let verifierPassed = true;
               let verifierError: string | undefined;
@@ -175,14 +201,23 @@ export class OrchestratorEngine {
                 }
               }
 
-              if (res.success && !hasExplicitEvidenceFailure && !hasMissingDeliverable && verifierPassed) {
+              if (
+                res.success &&
+                !hasExplicitEvidenceFailure &&
+                !hasMissingEvidence &&
+                !hasMissingDeliverable &&
+                !missingOrEmptyFile &&
+                verifierPassed
+              ) {
                 node.status = "COMPLETED";
                 node.outputResult = res.output;
                 completedSet.add(node.id);
                 this.logEvent("NODE_COMPLETED", { nodeId: node.id });
               } else {
                 node.status = "FAILED";
-                node.error = hasExplicitEvidenceFailure
+                node.error = missingOrEmptyFile
+                  ? `PROOF_OF_DONE_REJECTED: ${missingOrEmptyFile}`
+                  : hasExplicitEvidenceFailure || hasMissingEvidence
                   ? "PROOF_OF_DONE_REJECTED: Worker claimed success without verified evidence"
                   : verifierError
                   ? `PROOF_OF_DONE_REJECTED: ${verifierError}`

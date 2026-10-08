@@ -8,7 +8,7 @@ const { scanRepository } = require("../.build/runtime/repository-intelligence/sc
 const { writeInventories } = require("../.build/runtime/repository-intelligence/inventory-writer.js");
 const { compileArchitecturePack } = require("../.build/runtime/repository-intelligence/architecture-compiler.js");
 const { resolveCanonicalRoot, loadOrInitRepoIdentity } = require("../.build/runtime/repo-identity.js");
-const { issueBootstrapGrant, bootstrapRepoVault } = require("../.build/runtime/repo-bootstrap.js");
+const { issueBootstrapGrant, bootstrapRepoVault, mintBootstrapProof } = require("../.build/runtime/repo-bootstrap.js");
 
 test("repository-intelligence: scans multi-language fixture and generates architecture pack", () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-rts-test-"));
@@ -57,7 +57,9 @@ export function startServer() {
 
     // Bootstrap vault first
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-RTS-01");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-RTS-01", {
+      proof: mintBootstrapProof("HT-RTS-01"),
+    });
     bootstrapRepoVault(canonical, grant);
 
     // Scan

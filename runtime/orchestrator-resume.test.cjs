@@ -49,7 +49,7 @@ test("orchestrator-resume: resumes interrupted run without re-running completed 
     await engine1.executeWaveSchedule(dag, async (node) => {
       if (node.id === "node-1") {
         node1ExecutionCount++;
-        return { success: true, output: "Node 1 done" };
+        return { success: true, output: "Node 1 done", verifiedEvidence: true };
       }
       if (node.id === "node-2") {
         node2ExecutionCount++;
@@ -71,11 +71,11 @@ test("orchestrator-resume: resumes interrupted run without re-running completed 
     const finalMeta = await engine2.executeWaveSchedule(dag, async (node) => {
       if (node.id === "node-1") {
         node1ExecutionCount++;
-        return { success: true, output: "Node 1 done" };
+        return { success: true, output: "Node 1 done", verifiedEvidence: true };
       }
       if (node.id === "node-2") {
         node2ExecutionCount++;
-        return { success: true, output: "Node 2 recovered" };
+        return { success: true, output: "Node 2 recovered", verifiedEvidence: true };
       }
       return { success: true, output: "" };
     });

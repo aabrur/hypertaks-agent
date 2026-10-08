@@ -12,6 +12,7 @@ export interface WorkerExecutionResult {
   readonly evidenceClass: "T6_GENERATED" | "T2_VERIFIED";
   readonly attemptedEscalations: readonly string[];
   readonly contained: boolean;
+  readonly status?: "COMPLETED" | "UNAVAILABLE" | "CONTAINED" | "FAILED";
 }
 
 export interface AgentWorkerProvider {

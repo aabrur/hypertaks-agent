@@ -21,6 +21,7 @@ const {
   issueBootstrapGrant,
   verifyBootstrapGrant,
   bootstrapRepoVault,
+  mintBootstrapProof,
 } = require("../.build/runtime/repo-bootstrap.js");
 const { scanRepository } = require("../.build/runtime/repository-intelligence/scanner.js");
 const { compileArchitecturePack } = require("../.build/runtime/repository-intelligence/architecture-compiler.js");
@@ -47,7 +48,13 @@ test("security-v2: forged or cross-repo bootstrap grant fails closed", () => {
   const rootA = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-repoA-"));
   const rootB = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-repoB-"));
   try {
-    const grantA = issueBootstrapGrant(rootA, "repo-A", "HT-AUTH-001");
+    // 0. Missing proof fails closed
+    assert.throws(() => {
+      issueBootstrapGrant(rootA, "repo-A", "HT-AUTH-001");
+    }, /APPROVAL_REQUIRED/);
+
+    const proofA = mintBootstrapProof("HT-AUTH-001");
+    const grantA = issueBootstrapGrant(rootA, "repo-A", "HT-AUTH-001", { proof: proofA });
 
     // 1. Forged signature fails
     const forged = { ...grantA, signature: "attacker-signature" };
@@ -84,7 +91,8 @@ test("security-v2: secret tokens are redacted and never leak into architecture m
     );
 
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-SEC-01");
+    const proof = mintBootstrapProof("HT-SEC-01");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-SEC-01", { proof });
     bootstrapRepoVault(canonical, grant);
 
     const scan = scanRepository(canonical);
@@ -167,7 +175,8 @@ test("security-v2: bootstrap grant confines paths strictly to .hypertaks/**", ()
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-grant-scope-"));
   try {
     const canonical = resolveCanonicalRoot(tempDir);
-    const grant = issueBootstrapGrant(canonical, "test-repo", "HT-SCOPE-01");
+    const proof = mintBootstrapProof("HT-SCOPE-01");
+    const grant = issueBootstrapGrant(canonical, "test-repo", "HT-SCOPE-01", { proof });
 
     assert.equal(grant.allowed_path, ".hypertaks/**");
     assert.deepEqual(grant.forbidden_operations, [
@@ -193,7 +202,8 @@ test("security-v2: tampering with grant operations invalidates signature and fai
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-grant-tamper-"));
   try {
     const canonical = resolveCanonicalRoot(tempDir);
-    const grant = issueBootstrapGrant(canonical, "test-repo", "HT-TAMPER-01");
+    const proof = mintBootstrapProof("HT-TAMPER-01");
+    const grant = issueBootstrapGrant(canonical, "test-repo", "HT-TAMPER-01", { proof });
 
     // 1. Adding unauthorized operation
     const tamperedOps = { ...grant, allowed_operations: ["create", "update", "deploy"] };

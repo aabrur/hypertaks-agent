@@ -6,7 +6,7 @@ const os = require("node:os");
 
 const { loadReleaseVersion } = require("../.build/runtime/version.js");
 const { resolveCanonicalRoot, loadOrInitRepoIdentity } = require("../.build/runtime/repo-identity.js");
-const { issueBootstrapGrant, verifyBootstrapGrant, bootstrapRepoVault } = require("../.build/runtime/repo-bootstrap.js");
+const { issueBootstrapGrant, verifyBootstrapGrant, bootstrapRepoVault, mintBootstrapProof } = require("../.build/runtime/repo-bootstrap.js");
 const { scanRepository } = require("../.build/runtime/repository-intelligence/scanner.js");
 const { writeInventories } = require("../.build/runtime/repository-intelligence/inventory-writer.js");
 const { compileArchitecturePack } = require("../.build/runtime/repository-intelligence/architecture-compiler.js");
@@ -26,7 +26,9 @@ test("EV-91 to EV-95: repository bootstrap, vault completeness, grant reuse and 
     const otherCanonical = resolveCanonicalRoot(otherDir);
 
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-EV-01");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-EV-01", {
+      proof: mintBootstrapProof("HT-EV-01"),
+    });
 
     // EV-91: bootstrap on authorized activation
     const result = bootstrapRepoVault(canonical, grant);
@@ -74,7 +76,9 @@ test("EV-96 to EV-100: local graph, freshness, mappings", () => {
     );
 
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-EV-02");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-EV-02", {
+      proof: mintBootstrapProof("HT-EV-02"),
+    });
     bootstrapRepoVault(canonical, grant);
 
     const scan = scanRepository(canonical);
@@ -128,7 +132,7 @@ test("EV-101 to EV-106: impact analysis, DAG waves, and resume", async () => {
     await engine.executeWaveSchedule(dag, async (node) => {
       if (node.id === "n1") n1Ran++;
       if (node.id === "n3") return { success: false, output: "fail" };
-      return { success: true, output: "ok" };
+      return { success: true, output: "ok", verifiedEvidence: true };
     });
 
     assert.equal(n1Ran, 1);
@@ -137,7 +141,7 @@ test("EV-101 to EV-106: impact analysis, DAG waves, and resume", async () => {
     const engine2 = new OrchestratorEngine(canonical, "RUN-EV-01");
     await engine2.executeWaveSchedule(dag, async (node) => {
       if (node.id === "n1") n1Ran++;
-      return { success: true, output: "recovered" };
+      return { success: true, output: "recovered", verifiedEvidence: true };
     });
 
     // n1 was NOT re-run
@@ -149,7 +153,7 @@ test("EV-101 to EV-106: impact analysis, DAG waves, and resume", async () => {
 
 test("EV-107 to EV-112: external providers, governance, and versioning", async () => {
   const registry = new ProviderRegistry();
-  const agency = new AgencyAgentsProvider();
+  const agency = new AgencyAgentsProvider({ mode: "simulation" });
   registry.register(agency);
 
   // EV-107: external provider role selection

@@ -10,6 +10,7 @@ const {
   bootstrapRepoVault,
   revokeStoredGrant,
   readStoredGrant,
+  mintBootstrapProof,
 } = require("../.build/runtime/repo-bootstrap.js");
 const { resolveCanonicalRoot, loadOrInitRepoIdentity } = require("../.build/runtime/repo-identity.js");
 
@@ -18,7 +19,8 @@ test("repo-bootstrap: issue and verify bootstrap grant", () => {
   try {
     const canonical = resolveCanonicalRoot(tempDir);
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-TEST-001");
+    const proof = mintBootstrapProof("HT-TEST-001");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-TEST-001", { proof });
 
     assert.equal(grant.grant_kind, "hypertaks.repo-bootstrap.v1");
     assert.equal(grant.allowed_path, ".hypertaks/**");
@@ -55,7 +57,8 @@ test("repo-bootstrap: bootstrapRepoVault initializes vault and preserves existin
   try {
     const canonical = resolveCanonicalRoot(tempDir);
     const { identity } = loadOrInitRepoIdentity(canonical);
-    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-TEST-002");
+    const proof2 = mintBootstrapProof("HT-TEST-002");
+    const grant = issueBootstrapGrant(canonical, identity.repo_id, "HT-TEST-002", { proof: proof2 });
 
     // First initialization
     const result1 = bootstrapRepoVault(canonical, grant);
