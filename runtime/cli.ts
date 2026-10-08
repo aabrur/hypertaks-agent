@@ -59,24 +59,30 @@ export async function runCli(args: string[]): Promise<number> {
 
     case "graph": {
       const sub = args[1] || "status";
-      const { identity } = loadOrInitRepoIdentity(canonicalRoot);
-      const scan = scanRepository(canonicalRoot);
-      const graph = buildLocalGraph(canonicalRoot, scan);
 
-      if (sub === "impact") {
-        const target = args[2];
-        if (!target) {
-          console.error("Usage: hypertaks graph impact <nodeId>");
-          return 1;
+      if (sub === "impact" || sub === "freshness") {
+        const identity = readRepoIdentity(canonicalRoot);
+        if (!identity) {
+          console.log("Hypertaks Repository Operating Vault: NOT_INITIALIZED");
+          console.log("Run 'hypertaks init' to initialize repository vault.");
+          return 0;
         }
-        const impact = analyzeImpact(target, graph);
-        console.log(`Impact for ${target}:`);
-        console.log(`Direct dependents: ${impact.directDependents.join(", ") || "(none)"}`);
-        console.log(`Blast radius: ${impact.blastRadiusCount}`);
-        return 0;
-      }
+        const scan = scanRepository(canonicalRoot);
+        const graph = buildLocalGraph(canonicalRoot, scan);
 
-      if (sub === "freshness") {
+        if (sub === "impact") {
+          const target = args[2];
+          if (!target) {
+            console.error("Usage: hypertaks graph impact <nodeId>");
+            return 1;
+          }
+          const impact = analyzeImpact(target, graph);
+          console.log(`Impact for ${target}:`);
+          console.log(`Direct dependents: ${impact.directDependents.join(", ") || "(none)"}`);
+          console.log(`Blast radius: ${impact.blastRadiusCount}`);
+          return 0;
+        }
+
         const hashes: Record<string, string> = {};
         for (const f of scan.files) hashes[f.relativePath] = f.sha256;
         const fresh = evaluateGraphFreshness(canonicalRoot, hashes);
@@ -84,6 +90,9 @@ export async function runCli(args: string[]): Promise<number> {
         return 0;
       }
 
+      const { identity } = loadOrInitRepoIdentity(canonicalRoot);
+      const scan = scanRepository(canonicalRoot);
+      const graph = buildLocalGraph(canonicalRoot, scan);
       saveLocalGraph(canonicalRoot, identity.repo_id, graph);
       const hashes: Record<string, string> = {};
       for (const f of scan.files) hashes[f.relativePath] = f.sha256;

@@ -10,6 +10,11 @@ import {
 } from "./types";
 import { DagBuilder } from "./dag-builder";
 import { computeRootFingerprint } from "../repo-identity";
+import {
+  resolveWithinApprovedRoot,
+  validateRecordId,
+  sanitizeAgentName,
+} from "../founder-brain";
 
 export class OrchestratorEngine {
   private readonly runDir: string;
@@ -18,12 +23,17 @@ export class OrchestratorEngine {
     private readonly canonicalRoot: string,
     private readonly runId: string,
   ) {
-    this.runDir = path.join(canonicalRoot, ".hypertaks", "runs", runId);
+    validateRecordId(runId);
+    this.runDir = resolveWithinApprovedRoot(
+      canonicalRoot,
+      path.join(".hypertaks", "runs", runId),
+      false,
+    );
   }
 
   public initRun(dag: TaskDag): OrchestratorRunMeta {
     if (!fs.existsSync(this.runDir)) {
-      fs.mkdirSync(this.runDir, { recursive: true });
+      resolveWithinApprovedRoot(this.canonicalRoot, path.join(".hypertaks", "runs", this.runId), true);
       fs.mkdirSync(path.join(this.runDir, "agents"), { recursive: true });
       fs.mkdirSync(path.join(this.runDir, "handoffs"), { recursive: true });
       fs.mkdirSync(path.join(this.runDir, "artifacts"), { recursive: true });
@@ -96,18 +106,21 @@ export class OrchestratorEngine {
   }
 
   public recordHandoff(handoff: AgentHandoff): void {
-    const handoffPath = path.join(
-      this.runDir,
-      "handoffs",
-      `${handoff.fromAgent}-to-${handoff.toAgent}.json`,
+    const from = sanitizeAgentName(handoff.fromAgent);
+    const to = sanitizeAgentName(handoff.toAgent);
+    const handoffPath = resolveWithinApprovedRoot(
+      this.canonicalRoot,
+      path.join(".hypertaks", "runs", this.runId, "handoffs", `${from}-to-${to}.json`),
+      true,
     );
     fs.writeFileSync(handoffPath, JSON.stringify(handoff, null, 2) + "\n", "utf8");
-    this.logEvent("AGENT_HANDOFF", { from: handoff.fromAgent, to: handoff.toAgent });
+    this.logEvent("AGENT_HANDOFF", { from, to });
   }
 
   public executeWaveSchedule(
     dag: TaskDag,
     executor: (node: TaskNode) => Promise<{ success: boolean; output: string }>,
+    verifier?: (node: TaskNode, res: { success: boolean; output: string }) => Promise<{ verified: boolean; error?: string }>,
   ): Promise<OrchestratorRunMeta> {
     const builder = new DagBuilder();
     for (const node of dag.nodes) {
@@ -148,16 +161,33 @@ export class OrchestratorEngine {
             node.status = "RUNNING";
             try {
               const res = await executor(node);
-              // Proof-of-done gate: reject completion if evidence verification explicitly failed
-              if (res.success && (res as any).verifiedEvidence !== false) {
+              const workerEvidence = (res as any).verifiedEvidence;
+              const hasExplicitEvidenceFailure = workerEvidence === false || workerEvidence === null;
+              const hasMissingDeliverable = node.expectedOutputs.length > 0 && (!res.output || res.output.trim().length === 0);
+
+              let verifierPassed = true;
+              let verifierError: string | undefined;
+              if (verifier) {
+                const vCheck = await verifier(node, res);
+                if (!vCheck.verified) {
+                  verifierPassed = false;
+                  verifierError = vCheck.error ?? "Verifier rejected completion proof";
+                }
+              }
+
+              if (res.success && !hasExplicitEvidenceFailure && !hasMissingDeliverable && verifierPassed) {
                 node.status = "COMPLETED";
                 node.outputResult = res.output;
                 completedSet.add(node.id);
                 this.logEvent("NODE_COMPLETED", { nodeId: node.id });
               } else {
                 node.status = "FAILED";
-                node.error = (res as any).verifiedEvidence === false
+                node.error = hasExplicitEvidenceFailure
                   ? "PROOF_OF_DONE_REJECTED: Worker claimed success without verified evidence"
+                  : verifierError
+                  ? `PROOF_OF_DONE_REJECTED: ${verifierError}`
+                  : hasMissingDeliverable
+                  ? "PROOF_OF_DONE_REJECTED: Worker claimed success without deliverable output"
                   : res.output;
                 failedSet.add(node.id);
                 this.logEvent("NODE_FAILED", { nodeId: node.id, error: node.error });

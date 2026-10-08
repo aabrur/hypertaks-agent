@@ -217,11 +217,22 @@ function isWithinRoot(root: string, target: string): boolean {
 }
 
 export function resolveWithinApprovedRoot(root: string, relativePath: string, createParent = false): string {
-  if (!relativePath || path.isAbsolute(relativePath) || relativePath.includes("\u0000")) {
+  if (
+    !relativePath ||
+    path.isAbsolute(relativePath) ||
+    /^[A-Za-z]:/u.test(relativePath) ||
+    relativePath.startsWith("\\\\") ||
+    relativePath.startsWith("//") ||
+    relativePath.includes("\u0000")
+  ) {
+    throw new Error("PATH_OUTSIDE_APPROVED_ROOT: an absolute, empty, or null-containing path is not allowed.");
+  }
+  const normalizedRelative = relativePath.replace(/\\/gu, "/");
+  if (path.posix.isAbsolute(normalizedRelative)) {
     throw new Error("PATH_OUTSIDE_APPROVED_ROOT: an absolute, empty, or null-containing path is not allowed.");
   }
   const canonicalRoot = normalizeRoot(root, false);
-  const candidate = path.resolve(canonicalRoot, relativePath);
+  const candidate = path.resolve(canonicalRoot, normalizedRelative);
   if (!isWithinRoot(canonicalRoot, candidate)) {
     throw new Error("PATH_OUTSIDE_APPROVED_ROOT: traversal is not allowed.");
   }
@@ -237,6 +248,9 @@ export function resolveWithinApprovedRoot(root: string, relativePath: string, cr
 export function validateRecordId(value: string): string {
   if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/u.test(value)) {
     throw new Error("INVALID_RECORD_ID: use 1-128 letters, digits, dot, underscore, or hyphen.");
+  }
+  if (/^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\..*)?$/iu.test(value)) {
+    throw new Error("INVALID_RECORD_ID: reserved operating-system name.");
   }
   return value;
 }

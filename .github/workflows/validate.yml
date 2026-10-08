@@ -42,7 +42,7 @@ jobs:
           test -s /tmp/retrieval-quality.svg
 
       - name: Validate TypeScript runtime
-        run: npm test
+        run: npm run test:all
 
       - name: Compile Python scripts
         run: python3 -m compileall scripts

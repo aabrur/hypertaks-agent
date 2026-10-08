@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { RepositoryScanResult } from "../repository-intelligence/scanner";
 import { GraphEdge, GraphMeta, GraphNode, LocalGraph, NodeType } from "./graph-service";
-import { safeContextGitState } from "../founder-brain";
+import { safeContextGitState, resolveWithinApprovedRoot } from "../founder-brain";
 
 export function buildLocalGraph(canonicalRoot: string, scan: RepositoryScanResult): LocalGraph {
   const graph = new LocalGraph();
@@ -145,25 +145,23 @@ export function saveLocalGraph(
   repoId: string,
   graph: LocalGraph,
 ): readonly string[] {
-  const dotHypertaks = path.join(canonicalRoot, ".hypertaks");
-  const graphDir = path.join(dotHypertaks, "graph");
-  const indexesDir = path.join(graphDir, "indexes");
-
-  if (!fs.existsSync(graphDir)) fs.mkdirSync(graphDir, { recursive: true });
-  if (!fs.existsSync(indexesDir)) fs.mkdirSync(indexesDir, { recursive: true });
+  const graphDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph"), true);
+  resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "indexes"), true);
 
   const written: string[] = [];
   const nodes = graph.getNodes();
   const edges = graph.getEdges();
 
   // 1. nodes.jsonl
+  const nodesPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "nodes.jsonl"), false);
   const nodesLines = nodes.map((n) => JSON.stringify(n)).join("\n");
-  fs.writeFileSync(path.join(graphDir, "nodes.jsonl"), nodesLines ? nodesLines + "\n" : "", "utf8");
+  fs.writeFileSync(nodesPath, nodesLines ? nodesLines + "\n" : "", "utf8");
   written.push(".hypertaks/graph/nodes.jsonl");
 
   // 2. edges.jsonl
+  const edgesPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "edges.jsonl"), false);
   const edgesLines = edges.map((e) => JSON.stringify(e)).join("\n");
-  fs.writeFileSync(path.join(graphDir, "edges.jsonl"), edgesLines ? edgesLines + "\n" : "", "utf8");
+  fs.writeFileSync(edgesPath, edgesLines ? edgesLines + "\n" : "", "utf8");
   written.push(".hypertaks/graph/edges.jsonl");
 
   // 3. symbols.jsonl
@@ -171,14 +169,16 @@ export function saveLocalGraph(
     ["symbol", "function", "class", "interface", "type", "component", "hook"].includes(n.type),
   );
   const symbolsLines = symbolNodes.map((s) => JSON.stringify(s)).join("\n");
+  const symbolsPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "symbols.jsonl"), false);
   fs.writeFileSync(
-    path.join(graphDir, "symbols.jsonl"),
+    symbolsPath,
     symbolsLines ? symbolsLines + "\n" : "",
     "utf8",
   );
   written.push(".hypertaks/graph/symbols.jsonl");
 
   // 4. graph.json (Materialized compatibility graph)
+  const graphJsonPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "graph.json"), false);
   const materialized = {
     schema: "hypertaks.graph.snapshot.v1",
     repo_id: repoId,
@@ -187,13 +187,14 @@ export function saveLocalGraph(
     edges,
   };
   fs.writeFileSync(
-    path.join(graphDir, "graph.json"),
+    graphJsonPath,
     JSON.stringify(materialized, null, 2) + "\n",
     "utf8",
   );
   written.push(".hypertaks/graph/graph.json");
 
   // 5. graph.meta.json
+  const metaPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "graph.meta.json"), false);
   const gitState = safeContextGitState(canonicalRoot);
   const meta: GraphMeta = {
     schema: "hypertaks.graph.v1",
@@ -210,10 +211,11 @@ export function saveLocalGraph(
       graphify: "unavailable",
     },
   };
-  fs.writeFileSync(path.join(graphDir, "graph.meta.json"), JSON.stringify(meta, null, 2) + "\n", "utf8");
+  fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2) + "\n", "utf8");
   written.push(".hypertaks/graph/graph.meta.json");
 
   // 6. GRAPH_REPORT.md
+  const reportPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "graph", "GRAPH_REPORT.md"), false);
   let report = `# Intelligence Graph Summary Report
 
 **Repository ID:** \`${repoId}\`  
@@ -233,7 +235,7 @@ export function saveLocalGraph(
 - Hypertaks RTS: ACTIVE
 - Graphify Engine: UNAVAILABLE (Local fallback in use)
 `;
-  fs.writeFileSync(path.join(graphDir, "GRAPH_REPORT.md"), report, "utf8");
+  fs.writeFileSync(reportPath, report, "utf8");
   written.push(".hypertaks/graph/GRAPH_REPORT.md");
 
   return written;

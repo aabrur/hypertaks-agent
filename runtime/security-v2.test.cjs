@@ -34,8 +34,9 @@ test("security-v2: symlink escape and traversal blocked", () => {
       resolveWithinApprovedRoot(tempDir, "../../../etc/passwd");
     }, /PATH_OUTSIDE_APPROVED_ROOT/);
 
+    const absPath = process.platform === "win32" ? "C:\\Windows\\System32" : "/etc/passwd";
     assert.throws(() => {
-      resolveWithinApprovedRoot(tempDir, "C:/Windows/System32");
+      resolveWithinApprovedRoot(tempDir, absPath);
     }, /PATH_OUTSIDE_APPROVED_ROOT/);
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true });
@@ -257,6 +258,133 @@ test("security-v2: status command is strictly read-only and creates zero filesys
     const afterFiles = fs.readdirSync(tempDir);
     assert.equal(afterFiles.length, 0);
     assert.equal(fs.existsSync(path.join(tempDir, ".hypertaks")), false);
+  } finally {
+    process.chdir(prevCwd);
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test("security-v2: bootstrapRepoVault creates zero files on invalid grant denial", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-zero-write-"));
+  try {
+    const canonical = resolveCanonicalRoot(tempDir);
+    const fakeGrant = {
+      grant_kind: "hypertaks.repo-bootstrap.v1",
+      repo_id: "unauthorized-repo",
+      canonical_root_fingerprint: "invalid-fp",
+      allowed_path: ".hypertaks/**",
+      allowed_operations: ["create", "update"],
+      forbidden_operations: ["source_write", "external_publish", "deploy", "spend", "arbitrary_delete", "network_egress"],
+      issued_from_t1_contract: "HT-FAKE-01",
+      issued_at: new Date().toISOString(),
+      signature: "forged-signature",
+      revoked: false,
+    };
+
+    const result = bootstrapRepoVault(canonical, fakeGrant);
+    assert.equal(result.success, false);
+    assert.ok(result.error);
+
+    // Zero-write guarantee: no .hypertaks directory, no repo.json
+    assert.equal(fs.existsSync(path.join(canonical, ".hypertaks")), false);
+    assert.equal(fs.readdirSync(canonical).length, 0);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test("security-v2: OrchestratorEngine rejects path traversal runId and sanitizes handoffs", () => {
+  const { OrchestratorEngine } = require("../.build/runtime/orchestrator/orchestrator.js");
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-orch-path-"));
+  try {
+    const canonical = resolveCanonicalRoot(tempDir);
+
+    // 1. Path traversal in runId is rejected
+    assert.throws(
+      () => new OrchestratorEngine(canonical, "../../escape"),
+      /INVALID_RECORD_ID|PATH_OUTSIDE_APPROVED_ROOT/
+    );
+
+    // 2. Reserved OS name in runId is rejected
+    assert.throws(
+      () => new OrchestratorEngine(canonical, "CON"),
+      /INVALID_RECORD_ID|INVALID_AGENT_NAME/
+    );
+
+    // 3. Valid runId succeeds and stays inside .hypertaks/runs
+    const engine = new OrchestratorEngine(canonical, "safe-run-001");
+    assert.ok(engine);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test("security-v2: orchestrator completion gate fails closed on missing evidence or empty deliverables", async () => {
+  const { OrchestratorEngine } = require("../.build/runtime/orchestrator/orchestrator.js");
+  const { DagBuilder } = require("../.build/runtime/orchestrator/dag-builder.js");
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-proof-gate-"));
+  try {
+    const canonical = resolveCanonicalRoot(tempDir);
+    const builder = new DagBuilder();
+    builder.addNode({
+      id: "node-with-output",
+      role: "Developer",
+      provider: "native",
+      dependencies: [],
+      inputs: [],
+      expectedOutputs: ["artifact.json"],
+      permissions: ["PERM_FILE_WRITE"],
+      retryLimit: 1,
+      status: "PENDING",
+    });
+
+    const dag = builder.build("RUN-GATE-001", "repo-gate", "HT-GATE-01", "Lite");
+    const engine = new OrchestratorEngine(canonical, "RUN-GATE-001");
+    engine.initRun(dag);
+
+    // 1. Worker claiming success with verifiedEvidence: false is rejected
+    const metaFailEvidence = await engine.executeWaveSchedule(dag, async () => {
+      return { success: true, output: "claimed work", verifiedEvidence: false };
+    });
+    assert.equal(metaFailEvidence.status, "FAILED");
+
+    // 2. Worker claiming success with empty deliverable when expectedOutputs exist is rejected
+    const metaFailEmpty = await engine.executeWaveSchedule(dag, async () => {
+      return { success: true, output: "   " };
+    });
+    assert.equal(metaFailEmpty.status, "FAILED");
+
+    // 3. Custom verifier rejecting completion is respected
+    const metaFailVerifier = await engine.executeWaveSchedule(
+      dag,
+      async () => ({ success: true, output: "some output" }),
+      async () => ({ verified: false, error: "Custom verification checks failed" })
+    );
+    assert.equal(metaFailVerifier.status, "FAILED");
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test("security-v2: cli graph impact and graph freshness are strictly read-only on uninitialized repo", async () => {
+  const { runCli } = require("../.build/runtime/cli.js");
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-graph-ro-"));
+  const prevCwd = process.cwd();
+  try {
+    process.chdir(tempDir);
+    assert.equal(fs.readdirSync(tempDir).length, 0);
+
+    // graph impact
+    const exitImpact = await runCli(["graph", "impact", "file:src/index.ts"]);
+    assert.equal(exitImpact, 0);
+    assert.equal(fs.existsSync(path.join(tempDir, ".hypertaks")), false);
+    assert.equal(fs.readdirSync(tempDir).length, 0);
+
+    // graph freshness
+    const exitFreshness = await runCli(["graph", "freshness"]);
+    assert.equal(exitFreshness, 0);
+    assert.equal(fs.existsSync(path.join(tempDir, ".hypertaks")), false);
+    assert.equal(fs.readdirSync(tempDir).length, 0);
   } finally {
     process.chdir(prevCwd);
     fs.rmSync(tempDir, { recursive: true, force: true });

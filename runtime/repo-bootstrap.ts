@@ -4,6 +4,8 @@ import * as path from "node:path";
 import {
   computeRootFingerprint,
   loadOrInitRepoIdentity,
+  readRepoIdentity,
+  createRepoIdentity,
   resolveCanonicalRoot,
   RepoIdentity,
 } from "./repo-identity";
@@ -13,6 +15,8 @@ import {
   generateProjectContextDocument,
   safeContextGitState,
   resolveWithinApprovedRoot,
+  BossApprovalProof,
+  assertValidApprovalProof,
 } from "./founder-brain";
 
 export interface RepoBootstrapGrant {
@@ -35,14 +39,24 @@ export interface RepoBootstrapGrant {
   readonly revoked: boolean;
 }
 
-const DEFAULT_SIGNING_SALT = "hypertaks-salt-v2-secure";
+let processScopedBootstrapSecret: string | null = null;
+
+export function getInternalBootstrapSecret(): string {
+  if (process.env.HYPERTAKS_BOOTSTRAP_SECRET) {
+    return process.env.HYPERTAKS_BOOTSTRAP_SECRET;
+  }
+  if (!processScopedBootstrapSecret) {
+    processScopedBootstrapSecret = crypto.randomBytes(32).toString("hex");
+  }
+  return processScopedBootstrapSecret;
+}
 
 export function computeGrantSignature(
   repoId: string,
   rootFingerprint: string,
   contractId: string,
   issuedAt: string,
-  salt: string = DEFAULT_SIGNING_SALT,
+  salt?: string,
   allowedPath: string = ".hypertaks/**",
   allowedOps: readonly string[] = ["create", "update"],
   forbiddenOps: readonly string[] = [
@@ -54,10 +68,11 @@ export function computeGrantSignature(
     "network_egress",
   ],
 ): string {
+  const effectiveSalt = salt ?? getInternalBootstrapSecret();
   const opsStr = [...allowedOps].sort().join(",");
   const fOpsStr = [...forbiddenOps].sort().join(",");
-  const payload = `${repoId}:${rootFingerprint}:${contractId}:${allowedPath}:${opsStr}:${fOpsStr}:${issuedAt}:${salt}`;
-  return crypto.createHash("sha256").update(payload).digest("hex");
+  const payload = `${repoId}:${rootFingerprint}:${contractId}:${allowedPath}:${opsStr}:${fOpsStr}:${issuedAt}`;
+  return crypto.createHmac("sha256", effectiveSalt).update(payload).digest("hex");
 }
 
 export function issueBootstrapGrant(
@@ -65,7 +80,16 @@ export function issueBootstrapGrant(
   repoId: string,
   contractId: string,
   salt?: string,
+  options?: {
+    readonly proof?: BossApprovalProof | null;
+    readonly requireApprovalProof?: boolean;
+  },
 ): RepoBootstrapGrant {
+  if (options?.proof !== undefined && options.proof !== null) {
+    assertValidApprovalProof(options.proof, contractId);
+  } else if (options?.requireApprovalProof) {
+    throw new Error("APPROVAL_REQUIRED: an active T1 contract approval proof is required.");
+  }
   const rootFingerprint = computeRootFingerprint(canonicalRoot);
   const issuedAt = new Date().toISOString();
   const allowedOps = ["create", "update"] as const;
@@ -247,8 +271,9 @@ export function bootstrapRepoVault(
   },
 ): BootstrapResult {
   const canonicalRoot = resolveCanonicalRoot(projectRoot);
-  const { identity } = loadOrInitRepoIdentity(canonicalRoot);
-  const repoId = identity.repo_id;
+  const existingIdentity = readRepoIdentity(canonicalRoot);
+  const effectiveIdentity = existingIdentity ?? createRepoIdentity(canonicalRoot);
+  const repoId = effectiveIdentity.repo_id;
 
   const verification = verifyBootstrapGrant(canonicalRoot, repoId, grant, options?.salt);
   if (!verification.valid) {
@@ -260,6 +285,9 @@ export function bootstrapRepoVault(
       error: verification.reason ?? "Grant verification failed",
     };
   }
+
+  // Grant verified! Now persist identity and initialize the vault.
+  const { identity } = loadOrInitRepoIdentity(canonicalRoot);
 
   // Ensure all vault directories exist within approved root
   let dotHypertaks: string;

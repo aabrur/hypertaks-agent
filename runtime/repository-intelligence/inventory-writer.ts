@@ -1,15 +1,13 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { RepositoryScanResult } from "./scanner";
+import { resolveWithinApprovedRoot } from "../founder-brain";
 
 export function writeInventories(
   canonicalRoot: string,
   scanResult: RepositoryScanResult,
 ): readonly string[] {
-  const inventoryDir = path.join(canonicalRoot, ".hypertaks", "inventory");
-  if (!fs.existsSync(inventoryDir)) {
-    fs.mkdirSync(inventoryDir, { recursive: true });
-  }
+  const inventoryDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "inventory"), true);
 
   const writtenFiles: string[] = [];
 

@@ -2,18 +2,16 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { RepositoryScanResult } from "./scanner";
 import { RepoIdentity } from "../repo-identity";
+import { resolveWithinApprovedRoot } from "../founder-brain";
 
 export function compileArchitecturePack(
   canonicalRoot: string,
   identity: RepoIdentity,
   scanResult: RepositoryScanResult,
 ): readonly string[] {
-  const dotHypertaks = path.join(canonicalRoot, ".hypertaks");
-  const archDir = path.join(dotHypertaks, "architecture");
-  const diagramsDir = path.join(dotHypertaks, "diagrams");
-
-  if (!fs.existsSync(archDir)) fs.mkdirSync(archDir, { recursive: true });
-  if (!fs.existsSync(diagramsDir)) fs.mkdirSync(diagramsDir, { recursive: true });
+  const dotHypertaks = resolveWithinApprovedRoot(canonicalRoot, ".hypertaks", true);
+  const archDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "architecture"), true);
+  const diagramsDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "diagrams"), true);
 
   const written: string[] = [];
   const now = new Date().toISOString();
