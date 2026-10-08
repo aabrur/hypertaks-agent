@@ -16,12 +16,14 @@ export class GraphifyProviderV2 implements GraphProvider {
     private readonly options?: {
       readonly endpoint?: string | null;
       readonly authTokenEnv?: string | null;
+      readonly approvalProof?: any;
     },
   ) {}
 
   public isAvailable(): boolean {
     if (!this.options?.endpoint) return false;
-    return this.options.endpoint.startsWith("https://");
+    if (!this.options.endpoint.startsWith("https://")) return false;
+    return !!this.options?.approvalProof;
   }
 
   public async query(queryStr: string): Promise<GraphQueryResult> {
@@ -47,7 +49,7 @@ export class GraphifyProviderV2 implements GraphProvider {
       authTokenEnv: this.options?.authTokenEnv ?? null,
       localCommand: null,
       executor: null,
-      approvalProof: null,
+      approvalProof: this.options?.approvalProof ?? null,
     };
 
     return queryGraphifyOrFallback(queryOpts);

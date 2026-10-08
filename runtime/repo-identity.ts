@@ -3,6 +3,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { execFileSync } from "node:child_process";
 import { loadReleaseVersion } from "./version";
+import { resolveWithinApprovedRoot } from "./founder-brain";
 
 export interface RepoIdentity {
   readonly schema: "hypertaks.repo.v1";
@@ -127,28 +128,24 @@ export function createRepoIdentity(
 }
 
 export function readRepoIdentity(canonicalRoot: string): RepoIdentity | null {
-  const repoJsonPath = path.join(canonicalRoot, ".hypertaks", "repo.json");
-  if (!fs.existsSync(repoJsonPath)) {
-    return null;
-  }
   try {
+    const repoJsonPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "repo.json"), false);
+    if (!fs.existsSync(repoJsonPath)) {
+      return null;
+    }
     const content = fs.readFileSync(repoJsonPath, "utf8");
     const parsed = JSON.parse(content) as RepoIdentity;
     if (parsed.schema === "hypertaks.repo.v1" && typeof parsed.repo_id === "string") {
       return parsed;
     }
   } catch {
-    // Malformed repo.json
+    // Malformed repo.json, uninitialized, or symlink traversal blocked
   }
   return null;
 }
 
 export function saveRepoIdentity(canonicalRoot: string, identity: RepoIdentity): void {
-  const dotHypertaks = path.join(canonicalRoot, ".hypertaks");
-  if (!fs.existsSync(dotHypertaks)) {
-    fs.mkdirSync(dotHypertaks, { recursive: true });
-  }
-  const repoJsonPath = path.join(dotHypertaks, "repo.json");
+  const repoJsonPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "repo.json"), true);
   const tempPath = `${repoJsonPath}.tmp.${crypto.randomBytes(4).toString("hex")}`;
   fs.writeFileSync(tempPath, JSON.stringify(identity, null, 2) + "\n", "utf8");
   fs.renameSync(tempPath, repoJsonPath);

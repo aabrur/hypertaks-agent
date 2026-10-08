@@ -616,6 +616,10 @@ function resolveExplicitSkillInstruction(
     if (usePattern.test(normalized)) {
       affirmed.add(skill);
     }
+    const barePattern = new RegExp(`^\\s*/?${token}\\s*$`, "u");
+    if (barePattern.test(normalized)) {
+      affirmed.add(skill);
+    }
   }
 
   // Short alias with explicit route/use cue only (never bare product nouns).

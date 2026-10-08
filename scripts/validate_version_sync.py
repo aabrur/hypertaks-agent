@@ -94,6 +94,16 @@ def validate_version_sync() -> int:
         if data.get("version") != version:
             errors.append(f"{p.relative_to(ROOT)} version ({data.get('version')}) != {version}")
 
+    claude_mkt = ROOT / ".claude-plugin" / "marketplace.json"
+    if claude_mkt.is_file():
+        data = read_json(claude_mkt)
+        meta_ver = data.get("metadata", {}).get("version")
+        if meta_ver != version:
+            errors.append(f".claude-plugin/marketplace.json metadata.version ({meta_ver}) != {version}")
+        plugins = data.get("plugins", [])
+        if plugins and plugins[0].get("version") != version:
+            errors.append(f".claude-plugin/marketplace.json plugins[0].version ({plugins[0].get('version')}) != {version}")
+
     # 7. runtime/mcp-server.mjs
     mcp_server = ROOT / "runtime" / "mcp-server.mjs"
     if mcp_server.is_file():

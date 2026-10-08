@@ -97,7 +97,7 @@ export function buildLocalGraph(canonicalRoot: string, scan: RepositoryScanResul
       graph.addEdge({
         source: fileNodeId,
         target: tableNodeId,
-        type: "defines" as any,
+        type: "defines",
         confidence: "STATIC",
         sourceFile: pf.filePath,
       });

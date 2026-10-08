@@ -1,5 +1,5 @@
 import * as path from "node:path";
-import { resolveCanonicalRoot, loadOrInitRepoIdentity } from "./repo-identity";
+import { resolveCanonicalRoot, loadOrInitRepoIdentity, readRepoIdentity } from "./repo-identity";
 import { issueBootstrapGrant, bootstrapRepoVault, readStoredGrant } from "./repo-bootstrap";
 import { scanRepository } from "./repository-intelligence/scanner";
 import { writeInventories } from "./repository-intelligence/inventory-writer";
@@ -28,7 +28,12 @@ export async function runCli(args: string[]): Promise<number> {
     }
 
     case "status": {
-      const { identity } = loadOrInitRepoIdentity(canonicalRoot);
+      const identity = readRepoIdentity(canonicalRoot);
+      if (!identity) {
+        console.log("Hypertaks Repository Operating Vault: NOT_INITIALIZED");
+        console.log("Run 'hypertaks init' to initialize repository vault.");
+        return 0;
+      }
       const grant = readStoredGrant(canonicalRoot);
       console.log(`Hypertaks Repository Operating Vault`);
       console.log(`Repository: ${identity.display_name} (${identity.repo_id})`);

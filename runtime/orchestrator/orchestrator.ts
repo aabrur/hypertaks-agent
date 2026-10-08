@@ -148,16 +148,19 @@ export class OrchestratorEngine {
             node.status = "RUNNING";
             try {
               const res = await executor(node);
-              if (res.success) {
+              // Proof-of-done gate: reject completion if evidence verification explicitly failed
+              if (res.success && (res as any).verifiedEvidence !== false) {
                 node.status = "COMPLETED";
                 node.outputResult = res.output;
                 completedSet.add(node.id);
                 this.logEvent("NODE_COMPLETED", { nodeId: node.id });
               } else {
                 node.status = "FAILED";
-                node.error = res.output;
+                node.error = (res as any).verifiedEvidence === false
+                  ? "PROOF_OF_DONE_REJECTED: Worker claimed success without verified evidence"
+                  : res.output;
                 failedSet.add(node.id);
-                this.logEvent("NODE_FAILED", { nodeId: node.id, error: res.output });
+                this.logEvent("NODE_FAILED", { nodeId: node.id, error: node.error });
               }
             } catch (err) {
               node.status = "FAILED";

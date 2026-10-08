@@ -12,6 +12,7 @@ import {
   PROJECT_OPERATING_CONTEXT_FILES,
   generateProjectContextDocument,
   safeContextGitState,
+  resolveWithinApprovedRoot,
 } from "./founder-brain";
 
 export interface RepoBootstrapGrant {
@@ -42,8 +43,20 @@ export function computeGrantSignature(
   contractId: string,
   issuedAt: string,
   salt: string = DEFAULT_SIGNING_SALT,
+  allowedPath: string = ".hypertaks/**",
+  allowedOps: readonly string[] = ["create", "update"],
+  forbiddenOps: readonly string[] = [
+    "source_write",
+    "external_publish",
+    "deploy",
+    "spend",
+    "arbitrary_delete",
+    "network_egress",
+  ],
 ): string {
-  const payload = `${repoId}:${rootFingerprint}:${contractId}:${issuedAt}:${salt}`;
+  const opsStr = [...allowedOps].sort().join(",");
+  const fOpsStr = [...forbiddenOps].sort().join(",");
+  const payload = `${repoId}:${rootFingerprint}:${contractId}:${allowedPath}:${opsStr}:${fOpsStr}:${issuedAt}:${salt}`;
   return crypto.createHash("sha256").update(payload).digest("hex");
 }
 
@@ -55,22 +68,34 @@ export function issueBootstrapGrant(
 ): RepoBootstrapGrant {
   const rootFingerprint = computeRootFingerprint(canonicalRoot);
   const issuedAt = new Date().toISOString();
-  const signature = computeGrantSignature(repoId, rootFingerprint, contractId, issuedAt, salt);
+  const allowedOps = ["create", "update"] as const;
+  const forbiddenOps = [
+    "source_write",
+    "external_publish",
+    "deploy",
+    "spend",
+    "arbitrary_delete",
+    "network_egress",
+  ] as const;
+  const allowedPath = ".hypertaks/**";
+  const signature = computeGrantSignature(
+    repoId,
+    rootFingerprint,
+    contractId,
+    issuedAt,
+    salt,
+    allowedPath,
+    allowedOps,
+    forbiddenOps,
+  );
 
   return {
     grant_kind: "hypertaks.repo-bootstrap.v1",
     repo_id: repoId,
     canonical_root_fingerprint: rootFingerprint,
-    allowed_path: ".hypertaks/**",
-    allowed_operations: ["create", "update"],
-    forbidden_operations: [
-      "source_write",
-      "external_publish",
-      "deploy",
-      "spend",
-      "arbitrary_delete",
-      "network_egress",
-    ],
+    allowed_path: allowedPath,
+    allowed_operations: allowedOps,
+    forbidden_operations: forbiddenOps,
     issued_from_t1_contract: contractId,
     issued_at: issuedAt,
     signature,
@@ -103,12 +128,39 @@ export function verifyBootstrapGrant(
   if (grant.allowed_path !== ".hypertaks/**") {
     return { valid: false, reason: "Grant allowed path must strictly be .hypertaks/**" };
   }
+  if (!Array.isArray(grant.allowed_operations) || grant.allowed_operations.length === 0) {
+    return { valid: false, reason: "Grant must declare allowed operations" };
+  }
+  for (const op of grant.allowed_operations) {
+    if (op !== "create" && op !== "update") {
+      return { valid: false, reason: `Unauthorized operation in grant: ${op}` };
+    }
+  }
+  if (!Array.isArray(grant.forbidden_operations)) {
+    return { valid: false, reason: "Grant must declare forbidden operations" };
+  }
+  const requiredForbidden = [
+    "source_write",
+    "external_publish",
+    "deploy",
+    "spend",
+    "arbitrary_delete",
+    "network_egress",
+  ];
+  for (const req of requiredForbidden) {
+    if (!grant.forbidden_operations.includes(req as any)) {
+      return { valid: false, reason: `Missing required security boundary: ${req}` };
+    }
+  }
   const expectedSignature = computeGrantSignature(
     grant.repo_id,
     grant.canonical_root_fingerprint,
     grant.issued_from_t1_contract,
     grant.issued_at,
     salt,
+    grant.allowed_path,
+    grant.allowed_operations,
+    grant.forbidden_operations,
   );
   if (grant.signature !== expectedSignature) {
     return { valid: false, reason: "Grant signature verification failed (tampered grant)" };
@@ -118,28 +170,32 @@ export function verifyBootstrapGrant(
 }
 
 export function readStoredGrant(canonicalRoot: string): RepoBootstrapGrant | null {
-  const grantPath = path.join(canonicalRoot, ".hypertaks", "state", "bootstrap-grant.json");
-  if (!fs.existsSync(grantPath)) {
-    return null;
-  }
   try {
+    const grantPath = resolveWithinApprovedRoot(
+      canonicalRoot,
+      path.join(".hypertaks", "state", "bootstrap-grant.json"),
+      false,
+    );
+    if (!fs.existsSync(grantPath)) {
+      return null;
+    }
     const raw = fs.readFileSync(grantPath, "utf8");
     const parsed = JSON.parse(raw) as RepoBootstrapGrant;
     if (parsed.grant_kind === "hypertaks.repo-bootstrap.v1") {
       return parsed;
     }
   } catch {
-    // Malformed grant
+    // Malformed grant, uninitialized, or symlink traversal blocked
   }
   return null;
 }
 
 export function saveStoredGrant(canonicalRoot: string, grant: RepoBootstrapGrant): void {
-  const stateDir = path.join(canonicalRoot, ".hypertaks", "state");
-  if (!fs.existsSync(stateDir)) {
-    fs.mkdirSync(stateDir, { recursive: true });
-  }
-  const grantPath = path.join(stateDir, "bootstrap-grant.json");
+  const grantPath = resolveWithinApprovedRoot(
+    canonicalRoot,
+    path.join(".hypertaks", "state", "bootstrap-grant.json"),
+    true,
+  );
   const tempPath = `${grantPath}.tmp.${crypto.randomBytes(4).toString("hex")}`;
   fs.writeFileSync(tempPath, JSON.stringify(grant, null, 2) + "\n", "utf8");
   fs.renameSync(tempPath, grantPath);
@@ -205,39 +261,41 @@ export function bootstrapRepoVault(
     };
   }
 
-  // Ensure all vault directories exist
-  const dotHypertaks = path.join(canonicalRoot, ".hypertaks");
-  for (const subDir of VAULT_DIRECTORIES) {
-    const fullDir = path.join(dotHypertaks, subDir);
-    if (!fs.existsSync(fullDir)) {
-      fs.mkdirSync(fullDir, { recursive: true });
+  // Ensure all vault directories exist within approved root
+  let dotHypertaks: string;
+  try {
+    dotHypertaks = resolveWithinApprovedRoot(canonicalRoot, ".hypertaks", true);
+    for (const subDir of VAULT_DIRECTORIES) {
+      const fullDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", subDir), true);
+      if (!fs.existsSync(fullDir)) {
+        fs.mkdirSync(fullDir, { recursive: true });
+      }
     }
-  }
 
-  const projectDir = path.join(dotHypertaks, "projects", repoId);
-  if (!fs.existsSync(projectDir)) {
-    fs.mkdirSync(projectDir, { recursive: true });
-  }
+    const projectDir = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "projects", repoId), true);
+    if (!fs.existsSync(projectDir)) {
+      fs.mkdirSync(projectDir, { recursive: true });
+    }
 
-  const createdFiles: string[] = [];
-  const preservedFiles: string[] = [];
-  const agentName = options?.agentName ?? "Hypertaks-Founder";
-  const gitState = safeContextGitState(canonicalRoot);
-  const versionInfo = loadReleaseVersion(canonicalRoot);
+    const createdFiles: string[] = [];
+    const preservedFiles: string[] = [];
+    const agentName = options?.agentName ?? "Hypertaks-Founder";
+    const gitState = safeContextGitState(canonicalRoot);
+    const versionInfo = loadReleaseVersion(canonicalRoot);
 
-  // 1. VERSION
-  const versionPath = path.join(dotHypertaks, "VERSION");
-  if (!fs.existsSync(versionPath)) {
-    fs.writeFileSync(versionPath, `${versionInfo.productVersion}\n`, "utf8");
-    createdFiles.push(".hypertaks/VERSION");
-  } else {
-    preservedFiles.push(".hypertaks/VERSION");
-  }
+    // 1. VERSION
+    const versionPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "VERSION"), true);
+    if (!fs.existsSync(versionPath)) {
+      fs.writeFileSync(versionPath, `${versionInfo.productVersion}\n`, "utf8");
+      createdFiles.push(".hypertaks/VERSION");
+    } else {
+      preservedFiles.push(".hypertaks/VERSION");
+    }
 
-  // 2. README.md
-  const readmePath = path.join(dotHypertaks, "README.md");
-  if (!fs.existsSync(readmePath)) {
-    const readmeContent = `# Hypertaks Repository Operating Vault
+    // 2. README.md
+    const readmePath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "README.md"), true);
+    if (!fs.existsSync(readmePath)) {
+      const readmeContent = `# Hypertaks Repository Operating Vault
 
 Version: ${versionInfo.productVersion}
 Repository ID: ${repoId}
@@ -251,78 +309,87 @@ This folder is the persistent operating surface for Hypertaks:
 
 Do not commit sensitive keys, passwords, or personal credentials into this folder.
 `;
-    fs.writeFileSync(readmePath, readmeContent, "utf8");
-    createdFiles.push(".hypertaks/README.md");
-  } else {
-    preservedFiles.push(".hypertaks/README.md");
-  }
-
-  // 3. bootstrap.json
-  const bootstrapMetaPath = path.join(dotHypertaks, "bootstrap.json");
-  const bootstrapMeta = {
-    schema: "hypertaks.bootstrap.v1",
-    repo_id: repoId,
-    bootstrapped_at: new Date().toISOString(),
-    product_version: versionInfo.productVersion,
-    git_state: gitState,
-    grant_contract: grant.issued_from_t1_contract,
-  };
-  fs.writeFileSync(bootstrapMetaPath, JSON.stringify(bootstrapMeta, null, 2) + "\n", "utf8");
-  createdFiles.push(".hypertaks/bootstrap.json");
-
-  // 4. status.json
-  const statusPath = path.join(dotHypertaks, "status.json");
-  const statusMeta = {
-    schema: "hypertaks.status.v1",
-    repo_id: repoId,
-    last_sync: new Date().toISOString(),
-    status: "HEALTHY",
-    graph_freshness: "UNKNOWN",
-    active_runs: 0,
-  };
-  fs.writeFileSync(statusPath, JSON.stringify(statusMeta, null, 2) + "\n", "utf8");
-  createdFiles.push(".hypertaks/status.json");
-
-  // 5. Store valid grant in state
-  saveStoredGrant(canonicalRoot, grant);
-
-  // 6. Preserve and initialize 13 Project Operating Context files
-  for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
-    const filePath = path.join(projectDir, filename);
-    const relPath = `.hypertaks/projects/${repoId}/${filename}`;
-    if (!fs.existsSync(filePath)) {
-      const content = generateProjectContextDocument(filename, repoId, agentName, gitState);
-      fs.writeFileSync(filePath, content, "utf8");
-      createdFiles.push(relPath);
+      fs.writeFileSync(readmePath, readmeContent, "utf8");
+      createdFiles.push(".hypertaks/README.md");
     } else {
-      preservedFiles.push(relPath);
+      preservedFiles.push(".hypertaks/README.md");
     }
-  }
 
-  // 7. Initialize root architecture pack templates if absent
-  const rootPackFiles: Record<string, string> = {
-    "ARCHITECTURE.md": `# Repository Architecture Overview\n\nRepository: ${identity.display_name}\nID: ${repoId}\nStatus: INITIALIZED\n\nRun Hypertaks RTS to compile full evidence-backed architecture.\n`,
-    "FUNCTION-MAP.md": `# Function and Symbol Map\n\nRepository: ${identity.display_name}\n\nHigh-value entrypoints, handlers, and services will be mapped by RTS.\n`,
-    "DATA-MODEL.md": `# Data Model and Schemas\n\nRepository: ${identity.display_name}\n\nEntity relationships, database tables, and migrations will be mapped by RTS.\n`,
-    "NETWORK-DEPENDENCIES.md": `# Network and External Dependencies\n\nRepository: ${identity.display_name}\n\nInbound routes, external API endpoints, and integrations will be mapped by RTS.\n`,
-    "ASSET-INDEX.md": `# Asset and Static Resources Index\n\nRepository: ${identity.display_name}\n\nStatic assets, design tokens, and documentation resources will be indexed by RTS.\n`,
-  };
+    // 3. bootstrap.json
+    const bootstrapMetaPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "bootstrap.json"), true);
+    const bootstrapMeta = {
+      schema: "hypertaks.bootstrap.v1",
+      repo_id: repoId,
+      bootstrapped_at: new Date().toISOString(),
+      product_version: versionInfo.productVersion,
+      git_state: gitState,
+      grant_contract: grant.issued_from_t1_contract,
+    };
+    fs.writeFileSync(bootstrapMetaPath, JSON.stringify(bootstrapMeta, null, 2) + "\n", "utf8");
+    createdFiles.push(".hypertaks/bootstrap.json");
 
-  for (const [filename, template] of Object.entries(rootPackFiles)) {
-    const fullPath = path.join(dotHypertaks, filename);
-    const relPath = `.hypertaks/${filename}`;
-    if (!fs.existsSync(fullPath)) {
-      fs.writeFileSync(fullPath, template, "utf8");
-      createdFiles.push(relPath);
-    } else {
-      preservedFiles.push(relPath);
+    // 4. status.json
+    const statusPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "status.json"), true);
+    const statusMeta = {
+      schema: "hypertaks.status.v1",
+      repo_id: repoId,
+      last_sync: new Date().toISOString(),
+      status: "HEALTHY",
+      graph_freshness: "UNKNOWN",
+      active_runs: 0,
+    };
+    fs.writeFileSync(statusPath, JSON.stringify(statusMeta, null, 2) + "\n", "utf8");
+    createdFiles.push(".hypertaks/status.json");
+
+    // 5. Store valid grant in state
+    saveStoredGrant(canonicalRoot, grant);
+
+    // 6. Preserve and initialize 13 Project Operating Context files
+    for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
+      const filePath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "projects", repoId, filename), true);
+      const relPath = `.hypertaks/projects/${repoId}/${filename}`;
+      if (!fs.existsSync(filePath)) {
+        const content = generateProjectContextDocument(filename, repoId, agentName, gitState);
+        fs.writeFileSync(filePath, content, "utf8");
+        createdFiles.push(relPath);
+      } else {
+        preservedFiles.push(relPath);
+      }
     }
-  }
 
-  return {
-    success: true,
-    repoId,
-    createdFiles,
-    preservedFiles,
-  };
+    // 7. Initialize root architecture pack templates if absent
+    const rootPackFiles: Record<string, string> = {
+      "ARCHITECTURE.md": `# Repository Architecture Overview\n\nRepository: ${identity.display_name}\nID: ${repoId}\nStatus: INITIALIZED\n\nRun Hypertaks RTS to compile full evidence-backed architecture.\n`,
+      "FUNCTION-MAP.md": `# Function and Symbol Map\n\nRepository: ${identity.display_name}\n\nHigh-value entrypoints, handlers, and services will be mapped by RTS.\n`,
+      "DATA-MODEL.md": `# Data Model and Schemas\n\nRepository: ${identity.display_name}\n\nEntity relationships, database tables, and migrations will be mapped by RTS.\n`,
+      "NETWORK-DEPENDENCIES.md": `# Network and External Dependencies\n\nRepository: ${identity.display_name}\n\nInbound routes, external API endpoints, and integrations will be mapped by RTS.\n`,
+      "ASSET-INDEX.md": `# Asset and Static Resources Index\n\nRepository: ${identity.display_name}\n\nStatic assets, design tokens, and documentation resources will be indexed by RTS.\n`,
+    };
+
+    for (const [filename, template] of Object.entries(rootPackFiles)) {
+      const fullPath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", filename), true);
+      const relPath = `.hypertaks/${filename}`;
+      if (!fs.existsSync(fullPath)) {
+        fs.writeFileSync(fullPath, template, "utf8");
+        createdFiles.push(relPath);
+      } else {
+        preservedFiles.push(relPath);
+      }
+    }
+
+    return {
+      success: true,
+      repoId,
+      createdFiles,
+      preservedFiles,
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      repoId,
+      createdFiles: [],
+      preservedFiles: [],
+      error: err?.message ?? "Vault bootstrap failed",
+    };
+  }
 }

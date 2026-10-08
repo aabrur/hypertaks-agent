@@ -187,3 +187,78 @@ test("security-v2: bootstrap grant confines paths strictly to .hypertaks/**", ()
     fs.rmSync(tempDir, { recursive: true, force: true });
   }
 });
+
+test("security-v2: tampering with grant operations invalidates signature and fails verification", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-grant-tamper-"));
+  try {
+    const canonical = resolveCanonicalRoot(tempDir);
+    const grant = issueBootstrapGrant(canonical, "test-repo", "HT-TAMPER-01");
+
+    // 1. Adding unauthorized operation
+    const tamperedOps = { ...grant, allowed_operations: ["create", "update", "deploy"] };
+    const check1 = verifyBootstrapGrant(canonical, "test-repo", tamperedOps);
+    assert.equal(check1.valid, false);
+
+    // 2. Removing a forbidden operation
+    const tamperedForbidden = {
+      ...grant,
+      forbidden_operations: ["source_write", "external_publish"],
+    };
+    const check2 = verifyBootstrapGrant(canonical, "test-repo", tamperedForbidden);
+    assert.equal(check2.valid, false);
+
+    // 3. Modifying operations even if syntactically valid invalidates signature
+    const tamperedValidOps = { ...grant, allowed_operations: ["create"] };
+    const check3 = verifyBootstrapGrant(canonical, "test-repo", tamperedValidOps);
+    assert.equal(check3.valid, false);
+    assert.ok(check3.reason.includes("tampered grant"));
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test("security-v2: LocalGraph.clear empties nodesMap, edgesList, and adjacency mappings", () => {
+  const { LocalGraph } = require("../.build/runtime/graph/graph-service.js");
+  const graph = new LocalGraph();
+  graph.addNode({ id: "file:src/index.ts", type: "file", label: "index.ts", filePath: "src/index.ts" });
+  graph.addNode({ id: "symbol:src/index.ts:main", type: "function", label: "main", filePath: "src/index.ts" });
+  graph.addEdge({
+    source: "file:src/index.ts",
+    target: "symbol:src/index.ts:main",
+    type: "contains",
+    confidence: "STATIC",
+    sourceFile: "src/index.ts",
+  });
+
+  assert.equal(graph.getNodes().length, 2);
+  assert.equal(graph.getEdges().length, 1);
+  assert.ok(graph.getNode("file:src/index.ts") !== undefined);
+
+  graph.clear();
+
+  assert.equal(graph.getNodes().length, 0);
+  assert.equal(graph.getEdges().length, 0);
+  assert.equal(graph.getNode("file:src/index.ts"), undefined);
+  assert.equal(graph.getOutgoingEdges("file:src/index.ts").length, 0);
+});
+
+test("security-v2: status command is strictly read-only and creates zero filesystem mutations", async () => {
+  const { runCli } = require("../.build/runtime/cli.js");
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-sec-status-"));
+  const prevCwd = process.cwd();
+  try {
+    process.chdir(tempDir);
+    const beforeFiles = fs.readdirSync(tempDir);
+    assert.equal(beforeFiles.length, 0);
+
+    const exitCode = await runCli(["status"]);
+    assert.equal(exitCode, 0);
+
+    const afterFiles = fs.readdirSync(tempDir);
+    assert.equal(afterFiles.length, 0);
+    assert.equal(fs.existsSync(path.join(tempDir, ".hypertaks")), false);
+  } finally {
+    process.chdir(prevCwd);
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});

@@ -72,6 +72,7 @@ export type EdgeType =
   | "references"
   | "owns"
   | "protects"
+  | "defines"
   | "deploys_to"
   | "communicates_with";
 
@@ -148,7 +149,7 @@ export class LocalGraph {
   }
 
   public clear(): void {
-    this.nodesMap.clear;
+    this.nodesMap.clear();
     this.edgesList.length = 0;
     this.outgoing.clear();
     this.incoming.clear();

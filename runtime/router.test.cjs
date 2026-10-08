@@ -412,6 +412,16 @@ const routeCases = [
   ['  simpan, ambil, memori founder... ', 'hypertaks-brain'],
   ['Dependency Change Impact - Blast Radius', 'hypertaks-graph'],
   ['CREATE a Checkpoint + Handoff + Proof-Of-Done', 'hypertaks-continuity'],
+  ['/hypertaks-verify', 'hypertaks-verify'],
+  ['hypertaks-verify', 'hypertaks-verify'],
+  ['/hypertaks-brain', 'hypertaks-brain'],
+  ['hypertaks-brain', 'hypertaks-brain'],
+  ['/hypertaks-graph', 'hypertaks-graph'],
+  ['hypertaks-graph', 'hypertaks-graph'],
+  ['/hypertaks-continuity', 'hypertaks-continuity'],
+  ['hypertaks-continuity', 'hypertaks-continuity'],
+  ['/hypertaks', 'hypertaks'],
+  ['hypertaks', 'hypertaks'],
 ];
 for (const [request, expected] of routeCases) {
   assert.equal(router.routePublicSkill(request).skill, expected, request);
