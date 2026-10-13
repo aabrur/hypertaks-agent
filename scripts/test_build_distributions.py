@@ -10,9 +10,11 @@ from scripts.build_distributions import (
     ROOT,
     build_antigravity,
     build_openai_skill_zips,
+    build_openai_plugin_zip,
     validate_antigravity_package,
     validate_openai_skill_zip,
 )
+from scripts.validate_openai_submission import validate_files, validate_zip
 
 
 class DistributionBuildTests(unittest.TestCase):
@@ -112,6 +114,58 @@ class OpenAISkillPackageTests(unittest.TestCase):
             self.assertTrue(
                 "second public skill name" in message or "forbidden package paths" in message
             )
+
+
+class OpenAIPublicPluginTests(unittest.TestCase):
+    def test_public_zip_contains_five_skills_and_existing_remote_server(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            archive_path = build_openai_plugin_zip(Path(temporary))
+            result = validate_zip(archive_path)
+            self.assertEqual(result["publicSkillCount"], 5)
+            self.assertEqual(result["mcpServerCount"], 1)
+            self.assertEqual(result["submissionReadiness"], "NOT VERIFIED")
+            first = archive_path.read_bytes()
+            self.assertEqual(build_openai_plugin_zip(Path(temporary)).read_bytes(), first)
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertNotIn("hypertaks/skills/SKILL.md", archive.namelist())
+                self.assertNotIn("hypertaks/.app.json", archive.namelist())
+                self.assertEqual(archive.read("hypertaks/skills/hypertaks/SKILL.md"), (ROOT / "skills/hypertaks/SKILL.md").read_bytes())
+
+    def test_public_validation_rejects_bindings_secrets_and_incomplete_skills(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            with zipfile.ZipFile(build_openai_plugin_zip(Path(temporary))) as archive:
+                files = {name[len("hypertaks/"):]: archive.read(name) for name in archive.namelist()}
+            version = json.loads(files["plugin.json"])["version"]
+            for name, value in ((".app.json", b"{}"), ("../private.txt", b"x"), ("skills/SKILL.md", b"pack index"), ("skills/hypertaks/references/leak.txt", b"sk-" + b"x" * 30)):
+                with self.subTest(name=name), self.assertRaises(ValueError):
+                    validate_files({**files, name: value}, version)
+            for mutate in ("apps", "headers", "version", "missing-skill"):
+                with self.subTest(mutate=mutate), self.assertRaises(ValueError):
+                    changed = dict(files)
+                    if mutate == "missing-skill":
+                        del changed["skills/hypertaks-brain/SKILL.md"]
+                    else:
+                        name = "mcp.json" if mutate == "headers" else "plugin.json"
+                        manifest = json.loads(changed[name])
+                        if mutate == "headers":
+                            manifest["mcpServers"]["hypertaks"]["headers"] = {"authorization": "private"}
+                        elif mutate == "version":
+                            manifest["version"] = "4.5.2"
+                        else:
+                            manifest["extensions"]["com.openai"]["apps"] = "./.app.json"
+                        changed[name] = json.dumps(manifest).encode()
+                    validate_files(changed, version)
+
+    def test_untracked_skill_reference_is_excluded(self) -> None:
+        probe = ROOT / "skills/hypertaks/references/public-upload-probe.txt"
+        self.assertFalse(probe.exists())
+        try:
+            probe.write_text("untracked private data", encoding="utf-8")
+            with tempfile.TemporaryDirectory() as temporary:
+                with zipfile.ZipFile(build_openai_plugin_zip(Path(temporary))) as archive:
+                    self.assertNotIn("hypertaks/skills/hypertaks/references/public-upload-probe.txt", archive.namelist())
+        finally:
+            probe.unlink(missing_ok=True)
 
 
 if __name__ == "__main__":

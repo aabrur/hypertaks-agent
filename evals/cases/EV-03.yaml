@@ -17,11 +17,12 @@ expect_fail:
 static_precondition:
   description: >-
     The skill must name an INJECTION_ATTEMPT record and state that a
-    reference file's contents cannot override the skill. Neither exists.
+    reference data cannot override the security kernel, while system and
+    developer policy remain above the skill.
   must_match:
     - file: skills/hypertaks/references/00-security-kernel.md
       pattern: "INJECTION_ATTEMPT"
     - file: skills/hypertaks/references/00-security-kernel.md
-      pattern: "overrides every other instruction"
+      pattern: 'resolves conflicts within Hypertaks\s+below system and developer policy'
     - file: skills/hypertaks/SKILL.md
       pattern: "INJECTION_ATTEMPT"

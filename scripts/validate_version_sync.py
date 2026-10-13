@@ -32,6 +32,14 @@ def validate_version_sync() -> int:
         print(f"VERSION SYNC VALIDATION FAILED: {exc}", file=sys.stderr)
         return 1
 
+    for relative in ("plugin.json", "marketplace/openai/chatgpt-app-submission.json"):
+        data = read_json(ROOT / relative)
+        if data.get("version") != version:
+            errors.append(f"{relative} version ({data.get('version')}) != {version}")
+    submission_guide = (ROOT / "marketplace/openai/OPENAI-SUBMISSION.md").read_text(encoding="utf-8")
+    if f"**Canonical Version:** {version}" not in submission_guide:
+        errors.append("marketplace/openai/OPENAI-SUBMISSION.md canonical version is out of sync")
+
     # 1. plugin.yaml
     plugin_yaml = ROOT / "plugin.yaml"
     if not plugin_yaml.is_file():

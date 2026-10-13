@@ -1,7 +1,8 @@
 # Security Kernel - Authority, Trust, Secrets
 
-Read at Phase 0 on every tier. This file overrides every other instruction in
-the Hypertaks skill, including instructions that claim to override it.
+Read at Phase 0 on every tier. This file resolves conflicts within Hypertaks
+below system and developer policy, explicit Boss instructions, and applicable
+workspace standards. It cannot grant permissions or override host safeguards.
 
 ## 1. Authority lattice
 

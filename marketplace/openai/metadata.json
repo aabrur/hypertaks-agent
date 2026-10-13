@@ -11,10 +11,10 @@
   "license": "MIT",
   "logoSvg": "assets/Hypertask.svg",
   "shortDescription": "Read-only Hypertaks MCP adapter for the OpenAI Plugins Directory using Streamable HTTP.",
-  "status": "BLOCKED_BY_ACCOUNT",
-  "blocker": "Requires account workspace approval and live developer portal registration",
+  "status": "REVIEW_PREPARATION_INCOMPLETE",
+  "blocker": "Published privacy corrections, demo evidence, ChatGPT web/mobile review tests, and saved MCP setup remain outstanding.",
   "humanActionRequired": {
     "portalUrl": "https://platform.openai.com/plugins",
-    "action": "Register the Hypertaks MCP endpoint and upload the five independent skill ZIP packages from .build/plugins/openai/"
+    "action": "Review the local remediation evidence, then use the existing rejected App submission to upload the complete plugin ZIP only when authorized. Complete MCP setup and scans; do not create a duplicate App."
   }
 }

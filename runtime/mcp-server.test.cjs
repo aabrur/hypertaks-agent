@@ -287,18 +287,16 @@ test("automatic router uses focused vocabulary, bilingual terms, and negation", 
   assert.equal(preferred.reason, preferredUnit.reason);
   assert.match(preferred.reason, /override|preferred|explicit/i);
 
-  const invalidPreferred = await route(
-    server.baseUrl,
-    "install setup configuration checksum",
-    "hypertaks-sixth",
-  );
+  const invalidPreferred = await rpc(server.baseUrl, {
+    jsonrpc: "2.0", id: "invalid-preferred", method: "tools/call",
+    params: { name: "hypertaks_route", arguments: { request: "install setup configuration checksum", preferredSkill: "hypertaks-sixth" } },
+  });
   const invalidPreferredUnit = compiledRouter.routePublicSkill(
     "install setup configuration checksum",
     "hypertaks-sixth",
   );
-  assert.equal(invalidPreferred.skill, "hypertaks-verify");
-  assert.equal(invalidPreferred.skill, invalidPreferredUnit.skill);
-  assert.equal(invalidPreferred.reason, invalidPreferredUnit.reason);
+  assert.equal(invalidPreferred.payload.result.isError, true);
+  assert.equal(invalidPreferredUnit.skill, "hypertaks-verify");
 });
 
 test("token-safe route diagnostics default to none and expose identity only when requested", async (t) => {
@@ -437,6 +435,36 @@ test("focused route and canonical skill read work", async (t) => {
   assert.equal(skill.payload.result.isError, false);
   assert.match(skill.payload.result.structuredContent.content, /hypertaks-verify/i);
   assert.match(skill.payload.result.structuredContent.sha256, /^[a-f0-9]{64}$/);
+  assert.match(skill.payload.result.content[0].text, /##/);
+  assert.ok(skill.payload.result.content[0].text.includes(skill.payload.result.structuredContent.sha256));
+});
+
+test("tool calls enforce the advertised argument schemas", async (t) => {
+  const server = await startServer();
+  t.after(() => server.stop());
+  const invalid = [
+    ["hypertaks_manifest", { unexpected: true }],
+    ["hypertaks_verify_installation", { repair: true }],
+    ["hypertaks_route", { request: "test", preferredSkill: "hypertaks-invalid" }],
+    ["hypertaks_route", { request: "test", diagnostics: null }],
+    ["hypertaks_route", { request: "test", diagnostics: "" }],
+    ["hypertaks_route", { request: "test", preferredSkill: 1 }],
+    ["hypertaks_route", { request: "test", diagnostics: "full", extra: true }],
+    ["hypertaks_route", { request: "x".repeat(12001) }],
+    ["hypertaks_route", {}],
+    ["hypertaks_get_skill", { skill: "hypertaks", extra: true }],
+    ["hypertaks_manifest", null],
+    ["hypertaks_manifest", []],
+  ];
+  for (const [name, arguments_] of invalid) {
+    const result = await rpc(server.baseUrl, {
+      jsonrpc: "2.0", id: "invalid-schema", method: "tools/call",
+      params: { name, arguments: arguments_ },
+    });
+    assert.equal(result.payload.result.isError, true, `${name} accepted invalid arguments`);
+  }
+  // JSON Schema string length counts code points rather than UTF-16 units.
+  assert.equal((await route(server.baseUrl, "\u{1f600}".repeat(12000))).mutationPerformed, false);
 });
 
 test("invalid skill, oversized body, and unauthorized origin fail closed", async (t) => {
@@ -637,12 +665,14 @@ test("A4 router regression matrix, determinism, concurrency, and tool boundary",
   }
 
   for (const item of matrix.INVALID_PREFERRED_CASES) {
-    const routed = await route(server.baseUrl, item.request, item.preferredSkill);
+    const routed = await rpc(server.baseUrl, {
+      jsonrpc: "2.0", id: item.id, method: "tools/call",
+      params: { name: "hypertaks_route", arguments: { request: item.request, preferredSkill: item.preferredSkill } },
+    });
     const unit = compiledRouter.routePublicSkill(item.request, item.preferredSkill);
     mcpCalls += 1;
-    distribution[routed.skill] = (distribution[routed.skill] || 0) + 1;
-    if (routed.skill === item.expected && unit.skill === item.expected) mcpPass += 1;
-    else failures.push({ id: item.id, expected: item.expected, mcp: routed.skill, unit: unit.skill });
+    if (routed.payload.result.isError === true && unit.skill === item.expected) mcpPass += 1;
+    else failures.push({ id: item.id, expected: "schema rejection", mcp: routed.payload, unit: unit.skill });
   }
 
   assert.equal(failures.length, 0, JSON.stringify(failures.slice(0, 5)));

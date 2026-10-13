@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -335,18 +336,55 @@ def iter_skill_package_files(skill_name: str) -> list[Path]:
     skill_md = skill_root / "SKILL.md"
     if not skill_md.is_file():
         raise FileNotFoundError(f"missing SKILL.md for {skill_name}")
+    tracked = git_tracked_files()
+    require_tracked_file(skill_md, tracked)
     files = [skill_md]
     for folder in SKILL_PACKAGE_FOLDERS:
         directory = skill_root / folder
         if not directory.is_dir():
             continue
         for path in sorted(directory.rglob("*")):
-            if path.is_file() and not path.name.startswith("."):
+            if path.is_file() and not path.name.startswith(".") and path.relative_to(ROOT).as_posix() in tracked:
+                require_tracked_file(path, tracked)
                 files.append(path)
     openai_yaml = skill_root / "agents" / "openai.yaml"
     if openai_yaml not in files:
         raise FileNotFoundError(f"missing agents/openai.yaml for {skill_name}")
     return files
+
+
+def build_openai_plugin_zip(output_root: Path | None = None) -> Path:
+    """Build a separate public upload copy without private host/App bindings."""
+    if __package__:
+        from .validate_openai_submission import validate_zip
+    else:
+        from validate_openai_submission import validate_zip
+
+    destination = (output_root or OPENAI_OUTPUT_ROOT).resolve()
+    destination.mkdir(parents=True, exist_ok=True)
+    version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    sources = [ROOT / name for name in ("plugin.json", "mcp.json", "LICENSE", "assets/Hypertask.svg", "assets/chatgpt-directory-icon.png", "assets/chatgpt-composer-icon.png")]
+    for skill_name in CANONICAL_SKILLS:
+        sources.extend(iter_skill_package_files(skill_name))
+    for source in sources:
+        if source.is_symlink() or not source.is_file() or not source.resolve().is_relative_to(ROOT.resolve()):
+            raise ValueError("public package source must be a contained regular file")
+    target = destination / f"hypertaks-plugin-{version}.zip"
+    with tempfile.NamedTemporaryFile(prefix="hypertaks-public-", suffix=".zip", dir=destination, delete=False) as temporary:
+        temporary_path = Path(temporary.name)
+    try:
+        with zipfile.ZipFile(temporary_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for source in sorted(sources):
+                name = "hypertaks/" + source.relative_to(ROOT).as_posix()
+                entry = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+                entry.compress_type = zipfile.ZIP_DEFLATED
+                entry.external_attr = 0o100644 << 16
+                archive.writestr(entry, source.read_bytes())
+        validate_zip(temporary_path, version)
+        os.replace(temporary_path, target)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+    return target
 
 
 def build_openai_skill_zips(output_root: Path | None = None) -> Path:
@@ -414,7 +452,7 @@ def validate_openai_skill_zip(zip_path: Path, skill_name: str) -> None:
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("host", choices=("antigravity", "openai"))
+    parser.add_argument("host", choices=("antigravity", "openai", "openai-skills"))
     parser.add_argument("--output-root", type=Path, default=None)
     parser.add_argument("--check-only", action="store_true")
     return parser.parse_args(argv)
@@ -422,15 +460,15 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
-    if args.host == "openai":
+    if args.host in {"openai", "openai-skills"}:
         output_root = args.output_root or OPENAI_OUTPUT_ROOT
+        builder = build_openai_plugin_zip if args.host == "openai" else build_openai_skill_zips
         if args.check_only:
             with tempfile.TemporaryDirectory(prefix="hypertaks-openai-check-") as temp_dir:
-                package = build_openai_skill_zips(Path(temp_dir))
-                print("OpenAI skill package check: PASS")
-                print(package)
+                builder(Path(temp_dir))
+                print("OpenAI package format check: PASS (submission readiness is separate)")
             return 0
-        package = build_openai_skill_zips(output_root)
+        package = builder(output_root)
         print(package)
         return 0
 

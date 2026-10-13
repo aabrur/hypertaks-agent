@@ -42,8 +42,8 @@ contract:
   permissions:
     type: list
     required: true
-    values: [PERM_READ_LOCAL, PERM_NET_READ, PERM_FILE_WRITE, PERM_SHELL,
-             PERM_SEND_MESSAGE, PERM_PUBLISH, PERM_SPEND, PERM_ONCHAIN_WRITE,
+    values: [PERM_READ_LOCAL, PERM_NET_READ, PERM_FILE_WRITE, PERM_EXECUTE,
+             PERM_SEND_3P, PERM_PUBLISH, PERM_SPEND, PERM_ONCHAIN_WRITE,
              PERM_DELETE]
   irreversible_actions: {type: list, required: true}
 

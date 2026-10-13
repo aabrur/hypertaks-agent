@@ -79,7 +79,7 @@ const TOOLS = Object.freeze([
     title: "Read Hypertaks Manifest",
     description:
       "Return the Hypertaks product boundary, version, canonical public skill list, and remote MCP adapter limitations.",
-    inputSchema: { type: "object", additionalProperties: false },
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
     annotations: readOnlyAnnotations(),
   },
   {
@@ -137,7 +137,7 @@ const TOOLS = Object.freeze([
     title: "Verify Hypertaks Runtime Files",
     description:
       "Verify the exact five canonical skill entry files and canonical SVG present in this server checkout, including SHA-256 evidence.",
-    inputSchema: { type: "object", additionalProperties: false },
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
     annotations: readOnlyAnnotations(),
   },
 ]);
@@ -360,8 +360,10 @@ async function verifyInstallation() {
 }
 
 function toolSuccess(structuredContent, text) {
+  // Include the data in text for MCP clients that do not consume structuredContent.
+  const serialized = JSON.stringify(structuredContent, null, 2);
   return {
-    content: [{ type: "text", text }],
+    content: [{ type: "text", text: text === serialized ? text : `${text}\n${serialized}` }],
     structuredContent,
     isError: false,
   };
@@ -375,7 +377,47 @@ function toolFailure(message) {
   };
 }
 
+function validateToolArguments(tool, args) {
+  if (!args || typeof args !== "object" || Array.isArray(args)) {
+    return "Tool arguments must be an object.";
+  }
+  const schema = tool.inputSchema;
+  const properties = schema.properties;
+  if (Object.keys(args).some((key) => !Object.hasOwn(properties, key))) {
+    return "Tool arguments include unsupported properties.";
+  }
+  for (const key of schema.required ?? []) {
+    if (!Object.hasOwn(args, key)) return `${key} is required.`;
+  }
+  for (const [key, value] of Object.entries(args)) {
+    const definition = properties[key];
+    if (definition.type === "string" && typeof value !== "string") {
+      return `${key} must be a string.`;
+    }
+    if (definition.enum && !definition.enum.includes(value)) {
+      if (key === "skill" || key === "preferredSkill") {
+        return `${key} must be one of the five canonical Hypertaks public skills.`;
+      }
+      return `${key} must be one of the declared values.`;
+    }
+    if (typeof value === "string") {
+      if (definition.minLength !== undefined && [...value].length < definition.minLength) {
+        return `${key} is too short.`;
+      }
+      if (definition.maxLength !== undefined && [...value].length > definition.maxLength) {
+        return `${key} exceeds ${definition.maxLength} characters.`;
+      }
+    }
+  }
+  return null;
+}
+
 async function callTool(name, args) {
+  const tool = TOOLS.find((candidate) => candidate.name === name);
+  if (!tool) throw Object.assign(new Error(`Unknown tool: ${name}`), { rpcCode: -32601 });
+  const argumentError = validateToolArguments(tool, args);
+  if (argumentError) return toolFailure(argumentError);
+
   if (name === "hypertaks_manifest") {
     const publicManifest = buildPublicManifest();
     const manifest = {
@@ -413,7 +455,6 @@ async function callTool(name, args) {
     if (typeof args?.request !== "string" || args.request.trim() === "") {
       return toolFailure("request must be a non-empty string.");
     }
-    if (args.request.length > 12000) return toolFailure("request exceeds 12000 characters.");
     let diagnosticsLevel;
     try {
       diagnosticsLevel = parseDiagnosticsLevel(args?.diagnostics);
@@ -474,7 +515,8 @@ async function handleRpc(message) {
       return jsonRpcError(message.id, -32602, "tools/call requires params.name.");
     }
     try {
-      return jsonRpcResult(message.id, await callTool(name, message.params?.arguments ?? {}));
+      const args = Object.hasOwn(message.params, "arguments") ? message.params.arguments : {};
+      return jsonRpcResult(message.id, await callTool(name, args));
     } catch (error) {
       if (error?.rpcCode) return jsonRpcError(message.id, error.rpcCode, error.message);
       return jsonRpcResult(message.id, toolFailure("Tool execution failed without changing external state."));
