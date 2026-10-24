@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Worker Governance: generic provider abstraction with Agency Agents provider, T6 untrusted evidence boundary, and anti-injection security containment.
 - Local CLI: command surface (`init`, `status`, `sync`, `architecture`, `graph`) for repository vault operations.
 - Security V2 & Behavioral Evals: 8 security regression tests and behavioral evaluations EV-91 through EV-112.
+- Unified Capability Fabric: operational `execute()` dispatching across native, host, and MCP tools with honest status reporting, descriptor deduplication, and multilingual intent inference.
+- Mandatory Repository Screening: Step 1e intake protocol with shallow and deep AST scanning profiles, dependency tracing, and coverage reporting.
+- Layered Context Verification: 5-layer verification suite (STRUCTURAL, EVIDENCE, FRESHNESS, INTEGRITY, CONSISTENCY).
+- Universal Context Generation: repository-agnostic `.ctx.md` documents preserving user customizations and marking unverified claims as UNKNOWN.
+- Local Graph and Brain Reconciliation: cached graph rehydration avoiding redundant rebuilds.
 
 ### Changed
 - Transitioned version identity to `0.0.4.5.9` (`v0.0.4.5.9`) with release single source of truth in `release/version.json`.

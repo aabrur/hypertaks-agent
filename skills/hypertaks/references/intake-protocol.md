@@ -131,6 +131,20 @@ contract. A recommended visual is proposed with its value and cost. Optional
 visuals never delay the core result. Image generation is never selected for a
 precise numerical chart, table, or technical topology.
 
+## Step 1e - Mandatory Repository Screening
+
+Any task that modifies or architects an existing repository must first establish
+repository identity, inspect relevant source, validate existing intelligence, and
+evaluate risk before executing changes:
+
+- Sized screening: Run non-mutating repository screening (`hypertaks scan`) before
+  proposing structural changes or generating implementation plans based on assumptions.
+- Multilingual intent recognition: Route both English and Indonesian requests across
+  multiple simultaneous intents without forcing third-party brand names.
+- Intelligence reconciliation: Validate existing graph and brain state before authoring
+  or enriching living context documents.
+- Honest limits: Statically report scanned, parsed, skipped, and unresolved coverage.
+
 ## De-escalation - the ratchet used to turn only one way
 
 If during Phases 1-3 the task proves smaller than it scored, **lower the tier

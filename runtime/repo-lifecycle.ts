@@ -24,6 +24,7 @@ import { writeInventories } from "./repository-intelligence/inventory-writer";
 import { enrichProjectOperatingContext, ContextEnrichmentResult } from "./repository-intelligence/context-enricher";
 import { buildLocalGraph, saveLocalGraph } from "./graph/local-graph-provider";
 import { evaluateGraphFreshness, saveHashesCache, loadHashesCache } from "./graph/freshness";
+import { reconcileGraphAndBrain, ReconciledIntelligence } from "./graph/reconciliation";
 
 export type VaultState =
   | "UNINITIALIZED"
@@ -385,18 +386,13 @@ export async function autoInitializeOrSync(
     let enrichmentResult: ContextEnrichmentResult | undefined;
     if (identity) {
       compileArchitecturePack(preflight.canonicalRoot, identity, scan);
+      const reconciled = reconcileGraphAndBrain(preflight.canonicalRoot, identity, scan);
       enrichmentResult = enrichProjectOperatingContext(
         preflight.canonicalRoot,
         identity,
         scan,
         options.agentName ? { agentName: options.agentName } : undefined,
       );
-      const graph = buildLocalGraph(preflight.canonicalRoot, scan);
-      saveLocalGraph(preflight.canonicalRoot, identity.repo_id, graph);
-      
-      const hashes: Record<string, string> = {};
-      for (const f of scan.files) hashes[f.relativePath] = f.sha256;
-      saveHashesCache(preflight.canonicalRoot, hashes);
     }
 
     const postPreflight = runPreflight(preflight.canonicalRoot);

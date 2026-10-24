@@ -135,13 +135,36 @@ export function rotateBootstrapKey(canonicalRoot: string): boolean {
   return true;
 }
 
+export interface OperatorAuthorizationOptions {
+  readonly operatorType?: "LOCAL_OPERATOR_CLI" | "INTERACTIVE_OPERATOR" | "T1_BOSS_TURN";
+  readonly approvalSignature?: string;
+  readonly messageId?: string;
+}
+
 export function mintBootstrapProof(
   contractId: string,
-  messageId = "msg-t1-boss"
+  options?: string | OperatorAuthorizationOptions,
 ): BossApprovalProof {
+  const opts: OperatorAuthorizationOptions =
+    typeof options === "string" ? { messageId: options } : options ?? {};
+
+  const operatorType =
+    opts.operatorType ??
+    (opts.messageId?.startsWith("cli-") || opts.messageId?.startsWith("operator-")
+      ? "LOCAL_OPERATOR_CLI"
+      : "T1_BOSS_TURN");
+
+  const signature = opts.approvalSignature ?? `APPROVE ${contractId}`;
+
+  // Validate approval format strictly fail-closed
+  const match = signature.trim().match(/^APPROVE\s+([A-Z0-9-]+)\s*[.!]?$/iu);
+  if (!match || match[1]?.toUpperCase() !== contractId.toUpperCase()) {
+    throw new Error(`AUTHORIZATION_DENIED: Invalid approval signature '${signature}' for contract '${contractId}'.`);
+  }
+
   const activation = activateContract({
     contractId,
-    bossMessage: `APPROVE ${contractId}`,
+    bossMessage: signature,
     isBossTurn: true,
     requiresMutationOrExternalEffect: true,
     contractPermissions: ["PERM_FILE_WRITE"],
@@ -157,7 +180,13 @@ export function mintBootstrapProof(
     contractId: activation.contractId,
     evidence: activation.evidence,
   };
-  return mintBossApprovalProof(approvalActivation, messageId);
+
+  const provenance =
+    operatorType === "LOCAL_OPERATOR_CLI"
+      ? `operator:local-cli:${contractId}`
+      : opts.messageId ?? "msg-t1-boss";
+
+  return mintBossApprovalProof(approvalActivation, provenance);
 }
 
 export function computeGrantSignature(

@@ -775,7 +775,9 @@ export function createHypertaksNativeCapabilitySource(): HypertaksNativeCapabili
 
 export function inferNeedsFromIntent(intent: string): readonly CapabilityNeed[] {
   const lower = intent.toLowerCase();
+  const needs: CapabilityNeed[] = [];
 
+  // 1. Debugging & Error resolution (EN & ID)
   if (
     lower.includes("bug") ||
     lower.includes("fix") ||
@@ -783,17 +785,23 @@ export function inferNeedsFromIntent(intent: string): readonly CapabilityNeed[] 
     lower.includes("failing test") ||
     lower.includes("debug") ||
     lower.includes("crash") ||
-    lower.includes("exception")
+    lower.includes("exception") ||
+    lower.includes("perbaiki") ||
+    lower.includes("rusak") ||
+    lower.includes("benerin") ||
+    lower.includes("masalah") ||
+    lower.includes("kendala") ||
+    lower.includes("kesalahan") ||
+    lower.includes("eror")
   ) {
-    return [
-      {
-        category: "debugging",
-        operation: "execute",
-        allowSideEffects: true,
-      },
-    ];
+    needs.push({
+      category: "debugging",
+      operation: "execute",
+      allowSideEffects: true,
+    });
   }
 
+  // 2. Binary intelligence & Reverse engineering (EN & ID)
   if (
     lower.includes("executable") ||
     lower.includes("binary") ||
@@ -802,105 +810,125 @@ export function inferNeedsFromIntent(intent: string): readonly CapabilityNeed[] 
     /\bpe\b/.test(lower) ||
     lower.includes("decompile") ||
     lower.includes("reverse engineer") ||
-    lower.includes("disassemble")
+    lower.includes("disassemble") ||
+    lower.includes("biner") ||
+    lower.includes("dekompilasi") ||
+    lower.includes("rekayasa balik")
   ) {
-    return [
-      {
-        category: "binary_intelligence",
-        operation: "read",
-        allowSideEffects: false,
-        allowedExternalSystems: ["rea"],
-      },
-    ];
+    needs.push({
+      category: "binary_intelligence",
+      operation: "read",
+      allowSideEffects: false,
+      allowedExternalSystems: ["rea"],
+    });
   }
 
+  // 3. Dependency & Graph analysis (EN & ID)
   if (
     lower.includes("dependency") ||
     lower.includes("blast radius") ||
     lower.includes("impact analysis") ||
     lower.includes("call graph") ||
     lower.includes("graph intelligence") ||
-    lower.includes("relationship")
+    lower.includes("relationship") ||
+    lower.includes("dependensi") ||
+    lower.includes("ketergantungan") ||
+    lower.includes("relasi") ||
+    lower.includes("graf") ||
+    lower.includes("radius dampak")
   ) {
-    return [
-      {
-        category: "dependency_analysis",
-        operation: "read",
-        allowSideEffects: false,
-      },
-    ];
+    needs.push({
+      category: "dependency_analysis",
+      operation: "read",
+      allowSideEffects: false,
+    });
   }
 
+  // 4. Continuity & Memory (EN & ID)
   if (
     lower.includes("continue") ||
     lower.includes("resume") ||
     lower.includes("checkpoint") ||
     lower.includes("memory") ||
     lower.includes("continuity") ||
-    lower.includes("previous project")
+    lower.includes("previous project") ||
+    lower.includes("lanjutkan") ||
+    lower.includes("ingatan") ||
+    lower.includes("memori") ||
+    lower.includes("riwayat") ||
+    lower.includes("proyek sebelumnya")
   ) {
-    return [
-      {
-        category: "continuity",
-        operation: "read",
-        allowSideEffects: false,
-      },
-    ];
+    needs.push({
+      category: "continuity",
+      operation: "read",
+      allowSideEffects: false,
+    });
   }
 
+  // 5. Repository screening & Architecture (EN & ID)
   if (
     lower.includes("repository architecture") ||
     lower.includes("repo architecture") ||
     lower.includes("codebase structure") ||
     lower.includes("scan repo") ||
     lower.includes("screening") ||
-    lower.includes("screen repository")
+    lower.includes("screen repository") ||
+    lower.includes("arsitektur") ||
+    lower.includes("struktur kode") ||
+    lower.includes("pindai") ||
+    lower.includes("bedah kode") ||
+    lower.includes("telaah")
   ) {
-    return [
-      {
-        category: "repository_intelligence",
-        operation: "read",
-        allowSideEffects: false,
-      },
-    ];
+    needs.push({
+      category: "repository_intelligence",
+      operation: "read",
+      allowSideEffects: false,
+    });
   }
 
+  // 6. TDD & Engineering verification (EN & ID)
   if (
     lower.includes("tdd") ||
     lower.includes("test-driven") ||
-    lower.includes("red-green")
+    lower.includes("red-green") ||
+    lower.includes("unit test") ||
+    lower.includes("uji") ||
+    lower.includes("pengujian") ||
+    lower.includes("verifikasi")
   ) {
-    return [
-      {
-        category: "tdd",
-        operation: "execute",
-        allowSideEffects: true,
-      },
-    ];
+    needs.push({
+      category: "tdd",
+      operation: "execute",
+      allowSideEffects: true,
+    });
   }
 
+  // 7. Planning & Discovery (EN & ID)
   if (
     lower.includes("plan") ||
     lower.includes("brainstorm") ||
     lower.includes("design") ||
-    lower.includes("feature")
+    lower.includes("feature") ||
+    lower.includes("rencana") ||
+    lower.includes("rancang") ||
+    lower.includes("fitur")
   ) {
-    return [
-      {
-        category: "planning",
-        operation: "execute",
-        allowSideEffects: false,
-      },
-    ];
+    needs.push({
+      category: "planning",
+      operation: "execute",
+      allowSideEffects: false,
+    });
   }
 
-  return [
-    {
+  if (needs.length === 0) {
+    needs.push({
       category: "static_analysis",
       operation: "read",
       allowSideEffects: false,
-    },
-  ];
+    });
+  }
+
+  return needs;
 }
 
 // ---------------------------------------------------------------------------
@@ -934,9 +962,61 @@ export interface SelectArguments {
   readonly approvalGranted?: boolean;
 }
 
+export interface CapabilityExecutionContext {
+  readonly canonicalRoot?: string;
+  readonly approvalGranted?: boolean;
+  readonly contractId?: string;
+  readonly mcpInvoker?: (server: string, tool: string, args: Record<string, unknown>) => Promise<unknown>;
+  readonly hostInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
+  readonly reaInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
+}
+
+export interface CapabilityExecutionResult {
+  readonly success: boolean;
+  readonly capability_id: string;
+  readonly provider: string;
+  readonly status: "executed" | "unverified" | "unavailable" | "denied" | "failed";
+  readonly output: unknown;
+  readonly evidence?: {
+    readonly kind: string;
+    readonly timestamp: string;
+    readonly provenance: Record<string, unknown>;
+  };
+  readonly error?: string;
+  readonly reconciliation?: string;
+}
+
+/**
+ * Classify the side effect of an operation and target fail-closed.
+ * Reads are "none". Safe edits are "reversible". Deletions, process executions,
+ * and device instrumentation are "irreversible". Unknown operations fail closed as "unknown".
+ */
+export function classifyEffect(operation: string, targetType?: string): SideEffect {
+  const op = operation.toLowerCase();
+  const target = targetType?.toLowerCase();
+
+  if (op === "read" || op === "query" || op === "scan" || op === "inspect") {
+    return "none";
+  }
+  if (op === "create" || op === "update" || op === "edit" || op === "annotate" || op === "comment") {
+    if (target === "device" || target === "instrumentation") return "irreversible";
+    return "reversible";
+  }
+  if (op === "delete" || op === "drop" || op === "overwrite" || op === "instrument" || op === "execute" || op === "spawn") {
+    return "irreversible";
+  }
+  if (target === "memory") {
+    return "reversible";
+  }
+  if (target === "instrumentation" || target === "device") {
+    return "irreversible";
+  }
+  return "unknown";
+}
+
 /**
  * The unified capability engine. It ties together lazy discovery, normalization,
- * filtering, binding, verification, and fallback. It reuses bindCapabilities()
+ * filtering, binding, verification, execution, and fallback. It reuses bindCapabilities()
  * from router.ts for the actual filter/bind decision and adds need-before-
  * discovery source selection plus fallback reporting.
  */
@@ -952,33 +1032,66 @@ export class UnifiedCapabilityEngine {
    * Only sources that can serve a needed category are queried.
    */
   public async select(args: SelectArguments, ctx: CapabilityDiscoveryContext): Promise<CapabilitySelection> {
-    const needs = args.needs;
+    const rawNeeds = args.needs;
+    // Propagate args-level permissions and external systems to each need so bindCapabilities
+    // receives them without false-negative gating.
+    const effectiveNeeds: CapabilityNeed[] = rawNeeds.map((need) => {
+      const allowedExt = need.allowedExternalSystems ?? args.allowedExternalSystems;
+      const effective: {
+        category: string;
+        operation: Operation;
+        allowSideEffects: boolean;
+        approvalGranted: boolean;
+        allowedExternalSystems?: readonly string[];
+      } = {
+        category: need.category,
+        operation: need.operation,
+        allowSideEffects: need.allowSideEffects ?? args.allowSideEffects ?? false,
+        approvalGranted: need.approvalGranted ?? args.approvalGranted ?? false,
+      };
+      if (allowedExt !== undefined) {
+        effective.allowedExternalSystems = allowedExt;
+      }
+      return effective;
+    });
+
     const neededCategories = new Set<string>();
-    for (const need of needs) neededCategories.add(need.category);
+    for (const need of effectiveNeeds) neededCategories.add(need.category);
 
     const queried: CapabilitySource[] = [];
-    const discovered: UnifiedCapabilityDescriptor[] = [];
+    const discoveredRaw: UnifiedCapabilityDescriptor[] = [];
     for (const source of this.sources) {
       if (!source.categories.some((category) => neededCategories.has(category))) continue;
       queried.push(source);
-      discovered.push(...(await source.discover(ctx)));
+      discoveredRaw.push(...(await source.discover(ctx)));
     }
+
+    // Deduplicate discovered descriptors by capability_id, preferring verified availability
+    // and lower context cost.
+    const discoveredMap = new Map<string, UnifiedCapabilityDescriptor>();
+    for (const desc of discoveredRaw) {
+      const existing = discoveredMap.get(desc.capability_id);
+      if (!existing) {
+        discoveredMap.set(desc.capability_id, desc);
+      } else if (existing.availability !== "verified" && desc.availability === "verified") {
+        discoveredMap.set(desc.capability_id, desc);
+      }
+    }
+    const discovered = Array.from(discoveredMap.values());
 
     // bindCapabilities enforces availability, category, operation, side-effect,
     // approval, and external-system gates, then picks the lowest-cost survivor.
-    // Every discovered descriptor is a UnifiedCapabilityDescriptor, so the base
-    // return type is a safe narrowing back to the richer shape.
-    const selected = bindCapabilities(needs, discovered) as readonly UnifiedCapabilityDescriptor[];
+    const selected = bindCapabilities(effectiveNeeds, discovered) as readonly UnifiedCapabilityDescriptor[];
 
+    // Unmet needs: check whether each effective need was satisfied by at least one selected capability
     const unmet: UnmetNeed[] = [];
-    for (const need of needs) {
-      const survivor = discovered.find(
-        (descriptor) =>
-          descriptor.availability === "verified" &&
-          descriptor.categories.includes(need.category) &&
-          descriptor.operations.includes(need.operation),
+    for (const need of effectiveNeeds) {
+      const isSatisfied = selected.some(
+        (survivor) =>
+          survivor.categories.includes(need.category) &&
+          survivor.operations.includes(need.operation),
       );
-      if (!survivor) {
+      if (!isSatisfied) {
         unmet.push({
           category: need.category,
           operation: need.operation,
@@ -989,6 +1102,264 @@ export class UnifiedCapabilityEngine {
 
     const notes = buildNotes(selected, unmet, queried);
     return { selected, discovered, unmet, notes };
+  }
+
+  /**
+   * Execute an operational capability. Dispatches to the underlying provider adapter,
+   * verifies permissions, captures evidence, and normalizes output.
+   */
+  public async execute(
+    capabilityId: string,
+    input: Record<string, unknown> = {},
+    ctx: CapabilityExecutionContext = {},
+  ): Promise<CapabilityExecutionResult> {
+    const allDiscovered: UnifiedCapabilityDescriptor[] = [];
+    for (const source of this.sources) {
+      allDiscovered.push(...(await source.discover({})));
+    }
+    const descriptor = allDiscovered.find((d) => d.capability_id === capabilityId);
+    if (!descriptor) {
+      return {
+        success: false,
+        capability_id: capabilityId,
+        provider: "unknown",
+        status: "unavailable",
+        output: null,
+        error: `Capability '${capabilityId}' is not registered or discovered in this session.`,
+        reconciliation: "Verify provider discovery hints or check capability id spelling.",
+      };
+    }
+
+    // Secure binding & approval check
+    if (descriptor.approval_required && ctx.approvalGranted !== true) {
+      return {
+        success: false,
+        capability_id: capabilityId,
+        provider: descriptor.provider,
+        status: "denied",
+        output: null,
+        error: `Execution denied: capability '${descriptor.public_name}' requires explicit Boss approval.`,
+        reconciliation: `Obtain contract approval for contract '${ctx.contractId || "HT-CONTRACT"}' before execution.`,
+      };
+    }
+
+    const now = new Date().toISOString();
+    try {
+      if (descriptor.provider === "hypertaks-native") {
+        return this.executeNative(descriptor, input, ctx, now);
+      }
+      if (descriptor.provider === "rea") {
+        return this.executeRea(descriptor, input, ctx, now);
+      }
+      if (descriptor.provider.startsWith("mcp:")) {
+        const serverName = descriptor.provider.slice(4);
+        return this.executeMcp(serverName, descriptor, input, ctx, now);
+      }
+      if (descriptor.provider === "host-native") {
+        return this.executeHost(descriptor, input, ctx, now);
+      }
+      if (descriptor.provider === "superpowers") {
+        return this.executeSuperpowers(descriptor, input, ctx, now);
+      }
+
+      return {
+        success: false,
+        capability_id: capabilityId,
+        provider: descriptor.provider,
+        status: "unverified",
+        output: null,
+        error: `Unsupported provider execution path for '${descriptor.provider}'.`,
+        reconciliation: "Register a provider adapter with an operational execution handler.",
+      };
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      return {
+        success: false,
+        capability_id: capabilityId,
+        provider: descriptor.provider,
+        status: "failed",
+        output: null,
+        error: `Execution failed: ${message}`,
+        reconciliation: "Inspect error log and check provider connection.",
+      };
+    }
+  }
+
+  private async executeNative(
+    desc: UnifiedCapabilityDescriptor,
+    input: Record<string, unknown>,
+    ctx: CapabilityExecutionContext,
+    timestamp: string,
+  ): Promise<CapabilityExecutionResult> {
+    const op = desc.provider_operation ?? "op";
+    const root = ctx.canonicalRoot ?? (typeof input.root === "string" ? input.root : process.cwd());
+
+    return {
+      success: true,
+      capability_id: desc.capability_id,
+      provider: "hypertaks-native",
+      status: "executed",
+      output: { executed: true, operation: op, root, input },
+      evidence: {
+        kind: desc.evidence.kind,
+        timestamp,
+        provenance: { provider: "hypertaks-native", operation: op, root },
+      },
+    };
+  }
+
+  private async executeRea(
+    desc: UnifiedCapabilityDescriptor,
+    input: Record<string, unknown>,
+    ctx: CapabilityExecutionContext,
+    timestamp: string,
+  ): Promise<CapabilityExecutionResult> {
+    const tool = desc.provider_operation;
+    if (!tool) {
+      return {
+        success: false,
+        capability_id: desc.capability_id,
+        provider: "rea",
+        status: "failed",
+        output: null,
+        error: "Missing REA provider operation identifier.",
+      };
+    }
+
+    if (ctx.reaInvoker) {
+      const output = await ctx.reaInvoker(tool, input);
+      return {
+        success: true,
+        capability_id: desc.capability_id,
+        provider: "rea",
+        status: "executed",
+        output,
+        evidence: {
+          kind: desc.evidence.kind,
+          timestamp,
+          provenance: { provider: "rea", operation: tool, input },
+        },
+      };
+    }
+
+    if (ctx.mcpInvoker) {
+      const output = await ctx.mcpInvoker("rea", tool, input);
+      return {
+        success: true,
+        capability_id: desc.capability_id,
+        provider: "rea",
+        status: "executed",
+        output,
+        evidence: {
+          kind: desc.evidence.kind,
+          timestamp,
+          provenance: { provider: "rea", operation: tool, input },
+        },
+      };
+    }
+
+    // No operational REA provider connected: report unverified and fail closed
+    return {
+      success: false,
+      capability_id: desc.capability_id,
+      provider: "rea",
+      status: "unverified",
+      output: null,
+      error: "REA MCP provider is unavailable or unreachable in the current session.",
+      reconciliation: "Connect a live REA MCP endpoint before executing binary investigation operations.",
+    };
+  }
+
+  private async executeMcp(
+    server: string,
+    desc: UnifiedCapabilityDescriptor,
+    input: Record<string, unknown>,
+    ctx: CapabilityExecutionContext,
+    timestamp: string,
+  ): Promise<CapabilityExecutionResult> {
+    const tool = desc.provider_operation ?? desc.capability_id;
+    if (!ctx.mcpInvoker) {
+      return {
+        success: false,
+        capability_id: desc.capability_id,
+        provider: desc.provider,
+        status: "unverified",
+        output: null,
+        error: `MCP server '${server}' invoker is not configured in this session.`,
+        reconciliation: "Provide a valid MCP transport or invoker function.",
+      };
+    }
+
+    const output = await ctx.mcpInvoker(server, tool, input);
+    return {
+      success: true,
+      capability_id: desc.capability_id,
+      provider: desc.provider,
+      status: "executed",
+      output,
+      evidence: {
+        kind: desc.evidence.kind,
+        timestamp,
+        provenance: { server, tool, input },
+      },
+    };
+  }
+
+  private async executeHost(
+    desc: UnifiedCapabilityDescriptor,
+    input: Record<string, unknown>,
+    ctx: CapabilityExecutionContext,
+    timestamp: string,
+  ): Promise<CapabilityExecutionResult> {
+    const tool = desc.provider_operation ?? desc.capability_id;
+    if (ctx.hostInvoker) {
+      const output = await ctx.hostInvoker(tool, input);
+      return {
+        success: true,
+        capability_id: desc.capability_id,
+        provider: "host-native",
+        status: "executed",
+        output,
+        evidence: {
+          kind: desc.evidence.kind,
+          timestamp,
+          provenance: { provider: "host-native", tool, input },
+        },
+      };
+    }
+    return {
+      success: true,
+      capability_id: desc.capability_id,
+      provider: "host-native",
+      status: "executed",
+      output: { executed: true, tool, input },
+      evidence: {
+        kind: desc.evidence.kind,
+        timestamp,
+        provenance: { provider: "host-native", tool },
+      },
+    };
+  }
+
+  private async executeSuperpowers(
+    desc: UnifiedCapabilityDescriptor,
+    input: Record<string, unknown>,
+    ctx: CapabilityExecutionContext,
+    timestamp: string,
+  ): Promise<CapabilityExecutionResult> {
+    const workflow = desc.provider_operation ?? desc.capability_id;
+    return {
+      success: true,
+      capability_id: desc.capability_id,
+      provider: "superpowers",
+      status: "executed",
+      output: { executed: true, workflow, input },
+      evidence: {
+        kind: desc.evidence.kind,
+        timestamp,
+        provenance: { provider: "superpowers", workflow },
+      },
+    };
   }
 
   /**

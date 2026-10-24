@@ -8,6 +8,7 @@ import { scanRepository } from "./repository-intelligence/scanner";
 import { writeInventories } from "./repository-intelligence/inventory-writer";
 import { compileArchitecturePack } from "./repository-intelligence/architecture-compiler";
 import { enrichProjectOperatingContext } from "./repository-intelligence/context-enricher";
+import { verifyProjectOperatingContext } from "./repository-intelligence/context-verifier";
 import { buildLocalGraph, saveLocalGraph } from "./graph/local-graph-provider";
 import { saveHashesCache } from "./graph/freshness";
 import { analyzeImpact } from "./graph/impact-analyzer";
@@ -176,7 +177,7 @@ export async function runCli(args: string[]): Promise<number> {
       try {
         scanRoot = resolveCanonicalRoot(String(targetRaw));
         preflight = runPreflight(scanRoot);
-        scan = scanRepository(scanRoot);
+        scan = scanRepository(scanRoot, { depth: deep ? "deep" : "shallow" });
       } catch (error) {
         console.error(`INVALID_TARGET: cannot screen repository root '${String(targetRaw)}'. ${error instanceof Error ? error.message : String(error)}`);
         return 1;
@@ -212,7 +213,11 @@ export async function runCli(args: string[]): Promise<number> {
           return 2;
         }
 
-        const proof = mintBootstrapProof(contractId, "cli-user-turn");
+        const proof = mintBootstrapProof(contractId, {
+          operatorType: "LOCAL_OPERATOR_CLI",
+          approvalSignature: approval,
+          messageId: `operator-cli:${contractId}`,
+        });
         const result = await autoInitializeOrSync(scanRoot, { proof, contractId, forceRescan: true });
         if (result.success) {
           const bootstrapCreated = result.bootstrapResult?.createdFiles.length ?? 0;
@@ -237,14 +242,30 @@ export async function runCli(args: string[]): Promise<number> {
 
       // Read-only path: print findings and a concise execution plan, no writes.
       if (json) {
-        console.log(JSON.stringify({ read_only: true, deep, repoId: preflight.repoId, canonicalRoot: scanRoot, gitRepository: preflight.isGitRepo, vaultState: preflight.state, filesScanned: scan.files.length, filesParsed: scan.parsedFiles.length, assets: scan.assets.length, secretWarnings: scan.secretWarnings.length, stack: summarizeScan(scan), plan: scanExecutionPlan(preflight, scan, false) }, null, 2));
+        console.log(JSON.stringify({
+          read_only: true,
+          deep,
+          repoId: preflight.repoId,
+          canonicalRoot: scanRoot,
+          gitRepository: preflight.isGitRepo,
+          vaultState: preflight.state,
+          filesScanned: scan.files.length,
+          filesParsed: scan.parsedFiles.length,
+          assets: scan.assets.length,
+          secretWarnings: scan.secretWarnings.length,
+          coverage: scan.coverage,
+          dependencies: scan.dependencies,
+          stack: summarizeScan(scan),
+          plan: scanExecutionPlan(preflight, scan, false)
+        }, null, 2));
       } else {
-        console.log(`Hypertaks Repository Screening${deep ? " (deep)" : ""} - READ-ONLY`);
+        console.log(`Hypertaks Repository Screening${deep ? " (deep)" : " (shallow)"} - READ-ONLY`);
         console.log(`Repository: ${preflight.repoId}`);
         console.log(`Canonical Root: ${scanRoot}`);
         console.log(`Git Repository: ${preflight.isGitRepo}`);
         console.log(`Vault State: ${preflight.state}`);
         console.log(`Files: ${scan.files.length} scanned, ${scan.parsedFiles.length} parsed; assets ${scan.assets.length}; secret warnings ${scan.secretWarnings.length}`);
+        console.log(`Coverage: ${scan.coverage.totalParsed}/${scan.coverage.totalScanned} parsed (${(scan.coverage.coverageRatio * 100).toFixed(1)}%), ${scan.coverage.unresolvedImports.length} unresolved imports`);
         console.log(`Stack: ${summarizeScan(scan)}`);
         console.log("");
         console.log(`Execution plan:`);
@@ -274,41 +295,24 @@ export async function runCli(args: string[]): Promise<number> {
           return 1;
         }
 
-        const projectDir = resolveWithinApprovedRoot(targetRoot, path.join(".hypertaks", "projects", identity.repo_id), true);
-        if (!fs.existsSync(projectDir)) {
-          console.error(`CONTEXT_VERIFY_FAILED: Project directory missing: .hypertaks/projects/${identity.repo_id}`);
-          return 1;
-        }
-
-        const missing: string[] = [];
-        const verified: string[] = [];
-        for (const file of PROJECT_OPERATING_CONTEXT_FILES) {
-          const filePath = path.join(projectDir, file);
-          if (!fs.existsSync(filePath)) {
-            missing.push(file);
-          } else {
-            const content = fs.readFileSync(filePath, "utf8");
-            if (content.length > 50 && content.startsWith("---") && content.includes("lifecycle_state:")) {
-              verified.push(file);
-            } else {
-              missing.push(`${file} (invalid structure or empty)`);
-            }
-          }
-        }
+        const report = verifyProjectOperatingContext(targetRoot, identity);
 
         if (args.includes("--json")) {
-          console.log(JSON.stringify({ repoId: identity.repo_id, total: PROJECT_OPERATING_CONTEXT_FILES.length, verified: verified.length, missing: missing.length, missingFiles: missing }, null, 2));
+          console.log(JSON.stringify(report, null, 2));
         } else {
-          console.log(`Hypertaks Context Verification for ${identity.repo_id}`);
-          console.log(`Verified Documents: ${verified.length} / ${PROJECT_OPERATING_CONTEXT_FILES.length}`);
-          if (missing.length > 0) {
-            console.error(`Missing or Invalid Documents (${missing.length}):`);
-            for (const m of missing) console.error(`  - ${m}`);
-            return 1;
+          console.log(`Hypertaks Layered Context Verification for ${identity.repo_id}`);
+          console.log(`Overall Status: ${report.passed ? "PASSED" : "FAILED"}`);
+          console.log(`Documents: ${report.verifiedDocuments} verified, ${report.partiallyVerifiedDocuments} partially verified, ${report.draftDocuments} draft, ${report.missingDocuments.length} missing.`);
+          for (const layer of report.layers) {
+            console.log(`  - Layer ${layer.layer}: ${layer.passed ? "PASS" : "FAIL"} (${layer.message})`);
+            for (const w of layer.warnings) console.log(`      [WARN] ${w}`);
+            for (const d of layer.details) console.log(`      [ERR]  ${d}`);
           }
-          console.log("All 13 canonical Project Operating Context documents verified.");
+          if (report.passed) {
+            console.log("All 13 canonical Project Operating Context documents verified across all layers.");
+          }
         }
-        return missing.length === 0 ? 0 : 1;
+        return report.passed ? 0 : 1;
       }
       console.log("Usage: hypertaks context verify [--repo <path>] [--json]");
       return 0;

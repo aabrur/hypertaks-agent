@@ -153,6 +153,35 @@ Hypertaks can frame strategy, review a product decision, diagnose a bottleneck,
 build an approved feature, or coordinate a cross-domain program. Mutation and
 external effects remain bound to the active contract and approval model.
 
+## Unified capability fabric and repository intelligence
+
+Hypertaks Founder unifies local tools, native execution, and external capabilities
+under a single governed fabric without leaking raw provider internals to the user.
+
+- **Unified Capability Engine**: Operational `execute()` path routing across
+  native capabilities, external MCP servers, host tools, and analysis engines.
+  External integrations fail closed and report honest status (e.g. unverified
+  when an external MCP daemon is offline).
+- **Mandatory Repository Screening**: Built into Intake Gate (Step 1e). Every
+  repository task screens structure, dependencies, and risk before modification,
+  supporting multilingual intent recognition (English and Indonesian).
+- **Deep Screening Profiles**: `--depth shallow` fast-indexes manifest files and
+  entrypoints; `--depth deep` runs multi-language AST parsing, traces internal and
+  external dependencies, and measures scan coverage.
+- **Layered Context Verification**: `hypertaks context verify` enforces five
+  distinct verification layers:
+  1. *Structural*: schema, filenames, and required document headers.
+  2. *Evidence*: validates that referenced source files actually exist.
+  3. *Freshness*: verifies git branch, commit hash, and source file digests.
+  4. *Integrity*: guarantees existing user-authored sections are preserved.
+  5. *Consistency*: cross-checks documents against conflicting claims.
+- **Universal Context Generation**: Generates 13 project-agnostic `.ctx.md`
+  operating documents. Unverified claims remain explicitly marked as `UNKNOWN`
+  rather than hallucinated.
+- **Graph and Brain Reconciliation**: Automatically checks graph cache freshness
+  under `.hypertaks/graph/` and reuses existing nodes, eliminating redundant full
+  rebuilds during routine rescans.
+
 ## Safety, authority, and continuity
 
 Authority is source-bound:

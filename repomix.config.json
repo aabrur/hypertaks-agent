@@ -1,6 +1,7 @@
 {
   "output": {
-    "filePath": "repomix-output.txt"
+    "filePath": "repomix-output.xml",
+    "style": "xml"
   },
   "ignore": {
     "useGitignore": true,

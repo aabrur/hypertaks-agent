@@ -240,3 +240,35 @@ export function saveLocalGraph(
 
   return written;
 }
+
+export function loadLocalGraphFromDisk(canonicalRoot: string): LocalGraph | null {
+  const nodesPath = path.join(canonicalRoot, ".hypertaks", "graph", "nodes.jsonl");
+  const edgesPath = path.join(canonicalRoot, ".hypertaks", "graph", "edges.jsonl");
+
+  if (!fs.existsSync(nodesPath) || !fs.existsSync(edgesPath)) {
+    return null;
+  }
+
+  try {
+    const graph = new LocalGraph();
+    const nodesContent = fs.readFileSync(nodesPath, "utf8");
+    for (const line of nodesContent.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      const node = JSON.parse(trimmed) as GraphNode;
+      graph.addNode(node);
+    }
+
+    const edgesContent = fs.readFileSync(edgesPath, "utf8");
+    for (const line of edgesContent.split("\n")) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      const edge = JSON.parse(trimmed) as GraphEdge;
+      graph.addEdge(edge);
+    }
+
+    return graph;
+  } catch {
+    return null;
+  }
+}

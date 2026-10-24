@@ -282,3 +282,84 @@ test("selectForIntent binds minimum sufficient capability for user intent", asyn
   assert.equal(execSel.unmet.length, 1);
   assert.match(execSel.notes.join(" "), /Falling back to core reasoning/);
 });
+
+test("CRITICAL 1: operational execution dispatches native, mcp, and handles REA states", async () => {
+  const engine = createDefaultCapabilityEngine({ available: true, tools: ["analyze_function"] });
+
+  // 1. Native execution
+  const nativeRes = await engine.execute("hypertaks-repository-intelligence", { root: process.cwd() });
+  assert.equal(nativeRes.success, true);
+  assert.equal(nativeRes.provider, "hypertaks-native");
+  assert.equal(nativeRes.status, "executed");
+  assert.ok(nativeRes.evidence);
+
+  // 2. REA execution with mock invoker
+  const reaMockRes = await engine.execute(
+    "hypertaks-investigation",
+    { function: "main" },
+    {
+      reaInvoker: async (tool, args) => ({ decompileResult: "int main() { return 0; }", tool }),
+    },
+  );
+  assert.equal(reaMockRes.success, true);
+  assert.equal(reaMockRes.status, "executed");
+  assert.equal(reaMockRes.provider, "rea");
+  assert.ok(reaMockRes.evidence);
+
+  // 3. REA execution when no invoker / live endpoint is configured fails closed
+  const reaNoInvokerRes = await engine.execute("hypertaks-investigation", { function: "main" });
+  assert.equal(reaNoInvokerRes.success, false);
+  assert.equal(reaNoInvokerRes.status, "unverified");
+  assert.match(reaNoInvokerRes.error, /REA MCP provider is unavailable/);
+
+  // 4. Approval gating
+  const gatedEngine = new UnifiedCapabilityEngine([
+    {
+      sourceId: "mock",
+      categories: ["danger"],
+      discover: async () => [
+        baseDesc("cap-danger", "danger", "execute", {
+          approval_required: true,
+          side_effect: "irreversible",
+          provider: "host-native",
+        }),
+      ],
+    },
+  ]);
+  const deniedRes = await gatedEngine.execute("cap-danger", {}, { approvalGranted: false });
+  assert.equal(deniedRes.success, false);
+  assert.equal(deniedRes.status, "denied");
+
+  const approvedRes = await gatedEngine.execute("cap-danger", {}, { approvalGranted: true });
+  assert.equal(approvedRes.success, true);
+  assert.equal(approvedRes.status, "executed");
+});
+
+test("CRITICAL 2: Indonesian intent routing and multi-intent matching", () => {
+  // Indonesian intent
+  const idDebug = inferNeedsFromIntent("tolong perbaiki masalah dan bug di router");
+  assert.equal(idDebug.some((n) => n.category === "debugging"), true);
+
+  const idBinary = inferNeedsFromIntent("analisis biner executable dan dekompilasi");
+  assert.equal(idBinary.some((n) => n.category === "binary_intelligence"), true);
+
+  const idGraph = inferNeedsFromIntent("lihat relasi dependensi dan graf proyek");
+  assert.equal(idGraph.some((n) => n.category === "dependency_analysis"), true);
+
+  // Multi-intent simultaneously
+  const multi = inferNeedsFromIntent("perbaiki bug dan telaah arsitektur kode");
+  assert.ok(multi.length >= 2);
+  assert.equal(multi.some((n) => n.category === "debugging"), true);
+  assert.equal(multi.some((n) => n.category === "repository_intelligence"), true);
+});
+
+test("CRITICAL 7: fail-closed effect classification", () => {
+  const { classifyEffect } = engineModule;
+  assert.equal(classifyEffect("read"), "none");
+  assert.equal(classifyEffect("query"), "none");
+  assert.equal(classifyEffect("update"), "reversible");
+  assert.equal(classifyEffect("edit"), "reversible");
+  assert.equal(classifyEffect("delete"), "irreversible");
+  assert.equal(classifyEffect("execute"), "irreversible");
+  assert.equal(classifyEffect("unknown_dangerous_op"), "unknown");
+});
