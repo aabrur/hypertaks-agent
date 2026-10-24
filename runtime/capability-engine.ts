@@ -25,6 +25,9 @@
  * This module extends the routing model in router.ts (CapabilityDescriptor,
  * CapabilityNeed, bindCapabilities). It does not rebuild it.
  */
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as child_process from "node:child_process";
 import {
   bindCapabilities,
   type Availability,
@@ -383,6 +386,231 @@ function buildReaDescriptor(
     fallback: REA_GROUP_FALLBACK[group],
     error_model: "Fail closed on ambiguous timeout; never auto-attach an invasive backend during screening.",
   };
+}
+
+// ---------------------------------------------------------------------------
+// REA stdio transport and local discovery
+// ---------------------------------------------------------------------------
+
+export interface ReaStdioConfig {
+  readonly nodeBin: string;
+  readonly scriptPath: string;
+  readonly env: Record<string, string>;
+  readonly exists: boolean;
+}
+
+/**
+ * Resolves local REA configuration from user mcp_config.json or npm global install.
+ */
+export function resolveLocalReaConfig(): ReaStdioConfig {
+  const userProfile = process.env.USERPROFILE || process.env.HOME || "";
+  const appData = process.env.APPDATA || path.join(userProfile, "AppData", "Roaming");
+  const mcpConfigFile = path.join(userProfile, ".gemini", "config", "mcp_config.json");
+
+  let env: Record<string, string> = { ...(process.env as Record<string, string>) };
+  let scriptPath = path.join(appData, "npm", "node_modules", "rea-agents", "scripts", "rea.mjs");
+  let nodeBin = "node";
+
+  if (fs.existsSync(mcpConfigFile)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(mcpConfigFile, "utf8")) as {
+        mcpServers?: {
+          rea?: {
+            command?: string;
+            args?: string[];
+            env?: Record<string, string>;
+          };
+        };
+      };
+      const reaCfg = parsed.mcpServers?.rea;
+      if (reaCfg) {
+        if (reaCfg.command) nodeBin = reaCfg.command;
+        if (reaCfg.args && reaCfg.args[0]) scriptPath = reaCfg.args[0];
+        if (reaCfg.env) env = { ...env, ...reaCfg.env };
+      }
+    } catch {
+      // Fall back to standard paths
+    }
+  }
+
+  const exists = fs.existsSync(scriptPath);
+  return { nodeBin, scriptPath, env, exists };
+}
+
+/**
+ * Executes a single REA tool invocation through stdio transport on demand.
+ * Spawns the REA MCP server child process, initializes protocol, invokes the tool,
+ * and terminates cleanly without requiring a standing background HTTP daemon.
+ */
+export function executeReaViaStdio(
+  tool: string,
+  args: Record<string, unknown>,
+  timeoutMs = 20000,
+): Promise<unknown> {
+  return new Promise((resolve, reject) => {
+    const config = resolveLocalReaConfig();
+    if (!config.exists) {
+      return reject(new Error(`REA script not found at '${config.scriptPath}'.`));
+    }
+
+    const proc = child_process.spawn(config.nodeBin, [config.scriptPath, "--mcp"], {
+      env: config.env,
+      stdio: ["pipe", "pipe", "inherit"],
+    });
+
+    let buffer = "";
+    let msgId = 1;
+    const pending = new Map<number, { resolve: (val: unknown) => void; reject: (err: Error) => void }>();
+
+    proc.stdout.on("data", (chunk: Buffer) => {
+      buffer += chunk.toString("utf8");
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const msg = JSON.parse(line) as {
+            id?: number;
+            error?: { message?: string; code?: number };
+            result?: unknown;
+          };
+          if (typeof msg.id === "number" && pending.has(msg.id)) {
+            const entry = pending.get(msg.id)!;
+            pending.delete(msg.id);
+            if (msg.error) {
+              entry.reject(new Error(msg.error.message || JSON.stringify(msg.error)));
+            } else {
+              entry.resolve(msg.result);
+            }
+          }
+        } catch {
+          // Ignore non-JSON log lines
+        }
+      }
+    });
+
+    proc.on("error", (err) => {
+      reject(new Error(`Failed to spawn REA process: ${err.message}`));
+    });
+
+    const send = (method: string, params: Record<string, unknown> = {}): Promise<unknown> => {
+      const id = msgId++;
+      return new Promise((res, rej) => {
+        pending.set(id, { resolve: res, reject: rej });
+        proc.stdin.write(JSON.stringify({ jsonrpc: "2.0", id, method, params }) + "\n");
+      });
+    };
+
+    let timer: NodeJS.Timeout | null = null;
+    timer = setTimeout(() => {
+      proc.kill();
+      reject(new Error(`REA stdio call '${tool}' timed out after ${timeoutMs}ms.`));
+    }, timeoutMs);
+
+    (async () => {
+      try {
+        await send("initialize", {
+          protocolVersion: "2024-11-05",
+          capabilities: {},
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.10" },
+        });
+        const result = await send("tools/call", { name: tool, arguments: args });
+        if (timer) clearTimeout(timer);
+        resolve(result);
+      } catch (err: unknown) {
+        if (timer) clearTimeout(timer);
+        reject(err instanceof Error ? err : new Error(String(err)));
+      } finally {
+        proc.kill();
+      }
+    })();
+  });
+}
+
+/**
+ * Creates an invoker function for REA operations over on-demand stdio transport.
+ */
+export function createReaStdioInvoker(): (tool: string, args: Record<string, unknown>) => Promise<unknown> {
+  return (tool: string, args: Record<string, unknown>) => executeReaViaStdio(tool, args);
+}
+
+/**
+ * Discovers live local REA capabilities by querying tools/list over stdio.
+ */
+export async function probeLocalReaTools(timeoutMs = 10000): Promise<{
+  readonly available: boolean;
+  readonly tools: readonly string[];
+  readonly version?: string;
+}> {
+  const config = resolveLocalReaConfig();
+  if (!config.exists) {
+    return { available: false, tools: [] };
+  }
+
+  return new Promise((resolve) => {
+    let timer: NodeJS.Timeout | null = null;
+    const proc = child_process.spawn(config.nodeBin, [config.scriptPath, "--mcp"], {
+      env: config.env,
+      stdio: ["pipe", "pipe", "inherit"],
+    });
+
+    let buffer = "";
+    let msgId = 1;
+    const pending = new Map<number, (res: any) => void>();
+
+    proc.stdout.on("data", (chunk: Buffer) => {
+      buffer += chunk.toString("utf8");
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const msg = JSON.parse(line) as { id?: number; result?: any };
+          if (typeof msg.id === "number" && pending.has(msg.id)) {
+            const cb = pending.get(msg.id)!;
+            pending.delete(msg.id);
+            cb(msg.result);
+          }
+        } catch {}
+      }
+    });
+
+    const send = (method: string, params: Record<string, unknown> = {}): Promise<any> => {
+      const id = msgId++;
+      return new Promise((res) => {
+        pending.set(id, res);
+        proc.stdin.write(JSON.stringify({ jsonrpc: "2.0", id, method, params }) + "\n");
+      });
+    };
+
+    timer = setTimeout(() => {
+      proc.kill();
+      resolve({ available: false, tools: [] });
+    }, timeoutMs);
+
+    (async () => {
+      try {
+        const initRes = await send("initialize", {
+          protocolVersion: "2024-11-05",
+          capabilities: {},
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.10" },
+        });
+        const toolsRes = await send("tools/list", {});
+        if (timer) clearTimeout(timer);
+        proc.kill();
+        const toolsList = Array.isArray(toolsRes?.tools) ? toolsRes.tools.map((t: any) => t.name) : [];
+        resolve({
+          available: true,
+          tools: toolsList,
+          version: initRes?.serverInfo?.version ?? "6.7.0",
+        });
+      } catch {
+        if (timer) clearTimeout(timer);
+        proc.kill();
+        resolve({ available: false, tools: [] });
+      }
+    })();
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -969,6 +1197,7 @@ export interface CapabilityExecutionContext {
   readonly mcpInvoker?: (server: string, tool: string, args: Record<string, unknown>) => Promise<unknown>;
   readonly hostInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
   readonly reaInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
+  readonly useLocalStdioRea?: boolean;
 }
 
 export interface CapabilityExecutionResult {
@@ -1214,7 +1443,8 @@ export class UnifiedCapabilityEngine {
     ctx: CapabilityExecutionContext,
     timestamp: string,
   ): Promise<CapabilityExecutionResult> {
-    const tool = desc.provider_operation;
+    const requestedTool = typeof input.tool === "string" ? input.tool : undefined;
+    const tool = requestedTool ?? desc.provider_operation;
     if (!tool) {
       return {
         success: false,
@@ -1226,8 +1456,11 @@ export class UnifiedCapabilityEngine {
       };
     }
 
+    const toolArgs = { ...input };
+    delete toolArgs.tool;
+
     if (ctx.reaInvoker) {
-      const output = await ctx.reaInvoker(tool, input);
+      const output = await ctx.reaInvoker(tool, toolArgs);
       return {
         success: true,
         capability_id: desc.capability_id,
@@ -1237,13 +1470,13 @@ export class UnifiedCapabilityEngine {
         evidence: {
           kind: desc.evidence.kind,
           timestamp,
-          provenance: { provider: "rea", operation: tool, input },
+          provenance: { provider: "rea", operation: tool, input: toolArgs },
         },
       };
     }
 
     if (ctx.mcpInvoker) {
-      const output = await ctx.mcpInvoker("rea", tool, input);
+      const output = await ctx.mcpInvoker("rea", tool, toolArgs);
       return {
         success: true,
         capability_id: desc.capability_id,
@@ -1253,9 +1486,38 @@ export class UnifiedCapabilityEngine {
         evidence: {
           kind: desc.evidence.kind,
           timestamp,
-          provenance: { provider: "rea", operation: tool, input },
+          provenance: { provider: "rea", operation: tool, input: toolArgs },
         },
       };
+    }
+
+    if (ctx.useLocalStdioRea) {
+      try {
+        const output = await executeReaViaStdio(tool, toolArgs);
+        return {
+          success: true,
+          capability_id: desc.capability_id,
+          provider: "rea",
+          status: "executed",
+          output,
+          evidence: {
+            kind: desc.evidence.kind,
+            timestamp,
+            provenance: { provider: "rea", operation: tool, transport: "stdio", input: toolArgs },
+          },
+        };
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        return {
+          success: false,
+          capability_id: desc.capability_id,
+          provider: "rea",
+          status: "failed",
+          output: null,
+          error: `REA stdio execution failed: ${message}`,
+          reconciliation: "Verify local REA installation and arguments.",
+        };
+      }
     }
 
     // No operational REA provider connected: report unverified and fail closed
@@ -1266,7 +1528,7 @@ export class UnifiedCapabilityEngine {
       status: "unverified",
       output: null,
       error: "REA MCP provider is unavailable or unreachable in the current session.",
-      reconciliation: "Connect a live REA MCP endpoint before executing binary investigation operations.",
+      reconciliation: "Connect a live REA MCP endpoint or set useLocalStdioRea before executing binary investigation operations.",
     };
   }
 

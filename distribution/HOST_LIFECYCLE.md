@@ -1,13 +1,13 @@
 # Hypertaks Host Lifecycle and Repository Operating Vault Guide
 
-Version: `0.0.4.5.9`
+Version: `0.0.4.5.10`
 Architecture: Founder Operating System Repository Lifecycle
 
 ---
 
 ## 1. Executive Summary
 
-Hypertaks 0.0.4.5.9 establishes a zero-command repository initialization experience with an uncompromising zero-consent write guard.
+Hypertaks 0.0.4.5.10 establishes a zero-command repository initialization experience with an uncompromising zero-consent write guard.
 
 When an AI coding agent attaches to a repository:
 1. Hypertaks detects the repository root automatically.

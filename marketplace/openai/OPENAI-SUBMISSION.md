@@ -2,7 +2,7 @@
 
 ## Product and existing identity
 
-- **Canonical Version:** 0.0.4.5.9
+- **Canonical Version:** 0.0.4.5.10
 - **OpenAI Package Version:** 4.5.9
 - **OpenAI Package Name:** `app-6a851e5881dc81919fd10e98f7e19b80`
 - Product: Hypertaks Founder Operating System.
@@ -23,7 +23,7 @@ python scripts/build_distributions.py openai
 python scripts/validate_openai_submission.py .build/plugins/openai/hypertaks-plugin-4.5.9.zip
 ```
 
-The build validates the actual archive before atomically replacing the output. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The builder overrides only the generated OpenAI manifest name and version from `marketplace/openai/metadata.json` (`packageId` and `packageVersion`). The OpenAI package uses 4.5.9, a MAJOR.MINOR.PATCH version following the prior 4.5.8 release. The shared source manifests and internal engine retain 0.0.4.5.9. No separate compatibility overlay is included in this ZIP; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
+The build validates the actual archive before atomically replacing the output. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The builder overrides only the generated OpenAI manifest name and version from `marketplace/openai/metadata.json` (`packageId` and `packageVersion`). The OpenAI package uses 4.5.9, a MAJOR.MINOR.PATCH version following the prior 4.5.8 release. The shared source manifests and internal engine retain 0.0.4.5.10. No separate compatibility overlay is included in this ZIP; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
 
 For standalone skill exports only, retain the separate compatibility command:
 

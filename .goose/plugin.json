@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "0.0.4.5.9",
+  "version": "0.0.4.5.10",
   "description": "Hypertaks managed recipe and extension adapter for Goose.",
   "skills": "./skills/"
 }

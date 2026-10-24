@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4.5.10] - 2026-10-24
+
+### Added
+- REA Stdio Transport: Built-in on-demand stdio child-process execution (`node rea.mjs --mcp`) in `runtime/capability-engine.ts`, eliminating the requirement for standing background HTTP daemons.
+- Live Capability Probe & Invocation: Automated discovery via `probeLocalReaTools()` and execution via `executeReaViaStdio()`, verified against real local targets (`whoami.exe`) and 207 discovered MCP operations.
+- REA End-to-End Integration Test: `runtime/rea-stdio-integration.test.cjs` covering full Intake Gate, capability selection, tool execution, evidence capture, non-REA isolation, and fail-closed permission enforcement.
+
+### Changed
+- Transitioned version identity to `0.0.4.5.10` (`v0.0.4.5.10`) across all 22 host adapters, distribution records, manifests, and documentation surfaces.
+- Preserved exactly five canonical public skills, four read-only public MCP tools, and zero em dashes across all files.
+
 ## [0.0.4.5.9] - 2026-10-08
 
 ### Added

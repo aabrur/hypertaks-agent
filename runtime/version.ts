@@ -13,11 +13,11 @@ export interface ReleaseVersionInfo {
 
 export const FALLBACK_RELEASE_VERSION: ReleaseVersionInfo = {
   schema: "hypertaks.release.v2",
-  productVersion: "0.0.4.5.9",
-  displayVersion: "v0.0.4.5.9",
+  productVersion: "0.0.4.5.10",
+  displayVersion: "v0.0.4.5.10",
   semverCompatibilityVersion: "0.0.4-5.9",
   previousHistoricalVersion: "4.5.8",
-  previousProductAlias: "0.0.4.5.9",
+  previousProductAlias: "0.0.4.5.10",
   previousSemverCompatibilityVersion: "0.0.4-5.9",
 };
 
@@ -41,7 +41,7 @@ export function loadReleaseVersion(customRoot?: string): ReleaseVersionInfo {
         displayVersion: parsed.displayVersion,
         semverCompatibilityVersion: parsed.semverCompatibilityVersion,
         previousHistoricalVersion: parsed.previousHistoricalVersion ?? "4.5.8",
-        previousProductAlias: parsed.previousProductAlias ?? "0.0.4.5.9",
+        previousProductAlias: parsed.previousProductAlias ?? "0.0.4.5.10",
         previousSemverCompatibilityVersion: parsed.previousSemverCompatibilityVersion ?? "0.0.4-5.9",
       };
     }

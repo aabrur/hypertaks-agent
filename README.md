@@ -10,7 +10,7 @@
 
 **Turn a request into a governed contract, specialist execution, verified evidence, and a founder-grade result.**
 
-[![Release](https://img.shields.io/badge/release-v0.0.4.5.9-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v0.0.4.5.9)
+[![Release](https://img.shields.io/badge/release-v0.0.4.5.10-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v0.0.4.5.10)
 [![Public skills](https://img.shields.io/badge/public%20skills-5-111827)](#the-five-public-skills)
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b)](LICENSE)
@@ -122,7 +122,7 @@ or inspect the
 
 ## Package status
 
-| Surface | v0.0.4.5.9 status |
+| Surface | v0.0.4.5.10 status |
 |---|---|
 | Public product | Five canonical Hypertaks skills |
 | Remote MCP surface | Four read-only tools; no mutating remote tool was added |
@@ -160,8 +160,9 @@ under a single governed fabric without leaking raw provider internals to the use
 
 - **Unified Capability Engine**: Operational `execute()` path routing across
   native capabilities, external MCP servers, host tools, and analysis engines.
-  External integrations fail closed and report honest status (e.g. unverified
-  when an external MCP daemon is offline).
+  Supports on-demand stdio execution for local MCP tools (such as REA) with
+  automatic process startup, eliminates the need for standing background daemons,
+  and reports honest fail-closed status when tools are unverified or disconnected.
 - **Mandatory Repository Screening**: Built into Intake Gate (Step 1e). Every
   repository task screens structure, dependencies, and risk before modification,
   supporting multilingual intent recognition (English and Indonesian).

@@ -1,5 +1,24 @@
 # Release Notes
 
+## v0.0.4.5.10 - REA Stdio Activation, Live Capability Integration & Audit Remediation
+
+Hypertaks 0.0.4.5.10 delivers the complete operational unification and activation of the REA (Reverse Engineer Anything) capability engine over on-demand stdio transport, eliminates the need for background daemons, introduces real deep repository screening with dependency tracing, and establishes layered 5-layer context verification.
+
+### What shipped
+
+- **REA On-Demand Stdio Transport**: Native stdio execution path in `runtime/capability-engine.ts` (`node rea.mjs --mcp`) that initializes, executes, and terminates on demand without requiring standing background HTTP daemons.
+- **Live Capability Integration**: Automated capability discovery via `probeLocalReaTools()` and direct execution via `executeReaViaStdio()`, verified against real local targets (`whoami.exe`) and 207 discovered MCP operations.
+- **REA End-to-End Test Suite**: Complete integration test suite `runtime/rea-stdio-integration.test.cjs` covering Intake Gate, capability selection, stdio execution, evidence generation, non-REA isolation, and fail-closed permission denial.
+- **Deep Screening Profiles**: `--depth deep` multi-language AST parsing across TypeScript, JavaScript, Python, Go, Rust, and SQL with dependency tracing and coverage ratios.
+- **Layered Context Verification**: 5-layer verification suite (Structural, Evidence, Freshness, Integrity, Consistency) via `hypertaks context verify`.
+- **Universal Agnostic Context**: 13 `.ctx.md` documents adapted to any target codebase with unverified claims marked `UNKNOWN`.
+
+### Preserved invariants
+
+- Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
+- Exactly four read-only public remote MCP tools.
+- Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
+
 ## v0.0.4.5.9 - Repository Operating Vault, Local Intelligence Graph, Orchestrator V2 & Worker Governance
 
 Hypertaks 0.0.4.5.9 introduces the Repository Operating Vault, Local Intelligence Graph, Orchestrator V2, and Worker Governance, establishing an offline-first, evidence-backed workspace operating system while preserving the five canonical public skills and four public MCP tools.

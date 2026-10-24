@@ -172,8 +172,8 @@ test("EV-107 to EV-112: external providers, governance, and versioning", async (
 
   // EV-111: five-part public product version reported
   const versionInfo = loadReleaseVersion(path.resolve(__dirname, ".."));
-  assert.equal(versionInfo.productVersion, "0.0.4.5.9");
-  assert.equal(versionInfo.displayVersion, "v0.0.4.5.9");
+  assert.equal(versionInfo.productVersion, "0.0.4.5.10");
+  assert.equal(versionInfo.displayVersion, "v0.0.4.5.10");
 
   // EV-112: strict SemVer compatibility fields validated
   assert.equal(versionInfo.semverCompatibilityVersion, "0.0.4-5.9");
