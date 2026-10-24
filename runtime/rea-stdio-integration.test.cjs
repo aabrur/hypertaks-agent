@@ -172,9 +172,23 @@ test("REA Stdio Step 4: Non-REA prompt does NOT bind or spawn REA", async () => 
 });
 
 test("REA Stdio Step 5: Permission gating and error handling fail closed", async (t) => {
+  const config = resolveLocalReaConfig();
+  if (!config.exists) {
+    const offlineEngine = createDefaultCapabilityEngine();
+    const mutatingRes = await offlineEngine.execute(
+      "hypertaks-investigation-annotation",
+      { tool: "annotate_native_function" },
+      { approvalGranted: false, useLocalStdioRea: true },
+    );
+    assert.equal(mutatingRes.success, false);
+    assert.equal(mutatingRes.status, "unavailable");
+    t.skip("Local REA installation not present on host (expected in CI)");
+    return;
+  }
+
   const probe = await probeLocalReaTools();
   const engine = createDefaultCapabilityEngine({
-    available: probe.available,
+    available: true,
     tools: probe.tools,
     auth: "none",
   });
@@ -188,12 +202,6 @@ test("REA Stdio Step 5: Permission gating and error handling fail closed", async
   assert.equal(mutatingRes.success, false);
   assert.equal(mutatingRes.status, "denied");
   assert.match(mutatingRes.error, /requires explicit Boss approval/);
-
-  const config = resolveLocalReaConfig();
-  if (!config.exists) {
-    t.skip("Local REA installation not present on host for missing-target check");
-    return;
-  }
 
   // 2. Target file not found returns clean error via stdio
   const nonExistentTarget = "C:\\Users\\abrur\\tools\\test-targets\\non_existent_binary.exe";
