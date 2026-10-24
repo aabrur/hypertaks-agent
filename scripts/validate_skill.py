@@ -36,6 +36,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+if __package__:
+    from .validate_public_skills import parse_frontmatter
+else:
+    from validate_public_skills import parse_frontmatter
+
 ROOT = Path(__file__).resolve().parent.parent
 SKILL_DIR = ROOT / "skills" / "hypertaks"
 errors = []
@@ -79,6 +84,10 @@ skill = SKILL_DIR / "SKILL.md"
 check(skill.exists(), "skills/hypertaks/SKILL.md missing")
 if skill.exists():
     text = skill.read_text(encoding="utf-8")
+    try:
+        parse_frontmatter(text)
+    except ValueError as exc:
+        errors.append(str(exc))
     m = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
     check(bool(m), "SKILL.md: invalid or missing frontmatter")
     if m:

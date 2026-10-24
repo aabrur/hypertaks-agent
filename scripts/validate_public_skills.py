@@ -6,6 +6,8 @@ import re
 import sys
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parent.parent
 SKILLS = ROOT / "skills"
 EXPECTED = {
@@ -23,16 +25,25 @@ ALLOWED_SKILL_ROOT_ENTRIES = {
     "agents",
 }
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
-NAME_RE = re.compile(r"^name:\s*([a-z0-9-]+)\s*$", re.MULTILINE)
 
 
-def read_name(skill_file: Path) -> str | None:
-    text = skill_file.read_text(encoding="utf-8")
+def parse_frontmatter(text: str) -> dict[str, object] | None:
     match = FRONTMATTER_RE.match(text)
     if not match:
         return None
-    name_match = NAME_RE.search(match.group(1))
-    return name_match.group(1) if name_match else None
+    try:
+        data = yaml.safe_load(match.group(1))
+    except yaml.YAMLError as exc:
+        raise ValueError(f"Invalid YAML frontmatter: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ValueError("YAML frontmatter must be a mapping")
+    return data
+
+
+def read_name(skill_file: Path) -> str | None:
+    data = parse_frontmatter(skill_file.read_text(encoding="utf-8"))
+    name = data.get("name") if data else None
+    return name if isinstance(name, str) and re.fullmatch(r"[a-z0-9-]+", name) else None
 
 
 def collect_frontmatter_skill_names(
@@ -47,7 +58,11 @@ def collect_frontmatter_skill_names(
     for skill_file in sorted(skills_root.rglob("*.md")):
         if skill_file == pack_index:
             continue
-        name = read_name(skill_file)
+        try:
+            name = read_name(skill_file)
+        except ValueError as exc:
+            errors.append(f"{skill_file}: {exc}")
+            continue
         if name is None or not name.startswith("hypertaks"):
             continue
         if name in found:
@@ -97,8 +112,14 @@ def validate_skill_roots(skills_root: Path = SKILLS) -> list[str]:
         if not skill_file.is_file():
             errors.append(f"Missing SKILL.md: {skill_file}")
             continue
-        if read_name(skill_file) is None:
-            errors.append(f"Invalid frontmatter: {skill_file}")
+        try:
+            data = parse_frontmatter(skill_file.read_text(encoding="utf-8"))
+            if not data or data.get("name") != name:
+                errors.append(f"Frontmatter name must match directory {name}: {skill_file}")
+            if not data or not isinstance(data.get("description"), str) or not data["description"].strip():
+                errors.append(f"Missing frontmatter description: {skill_file}")
+        except ValueError as exc:
+            errors.append(f"{skill_file}: {exc}")
         description = skill_file.read_text(encoding="utf-8")
         host_needles = (
             "Claude Code",

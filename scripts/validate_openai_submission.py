@@ -16,9 +16,16 @@ from urllib.parse import urlsplit
 from jsonschema import Draft202012Validator
 from PIL import Image
 
+if __package__:
+    from .validate_public_skills import parse_frontmatter
+else:
+    from validate_public_skills import parse_frontmatter
+
 ROOT = Path(__file__).resolve().parent.parent
 SKILLS = {"hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"}
 ENDPOINT = "https://hypertaks.crimsonriftstudio.com/mcp"
+OPENAI_PACKAGE_NAME = "app-6a851e5881dc81919fd10e98f7e19b80"
+PACKAGE_VERSION_RE = re.compile(r"(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)")
 SECRET_PATTERNS = (
     r"\bsk-[A-Za-z0-9_-]{20,}\b",
     r"\bgh[pousr]_[A-Za-z0-9]{20,}\b",
@@ -33,6 +40,14 @@ SECRET_PATTERNS = (
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
+
+def openai_package_identity() -> tuple[str, str]:
+    metadata = json.loads((ROOT / "marketplace/openai/metadata.json").read_text(encoding="utf-8"))
+    require(metadata.get("packageId") == OPENAI_PACKAGE_NAME, "OpenAI package identity must match the existing submission")
+    version = metadata.get("packageVersion")
+    require(isinstance(version, str) and bool(PACKAGE_VERSION_RE.fullmatch(version)), "OpenAI packageVersion must use MAJOR.MINOR.PATCH")
+    return metadata["packageId"], version
 
 
 def https_url(value: object) -> bool:
@@ -65,8 +80,9 @@ def validate_files(files: Mapping[str, bytes], expected_version: str) -> dict[st
         schema = json.loads((ROOT / "marketplace/openai/schemas" / f"{label}.schema.json").read_text(encoding="utf-8"))
         errors = list(Draft202012Validator(schema).iter_errors(instance))
         require(not errors, f"{label}.json does not match its pinned Agent Plugins schema")
-    require(plugin.get("name") == "hypertaks", "public package name must remain hypertaks")
-    require(plugin.get("version") == expected_version, "public package version differs from package.json")
+    require(plugin.get("name") == OPENAI_PACKAGE_NAME, "public package name must match the existing OpenAI submission")
+    require(isinstance(plugin.get("version"), str) and bool(PACKAGE_VERSION_RE.fullmatch(plugin["version"])), "public package version must use MAJOR.MINOR.PATCH")
+    require(plugin.get("version") == expected_version, "public package version differs from OpenAI packageVersion")
     manifests = [plugin] + [json.loads(data) for name, data in files.items() if name.endswith("/plugin.json")]
     for manifest in manifests:
         require(manifest.get("apps") is None, "public upload must not declare apps")
@@ -110,8 +126,8 @@ def validate_files(files: Mapping[str, bytes], expected_version: str) -> dict[st
         if name.startswith("skills/"):
             require(len(PurePosixPath(name).parts) >= 3 and name.split("/")[1] in SKILLS, "unexpected skill root")
         if re.fullmatch(r"skills/[^/]+/SKILL\.md", name):
-            match = re.search(r"^name:\s*([a-z0-9-]+)\s*$", data.decode("utf-8"), re.MULTILINE)
-            require(bool(match) and match.group(1) == name.split("/")[1], f"skill name mismatch in {name}")
+            header = parse_frontmatter(data.decode("utf-8"))
+            require(bool(header) and header.get("name") == name.split("/")[1], f"skill name mismatch in {name}")
 
     review = extension.get("review", {})
     require("test_credentials" not in review and "reviewer_instructions" not in review, "reviewer access must stay outside the ZIP")
@@ -127,7 +143,7 @@ def validate_files(files: Mapping[str, bytes], expected_version: str) -> dict[st
 
 
 def validate_zip(archive_path: Path, expected_version: str | None = None) -> dict[str, object]:
-    version = expected_version or json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    version = expected_version or openai_package_identity()[1]
     files: dict[str, bytes] = {}
     with zipfile.ZipFile(archive_path) as archive:
         for entry in archive.infolist():

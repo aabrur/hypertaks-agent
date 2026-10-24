@@ -90,3 +90,12 @@ test("orchestrator-v2: detects cyclic dependencies and throws error", () => {
     builder.computeWaves();
   }, /CYCLIC_DEPENDENCY_DETECTED/);
 });
+
+test("orchestrator-v2: detects missing dependency and throws error", () => {
+  const builder = new DagBuilder();
+  builder.addNode({ id: "a", role: "r1", provider: "p", dependencies: ["non-existent-node"], inputs: [], expectedOutputs: [], permissions: [], retryLimit: 1, status: "PENDING" });
+
+  assert.throws(() => {
+    builder.computeWaves();
+  }, /MISSING_DEPENDENCY/);
+});

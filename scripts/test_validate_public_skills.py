@@ -8,11 +8,27 @@ from pathlib import Path
 from scripts.validate_public_skills import (
     EXPECTED,
     collect_frontmatter_skill_names,
+    parse_frontmatter,
+    read_name,
     validate_public_skills,
 )
 
 
 class PublicSkillSurfaceTests(unittest.TestCase):
+    def test_unescaped_description_quotes_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            skill = Path(temp_dir) / "hypertaks" / "SKILL.md"
+            skill.parent.mkdir()
+            skill.write_text('---\nname: hypertaks\ndescription: "Use for "founder work"."\n---\n# body\n', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Invalid YAML frontmatter"):
+                read_name(skill)
+            _found, errors = collect_frontmatter_skill_names(Path(temp_dir))
+            self.assertTrue(any("Invalid YAML frontmatter" in error for error in errors))
+
+    def test_yaml_parser_preserves_escaped_quotes(self) -> None:
+        header = parse_frontmatter('---\nname: hypertaks\ndescription: "Use for \\"founder work\\"."\n---\n# body\n')
+        self.assertEqual(header["description"], 'Use for "founder work".')
+
     def test_repository_has_exactly_five_frontmatter_skill_names(self) -> None:
         found, errors = collect_frontmatter_skill_names()
         self.assertEqual(set(found), EXPECTED, errors)

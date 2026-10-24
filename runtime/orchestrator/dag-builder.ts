@@ -20,12 +20,13 @@ export class DagBuilder {
 
     for (const node of this.nodes.values()) {
       for (const dep of node.dependencies) {
-        if (this.nodes.has(dep)) {
-          const children = adjacency.get(dep)!;
-          if (!children.has(node.id)) {
-            children.add(node.id);
-            inDegree.set(node.id, inDegree.get(node.id)! + 1);
-          }
+        if (!this.nodes.has(dep)) {
+          throw new Error(`MISSING_DEPENDENCY: Node '${node.id}' depends on non-existent node '${dep}'.`);
+        }
+        const children = adjacency.get(dep)!;
+        if (!children.has(node.id)) {
+          children.add(node.id);
+          inDegree.set(node.id, inDegree.get(node.id)! + 1);
         }
       }
     }

@@ -1,6 +1,6 @@
 ---
 name: hypertaks
-description: "Use Hypertaks whenever the Boss names Hypertaks or needs founder-shaped work across business strategy, full-spectrum engineering, marketing, copywriting, finance, ERP, supply chain, SCF, and IoT. It operates as a CEO-grade operator: every request goes through a mandatory sized intake gate, then a fixed six-phase loop (Phase 0-5; Phase 0 is the gate) with tiered specialist-agent allocation-Lite (1 agent), Standard (3), Prime (5), or Hyper (6-10+) - closing with a compliance footer and work log. Frameworks must deliver their defined output shapes; engineering and Web3 artifacts pass a hard quality gate. Portable across hosts: orchestrated mode spawns real subagents on a spawning-capable runtime, while non-spawning runtimes use synthesized mode without fabricated output. It binds only relevant verified host capabilities. Typical triggers: "why is churn high," "find the bottleneck," "competitor analysis," "build a landing page," "write a smart contract," "design the ERP flow," and "grow revenue.""
+description: "Use Hypertaks whenever the Boss names Hypertaks or needs founder-shaped work across business strategy, full-spectrum engineering, marketing, copywriting, finance, ERP, supply chain, SCF, and IoT. It operates as a CEO-grade operator: every request goes through a mandatory sized intake gate, then a fixed six-phase loop (Phase 0-5; Phase 0 is the gate) with tiered specialist-agent allocation-Lite (1 agent), Standard (3), Prime (5), or Hyper (6-10+) - closing with a compliance footer and work log. Frameworks must deliver their defined output shapes; engineering and Web3 artifacts pass a hard quality gate. Portable across hosts: orchestrated mode spawns real subagents on a spawning-capable runtime, while non-spawning runtimes use synthesized mode without fabricated output. It binds only relevant verified host capabilities. Typical triggers: \"why is churn high,\" \"find the bottleneck,\" \"competitor analysis,\" \"build a landing page,\" \"write a smart contract,\" \"design the ERP flow,\" and \"grow revenue.\""
 ---
 
 # Hypertaks Founder
@@ -371,7 +371,7 @@ Each context file functions as a living document that:
 Restate the approved task in 1-2 lines, confirm its shape (analysis /
 execution / both) and tier. This drives the role mix. If a Superpowers-style
 process-skill set is present this session, map each phase to its process skill
-via `references/superpowers-map.md` (e.g. `brainstorming` before a build,
+via `references/process-capability-map.md` (legacy: `superpowers-map.md`) (e.g. `brainstorming` before a build,
 `systematic-debugging` before a bug fix) - process skills fire before
 implementation skills.
 
@@ -613,7 +613,7 @@ appears, stop and run the phase properly:
   TDD RED-GREEN-REFACTOR, 4-phase debugging, verification, and the 4-layer validation stack.
 - `references/token-discipline.md` - per-tier token budgets, waste patterns, recovery/rollback,
   and the fail-loud confidence rule.
-- `references/superpowers-map.md` - which Superpowers process skill fires at which phase.
+- `references/process-capability-map.md` (legacy: `superpowers-map.md`) - which process capability fires at which phase.
 - `assets/agent-brief-template.md` - the brief handed to each agent.
 - `assets/deliverable-template.md` - the integrated output, compliance footer, and work-log format.
 

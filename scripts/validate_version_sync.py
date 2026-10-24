@@ -39,6 +39,14 @@ def validate_version_sync() -> int:
     submission_guide = (ROOT / "marketplace/openai/OPENAI-SUBMISSION.md").read_text(encoding="utf-8")
     if f"**Canonical Version:** {version}" not in submission_guide:
         errors.append("marketplace/openai/OPENAI-SUBMISSION.md canonical version is out of sync")
+    openai_metadata = read_json(ROOT / "marketplace/openai/metadata.json")
+    package_version = openai_metadata.get("packageVersion")
+    if not isinstance(package_version, str) or not re.fullmatch(r"(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)", package_version):
+        errors.append("OpenAI packageVersion must use MAJOR.MINOR.PATCH independently of the engine version")
+    if openai_metadata.get("packageId") != "app-6a851e5881dc81919fd10e98f7e19b80":
+        errors.append("OpenAI packageId must match the existing submission")
+    if f"**OpenAI Package Version:** {package_version}" not in submission_guide:
+        errors.append("OpenAI submission guide package version is out of sync")
 
     # 1. plugin.yaml
     plugin_yaml = ROOT / "plugin.yaml"

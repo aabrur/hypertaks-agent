@@ -127,6 +127,16 @@ class OpenAIPublicPluginTests(unittest.TestCase):
             first = archive_path.read_bytes()
             self.assertEqual(build_openai_plugin_zip(Path(temporary)).read_bytes(), first)
             with zipfile.ZipFile(archive_path) as archive:
+                manifest = json.loads(archive.read("hypertaks/plugin.json"))
+                metadata = json.loads((ROOT / "marketplace/openai/metadata.json").read_text(encoding="utf-8"))
+                self.assertEqual(manifest["name"], "app-6a851e5881dc81919fd10e98f7e19b80")
+                self.assertEqual(manifest["version"], metadata["packageVersion"])
+                self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+$")
+                source = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+                self.assertEqual(source["name"], "hypertaks")
+                self.assertEqual(source["version"], json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"])
+                self.assertEqual({**source, "name": manifest["name"], "version": manifest["version"]}, manifest)
+                self.assertEqual(archive.read("hypertaks/mcp.json"), (ROOT / "mcp.json").read_bytes())
                 self.assertNotIn("hypertaks/skills/SKILL.md", archive.namelist())
                 self.assertNotIn("hypertaks/.app.json", archive.namelist())
                 self.assertEqual(archive.read("hypertaks/skills/hypertaks/SKILL.md"), (ROOT / "skills/hypertaks/SKILL.md").read_bytes())
@@ -139,11 +149,13 @@ class OpenAIPublicPluginTests(unittest.TestCase):
             for name, value in ((".app.json", b"{}"), ("../private.txt", b"x"), ("skills/SKILL.md", b"pack index"), ("skills/hypertaks/references/leak.txt", b"sk-" + b"x" * 30)):
                 with self.subTest(name=name), self.assertRaises(ValueError):
                     validate_files({**files, name: value}, version)
-            for mutate in ("apps", "headers", "version", "missing-skill"):
+            for mutate in ("apps", "headers", "version", "non-semver", "identity", "yaml", "missing-skill"):
                 with self.subTest(mutate=mutate), self.assertRaises(ValueError):
                     changed = dict(files)
                     if mutate == "missing-skill":
                         del changed["skills/hypertaks-brain/SKILL.md"]
+                    elif mutate == "yaml":
+                        changed["skills/hypertaks/SKILL.md"] = b'---\nname: hypertaks\ndescription: "Bad "quotes"."\n---\n'
                     else:
                         name = "mcp.json" if mutate == "headers" else "plugin.json"
                         manifest = json.loads(changed[name])
@@ -151,6 +163,10 @@ class OpenAIPublicPluginTests(unittest.TestCase):
                             manifest["mcpServers"]["hypertaks"]["headers"] = {"authorization": "private"}
                         elif mutate == "version":
                             manifest["version"] = "4.5.2"
+                        elif mutate == "non-semver":
+                            manifest["version"] = "0.0.4.5.9"
+                        elif mutate == "identity":
+                            manifest["name"] = "hypertaks"
                         else:
                             manifest["extensions"]["com.openai"]["apps"] = "./.app.json"
                         changed[name] = json.dumps(manifest).encode()

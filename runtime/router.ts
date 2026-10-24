@@ -6,6 +6,7 @@
  *   - Genuine T1 Boss approval is required for all contract activations.
  */
 export * from "./founder-brain";
+export * from "./capability-engine";
 
 export type QueryClass =
   | "none"

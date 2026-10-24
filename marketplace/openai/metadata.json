@@ -1,7 +1,8 @@
 {
   "host": "openai",
   "displayName": "OpenAI Plugins Directory",
-  "packageId": "hypertaks",
+  "packageId": "app-6a851e5881dc81919fd10e98f7e19b80",
+  "packageVersion": "4.5.9",
   "version": "0.0.4.5.9",
   "publisher": "Crimson Rift Studio",
   "websiteUrl": "https://hypertaks.crimsonriftstudio.com",

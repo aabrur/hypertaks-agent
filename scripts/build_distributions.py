@@ -356,13 +356,15 @@ def iter_skill_package_files(skill_name: str) -> list[Path]:
 def build_openai_plugin_zip(output_root: Path | None = None) -> Path:
     """Build a separate public upload copy without private host/App bindings."""
     if __package__:
-        from .validate_openai_submission import validate_zip
+        from .validate_openai_submission import openai_package_identity, validate_zip
     else:
-        from validate_openai_submission import validate_zip
+        from validate_openai_submission import openai_package_identity, validate_zip
 
     destination = (output_root or OPENAI_OUTPUT_ROOT).resolve()
     destination.mkdir(parents=True, exist_ok=True)
-    version = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"]
+    package_name, version = openai_package_identity()
+    public_manifest = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
+    public_manifest.update(name=package_name, version=version)
     sources = [ROOT / name for name in ("plugin.json", "mcp.json", "LICENSE", "assets/Hypertask.svg", "assets/chatgpt-directory-icon.png", "assets/chatgpt-composer-icon.png")]
     for skill_name in CANONICAL_SKILLS:
         sources.extend(iter_skill_package_files(skill_name))
@@ -379,7 +381,8 @@ def build_openai_plugin_zip(output_root: Path | None = None) -> Path:
                 entry = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
                 entry.compress_type = zipfile.ZIP_DEFLATED
                 entry.external_attr = 0o100644 << 16
-                archive.writestr(entry, source.read_bytes())
+                content = (json.dumps(public_manifest, indent=2, ensure_ascii=False) + "\n").encode("utf-8") if source == ROOT / "plugin.json" else source.read_bytes()
+                archive.writestr(entry, content)
         validate_zip(temporary_path, version)
         os.replace(temporary_path, target)
     finally:

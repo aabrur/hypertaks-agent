@@ -21,6 +21,7 @@ import {
 import { scanRepository } from "./repository-intelligence/scanner";
 import { compileArchitecturePack } from "./repository-intelligence/architecture-compiler";
 import { writeInventories } from "./repository-intelligence/inventory-writer";
+import { enrichProjectOperatingContext, ContextEnrichmentResult } from "./repository-intelligence/context-enricher";
 import { buildLocalGraph, saveLocalGraph } from "./graph/local-graph-provider";
 import { evaluateGraphFreshness, saveHashesCache, loadHashesCache } from "./graph/freshness";
 
@@ -70,6 +71,7 @@ export interface LifecycleResult {
   readonly status: "READY" | "AWAITING_APPROVAL" | "DEGRADED" | "ERROR";
   readonly preflight: PreflightReport;
   readonly bootstrapResult?: BootstrapResult | undefined;
+  readonly enrichmentResult?: ContextEnrichmentResult | undefined;
   readonly message: string;
   readonly error?: string | undefined;
 }
@@ -380,8 +382,15 @@ export async function autoInitializeOrSync(
     writeInventories(preflight.canonicalRoot, scan);
     
     const identity = readRepoIdentity(preflight.canonicalRoot);
+    let enrichmentResult: ContextEnrichmentResult | undefined;
     if (identity) {
       compileArchitecturePack(preflight.canonicalRoot, identity, scan);
+      enrichmentResult = enrichProjectOperatingContext(
+        preflight.canonicalRoot,
+        identity,
+        scan,
+        options.agentName ? { agentName: options.agentName } : undefined,
+      );
       const graph = buildLocalGraph(preflight.canonicalRoot, scan);
       saveLocalGraph(preflight.canonicalRoot, identity.repo_id, graph);
       
@@ -397,6 +406,7 @@ export async function autoInitializeOrSync(
       status: "READY",
       preflight: postPreflight,
       bootstrapResult,
+      enrichmentResult,
       message: `Hypertaks Operating Vault is fully initialized and synchronized for ${preflight.repoId}.`,
     };
   } catch (err: any) {

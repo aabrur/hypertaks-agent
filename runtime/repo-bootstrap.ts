@@ -21,6 +21,8 @@ import {
   mintBossApprovalProof,
   ApprovalActivation,
 } from "./founder-brain";
+import { scanRepository } from "./repository-intelligence/scanner";
+import { buildDocumentContent } from "./repository-intelligence/context-enricher";
 
 export interface RepoBootstrapGrant {
   readonly grant_kind: "hypertaks.repo-bootstrap.v1";
@@ -533,11 +535,21 @@ Do not commit sensitive keys, passwords, or personal credentials into this folde
     saveStoredGrant(canonicalRoot, grant);
 
     // 6. Preserve and initialize 13 Project Operating Context files
+    const scan = scanRepository(canonicalRoot);
+    const bootstrapNow = new Date().toISOString();
     for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {
       const filePath = resolveWithinApprovedRoot(canonicalRoot, path.join(".hypertaks", "projects", repoId, filename), true);
       const relPath = `.hypertaks/projects/${repoId}/${filename}`;
       if (!fs.existsSync(filePath)) {
-        const content = generateProjectContextDocument(filename, repoId, agentName, gitState);
+        const content = buildDocumentContent(
+          filename,
+          identity,
+          scan,
+          agentName,
+          gitState,
+          bootstrapNow,
+          new Map(),
+        );
         fs.writeFileSync(filePath, content, "utf8");
         createdFiles.push(relPath);
       } else {

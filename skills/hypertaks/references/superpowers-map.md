@@ -1,4 +1,7 @@
-# Superpowers -> Hypertaks Phase Map
+# Superpowers -> Hypertaks Phase Map (Compatibility Alias)
+
+> Note: Canonical process capability reference is now `skills/hypertaks/references/process-capability-map.md`.
+> This file is retained as a compatibility alias.
 
 When the Superpowers plugin (or an equivalent process-skill set) is present in
 the environment, use its skills at the phase where each one earns its keep. This
