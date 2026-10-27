@@ -37,6 +37,12 @@ import {
   type Operation,
   type SideEffect,
 } from "./router";
+import { scanRepository } from "./repository-intelligence/scanner";
+import { buildLocalGraph, loadLocalGraphFromDisk } from "./graph/local-graph-provider";
+import { analyzeImpact } from "./graph/impact-analyzer";
+import { readPointer, redactSecrets } from "./founder-brain";
+import { readRepoIdentity } from "./repo-identity";
+import { verifyProjectOperatingContext } from "./repository-intelligence/context-verifier";
 
 // ---------------------------------------------------------------------------
 // Unified descriptor
@@ -206,6 +212,7 @@ const REA_STATIC_READ: ReadonlySet<string> = new Set([
 const REA_BINARY_READ: ReadonlySet<string> = new Set([
   "binary_overview",
   "inspect_macho",
+  "inspect_pe_resources",
   "inspect_signature",
   "inspect_native_api",
   "inspect_native_data_type",
@@ -1193,6 +1200,8 @@ export interface SelectArguments {
 export interface CapabilityExecutionContext {
   readonly canonicalRoot?: string;
   readonly approvalGranted?: boolean;
+  /** Required in addition to approval before a mutating, instrumenting, or unknown-effect tool may run. */
+  readonly allowSideEffects?: boolean;
   readonly contractId?: string;
   readonly mcpInvoker?: (server: string, tool: string, args: Record<string, unknown>) => Promise<unknown>;
   readonly hostInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
@@ -1249,6 +1258,140 @@ export function classifyEffect(operation: string, targetType?: string): SideEffe
  * from router.ts for the actual filter/bind decision and adds need-before-
  * discovery source selection plus fallback reporting.
  */
+function readableDirectory(root: string): string | null {
+  try {
+    const resolved = path.resolve(root);
+    if (!fs.existsSync(resolved) || !fs.statSync(resolved).isDirectory()) return null;
+    return resolved;
+  } catch {
+    return null;
+  }
+}
+
+function nonSuccess(
+  desc: { capability_id: string; provider: string },
+  status: "unverified" | "unavailable" | "denied" | "failed",
+  error: string,
+  reconciliation: string,
+  output: unknown = null,
+): CapabilityExecutionResult {
+  return {
+    success: false,
+    capability_id: desc.capability_id,
+    provider: desc.provider,
+    status,
+    output,
+    error,
+    reconciliation,
+  };
+}
+
+function providerFailureText(output: unknown): string | null {
+  if (!output || typeof output !== "object" || Array.isArray(output)) return null;
+  const record = output as Record<string, unknown>;
+  if (record.isError !== true) return null;
+  const parts: string[] = [];
+  if (Array.isArray(record.content)) {
+    for (const item of record.content) {
+      if (!item || typeof item !== "object" || Array.isArray(item)) continue;
+      const text = (item as Record<string, unknown>).text;
+      if (typeof text === "string" && text.length > 0) parts.push(text);
+    }
+  }
+  return redactSecrets(parts.join("\n") || "MCP tool result reported isError: true.");
+}
+
+function redactFailedProviderOutput(output: unknown): unknown {
+  if (!output || typeof output !== "object" || Array.isArray(output)) return output;
+  const record = output as Record<string, unknown>;
+  if (!Array.isArray(record.content)) return output;
+  return {
+    ...record,
+    content: record.content.map((item) => {
+      if (!item || typeof item !== "object" || Array.isArray(item)) return item;
+      const entry = item as Record<string, unknown>;
+      if (typeof entry.text !== "string") return item;
+      return { ...entry, text: redactSecrets(entry.text) };
+    }),
+  };
+}
+
+function fromProviderResult(
+  desc: UnifiedCapabilityDescriptor,
+  provider: string,
+  timestamp: string,
+  output: unknown,
+  provenance: Record<string, unknown>,
+): CapabilityExecutionResult {
+  const failure = providerFailureText(output);
+  if (failure) {
+    return {
+      success: false,
+      capability_id: desc.capability_id,
+      provider,
+      status: "failed",
+      output: redactFailedProviderOutput(output),
+      error: failure,
+      reconciliation: "Provider reported a tool error. The original error content is preserved with secrets redacted.",
+    };
+  }
+  return {
+    success: true,
+    capability_id: desc.capability_id,
+    provider,
+    status: "executed",
+    output,
+    evidence: {
+      kind: desc.evidence.kind,
+      timestamp,
+      provenance,
+    },
+  };
+}
+
+function authorizeReaTool(
+  desc: UnifiedCapabilityDescriptor,
+  input: Record<string, unknown>,
+  ctx: CapabilityExecutionContext,
+): { ok: true; tool: string; toolArgs: Record<string, unknown> } | { ok: false; result: CapabilityExecutionResult } {
+  const authorized = (desc.provider_operation ?? "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+  const requested = typeof input.tool === "string" ? input.tool.trim() : "";
+  const only = authorized.length === 1 ? authorized[0] : undefined;
+  const tool = requested || only || "";
+  if (!tool || !authorized.includes(tool)) {
+    return {
+      ok: false,
+      result: nonSuccess(
+        desc,
+        "denied",
+        `REA tool '${tool || "(missing)"}' is not an authorized operation of capability '${desc.capability_id}'.`,
+        "Request a tool that belongs to this capability's discovered operation set.",
+      ),
+    };
+  }
+  const classification = classifyReaTool(tool);
+  if (classification === null || classification.mutating) {
+    const sideEffectAuthorized = ctx.allowSideEffects === true && desc.side_effect !== "none";
+    if (ctx.approvalGranted !== true || !sideEffectAuthorized) {
+      return {
+        ok: false,
+        result: nonSuccess(
+          desc,
+          "denied",
+          `REA tool '${tool}' was not executed: side effect authorization is missing.`,
+          "Grant Founder approval and explicit side effect permission before invoking a mutating, instrumenting, or unknown-effect REA tool.",
+        ),
+      };
+    }
+  }
+  const toolArgs: Record<string, unknown> = { ...input };
+  delete toolArgs.tool;
+  return { ok: true, tool, toolArgs };
+}
+
 export class UnifiedCapabilityEngine {
   private readonly sources: readonly CapabilitySource[];
 
@@ -1375,20 +1518,20 @@ export class UnifiedCapabilityEngine {
     const now = new Date().toISOString();
     try {
       if (descriptor.provider === "hypertaks-native") {
-        return this.executeNative(descriptor, input, ctx, now);
+        return await this.executeNative(descriptor, input, ctx, now);
       }
       if (descriptor.provider === "rea") {
-        return this.executeRea(descriptor, input, ctx, now);
+        return await this.executeRea(descriptor, input, ctx, now);
       }
       if (descriptor.provider.startsWith("mcp:")) {
         const serverName = descriptor.provider.slice(4);
-        return this.executeMcp(serverName, descriptor, input, ctx, now);
+        return await this.executeMcp(serverName, descriptor, input, ctx, now);
       }
       if (descriptor.provider === "host-native") {
-        return this.executeHost(descriptor, input, ctx, now);
+        return await this.executeHost(descriptor, input, ctx, now);
       }
       if (descriptor.provider === "superpowers") {
-        return this.executeSuperpowers(descriptor, input, ctx, now);
+        return await this.executeSuperpowers(descriptor, input, ctx, now);
       }
 
       return {
@@ -1408,7 +1551,7 @@ export class UnifiedCapabilityEngine {
         provider: descriptor.provider,
         status: "failed",
         output: null,
-        error: `Execution failed: ${message}`,
+        error: `Execution failed: ${redactSecrets(message)}`,
         reconciliation: "Inspect error log and check provider connection.",
       };
     }
@@ -1420,21 +1563,161 @@ export class UnifiedCapabilityEngine {
     ctx: CapabilityExecutionContext,
     timestamp: string,
   ): Promise<CapabilityExecutionResult> {
-    const op = desc.provider_operation ?? "op";
-    const root = ctx.canonicalRoot ?? (typeof input.root === "string" ? input.root : process.cwd());
+    const op = desc.provider_operation ?? "";
+    const rootInput = ctx.canonicalRoot ?? (typeof input.root === "string" ? input.root : "");
+    if (!rootInput) {
+      return nonSuccess(
+        desc,
+        "unverified",
+        `Native operation '${op || "unknown"}' was not executed: no repository root was provided.`,
+        "Pass a readable repository root.",
+      );
+    }
+    const root = readableDirectory(rootInput);
+    if (!root) {
+      return nonSuccess(
+        desc,
+        "failed",
+        `Native operation '${op || "unknown"}' was not executed: root '${rootInput}' is not a readable directory.`,
+        "Provide an existing repository directory.",
+      );
+    }
 
-    return {
-      success: true,
-      capability_id: desc.capability_id,
-      provider: "hypertaks-native",
-      status: "executed",
-      output: { executed: true, operation: op, root, input },
-      evidence: {
-        kind: desc.evidence.kind,
-        timestamp,
-        provenance: { provider: "hypertaks-native", operation: op, root },
-      },
-    };
+    try {
+      if (op === "scanRepository") {
+        const depth = input.depth === "shallow" || input.depth === "deep" ? input.depth : undefined;
+        const scan = depth ? scanRepository(root, { depth }) : scanRepository(root);
+        return {
+          success: true,
+          capability_id: desc.capability_id,
+          provider: "hypertaks-native",
+          status: "executed",
+          output: scan,
+          evidence: {
+            kind: desc.evidence.kind,
+            timestamp,
+            provenance: {
+              provider: "hypertaks-native",
+              operation: op,
+              root,
+              fileCount: scan.files.length,
+            },
+          },
+        };
+      }
+
+      if (op === "localGraph") {
+        const loaded = loadLocalGraphFromDisk(root);
+        const graph = loaded ?? buildLocalGraph(root, scanRepository(root));
+        const nodeId = typeof input.nodeId === "string" ? input.nodeId : "";
+        const output: Record<string, unknown> = {
+          root,
+          source: loaded ? "disk" : "built",
+          nodeCount: graph.getNodes().length,
+          edgeCount: graph.getEdges().length,
+        };
+        if (nodeId) output.impact = analyzeImpact(nodeId, graph);
+        return {
+          success: true,
+          capability_id: desc.capability_id,
+          provider: "hypertaks-native",
+          status: "executed",
+          output,
+          evidence: {
+            kind: desc.evidence.kind,
+            timestamp,
+            provenance: {
+              provider: "hypertaks-native",
+              operation: op,
+              root,
+              source: output.source,
+              nodeCount: output.nodeCount,
+            },
+          },
+        };
+      }
+
+      if (op === "founderBrain") {
+        const action = typeof input.action === "string" ? input.action : "read";
+        if (action !== "read") {
+          return nonSuccess(
+            desc,
+            "unverified",
+            `founderBrain action '${action}' was not executed: no write handler is bound.`,
+            "readPointer is the established read contract. A write was not performed.",
+          );
+        }
+        const pointer = readPointer(root);
+        return {
+          success: true,
+          capability_id: desc.capability_id,
+          provider: "hypertaks-native",
+          status: "executed",
+          output: pointer,
+          evidence: {
+            kind: desc.evidence.kind,
+            timestamp,
+            provenance: {
+              provider: "hypertaks-native",
+              operation: op,
+              root,
+              pointerStatus: pointer.status,
+            },
+          },
+        };
+      }
+
+      if (op === "verify") {
+        const identity = readRepoIdentity(root);
+        if (!identity) {
+          return nonSuccess(
+            desc,
+            "unverified",
+            `Verification was not executed: no repo identity was found under '${root}'.`,
+            "Initialize the repository vault before requesting verification.",
+          );
+        }
+        const report = verifyProjectOperatingContext(root, identity);
+        if (!report.passed) {
+          return {
+            success: false,
+            capability_id: desc.capability_id,
+            provider: "hypertaks-native",
+            status: "failed",
+            output: report,
+            error: "Verification checks did not pass.",
+            reconciliation: "Inspect the verification report. A failed check is not execution success.",
+          };
+        }
+        return {
+          success: true,
+          capability_id: desc.capability_id,
+          provider: "hypertaks-native",
+          status: "executed",
+          output: report,
+          evidence: {
+            kind: desc.evidence.kind,
+            timestamp,
+            provenance: { provider: "hypertaks-native", operation: op, root, passed: true },
+          },
+        };
+      }
+
+      return nonSuccess(
+        desc,
+        "unverified",
+        `Native operation '${op || "unknown"}' has no execution handler.`,
+        "Supported native operations are scanRepository, localGraph, founderBrain, and verify.",
+      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      return nonSuccess(
+        desc,
+        "failed",
+        `Native operation '${op || "unknown"}' failed: ${redactSecrets(message)}`,
+        "Inspect the diagnostic. The operation was not reported as successful.",
+      );
+    }
   }
 
   private async executeRea(
@@ -1443,93 +1726,42 @@ export class UnifiedCapabilityEngine {
     ctx: CapabilityExecutionContext,
     timestamp: string,
   ): Promise<CapabilityExecutionResult> {
-    const requestedTool = typeof input.tool === "string" ? input.tool : undefined;
-    const tool = requestedTool ?? desc.provider_operation;
-    if (!tool) {
-      return {
-        success: false,
-        capability_id: desc.capability_id,
-        provider: "rea",
-        status: "failed",
-        output: null,
-        error: "Missing REA provider operation identifier.",
-      };
-    }
-
-    const toolArgs = { ...input };
-    delete toolArgs.tool;
+    const auth = authorizeReaTool(desc, input, ctx);
+    if (!auth.ok) return auth.result;
+    const { tool, toolArgs } = auth;
+    const provenance: Record<string, unknown> = { provider: "rea", operation: tool, input: toolArgs };
 
     if (ctx.reaInvoker) {
       const output = await ctx.reaInvoker(tool, toolArgs);
-      return {
-        success: true,
-        capability_id: desc.capability_id,
-        provider: "rea",
-        status: "executed",
-        output,
-        evidence: {
-          kind: desc.evidence.kind,
-          timestamp,
-          provenance: { provider: "rea", operation: tool, input: toolArgs },
-        },
-      };
+      return fromProviderResult(desc, "rea", timestamp, output, provenance);
     }
 
     if (ctx.mcpInvoker) {
       const output = await ctx.mcpInvoker("rea", tool, toolArgs);
-      return {
-        success: true,
-        capability_id: desc.capability_id,
-        provider: "rea",
-        status: "executed",
-        output,
-        evidence: {
-          kind: desc.evidence.kind,
-          timestamp,
-          provenance: { provider: "rea", operation: tool, input: toolArgs },
-        },
-      };
+      return fromProviderResult(desc, "rea", timestamp, output, provenance);
     }
 
     if (ctx.useLocalStdioRea) {
       try {
         const output = await executeReaViaStdio(tool, toolArgs);
-        return {
-          success: true,
-          capability_id: desc.capability_id,
-          provider: "rea",
-          status: "executed",
-          output,
-          evidence: {
-            kind: desc.evidence.kind,
-            timestamp,
-            provenance: { provider: "rea", operation: tool, transport: "stdio", input: toolArgs },
-          },
-        };
+        return fromProviderResult(desc, "rea", timestamp, output, { ...provenance, transport: "stdio" });
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
-        return {
-          success: false,
-          capability_id: desc.capability_id,
-          provider: "rea",
-          status: "failed",
-          output: null,
-          error: `REA stdio execution failed: ${message}`,
-          reconciliation: "Verify local REA installation and arguments.",
-        };
+        return nonSuccess(
+          desc,
+          "failed",
+          `REA stdio execution failed: ${redactSecrets(message)}`,
+          "Verify local REA installation and arguments.",
+        );
       }
     }
 
-    // No operational REA provider connected: report unverified and fail closed
-    return {
-      success: false,
-      capability_id: desc.capability_id,
-      provider: "rea",
-      status: "unverified",
-      output: null,
-      error: "REA MCP provider is unavailable or unreachable in the current session.",
-      reconciliation: "Connect a live REA MCP endpoint or set useLocalStdioRea before executing binary investigation operations.",
-    };
+    return nonSuccess(
+      desc,
+      "unverified",
+      "REA MCP provider is unavailable or unreachable in the current session.",
+      "Connect a live REA MCP endpoint or set useLocalStdioRea before executing binary investigation operations.",
+    );
   }
 
   private async executeMcp(
@@ -1541,30 +1773,16 @@ export class UnifiedCapabilityEngine {
   ): Promise<CapabilityExecutionResult> {
     const tool = desc.provider_operation ?? desc.capability_id;
     if (!ctx.mcpInvoker) {
-      return {
-        success: false,
-        capability_id: desc.capability_id,
-        provider: desc.provider,
-        status: "unverified",
-        output: null,
-        error: `MCP server '${server}' invoker is not configured in this session.`,
-        reconciliation: "Provide a valid MCP transport or invoker function.",
-      };
+      return nonSuccess(
+        desc,
+        "unverified",
+        `MCP server '${server}' invoker is not configured in this session.`,
+        "Provide a valid MCP transport or invoker function.",
+      );
     }
 
     const output = await ctx.mcpInvoker(server, tool, input);
-    return {
-      success: true,
-      capability_id: desc.capability_id,
-      provider: desc.provider,
-      status: "executed",
-      output,
-      evidence: {
-        kind: desc.evidence.kind,
-        timestamp,
-        provenance: { server, tool, input },
-      },
-    };
+    return fromProviderResult(desc, desc.provider, timestamp, output, { server, tool, input });
   }
 
   private async executeHost(
@@ -1574,54 +1792,31 @@ export class UnifiedCapabilityEngine {
     timestamp: string,
   ): Promise<CapabilityExecutionResult> {
     const tool = desc.provider_operation ?? desc.capability_id;
-    if (ctx.hostInvoker) {
-      const output = await ctx.hostInvoker(tool, input);
-      return {
-        success: true,
-        capability_id: desc.capability_id,
-        provider: "host-native",
-        status: "executed",
-        output,
-        evidence: {
-          kind: desc.evidence.kind,
-          timestamp,
-          provenance: { provider: "host-native", tool, input },
-        },
-      };
+    if (!ctx.hostInvoker) {
+      return nonSuccess(
+        desc,
+        "unverified",
+        `Host-native capability '${desc.public_name}' was not executed: no host invoker is configured.`,
+        "Provide a callable host invoker before execution.",
+      );
     }
-    return {
-      success: true,
-      capability_id: desc.capability_id,
-      provider: "host-native",
-      status: "executed",
-      output: { executed: true, tool, input },
-      evidence: {
-        kind: desc.evidence.kind,
-        timestamp,
-        provenance: { provider: "host-native", tool },
-      },
-    };
+    const output = await ctx.hostInvoker(tool, input);
+    return fromProviderResult(desc, "host-native", timestamp, output, { provider: "host-native", tool });
   }
 
   private async executeSuperpowers(
     desc: UnifiedCapabilityDescriptor,
-    input: Record<string, unknown>,
-    ctx: CapabilityExecutionContext,
-    timestamp: string,
+    _input: Record<string, unknown>,
+    _ctx: CapabilityExecutionContext,
+    _timestamp: string,
   ): Promise<CapabilityExecutionResult> {
     const workflow = desc.provider_operation ?? desc.capability_id;
-    return {
-      success: true,
-      capability_id: desc.capability_id,
-      provider: "superpowers",
-      status: "executed",
-      output: { executed: true, workflow, input },
-      evidence: {
-        kind: desc.evidence.kind,
-        timestamp,
-        provenance: { provider: "superpowers", workflow },
-      },
-    };
+    return nonSuccess(
+      desc,
+      "unverified",
+      `Superpowers workflow '${workflow}' is guidance only; no workflow executor was invoked.`,
+      "Use the workflow as guidance. A descriptor is not completed execution.",
+    );
   }
 
   /**

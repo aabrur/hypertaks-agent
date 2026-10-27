@@ -330,9 +330,14 @@ test("CRITICAL 1: operational execution dispatches native, mcp, and handles REA 
   assert.equal(deniedRes.success, false);
   assert.equal(deniedRes.status, "denied");
 
-  const approvedRes = await gatedEngine.execute("cap-danger", {}, { approvalGranted: true });
+  const approvedRes = await gatedEngine.execute("cap-danger", {}, {
+    approvalGranted: true,
+    hostInvoker: async (tool) => ({ tool, ran: true }),
+  });
   assert.equal(approvedRes.success, true);
   assert.equal(approvedRes.status, "executed");
+  assert.equal(approvedRes.output.ran, true);
+  assert.equal(approvedRes.output.executed, undefined);
 });
 
 test("CRITICAL 2: Indonesian intent routing and multi-intent matching", () => {
@@ -351,6 +356,239 @@ test("CRITICAL 2: Indonesian intent routing and multi-intent matching", () => {
   assert.ok(multi.length >= 2);
   assert.equal(multi.some((n) => n.category === "debugging"), true);
   assert.equal(multi.some((n) => n.category === "repository_intelligence"), true);
+});
+
+function readOnlyReaEngine() {
+  return createDefaultCapabilityEngine({
+    available: true,
+    tools: ["analyze_function", "search_strings"],
+    auth: "none",
+  });
+}
+
+function assertNotFakeExecution(result) {
+  assert.equal(result.success, false);
+  assert.notEqual(result.status, "executed");
+  assert.equal(result.evidence, undefined);
+  const output = result.output;
+  if (output && typeof output === "object") {
+    assert.notEqual(output.executed, true);
+  }
+}
+
+test("FIX 1: native scan of an invalid root does not report success", async () => {
+  const engine = createDefaultCapabilityEngine();
+  const missing = await engine.execute("hypertaks-repository-intelligence", {
+    root: "C:/Users/abrur/hypertaks-missing-root-does-not-exist",
+  });
+  assertNotFakeExecution(missing);
+  assert.match(missing.error, /not a readable directory|not executed|failed/i);
+});
+
+test("FIX 1: valid native scan returns scanner output, not an echoed input", async () => {
+  const fs = require("node:fs");
+  const os = require("node:os");
+  const path = require("node:path");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-scan-"));
+  fs.writeFileSync(path.join(root, "package.json"), "{\"name\":\"scan-fixture\"}\n");
+  const engine = createDefaultCapabilityEngine();
+  const result = await engine.execute("hypertaks-repository-intelligence", { root, depth: "shallow" });
+  assert.equal(result.success, true);
+  assert.equal(result.status, "executed");
+  assert.equal(result.provider, "hypertaks-native");
+  assert.equal(Array.isArray(result.output.files), true);
+  assert.ok(result.output.files.some((file) => file.relativePath === "package.json"));
+  assert.equal(typeof result.output.coverage.totalScanned, "number");
+  assert.equal(result.output.executed, undefined);
+  assert.equal(result.output.input, undefined);
+  assert.ok(result.evidence);
+  assert.equal(result.evidence.provenance.operation, "scanRepository");
+});
+
+test("FIX 1: host capability without an invoker does not report execution", async () => {
+  const engine = new UnifiedCapabilityEngine([
+    {
+      sourceId: "host",
+      categories: ["execution"],
+      discover: async () => [
+        baseDesc("host:browser", "execution", "execute", {
+          provider: "host-native",
+          provider_operation: "browser",
+          approval_required: true,
+          side_effect: "unknown",
+        }),
+      ],
+    },
+  ]);
+  const result = await engine.execute("host:browser", { url: "https://example.test" }, { approvalGranted: true });
+  assertNotFakeExecution(result);
+  assert.equal(result.status, "unverified");
+  assert.match(result.error, /invoker/i);
+});
+
+test("FIX 1: workflow capability without an executor does not report execution", async () => {
+  const engine = new UnifiedCapabilityEngine([
+    {
+      sourceId: "superpowers",
+      categories: ["debugging"],
+      discover: async () => [
+        baseDesc("hypertaks-debugging-workflow", "debugging", "execute", {
+          provider: "superpowers",
+          provider_operation: "systematic-debugging",
+          capability_type: "workflow",
+        }),
+      ],
+    },
+  ]);
+  const result = await engine.execute("hypertaks-debugging-workflow", { note: "guidance only" });
+  assertNotFakeExecution(result);
+  assert.match(result.error, /guidance|executor|not executed/i);
+});
+
+test("FIX 2: read-only REA capability cannot dispatch unauthorized tools", async () => {
+  const cases = [
+    { tool: "observe_native_calls", label: "instrument" },
+    { tool: "annotate_native_function", label: "annotate" },
+    { tool: "not_a_discovered_rea_op", label: "unknown" },
+  ];
+  for (const item of cases) {
+    let calls = 0;
+    const engine = readOnlyReaEngine();
+    const result = await engine.execute(
+      "hypertaks-investigation",
+      { tool: item.tool },
+      {
+        approvalGranted: true,
+        allowSideEffects: true,
+        reaInvoker: async () => {
+          calls += 1;
+          return { isError: false, content: [{ type: "text", text: "should not run" }] };
+        },
+        mcpInvoker: async () => {
+          calls += 1;
+          return { isError: false, content: [] };
+        },
+        useLocalStdioRea: true,
+      },
+    );
+    assert.equal(result.success, false, item.label);
+    assert.equal(result.status, "denied", item.label);
+    assert.equal(calls, 0, `${item.label} reached an invoker`);
+    assert.equal(result.evidence, undefined);
+  }
+});
+
+test("FIX 2: approval without side-effect authorization does not invoke a mutating REA tool", async () => {
+  let calls = 0;
+  const engine = createDefaultCapabilityEngine({
+    available: true,
+    tools: ["annotate_native_function"],
+    auth: "none",
+  });
+  const result = await engine.execute(
+    "hypertaks-investigation-annotation",
+    { tool: "annotate_native_function" },
+    {
+      approvalGranted: true,
+      reaInvoker: async () => {
+        calls += 1;
+        return { annotated: true };
+      },
+    },
+  );
+  assert.equal(result.success, false);
+  assert.equal(result.status, "denied");
+  assert.equal(calls, 0);
+  assert.match(result.error, /side effect/i);
+});
+
+test("FIX 2: authorized read-only REA operation executes only through the real invoker", async () => {
+  let seen = null;
+  const engine = readOnlyReaEngine();
+  const result = await engine.execute(
+    "hypertaks-investigation",
+    { tool: "analyze_function", function: "main" },
+    {
+      reaInvoker: async (tool, args) => {
+        seen = { tool, args };
+        return { isError: false, content: [{ type: "text", text: "int main(){return 0;}" }] };
+      },
+    },
+  );
+  assert.equal(result.success, true);
+  assert.equal(result.status, "executed");
+  assert.equal(seen.tool, "analyze_function");
+  assert.equal(seen.args.tool, undefined);
+  assert.equal(result.output.isError, false);
+  assert.ok(result.evidence);
+});
+
+test("FIX 3: MCP isError is a failed execution and is not given success evidence", async () => {
+  const secret = "api_key=abcdefghijklmnopqrst";
+  const reaEngine = readOnlyReaEngine();
+  const reaFailed = await reaEngine.execute(
+    "hypertaks-investigation",
+    { tool: "analyze_function" },
+    {
+      reaInvoker: async () => ({ isError: true, content: [{ type: "text", text: `provider failed ${secret}` }] }),
+    },
+  );
+  assert.equal(reaFailed.success, false);
+  assert.equal(reaFailed.status, "failed");
+  assert.equal(reaFailed.evidence, undefined);
+  assert.equal(reaFailed.output.isError, true);
+  assert.equal(reaFailed.error.includes(secret), false);
+  assert.match(reaFailed.error, /REDACTED_SECRET|provider failed/i);
+
+  const reaViaMcp = await reaEngine.execute(
+    "hypertaks-investigation",
+    { tool: "search_strings" },
+    {
+      mcpInvoker: async () => ({ isError: true, content: [{ type: "text", text: "rea mcp provider failed" }] }),
+    },
+  );
+  assert.equal(reaViaMcp.success, false);
+  assert.equal(reaViaMcp.status, "failed");
+  assert.equal(reaViaMcp.evidence, undefined);
+
+  const mcpEngine = new UnifiedCapabilityEngine([
+    {
+      sourceId: "mcp",
+      categories: ["unknown"],
+      discover: async () => [
+        baseDesc("mcp:demo:read_thing", "unknown", "execute", {
+          provider: "mcp:demo",
+          provider_operation: "read_thing",
+          kind: "mcp_tool",
+        }),
+      ],
+    },
+  ]);
+  const mcpFailed = await mcpEngine.execute("mcp:demo:read_thing", {}, {
+    mcpInvoker: async () => ({ isError: true, content: [{ type: "text", text: "mcp provider failed" }] }),
+  });
+  assert.equal(mcpFailed.success, false);
+  assert.equal(mcpFailed.status, "failed");
+  assert.equal(mcpFailed.evidence, undefined);
+
+  const mcpOk = await mcpEngine.execute("mcp:demo:read_thing", { path: "ok" }, {
+    mcpInvoker: async (server, tool) => ({ isError: false, content: [{ type: "text", text: `${server}:${tool}` }] }),
+  });
+  assert.equal(mcpOk.success, true);
+  assert.equal(mcpOk.status, "executed");
+  assert.ok(mcpOk.evidence);
+
+  const transport = await reaEngine.execute(
+    "hypertaks-investigation",
+    { tool: "analyze_function" },
+    {
+      reaInvoker: async () => {
+        throw new Error("JSON-RPC transport failure -32603");
+      },
+    },
+  );
+  assert.equal(transport.success, false);
+  assert.notEqual(transport.status, "executed");
 });
 
 test("CRITICAL 7: fail-closed effect classification", () => {

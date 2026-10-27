@@ -203,17 +203,21 @@ test("REA Stdio Step 5: Permission gating and error handling fail closed", async
   assert.equal(mutatingRes.status, "denied");
   assert.match(mutatingRes.error, /requires explicit Boss approval/);
 
-  // 2. Target file not found returns clean error via stdio
+  // 2. Missing target is a provider failure, never a Hypertaks success.
+  // inspect_pe_resources is a read-only binary operation, so it must be
+  // dispatched through the capability that actually authorizes it.
   const nonExistentTarget = "C:\\Users\\abrur\\tools\\test-targets\\non_existent_binary.exe";
   const missingTargetRes = await engine.execute(
-    "hypertaks-investigation",
+    "hypertaks-binary-intelligence",
     {
       tool: "inspect_pe_resources",
       path: nonExistentTarget,
     },
     { useLocalStdioRea: true },
   );
-  assert.equal(missingTargetRes.success, true);
+  assert.equal(missingTargetRes.success, false);
+  assert.equal(missingTargetRes.status, "failed");
+  assert.equal(missingTargetRes.evidence, undefined);
   const envelope = missingTargetRes.output;
   assert.equal(envelope.isError, true);
   assert.match(envelope.content[0].text, /Target file not found|ENOENT|does not exist/i);
