@@ -9,8 +9,8 @@ test("version SSOT: loads release/version.json correctly", () => {
   const root = path.resolve(__dirname, "..");
   const versionInfo = loadReleaseVersion(root);
 
-  assert.equal(versionInfo.productVersion, "0.0.4.5.10");
-  assert.equal(versionInfo.displayVersion, "v0.0.4.5.10");
+  assert.equal(versionInfo.productVersion, "0.0.4.5.11");
+  assert.equal(versionInfo.displayVersion, "v0.0.4.5.11");
   assert.equal(versionInfo.semverCompatibilityVersion, "0.0.4-5.9");
   assert.equal(versionInfo.previousHistoricalVersion, "4.5.8");
 });

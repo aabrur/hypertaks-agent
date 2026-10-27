@@ -164,7 +164,7 @@ class OpenAIPublicPluginTests(unittest.TestCase):
                         elif mutate == "version":
                             manifest["version"] = "4.5.2"
                         elif mutate == "non-semver":
-                            manifest["version"] = "0.0.4.5.10"
+                            manifest["version"] = "0.0.4.5.11"
                         elif mutate == "identity":
                             manifest["name"] = "hypertaks"
                         else:

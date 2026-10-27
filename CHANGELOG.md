@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4.5.11] - 2026-10-27
+
+### Fixed
+- Unified Capability Engine execution rediscovers capabilities from the trusted session discovery context on the execution call. Host and MCP tools found for the current session stay executable through their authorized invokers. A missing or stale session context fails closed, with no provider call and no success evidence.
+
+### Changed
+- Transitioned version identity to `0.0.4.5.11` (`v0.0.4.5.11`) across host adapters, distribution records, manifests, and documentation surfaces.
+- Preserved exactly five canonical public skills, four read-only public MCP tools, and zero em dashes across all files.
+
 ## [0.0.4.5.10] - 2026-10-24
 
 ### Added

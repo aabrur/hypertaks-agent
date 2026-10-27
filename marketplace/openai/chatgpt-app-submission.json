@@ -119,5 +119,5 @@
       "expected_output": "Explain that the requested skill is outside the five canonical skills. Either do not call the tool because the enum excludes the name, or call it with that name and receive isError true. Never claim that the nonexistent skill was loaded."
     }
   ],
-  "version": "0.0.4.5.10"
+  "version": "0.0.4.5.11"
 }

@@ -519,7 +519,7 @@ export function executeReaViaStdio(
         await send("initialize", {
           protocolVersion: "2024-11-05",
           capabilities: {},
-          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.10" },
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.11" },
         });
         const result = await send("tools/call", { name: tool, arguments: args });
         if (timer) clearTimeout(timer);
@@ -600,7 +600,7 @@ export async function probeLocalReaTools(timeoutMs = 10000): Promise<{
         const initRes = await send("initialize", {
           protocolVersion: "2024-11-05",
           capabilities: {},
-          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.10" },
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.11" },
         });
         const toolsRes = await send("tools/list", {});
         if (timer) clearTimeout(timer);
@@ -1207,6 +1207,12 @@ export interface CapabilityExecutionContext {
   readonly hostInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
   readonly reaInvoker?: (tool: string, args: Record<string, unknown>) => Promise<unknown>;
   readonly useLocalStdioRea?: boolean;
+  /**
+   * Trusted session hints for this execution. Host and MCP descriptors are
+   * rediscovered from this context. Omitting it discovers no session tools.
+   * Arguments in `input` are never treated as discovery hints.
+   */
+  readonly discovery?: CapabilityDiscoveryContext;
 }
 
 export interface CapabilityExecutionResult {
@@ -1485,9 +1491,10 @@ export class UnifiedCapabilityEngine {
     input: Record<string, unknown> = {},
     ctx: CapabilityExecutionContext = {},
   ): Promise<CapabilityExecutionResult> {
+    const discoveryCtx: CapabilityDiscoveryContext = ctx.discovery ?? {};
     const allDiscovered: UnifiedCapabilityDescriptor[] = [];
     for (const source of this.sources) {
-      allDiscovered.push(...(await source.discover({})));
+      allDiscovered.push(...(await source.discover(discoveryCtx)));
     }
     const descriptor = allDiscovered.find((d) => d.capability_id === capabilityId);
     if (!descriptor) {

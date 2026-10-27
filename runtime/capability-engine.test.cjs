@@ -591,6 +591,188 @@ test("FIX 3: MCP isError is a failed execution and is not given success evidence
   assert.notEqual(transport.status, "executed");
 });
 
+test("session host capability executes once through the discovered host invoker", async () => {
+  const session = { hostTools: ["read_file"], platform: "windows" };
+  const discovered = await createHostNativeCapabilitySource().discover(session);
+  const descriptor = byId(discovered, "host:read_file");
+  assert.ok(descriptor);
+  assert.equal(descriptor.provider, "host-native");
+  assert.equal(descriptor.provider_operation, "read_file");
+  assert.equal(descriptor.availability, "verified");
+
+  let calls = 0;
+  const engine = new UnifiedCapabilityEngine([
+    createHostNativeCapabilitySource(),
+    createMcpCapabilitySource(),
+    createHypertaksNativeCapabilitySource(),
+  ]);
+  const result = await engine.execute(
+    "host:read_file",
+    { path: "README.md", tool: "other_tool", hostTools: ["read_file"] },
+    {
+      approvalGranted: true,
+      discovery: session,
+      hostInvoker: async (tool, args) => {
+        calls += 1;
+        assert.equal(tool, "read_file");
+        assert.equal(args.path, "README.md");
+        return { text: "from-host-invoker", tool };
+      },
+    },
+  );
+  assert.equal(calls, 1);
+  assert.equal(result.success, true);
+  assert.equal(result.status, "executed");
+  assert.equal(result.provider, "host-native");
+  assert.equal(result.output.text, "from-host-invoker");
+  assert.equal(result.output.tool, "read_file");
+  assert.equal(result.evidence.provenance.tool, "read_file");
+});
+
+test("session MCP capability executes through mcpInvoker only when the provider succeeds", async () => {
+  const session = {
+    mcpServers: [{ name: "github", tools: ["list_issues"], authenticated: true }],
+  };
+  const discovered = await createMcpCapabilitySource().discover(session);
+  assert.equal(discovered.length, 1);
+  assert.equal(discovered[0].capability_id, "mcp:github:list_issues");
+  assert.equal(discovered[0].provider, "mcp:github");
+  assert.equal(discovered[0].provider_operation, "list_issues");
+
+  const engine = new UnifiedCapabilityEngine([createMcpCapabilitySource(), createHostNativeCapabilitySource()]);
+  const calls = [];
+  const ok = await engine.execute(
+    "mcp:github:list_issues",
+    { state: "open" },
+    {
+      approvalGranted: true,
+      discovery: session,
+      mcpInvoker: async (server, tool, args) => {
+        calls.push({ server, tool, args, outcome: "ok" });
+        return { isError: false, content: [{ type: "text", text: "issues" }] };
+      },
+    },
+  );
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].server, "github");
+  assert.equal(calls[0].tool, "list_issues");
+  assert.deepEqual(calls[0].args, { state: "open" });
+  assert.equal(ok.success, true);
+  assert.equal(ok.status, "executed");
+  assert.equal(ok.output.isError, false);
+  assert.ok(ok.evidence);
+
+  const failed = await engine.execute(
+    "mcp:github:list_issues",
+    { state: "open" },
+    {
+      approvalGranted: true,
+      discovery: session,
+      mcpInvoker: async (server, tool, args) => {
+        calls.push({ server, tool, args, outcome: "fail" });
+        return { isError: true, content: [{ type: "text", text: "provider failed" }] };
+      },
+    },
+  );
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1].outcome, "fail");
+  assert.equal(failed.success, false);
+  assert.equal(failed.status, "failed");
+  assert.equal(failed.evidence, undefined);
+});
+
+test("missing session discovery context does not execute a session capability", async () => {
+  let calls = 0;
+  const engine = new UnifiedCapabilityEngine([
+    createHostNativeCapabilitySource(),
+    createMcpCapabilitySource(),
+  ]);
+  await createHostNativeCapabilitySource().discover({ hostTools: ["read_file"] });
+  await createMcpCapabilitySource().discover({
+    mcpServers: [{ name: "github", tools: ["list_issues"], authenticated: true }],
+  });
+  const invoker = async () => {
+    calls += 1;
+    return { isError: false, text: "should-not-run", content: [] };
+  };
+  const hostResult = await engine.execute(
+    "host:read_file",
+    { path: "README.md", tool: "read_file", hostTools: ["read_file"] },
+    { approvalGranted: true, allowSideEffects: true, hostInvoker: invoker, mcpInvoker: invoker },
+  );
+  const mcpResult = await engine.execute(
+    "mcp:github:list_issues",
+    { state: "open", mcpServers: [{ name: "github", tools: ["list_issues"] }] },
+    { approvalGranted: true, allowSideEffects: true, hostInvoker: invoker, mcpInvoker: invoker },
+  );
+  assert.equal(calls, 0);
+  assert.equal(hostResult.success, false);
+  assert.equal(hostResult.status, "unavailable");
+  assert.equal(hostResult.evidence, undefined);
+  assert.equal(mcpResult.success, false);
+  assert.equal(mcpResult.status, "unavailable");
+  assert.equal(mcpResult.evidence, undefined);
+});
+
+test("a capability dropped from the current session is not executed", async () => {
+  let calls = 0;
+  const engine = new UnifiedCapabilityEngine([
+    createHostNativeCapabilitySource(),
+    createMcpCapabilitySource(),
+  ]);
+  const earlier = {
+    hostTools: ["read_file"],
+    mcpServers: [{ name: "github", tools: ["list_issues"], authenticated: true }],
+  };
+  const earlierHost = await createHostNativeCapabilitySource().discover(earlier);
+  const earlierMcp = await createMcpCapabilitySource().discover(earlier);
+  assert.ok(byId(earlierHost, "host:read_file"));
+  assert.ok(byId(earlierMcp, "mcp:github:list_issues"));
+
+  const current = {
+    hostTools: ["grep"],
+    mcpServers: [{ name: "github", tools: ["create_issue"], authenticated: true }],
+  };
+  const invoker = async () => {
+    calls += 1;
+    return { isError: false, ran: true, content: [{ type: "text", text: "should-not-run" }] };
+  };
+  const hostResult = await engine.execute(
+    "host:read_file",
+    { path: "README.md", tool: "read_file" },
+    { approvalGranted: true, discovery: current, hostInvoker: invoker, mcpInvoker: invoker },
+  );
+  const mcpResult = await engine.execute(
+    "mcp:github:list_issues",
+    { state: "open", tool: "list_issues" },
+    { approvalGranted: true, discovery: current, hostInvoker: invoker, mcpInvoker: invoker },
+  );
+  assert.equal(calls, 0);
+  assert.equal(hostResult.success, false);
+  assert.equal(hostResult.status, "unavailable");
+  assert.equal(hostResult.evidence, undefined);
+  assert.equal(mcpResult.success, false);
+  assert.equal(mcpResult.status, "unavailable");
+  assert.equal(mcpResult.evidence, undefined);
+
+  const live = await engine.execute(
+    "host:grep",
+    { pattern: "capability" },
+    {
+      approvalGranted: true,
+      discovery: current,
+      hostInvoker: async (tool) => {
+        calls += 1;
+        return { text: "live-grep", tool };
+      },
+    },
+  );
+  assert.equal(calls, 1);
+  assert.equal(live.success, true);
+  assert.equal(live.output.text, "live-grep");
+  assert.equal(live.output.tool, "grep");
+});
+
 test("CRITICAL 7: fail-closed effect classification", () => {
   const { classifyEffect } = engineModule;
   assert.equal(classifyEffect("read"), "none");

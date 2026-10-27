@@ -1,7 +1,7 @@
 {
   "schema": "hypertaks.release.v2",
-  "productVersion": "0.0.4.5.10",
-  "displayVersion": "v0.0.4.5.10",
+  "productVersion": "0.0.4.5.11",
+  "displayVersion": "v0.0.4.5.11",
   "semverCompatibilityVersion": "0.0.4-5.9",
   "previousHistoricalVersion": "4.5.8",
   "previousProductAlias": "4.5.8",

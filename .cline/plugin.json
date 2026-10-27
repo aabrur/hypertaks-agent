@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "0.0.4.5.10",
+  "version": "0.0.4.5.11",
   "description": "Hypertaks Cline managed skill adapter.",
   "skills": "./skills/"
 }

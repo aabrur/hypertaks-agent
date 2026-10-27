@@ -1,5 +1,23 @@
 # Release Notes
 
+## v0.0.4.5.11 - Session discovery context for capability execution
+
+Hypertaks 0.0.4.5.11 keeps a capability that was legitimately discovered for the current session executable through its authorized provider. Execution rediscovers from the trusted session context supplied on the call. Host tools and MCP tools that are still exposed run through their real invokers. A missing, stale, or revoked session tool fails closed.
+
+### What shipped
+
+- **Session discovery on execute**: `CapabilityExecutionContext.discovery` carries the trusted session hints into `UnifiedCapabilityEngine.execute()`. The engine no longer rediscovers with an empty context.
+- **Host and MCP execution**: A discovered host tool or MCP tool runs through the configured invoker when approval and the current session still allow it. Success is reported only when the provider succeeds.
+- **Fail closed**: Execution without the current session context, or after the tool leaves that context, returns unavailable. Provider invokers are not called, and no success evidence is written.
+- **Preserved executor guards**: Invalid repository roots, missing host invokers, missing workflow executors, unauthorized REA operations, missing side-effect authorization, and MCP `isError: true` results still fail without success evidence.
+
+### Preserved invariants
+
+- Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
+- Exactly four read-only public remote MCP tools.
+- Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
+- OpenAI package version remains 4.5.9. The shared product version is 0.0.4.5.11.
+
 ## v0.0.4.5.10 - REA Stdio Activation, Live Capability Integration & Audit Remediation
 
 Hypertaks 0.0.4.5.10 delivers the complete operational unification and activation of the REA (Reverse Engineer Anything) capability engine over on-demand stdio transport, eliminates the need for background daemons, introduces real deep repository screening with dependency tracing, and establishes layered 5-layer context verification.

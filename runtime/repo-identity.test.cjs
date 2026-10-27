@@ -57,7 +57,7 @@ test("repo-identity: loadOrInitRepoIdentity creates and preserves repo.json", ()
     assert.equal(created1, true);
     assert.equal(id1.schema, "hypertaks.repo.v1");
     assert.equal(id1.display_name, "My Test App");
-    assert.equal(id1.hypertaks_product_version, "0.0.4.5.10");
+    assert.equal(id1.hypertaks_product_version, "0.0.4.5.11");
     // Verify no secret in fingerprints or id
     assert.ok(!JSON.stringify(id1).includes("token"));
     assert.ok(!JSON.stringify(id1).includes("user:"));

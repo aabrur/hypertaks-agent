@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "0.0.4.5.10",
+  "version": "0.0.4.5.11",
   "description": "Hypertaks Founder Operating System with secure founder continuity, evidence-backed memory, Graphify routing, and cross-agent handoff.",
   "publisher": "Crimson Rift Studio",
   "author": {
@@ -101,7 +101,7 @@
         }
       },
       "publication": {
-        "release_notes": "Local remediation of the rejected v4.5.2 submission: package all five canonical skills with the existing read-only MCP endpoint, clarify review expectations and authorization boundaries, validate tool arguments, and include complete text results. Product version 0.0.4.5.10 is retained. Production remains unchanged until separately authorized deployment."
+        "release_notes": "Local remediation of the rejected v4.5.2 submission: package all five canonical skills with the existing read-only MCP endpoint, clarify review expectations and authorization boundaries, validate tool arguments, and include complete text results. Product version 0.0.4.5.11 is retained. Production remains unchanged until separately authorized deployment."
       }
     }
   }
