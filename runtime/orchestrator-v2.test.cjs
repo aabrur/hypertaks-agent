@@ -6,6 +6,7 @@ const os = require("node:os");
 
 const { DagBuilder } = require("../.build/runtime/orchestrator/dag-builder.js");
 const { OrchestratorEngine } = require("../.build/runtime/orchestrator/orchestrator.js");
+const { packContextForNode } = require("../.build/runtime/orchestrator/context-packer.js");
 const { resolveCanonicalRoot } = require("../.build/runtime/repo-identity.js");
 
 test("orchestrator-v2: computes execution waves and executes DAG in order", async () => {
@@ -98,4 +99,56 @@ test("orchestrator-v2: detects missing dependency and throws error", () => {
   assert.throws(() => {
     builder.computeWaves();
   }, /MISSING_DEPENDENCY/);
+});
+
+test("orchestrator-v2: propagates BLOCKED status to downstream nodes on failure and estimates file tokens", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "hypertaks-orch-block-"));
+  try {
+    const canonical = resolveCanonicalRoot(tempDir);
+    const sampleFile = path.join(canonical, "input.txt");
+    fs.writeFileSync(sampleFile, "A".repeat(400), "utf8");
+
+    const node1 = {
+      id: "node-1",
+      role: "Worker 1",
+      provider: "host-native",
+      dependencies: [],
+      inputs: [sampleFile],
+      expectedOutputs: ["out-1"],
+      permissions: ["PERM_READ"],
+      retryLimit: 1,
+      status: "PENDING",
+    };
+    const packed = packContextForNode(node1);
+    assert.ok(packed.tokenBudgetEstimate >= 100);
+
+    const builder = new DagBuilder();
+    builder.addNode(node1);
+    builder.addNode({
+      id: "node-2",
+      role: "Worker 2",
+      provider: "host-native",
+      dependencies: ["node-1"],
+      inputs: [],
+      expectedOutputs: ["out-2"],
+      permissions: ["PERM_READ"],
+      retryLimit: 1,
+      status: "PENDING",
+    });
+
+    const dag = builder.build("RUN-BLOCK-001", "repo-123", "HT-CONTRACT-002", "Prime");
+    const engine = new OrchestratorEngine(canonical, "RUN-BLOCK-001");
+    engine.initRun(dag);
+
+    const meta = await engine.executeWaveSchedule(dag, async () => {
+      return { success: false, output: "Simulated failure" };
+    });
+
+    assert.equal(meta.status, "FAILED");
+    const downstream = dag.nodes.find((n) => n.id === "node-2");
+    assert.equal(downstream.status, "BLOCKED");
+    assert.ok(meta.failedNodes.includes("node-2"));
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });

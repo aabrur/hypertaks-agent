@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4.5.12] - 2026-11-12
+
+### Added
+- 14th Project Operating Context Deliverable (`verificationctx.md`): Verification, Test Evidence, Audit Trail, and Proof-of-Done Operating Context, expanding the canonical Project Operating Context workspace from 13 to 14 `*ctx.md` living documents (`Visionctx.md` through `verificationctx.md`).
+- Governance Floor vs. Work Parallelism Guard in `skills/hypertaks/references/intake-protocol.md` clarifying high-stakes single-domain task scoring and QA/Red-Team verification without artificial domain padding.
+
+### Fixed
+- Public Skill Router Clause-Safe Negation & Locale Detection: Scoped explicit negation and verify-route guards per clause in `runtime/public-skill-router.ts` to prevent cross-clause bleed, and improved Indonesian function-word detection so Indonesian prompts report `detectedLocale: "id"`.
+- Bounded Direct Repository Search: Excluded `node_modules`, `.hypertaks`, `.build`, and `dist` directories and enforced `timeout` and `maxBuffer` limits in `directSearch` (`runtime/founder-brain.ts`).
+- File-Size-Aware Token Estimation & Reactive DAG Blocking: Included on-disk file byte length (up to 256 KB per file) in `packContextForNode` (`runtime/orchestrator/context-packer.ts`) and propagated `BLOCKED` status to downstream dependent nodes on wave failure (`runtime/orchestrator/orchestrator.ts`).
+
+### Changed
+- Upgraded Project Operating Context filenames across runtime, enricher, verifier, CLI, bootstrapper, skills, and test suites to the 14-file `<name>ctx.md` convention.
+- Transitioned version identity to `0.0.4.5.12` (`v0.0.4.5.12`) across all 22 host adapters, distribution records, manifests, and documentation surfaces.
+- Preserved exactly five canonical public skills, four read-only public MCP tools, and zero em dashes across all files.
+
 ## [0.0.4.5.11] - 2026-10-27
 
 ### Fixed

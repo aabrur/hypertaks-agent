@@ -100,18 +100,18 @@ export function verifyProjectOperatingContext(
   let evidencePassed = true;
 
   const currentScan = scanRepository(canonicalRoot, { depth: "shallow" });
-  const archContent = presentDocs.get("architecture.ctx.md");
+  const archContent = presentDocs.get("architecturectx.md");
   if (archContent) {
     if (!archContent.includes(identity.repo_id)) {
       evidencePassed = false;
-      evidenceDetails.push("architecture.ctx.md does not reference repo_id.");
+      evidenceDetails.push("architecturectx.md does not reference repo_id.");
     }
     if (!archContent.includes(currentScan.workspaceInfo.primaryLanguage)) {
-      evidenceWarnings.push(`architecture.ctx.md does not mention primary language ${currentScan.workspaceInfo.primaryLanguage}.`);
+      evidenceWarnings.push(`architecturectx.md does not mention primary language ${currentScan.workspaceInfo.primaryLanguage}.`);
     }
   } else {
     evidencePassed = false;
-    evidenceDetails.push("architecture.ctx.md missing for evidence validation.");
+    evidenceDetails.push("architecturectx.md missing for evidence validation.");
   }
 
   layers.push({
@@ -194,13 +194,20 @@ export function verifyProjectOperatingContext(
   let consistencyPassed = true;
 
   // Cross-document checks
-  const visionContent = presentDocs.get("Vision.ctx.md");
-  const reqContent = presentDocs.get("Requirements.ctx.md");
+  const visionContent = presentDocs.get("Visionctx.md");
+  const reqContent = presentDocs.get("Requirementsctx.md");
+  const verContent = presentDocs.get("verificationctx.md");
 
   if (visionContent && archContent) {
     if (!visionContent.includes(identity.repo_id) || !archContent.includes(identity.repo_id)) {
       consistencyPassed = false;
       consistencyDetails.push("Vision and Architecture documents disagree on repo_id.");
+    }
+  }
+  if (verContent && archContent) {
+    if (!verContent.includes(identity.repo_id) || !archContent.includes(identity.repo_id)) {
+      consistencyPassed = false;
+      consistencyDetails.push("Verification and Architecture documents disagree on repo_id.");
     }
   }
   if (reqContent && archContent) {

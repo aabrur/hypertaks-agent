@@ -1,3 +1,4 @@
+import * as fs from "node:fs";
 import { TaskNode } from "./types";
 
 export interface PackedContext {
@@ -30,9 +31,24 @@ Expected Deliverables: ${node.expectedOutputs.join(", ")}
 Permission Boundary: ${node.permissions.join(", ")}
 `;
 
-  // Estimate tokens (~4 characters per token)
-  const fullText = `${brief} ${relevantFiles.join(" ")} ${livingDocSnippets.join(" ")} ${acceptanceCriteria.join(" ")}`;
-  const tokenBudgetEstimate = Math.ceil(fullText.length / 4);
+  // Estimate tokens (~4 characters per token, including on-disk file byte length up to 256 KB per file)
+  let fileChars = 0;
+  for (const fileRef of relevantFiles) {
+    try {
+      if (fs.existsSync(fileRef)) {
+        const stat = fs.statSync(fileRef);
+        if (stat.isFile()) {
+          fileChars += Math.min(stat.size, 256 * 1024) + fileRef.length;
+          continue;
+        }
+      }
+    } catch {
+      // Fall back to path string length when virtual or unreadable
+    }
+    fileChars += fileRef.length;
+  }
+  const metadataText = `${brief} ${livingDocSnippets.join(" ")} ${acceptanceCriteria.join(" ")}`;
+  const tokenBudgetEstimate = Math.ceil((metadataText.length + fileChars) / 4);
 
   return {
     nodeId: node.id,

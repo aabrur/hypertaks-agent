@@ -309,7 +309,7 @@ export async function runCli(args: string[]): Promise<number> {
             for (const d of layer.details) console.log(`      [ERR]  ${d}`);
           }
           if (report.passed) {
-            console.log("All 13 canonical Project Operating Context documents verified across all layers.");
+            console.log("All 14 canonical Project Operating Context documents verified across all layers.");
           }
         }
         return report.passed ? 0 : 1;
@@ -364,7 +364,7 @@ function scanExecutionPlan(
   if (writeContext) {
     lines.push(`Authorized write scope: .hypertaks/** only (create/update); source writes, deploy, spend, and publish are forbidden by the grant.`);
   } else {
-    lines.push(`Next (optional): approve with --write-context --approve <contractId> to create the .hypertaks workspace and 13 context documents.`);
+    lines.push(`Next (optional): approve with --write-context --approve <contractId> to create the .hypertaks workspace and 14 context documents.`);
   }
   return lines;
 }

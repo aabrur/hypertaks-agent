@@ -98,8 +98,9 @@ const approvedActivation = router.activateContract({
   contractPermissions: ['PERM_FILE_WRITE'],
 });
 assert.equal(approvedActivation.active, true);
-assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'Vision.ctx.md')));
-assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'prompt-build-continunity-prompt.ctx.md')));
+assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'Visionctx.md')));
+assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'prompt-build-continunity-promptctx.md')));
+assert.ok(fs.existsSync(path.join(root, '.hypertaks', 'projects', '20260725-BRN', 'verificationctx.md')));
 assert.equal(router.activateContract({
   contractId: 'HT-20260725-BRN',
   bossMessage: 'DO NOT APPROVE HT-20260725-BRN',
@@ -450,7 +451,12 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.deepEqual(a, b);
   assert.equal(a.skill, 'hypertaks');
   assert.equal(a.primaryIntent, 'founder_strategy');
+  assert.equal(a.detectedLocale, 'id');
   assert.ok(a.suppressedSkills.some((item) => item.skill === 'hypertaks-verify' && item.reason === 'explicit_negation'));
+  assert.equal(
+    router.routePublicSkill('Do not verify the installation. Use hypertaks-brain to inspect the current memory target.').skill,
+    'hypertaks-brain',
+  );
   assert.equal(a.routePolicyVersion, router.ROUTE_POLICY_VERSION);
   assert.match(a.routerRulesDigest, /^[a-f0-9]{64}$/);
   assert.equal(a.mutationPerformed, false);
@@ -648,11 +654,12 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.equal(fallback.success, true);
 
   // Hidden Deliverable Foundation & Project Operating Context workspace tests
-  assert.equal(router.PROJECT_OPERATING_CONTEXT_FILES.length, 13);
-  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Vision.ctx.md'));
-  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Requirements.ctx.md'));
-  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('U-Experience.ctx.md'));
-  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('prompt-build-continunity-prompt.ctx.md'));
+  assert.equal(router.PROJECT_OPERATING_CONTEXT_FILES.length, 14);
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Visionctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('Requirementsctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('U-Experiencectx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('prompt-build-continunity-promptctx.md'));
+  assert.ok(router.PROJECT_OPERATING_CONTEXT_FILES.includes('verificationctx.md'));
 
   // Permission boundary: bootstrap without a trusted grant must throw PERMISSION_DENIED
   assert.throws(

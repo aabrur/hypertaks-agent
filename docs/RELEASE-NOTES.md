@@ -1,5 +1,24 @@
 # Release Notes
 
+## v0.0.4.5.12 - 14-File Project Operating Context (`*ctx.md`), Audit Remediation & Router Hardening
+
+Hypertaks 0.0.4.5.12 upgrades the Project Operating Context (POC) workspace to 14 canonical `*ctx.md` deliverables (adding `verificationctx.md`), remediates runtime and router audit findings, and synchronizes all 22 host distribution surfaces to `0.0.4.5.12`.
+
+### What shipped
+
+- **14 Living Context Deliverables (`*ctx.md`)**: Upgraded the Project Operating Context convention from 13 `.ctx.md` files to 14 `*ctx.md` files (`Visionctx.md`, `Requirementsctx.md`, `U-Experiencectx.md`, `architecturectx.md`, `lawctx.md`, `databasectx.md`, `designctx.md`, `apictx.md`, `coding-rulesctx.md`, `roadmapctx.md`, `preferencectx.md`, `prompt-build-continunity-promptctx.md`, `securityctx.md`, and `verificationctx.md`).
+- **Clause-Safe Negation & Locale Detection**: Scoped explicit skill negation per clause in `runtime/public-skill-router.ts` and refined Indonesian locale detection over ASCII fallbacks.
+- **Bounded Direct Search**: Added directory exclusions (`node_modules`, `.hypertaks`, `.build`, `dist`) and execution bounds (`timeout: 15_000`, `maxBuffer: 8 MB`) to `directSearch` in `runtime/founder-brain.ts`.
+- **Orchestrator & Context Packer Hardening**: `packContextForNode` incorporates on-disk file sizes (up to 256 KB per file) into token budget estimation, and `OrchestratorEngine.executeWaveSchedule` propagates `BLOCKED` status to downstream dependent nodes when a wave fails.
+- **Governance Floor vs. Work Parallelism Guard**: Clarified in `intake-protocol.md` that single-domain tasks reaching high scores via reversibility or audit-evidence points enforce the Deep Gate, per-action T1 approval, and a dedicated QA/Red-Team pass without padding artificial domains.
+
+### Preserved invariants
+
+- Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
+- Exactly four read-only public remote MCP tools.
+- Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
+- OpenAI package version remains 4.5.9. The shared product version is 0.0.4.5.12.
+
 ## v0.0.4.5.11 - Session discovery context for capability execution
 
 Hypertaks 0.0.4.5.11 keeps a capability that was legitimately discovered for the current session executable through its authorized provider. Execution rediscovers from the trusted session context supplied on the call. Host tools and MCP tools that are still exposed run through their real invokers. A missing, stale, or revoked session tool fails closed.

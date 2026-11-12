@@ -1,6 +1,6 @@
 # Hypertaks Skill Card
 
-**Version:** 0.0.4.5.11
+**Version:** 0.0.4.5.12
 
 ## Release status
 

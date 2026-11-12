@@ -336,20 +336,21 @@ see **Contract violations & rollback** below.
 
 For every sufficiently substantial project, task, initiative, investigation, or build, Hypertaks creates its internal project workspace folder under `.hypertaks/projects/<project-id>/` only after an approved contract grants `PERM_FILE_WRITE` for the contained project root. Use the canonical runtime's authorized bootstrap path. If the host has no authorized local write capability, keep the context in the conversation and report that no workspace was created. The remote MCP adapter cannot create this workspace.
 
-Every project workspace MUST contain the 13 exact context living documents:
-1. `Vision.ctx.md`
-2. `Requirements.ctx.md`
-3. `U-Experience.ctx.md`
-4. `architecture.ctx.md`
-5. `law.ctx.md`
-6. `database.ctx.md`
-7. `design.ctx.md`
-8. `api.ctx.md`
-9. `coding-rules.ctx.md`
-10. `roadmap.ctx.md`
-11. `preference.ctx.md`
-12. `prompt-build-continunity-prompt.ctx.md`
-13. `security.ctx.md`
+Every project workspace MUST contain the 14 exact context living documents:
+1. `Visionctx.md`
+2. `Requirementsctx.md`
+3. `U-Experiencectx.md`
+4. `architecturectx.md`
+5. `lawctx.md`
+6. `databasectx.md`
+7. `designctx.md`
+8. `apictx.md`
+9. `coding-rulesctx.md`
+10. `roadmapctx.md`
+11. `preferencectx.md`
+12. `prompt-build-continunity-promptctx.md`
+13. `securityctx.md`
+14. `verificationctx.md`
 
 This directory becomes the project's Project Operating Context. It is not merely documentation; it is the persistent operating foundation used by Hypertaks and any participating agent to understand, build, operate, modify, and continue the project.
 
@@ -543,9 +544,7 @@ one line: **stop; roll back the *reasoning* to the last clean phase boundary;
 name the violation; re-present the adjusted contract; resume only on a new T1
 approval.**
 
-Rollback moves reasoning, never effects. An irreversible action already
-committed gets **containment + disclosure**, never a claim that it was undone.
-If a violation is found after an irreversible action (like deploy, spend, or publish) has been committed, **NEVER announce a rollback**. Instead, halt and state exactly what was committed, what cannot be undone, and what compensating action (pause, migrate, re-deploy, refund) is available, if any.
+Rollback moves reasoning, never effects. If a violation is found after an irreversible action (deploy, spend, or publish) has been committed, **NEVER announce a rollback**: apply **containment + disclosure** by halting and stating what was committed, what cannot be undone, and what compensating action (pause, migrate, re-deploy, refund) is available.
 
 Delivery is bound to the contract's success criteria: no deliverable is
 declared complete while a criterion is unmet or unchecked - for analysis,

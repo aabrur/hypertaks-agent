@@ -41,11 +41,11 @@ test("EV-91 to EV-95: repository bootstrap, vault completeness, grant reuse and 
     assert.ok(fs.existsSync(path.join(canonical, ".hypertaks", "NETWORK-DEPENDENCIES.md")));
     assert.ok(fs.existsSync(path.join(canonical, ".hypertaks", "ASSET-INDEX.md")));
 
-    // EV-93: existing 13 POC documents preserved
-    const visionPath = path.join(canonical, ".hypertaks", "projects", identity.repo_id, "Vision.ctx.md");
+    // EV-93: existing 14 POC documents preserved
+    const visionPath = path.join(canonical, ".hypertaks", "projects", identity.repo_id, "Visionctx.md");
     fs.writeFileSync(visionPath, "CUSTOM_VISION", "utf8");
     const result2 = bootstrapRepoVault(canonical, grant);
-    assert.equal(result2.preservedFiles.includes(`.hypertaks/projects/${identity.repo_id}/Vision.ctx.md`), true);
+    assert.equal(result2.preservedFiles.includes(`.hypertaks/projects/${identity.repo_id}/Visionctx.md`), true);
     assert.equal(fs.readFileSync(visionPath, "utf8"), "CUSTOM_VISION");
 
     // EV-94: bootstrap grant reuse inside same repository
@@ -172,9 +172,9 @@ test("EV-107 to EV-112: external providers, governance, and versioning", async (
 
   // EV-111: five-part public product version reported
   const versionInfo = loadReleaseVersion(path.resolve(__dirname, ".."));
-  assert.equal(versionInfo.productVersion, "0.0.4.5.11");
-  assert.equal(versionInfo.displayVersion, "v0.0.4.5.11");
+  assert.equal(versionInfo.productVersion, "0.0.4.5.12");
+  assert.equal(versionInfo.displayVersion, "v0.0.4.5.12");
 
   // EV-112: strict SemVer compatibility fields validated
-  assert.equal(versionInfo.semverCompatibilityVersion, "0.0.4-5.9");
+  assert.equal(versionInfo.semverCompatibilityVersion, "0.0.4-5.12");
 });

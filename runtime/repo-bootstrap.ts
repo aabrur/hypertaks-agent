@@ -563,7 +563,7 @@ Do not commit sensitive keys, passwords, or personal credentials into this folde
     // 5. Store valid grant in state
     saveStoredGrant(canonicalRoot, grant);
 
-    // 6. Preserve and initialize 13 Project Operating Context files
+    // 6. Preserve and initialize 14 Project Operating Context files
     const scan = scanRepository(canonicalRoot);
     const bootstrapNow = new Date().toISOString();
     for (const filename of PROJECT_OPERATING_CONTEXT_FILES) {

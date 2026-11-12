@@ -513,21 +513,25 @@ function anyPhrase(haystack: string, phrases: readonly string[]): boolean {
   return phrases.some((phrase) => containsPhrase(haystack, phrase));
 }
 
-function splitClauses(normalized: string): string[] {
-  const rough = normalized
+function splitClauses(rawText: string): string[] {
+  const rough = rawText
     .split(
-      /\s*(?:[.!?;\n]+|\b(?:but|however|instead|except|tapi|namun|melainkan|sebaliknya)\b)\s*/u,
+      /\s*(?:[!?;\n]+|\.(?=\s|$|["')\]])|\b(?:but|however|instead|except|tapi|namun|melainkan|sebaliknya)\b)\s*/iu,
     )
-    .map((part) => part.trim())
+    .map((part) => normalizeRequestText(part))
     .filter(Boolean);
-  return rough.length > 0 ? rough : [normalized];
+  if (rough.length > 0) return rough;
+  const whole = normalizeRequestText(rawText);
+  return whole ? [whole] : [];
 }
 
 function detectLocaleHints(normalized: string): {
   readonly supportedHit: boolean;
   readonly locales: SupportedLocale[];
+  readonly hasExclusiveEnStrongPhrase?: boolean;
 } {
   const hits = new Set<SupportedLocale>();
+  let hasExclusiveEnStrongPhrase = false;
   for (const pack of FOCUSED_SKILL_RULES.locales) {
     const vocab = [
       ...pack.negation,
@@ -543,16 +547,33 @@ function detectLocaleHints(normalized: string): {
     if (anyPhrase(normalized, vocab)) {
       hits.add(pack.id);
     }
+    if (pack.id === "en") {
+      const enStrongVocab = [
+        ...pack.founderPrimary.filter((p) => p !== "strategi founder"),
+        ...FOCUSED_SKILLS.flatMap((skill) => pack.strongPhrases[skill]),
+      ];
+      if (anyPhrase(normalized, enStrongVocab)) {
+        hasExclusiveEnStrongPhrase = true;
+      }
+    }
   }
   // ASCII-heavy generic English engineering text still counts as supported en.
   if (/[a-z]/.test(normalized)) {
     hits.add("en");
   }
   // Indonesian-specific characters or tokens force id support recognition.
-  if (/[à-ÿ]|mbak|mas\b|dong\b|sih\b|nya\b|kah\b/u.test(normalized)) {
+  if (
+    /[à-ÿ]|\b(?:yang|dan|di|ke|dari|untuk|dengan|pada|ini|itu|tidak|jangan|bukan|buat|periksa|simpan|ambil|lanjutkan|tolong|silakan|silahkan|mbak|mas|dong|sih|nya|kah)\b/u.test(
+      normalized,
+    )
+  ) {
     hits.add("id");
   }
-  return { supportedHit: hits.size > 0, locales: [...hits] };
+  return {
+    supportedHit: hits.size > 0,
+    locales: [...hits],
+    hasExclusiveEnStrongPhrase,
+  };
 }
 
 function suppressedByExclusion(
@@ -608,12 +629,15 @@ function resolveExplicitSkillInstruction(
       `(?:^|[^\\p{L}\\p{N}_-])(?:do\\s+not|don't|dont|never|jangan|bukan|tidak\\s+perlu|without)(?=$|[^\\p{L}\\p{N}_-])[\\s\\S]{0,48}${token}`,
       "u",
     );
-    if (negPattern.test(normalized) && skill !== "hypertaks") {
+    if (
+      clauses.some((clause) => negPattern.test(clause)) &&
+      skill !== "hypertaks"
+    ) {
       suppressed.add(skill as FocusedSkill);
       affirmed.delete(skill);
       continue;
     }
-    if (usePattern.test(normalized)) {
+    if (clauses.some((clause) => usePattern.test(clause))) {
       affirmed.add(skill);
     }
     const barePattern = new RegExp(`^\\s*/?${token}\\s*$`, "u");
@@ -678,12 +702,10 @@ function resolveExplicitSkillInstruction(
     }
   }
 
-  // "jangan route ke verify" whole-text guard
-  if (
-    /(?:jangan|do\s+not|don't|dont|never)[\s\S]{0,32}(?:route|arahkan)[\s\S]{0,24}(?:verify|verifikasi|hypertaks-verify)/u.test(
-      normalized,
-    )
-  ) {
+  // "jangan route ke verify" clause-scoped guard
+  const verifyRouteNegPattern =
+    /(?:jangan|do\s+not|don't|dont|never)[\s\S]{0,32}(?:route|arahkan)[\s\S]{0,24}(?:verify|verifikasi|hypertaks-verify)/u;
+  if (clauses.some((clause) => verifyRouteNegPattern.test(clause))) {
     suppressed.add("hypertaks-verify");
     affirmed.delete("hypertaks-verify");
   }
@@ -1106,6 +1128,7 @@ function sortSuppressed(
 function localePresentation(localeHints: {
   readonly supportedHit: boolean;
   readonly locales: SupportedLocale[];
+  readonly hasExclusiveEnStrongPhrase?: boolean;
 }): {
   readonly detectedLocale: SupportedLocale | "unknown";
   readonly localeSupport: "full" | "fallback" | "unknown";
@@ -1113,13 +1136,16 @@ function localePresentation(localeHints: {
   if (localeHints.locales.length === 0) {
     return { detectedLocale: "unknown", localeSupport: "unknown" };
   }
-  // Prefer id when present with en for mixed input reporting stability: first sorted.
+  // Prefer id when present without exclusively English strong phrases.
   const ordered = [...localeHints.locales].sort();
-  const detected = ordered.includes("en") && ordered.length === 1
-    ? "en"
-    : ordered.includes("id") && ordered.length === 1
-      ? "id"
-      : ordered[0]!;
+  const detected =
+    ordered.includes("en") && ordered.length === 1
+      ? "en"
+      : ordered.includes("id") && ordered.length === 1
+        ? "id"
+        : ordered.includes("id") && !localeHints.hasExclusiveEnStrongPhrase
+          ? "id"
+          : ordered[0]!;
   return {
     detectedLocale: detected,
     localeSupport: localeHints.supportedHit ? "full" : "fallback",
@@ -1133,7 +1159,11 @@ function finishDiagnostics(input: {
   readonly secondaryIntents?: readonly PrimaryIntent[];
   readonly matchedSignals: readonly string[];
   readonly suppressedSkills: readonly SuppressedSkillInfo[];
-  readonly localeHints: { readonly supportedHit: boolean; readonly locales: SupportedLocale[] };
+  readonly localeHints: {
+    readonly supportedHit: boolean;
+    readonly locales: SupportedLocale[];
+    readonly hasExclusiveEnStrongPhrase?: boolean;
+  };
 }): PublicSkillRouteDiagnostics {
   const locale = localePresentation(input.localeHints);
   const secondary = [...new Set(input.secondaryIntents ?? [])]
@@ -1194,7 +1224,7 @@ export function diagnosePublicSkillRoute(
     });
   }
 
-  const clauses = splitClauses(normalized);
+  const clauses = splitClauses(requestText || "");
   const localeHints = detectLocaleHints(normalized);
   const signals: string[] = [];
   const suppressedList: SuppressedSkillInfo[] = [];

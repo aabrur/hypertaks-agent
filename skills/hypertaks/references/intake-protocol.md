@@ -63,6 +63,12 @@ Rules:
   manufacture workstreams that do not exist. This is a **floor, not a cap**: if
   the score says Hyper, high stakes never argue it back down; if the task is
   genuinely one domain, high stakes never pad it up.
+- **Governance Floor vs. Work Parallelism Guard:** When a single-domain,
+  single-deliverable task reaches a score of 7 or higher solely due to
+  reversibility, external side-effect, or audit-grade evidence points, enforce
+  the Deep Gate, per-action T1 approval, and a dedicated QA/Red-Team
+  verification pass without inventing artificial business domains or extra
+  parallel worker streams.
 - Hyper's count is set by counting distinct workstreams that each need their own
   deliverable, then adding the Founder/Integrator and a QA/Red-Team slot. The
   QA/Red-Team agent is **mandatory whenever high-stakes constraints apply**

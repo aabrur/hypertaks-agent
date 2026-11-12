@@ -239,6 +239,18 @@ export class OrchestratorEngine {
         this.recordCheckpoint(dag.contractId, Array.from(completedSet), waveIdx);
 
         if (failedSet.size > 0) {
+          for (let nextWaveIdx = waveIdx + 1; nextWaveIdx < waves.length; nextWaveIdx++) {
+            for (const nextNodeId of waves[nextWaveIdx]!) {
+              if (completedSet.has(nextNodeId)) continue;
+              const nextNode = dag.nodes.find((n) => n.id === nextNodeId);
+              if (!nextNode) continue;
+              if (nextNode.dependencies.some((d) => failedSet.has(d))) {
+                nextNode.status = "BLOCKED";
+                failedSet.add(nextNode.id);
+                this.logEvent("NODE_BLOCKED", { nodeId: nextNode.id });
+              }
+            }
+          }
           break; // Stop wave execution on failure
         }
       }

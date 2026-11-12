@@ -144,41 +144,46 @@ app.post("/api/checkout", (req, res) => {
     const projectDir = path.join(fixtureDir, ".hypertaks", "projects", repoId);
     assert.ok(fs.existsSync(projectDir));
 
-    // Verify Vision.ctx.md does NOT claim to be Hypertaks Founder
-    const vision = fs.readFileSync(path.join(projectDir, "Vision.ctx.md"), "utf8");
+    // Verify Visionctx.md does NOT claim to be Hypertaks Founder
+    const vision = fs.readFileSync(path.join(projectDir, "Visionctx.md"), "utf8");
     assert.match(vision, /sample-microservice/);
     assert.match(vision, /Payment and Checkout Processing Service for Online Retail/);
     assert.doesNotMatch(vision, /Hypertaks Founder Operating System/);
     assert.doesNotMatch(vision, /CEO-grade cross-agent operating system/);
     assert.match(vision, /UNKNOWN \(requires founder intake\)/);
 
-    // Verify architecture.ctx.md reflects target repo subsystems
-    const arch = fs.readFileSync(path.join(projectDir, "architecture.ctx.md"), "utf8");
+    // Verify architecturectx.md reflects target repo subsystems
+    const arch = fs.readFileSync(path.join(projectDir, "architecturectx.md"), "utf8");
     assert.match(arch, /src\//);
     assert.match(arch, /migrations\//);
     assert.doesNotMatch(arch, /runtime\/founder-brain\.ts/);
     assert.doesNotMatch(arch, /runtime\/repository-intelligence\//);
 
-    // Verify database.ctx.md reflects detected table 'orders'
-    const db = fs.readFileSync(path.join(projectDir, "database.ctx.md"), "utf8");
+    // Verify databasectx.md reflects detected table 'orders'
+    const db = fs.readFileSync(path.join(projectDir, "databasectx.md"), "utf8");
     assert.match(db, /Table: `orders`/);
     assert.match(db, /amount/);
     assert.doesNotMatch(db, /\.hypertaks\/repo\.json/);
 
-    // Verify api.ctx.md reflects routes /health and /api/checkout
-    const api = fs.readFileSync(path.join(projectDir, "api.ctx.md"), "utf8");
+    // Verify apictx.md reflects routes /health and /api/checkout
+    const api = fs.readFileSync(path.join(projectDir, "apictx.md"), "utf8");
     assert.match(api, /\/health/);
     assert.match(api, /\/api\/checkout/);
     assert.doesNotMatch(api, /hypertaks_manifest/);
 
-    // Verify law.ctx.md reflects Apache-2.0
-    const law = fs.readFileSync(path.join(projectDir, "law.ctx.md"), "utf8");
+    // Verify lawctx.md reflects Apache-2.0
+    const law = fs.readFileSync(path.join(projectDir, "lawctx.md"), "utf8");
     assert.match(law, /Apache-2\.0/);
 
-    // Verify security.ctx.md has no false absolute guarantees
-    const sec = fs.readFileSync(path.join(projectDir, "security.ctx.md"), "utf8");
+    // Verify securityctx.md has no false absolute guarantees
+    const sec = fs.readFileSync(path.join(projectDir, "securityctx.md"), "utf8");
     assert.match(sec, /Static scanning is not exhaustive/);
     assert.doesNotMatch(sec, /Zero production credentials leaked/);
+
+    // Verify verificationctx.md exists and contains verification posture
+    const ver = fs.readFileSync(path.join(projectDir, "verificationctx.md"), "utf8");
+    assert.match(ver, /Verification & Audit Posture/);
+    assert.match(ver, /Test & Validation Surface/);
   });
 
   await t.test("CRITICAL 6: layered context verify passes across all 5 layers", () => {
@@ -211,8 +216,8 @@ app.post("/api/checkout", (req, res) => {
     ]);
     assert.equal(rescan.code, 0);
     const data = JSON.parse(rescan.stdout);
-    // Preserved documents should be at least 13
-    assert.ok(data.preservedFiles >= 13);
+    // Preserved documents should be at least 14
+    assert.ok(data.preservedFiles >= 14);
   });
 
   // Cleanup

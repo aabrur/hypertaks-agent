@@ -519,7 +519,7 @@ export function executeReaViaStdio(
         await send("initialize", {
           protocolVersion: "2024-11-05",
           capabilities: {},
-          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.11" },
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.12" },
         });
         const result = await send("tools/call", { name: tool, arguments: args });
         if (timer) clearTimeout(timer);
@@ -600,7 +600,7 @@ export async function probeLocalReaTools(timeoutMs = 10000): Promise<{
         const initRes = await send("initialize", {
           protocolVersion: "2024-11-05",
           capabilities: {},
-          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.11" },
+          clientInfo: { name: "hypertaks-founder", version: "0.0.4.5.12" },
         });
         const toolsRes = await send("tools/list", {});
         if (timer) clearTimeout(timer);

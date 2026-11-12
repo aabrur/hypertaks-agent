@@ -898,12 +898,46 @@ export function generateHandoff(checkpoint: TaskCheckpoint): string {
 
 function directSearch(repositoryRoot: string, query: string): GraphQueryResult {
   const commands: readonly (readonly string[])[] = [
-    ["rg", "--line-number", "--fixed-strings", "--glob", "!graphify-out/**", query, repositoryRoot],
-    ["grep", "-R", "-n", "-F", "--exclude-dir=.git", "--exclude-dir=graphify-out", query, repositoryRoot],
+    [
+      "rg",
+      "--line-number",
+      "--fixed-strings",
+      "--glob",
+      "!graphify-out/**",
+      "--glob",
+      "!node_modules/**",
+      "--glob",
+      "!.hypertaks/**",
+      "--glob",
+      "!.build/**",
+      "--glob",
+      "!dist/**",
+      query,
+      repositoryRoot,
+    ],
+    [
+      "grep",
+      "-R",
+      "-n",
+      "-F",
+      "--exclude-dir=.git",
+      "--exclude-dir=graphify-out",
+      "--exclude-dir=node_modules",
+      "--exclude-dir=.hypertaks",
+      "--exclude-dir=.build",
+      "--exclude-dir=dist",
+      query,
+      repositoryRoot,
+    ],
   ];
   for (const command of commands) {
     try {
-      const output = execFileSync(command[0] as string, command.slice(1) as string[], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+      const output = execFileSync(command[0] as string, command.slice(1) as string[], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        timeout: 15_000,
+        maxBuffer: 8 * 1024 * 1024,
+      });
       return { success: true, modeUsed: "direct_search", data: output.split(/\r?\n/u).filter(Boolean), message: "Graphify unavailable or disabled. Direct repository search executed." };
     } catch (error) {
       const status = isObject(error) && typeof error.status === "number" ? error.status : null;
@@ -949,19 +983,20 @@ export function checkGraphFreshness(sourceCommit: string | null, sourceBranch: s
 }
 
 export const PROJECT_OPERATING_CONTEXT_FILES: readonly string[] = [
-  "Vision.ctx.md",
-  "Requirements.ctx.md",
-  "U-Experience.ctx.md",
-  "architecture.ctx.md",
-  "law.ctx.md",
-  "database.ctx.md",
-  "design.ctx.md",
-  "api.ctx.md",
-  "coding-rules.ctx.md",
-  "roadmap.ctx.md",
-  "preference.ctx.md",
-  "prompt-build-continunity-prompt.ctx.md",
-  "security.ctx.md",
+  "Visionctx.md",
+  "Requirementsctx.md",
+  "U-Experiencectx.md",
+  "architecturectx.md",
+  "lawctx.md",
+  "databasectx.md",
+  "designctx.md",
+  "apictx.md",
+  "coding-rulesctx.md",
+  "roadmapctx.md",
+  "preferencectx.md",
+  "prompt-build-continunity-promptctx.md",
+  "securityctx.md",
+  "verificationctx.md",
 ];
 
 export interface ContextGitState {
@@ -996,7 +1031,7 @@ export function generateProjectContextDocument(
   agentName: string,
   gitState: ContextGitState,
 ): string {
-  const title = filename.replace(".ctx.md", "");
+  const title = filename.replace(/\.?ctx\.md$/u, "");
   const timestamp = new Date().toISOString();
   return `---
 id: ${title}
@@ -1046,7 +1081,7 @@ Universal living context document for ${title} adaptively serving software, busi
 - Interpretation: Analytical conclusions and strategic synthesis.
 
 ## Dependencies & Context Bindings
-- Inter-file links to sibling *.ctx.md context documents within .hypertaks/projects/${projectId}/.
+- Inter-file links to sibling *ctx.md context documents within .hypertaks/projects/${projectId}/.
 
 ## Unresolved Issues & Historical Decisions
 - Historical Decisions: Workspace initialized from a generated scaffold.

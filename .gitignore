@@ -152,3 +152,5 @@ repomix-*.xml
 
 .tmp-probe/
 hypertaks-agent.txt
+hypertaks.xml
+hypertaks-agent.xml

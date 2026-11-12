@@ -46,11 +46,13 @@ interface TargetRepoMeta {
   readonly readmeSnippet: string | null;
   readonly topLevelDirs: readonly { readonly name: string; readonly fileCount: number }[];
   readonly detectedLinters: readonly string[];
+  readonly detectedScripts: readonly string[];
 }
 
 function extractTargetRepoMeta(canonicalRoot: string, scan: RepositoryScanResult): TargetRepoMeta {
   let description: string | null = null;
   let license: string | null = null;
+  const detectedScripts: string[] = [];
 
   // 1. package.json
   const pkgPath = path.join(canonicalRoot, "package.json");
@@ -62,6 +64,13 @@ function extractTargetRepoMeta(canonicalRoot: string, scan: RepositoryScanResult
       }
       if (typeof pkg.license === "string" && pkg.license.trim()) {
         license = pkg.license.trim();
+      }
+      if (pkg.scripts && typeof pkg.scripts === "object") {
+        for (const key of Object.keys(pkg.scripts)) {
+          if (/test|check|verify|lint|typecheck|build/iu.test(key)) {
+            detectedScripts.push(key);
+          }
+        }
       }
     } catch {}
   }
@@ -140,11 +149,12 @@ function extractTargetRepoMeta(canonicalRoot: string, scan: RepositoryScanResult
     readmeSnippet,
     topLevelDirs,
     detectedLinters,
+    detectedScripts,
   };
 }
 
 /**
- * Enriches and writes the 13 canonical Project Operating Context living documents
+ * Enriches and writes the 14 canonical Project Operating Context living documents
  * inside .hypertaks/projects/<repoId>/ using static screening evidence.
  */
 export function enrichProjectOperatingContext(
@@ -238,7 +248,7 @@ timestamp: ${timestamp}
 evidence_class: T4_EVIDENCE
 provenance:
   agent_id: ${agentName}
-  source_file: .hypertaks/projects/${repoId}/${title}.ctx.md
+  source_file: .hypertaks/projects/${repoId}/${title}ctx.md
   contract_id: HT-${repoId}
 source_git_state:
   commit_sha: ${gitState.commit}
@@ -265,48 +275,51 @@ export function buildDocumentContent(
 ): string {
   const root = canonicalRoot ?? scanResult.root;
   const meta = extractTargetRepoMeta(root, scanResult);
-  const title = filename.replace(".ctx.md", "");
+  const title = filename.replace(/\.?ctx\.md$/u, "");
 
   let body = "";
   switch (filename) {
-    case "Vision.ctx.md":
+    case "Visionctx.md":
       body = buildVisionDoc(identity, scanResult, meta, existingSections);
       break;
-    case "Requirements.ctx.md":
+    case "Requirementsctx.md":
       body = buildRequirementsDoc(identity, scanResult, meta, existingSections);
       break;
-    case "U-Experience.ctx.md":
+    case "U-Experiencectx.md":
       body = buildUserExperienceDoc(identity, scanResult, meta, existingSections);
       break;
-    case "architecture.ctx.md":
+    case "architecturectx.md":
       body = buildArchitectureDoc(identity, scanResult, meta, existingSections);
       break;
-    case "law.ctx.md":
+    case "lawctx.md":
       body = buildLawDoc(identity, scanResult, meta, existingSections);
       break;
-    case "database.ctx.md":
+    case "databasectx.md":
       body = buildDatabaseDoc(identity, scanResult, meta, existingSections);
       break;
-    case "design.ctx.md":
+    case "designctx.md":
       body = buildDesignDoc(identity, scanResult, meta, existingSections);
       break;
-    case "api.ctx.md":
+    case "apictx.md":
       body = buildApiDoc(identity, scanResult, meta, existingSections);
       break;
-    case "coding-rules.ctx.md":
+    case "coding-rulesctx.md":
       body = buildCodingRulesDoc(identity, scanResult, meta, existingSections);
       break;
-    case "roadmap.ctx.md":
+    case "roadmapctx.md":
       body = buildRoadmapDoc(identity, scanResult, meta, existingSections);
       break;
-    case "preference.ctx.md":
+    case "preferencectx.md":
       body = buildPreferenceDoc(identity, scanResult, meta, existingSections);
       break;
-    case "prompt-build-continunity-prompt.ctx.md":
+    case "prompt-build-continunity-promptctx.md":
       body = buildContinuityDoc(identity, scanResult, gitState, existingSections);
       break;
-    case "security.ctx.md":
+    case "securityctx.md":
       body = buildSecurityDoc(identity, scanResult, meta, existingSections);
+      break;
+    case "verificationctx.md":
+      body = buildVerificationDoc(identity, scanResult, meta, gitState, existingSections);
       break;
     default:
       body = `# ${title} - Project Operating Context\n\nLiving context document for ${title}.\n`;
@@ -352,10 +365,10 @@ ${customDecisions && !customDecisions.includes("Universal living context") ? cus
 - **Preferences:** UNKNOWN (requires founder intake)`}
 
 ## Dependencies & Context Bindings
-- Sibling Living Context: [architecture.ctx.md](architecture.ctx.md), [Requirements.ctx.md](Requirements.ctx.md), [security.ctx.md](security.ctx.md)
+- Sibling Living Context: [architecturectx.md](architecturectx.md), [Requirementsctx.md](Requirementsctx.md), [securityctx.md](securityctx.md)
 
 ## Unresolved Issues & Historical Decisions
-${customHistory && !customHistory.includes("Workspace initialized from a generated scaffold") ? customHistory : `- **Historical Decisions:** Established deterministic repository identity (\`${identity.repo_id}\`) and 13 canonical living context documents.
+${customHistory && !customHistory.includes("Workspace initialized from a generated scaffold") ? customHistory : `- **Historical Decisions:** Established deterministic repository identity (\`${identity.repo_id}\`) and 14 canonical living context documents.
 - **Unresolved Issues:** UNKNOWN (requires founder intake)`}
 `;
 }
@@ -392,7 +405,7 @@ ${customNonFunc ? customNonFunc : `- Performance, security, and scalability inva
 - Speculative / Future: UNKNOWN (requires founder intake)
 
 ## Dependencies & Context Bindings
-- Cross-references: [architecture.ctx.md](architecture.ctx.md), [api.ctx.md](api.ctx.md), [security.ctx.md](security.ctx.md)
+- Cross-references: [architecturectx.md](architecturectx.md), [apictx.md](apictx.md), [securityctx.md](securityctx.md)
 
 ## Unresolved Issues & Historical Decisions
 - Unresolved issues: UNKNOWN (requires founder intake)
@@ -424,7 +437,7 @@ ${totalRoutes > 0 ? `- Exposes ${totalRoutes} inbound route(s) across parsed fil
 - Interaction patterns and design guidelines: UNKNOWN (requires founder intake)
 
 ## Dependencies & Context Bindings
-- Sibling Context: [coding-rules.ctx.md](coding-rules.ctx.md), [preference.ctx.md](preference.ctx.md)
+- Sibling Context: [coding-rulesctx.md](coding-rulesctx.md), [preferencectx.md](preferencectx.md)
 
 ## Unresolved Issues & Historical Decisions
 - Unresolved UX items: UNKNOWN (requires founder intake)
@@ -480,13 +493,14 @@ flowchart TD
 \`\`\`
 
 ## Living Context Map & Cross-References
-- [Vision.ctx.md](Vision.ctx.md): Core purpose and domain
-- [Requirements.ctx.md](Requirements.ctx.md): Implemented vs planned requirements
-- [U-Experience.ctx.md](U-Experience.ctx.md): CLI and API surfaces
-- [api.ctx.md](api.ctx.md): Endpoint and handler catalogue
-- [database.ctx.md](database.ctx.md): Schema and persistence specification
-- [security.ctx.md](security.ctx.md): Trust boundaries and secret handling
-- [coding-rules.ctx.md](coding-rules.ctx.md): Tooling and conventions
+- [Visionctx.md](Visionctx.md): Core purpose and domain
+- [Requirementsctx.md](Requirementsctx.md): Implemented vs planned requirements
+- [U-Experiencectx.md](U-Experiencectx.md): CLI and API surfaces
+- [apictx.md](apictx.md): Endpoint and handler catalogue
+- [databasectx.md](databasectx.md): Schema and persistence specification
+- [securityctx.md](securityctx.md): Trust boundaries and secret handling
+- [coding-rulesctx.md](coding-rulesctx.md): Tooling and conventions
+- [verificationctx.md](verificationctx.md): Verification, test evidence, and proof-of-done operating context
 `;
 }
 
@@ -511,7 +525,7 @@ Legal, compliance, licensing, and attribution specification for ${identity.displ
 - Compliance requirements and regulatory constraints: UNKNOWN (requires compliance intake)
 
 ## Dependencies & Context Bindings
-- Sibling Context: [security.ctx.md](security.ctx.md), [Vision.ctx.md](Vision.ctx.md)
+- Sibling Context: [securityctx.md](securityctx.md), [Visionctx.md](Visionctx.md)
 `;
 }
 
@@ -565,7 +579,7 @@ System design principles, module boundaries, and architectural patterns for ${id
 - System design principles: UNKNOWN (requires founder intake)
 
 ## Dependencies & Context Bindings
-- Sibling Context: [architecture.ctx.md](architecture.ctx.md), [coding-rules.ctx.md](coding-rules.ctx.md)
+- Sibling Context: [architecturectx.md](architecturectx.md), [coding-rulesctx.md](coding-rulesctx.md)
 `;
 }
 
@@ -622,7 +636,7 @@ Engineering rules, conventions, and style constraints for ${identity.display_nam
 - Formatting rules and coding standards: UNKNOWN (requires founder intake)
 
 ## Dependencies & Context Bindings
-- Sibling Context: [design.ctx.md](design.ctx.md), [preference.ctx.md](preference.ctx.md)
+- Sibling Context: [designctx.md](designctx.md), [preferencectx.md](preferencectx.md)
 `;
 }
 
@@ -707,5 +721,51 @@ Security invariants, trust boundaries, and secret governance for ${identity.disp
 
 ## Trust Boundaries & Security Invariants
 - Security boundaries: UNKNOWN (requires security intake)
+`;
+}
+
+function buildVerificationDoc(
+  identity: RepoIdentity,
+  scan: RepositoryScanResult,
+  meta: TargetRepoMeta,
+  gitState: ContextGitState,
+  existing: Map<string, string>,
+): string {
+  const testFiles = scan.files.filter(
+    (f) => /\.(?:test|spec)\.[a-z0-9]+$/iu.test(f.relativePath) || /(?:^|\/)(?:test|tests|__tests__|evals)\//iu.test(f.relativePath),
+  );
+  const linters = meta.detectedLinters.join(", ") || "None statically detected";
+  const scripts = meta.detectedScripts.join(", ") || "None statically detected in package.json";
+  const customDecisions = existing.get("Decisions & Rationale");
+  const customHistory = existing.get("Unresolved Issues & Historical Decisions");
+
+  return `# Verification - Project Operating Context
+
+## Verification & Audit Posture
+Verification, test evidence, audit trail, and proof-of-done operating context for ${identity.display_name} (\`${identity.repo_id}\`).
+- **Active Branch:** \`${gitState.branch}\`
+- **Current Commit:** \`${gitState.commit}\`
+- **Working Tree State:** ${gitState.clean ? "clean" : "dirty"}
+
+## Test & Validation Surface
+- **Detected Test Files:** ${testFiles.length} test/evaluation file(s) identified across ${scan.files.length} scanned repository files.
+- **Validation & Build Scripts (\`package.json\`):** ${scripts}
+- **Active Linter & Typecheck Tooling:** ${linters}
+
+## Decisions & Rationale
+${customDecisions && !customDecisions.includes("Universal living context") ? customDecisions : `### Facts vs Assumptions
+- **Facts (Verified):** Static repository screening detected ${testFiles.length} test file(s) and ${meta.detectedLinters.length} configured linter/typecheck tool(s).
+- **Assumptions:** Execution of runtime test suites requires an authorized execution environment.
+
+### Requirements vs Preferences
+- **Requirements:** Proof-of-done requires verifiable test evidence tied to the current repository commit.
+- **Preferences:** Verification suite coverage targets: UNKNOWN (requires founder intake)`}
+
+## Dependencies & Context Bindings
+- Sibling Living Context: [architecturectx.md](architecturectx.md), [securityctx.md](securityctx.md), [coding-rulesctx.md](coding-rulesctx.md)
+
+## Unresolved Issues & Historical Decisions
+${customHistory && !customHistory.includes("Workspace initialized from a generated scaffold") ? customHistory : `- **Historical Decisions:** Initialized 14th canonical living context document (\`verificationctx.md\`) for proof-of-done and audit tracking.
+- **Unresolved Issues:** Runtime test execution evidence: UNKNOWN (requires verification run)`}
 `;
 }

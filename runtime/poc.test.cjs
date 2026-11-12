@@ -44,7 +44,7 @@ const pocDir = (repo, projectId) => path.join(repo, '.hypertaks', 'projects', pr
   });
   assert.equal(activation.active, true, 'A: activation must be active');
   assert.equal(activation.bootstrapStatus, 'SUCCESS', 'A: bootstrap must succeed');
-  assert.equal(fs.readdirSync(pocDir(repo, 'POC-A')).length, 13, 'A: exactly 13 files');
+  assert.equal(fs.readdirSync(pocDir(repo, 'POC-A')).length, 14, 'A: exactly 14 files');
 }
 
 // B: approved contract without PERM_FILE_WRITE -> no filesystem mutation
@@ -214,10 +214,10 @@ console.log('poc boundary tests (part 1) passed');
   });
   const grant = router.mintWorkspaceWriteGrant(activation, 'POC-H', repo);
   fs.mkdirSync(pocDir(repo, 'POC-H'), { recursive: true });
-  const existing = path.join(pocDir(repo, 'POC-H'), 'Vision.ctx.md');
+  const existing = path.join(pocDir(repo, 'POC-H'), 'Visionctx.md');
   fs.writeFileSync(existing, '---\nid: Vision\n---\nBoss-authored vision content.\n', 'utf8');
   const created = router.bootstrapProjectWorkspace(repo, 'POC-H', grant);
-  assert.equal(created.length, 12, 'I: only the 12 missing files may be created');
+  assert.equal(created.length, 13, 'I: only the 13 missing files may be created');
   assert.equal(
     fs.readFileSync(existing, 'utf8'),
     '---\nid: Vision\n---\nBoss-authored vision content.\n',
@@ -240,7 +240,7 @@ console.log('poc boundary tests (part 2) passed');
   const grant = router.mintWorkspaceWriteGrant(activation, 'POC-I', repo);
   const failingOps = {
     writeFileSync(target, content, options) {
-      if (String(target).includes('architecture.ctx.md')) {
+      if (String(target).includes('architecturectx.md')) {
         throw new Error('EIO: injected disk failure');
       }
       return fs.writeFileSync(target, content, options);
@@ -252,7 +252,7 @@ console.log('poc boundary tests (part 2) passed');
     'J: partial failure must fail loud, not report success',
   );
   const partial = fs.readdirSync(pocDir(repo, 'POC-I'));
-  assert.ok(partial.length > 0 && partial.length < 13, 'J: partial state exists and must not be hidden');
+  assert.ok(partial.length > 0 && partial.length < 14, 'J: partial state exists and must not be hidden');
 }
 
 // J2: a bootstrap failure through activation surfaces as DEGRADED with a reason
@@ -285,10 +285,10 @@ console.log('poc boundary tests (part 2) passed');
   const grant = router.mintWorkspaceWriteGrant(activation, 'POC-J', repo);
   const first = router.bootstrapProjectWorkspace(repo, 'POC-J', grant);
   assert.equal(first.length, 0, 'already created during activateContract');
-  const before = fs.readFileSync(path.join(pocDir(repo, 'POC-J'), 'security.ctx.md'), 'utf8');
+  const before = fs.readFileSync(path.join(pocDir(repo, 'POC-J'), 'securityctx.md'), 'utf8');
   const second = router.bootstrapProjectWorkspace(repo, 'POC-J', grant);
   assert.equal(second.length, 0, 'replay must create nothing');
-  assert.equal(fs.readFileSync(path.join(pocDir(repo, 'POC-J'), 'security.ctx.md'), 'utf8'), before);
+  assert.equal(fs.readFileSync(path.join(pocDir(repo, 'POC-J'), 'securityctx.md'), 'utf8'), before);
 }
 
 // L: generated metadata must not masquerade as verified evidence
@@ -329,7 +329,7 @@ console.log('poc boundary tests (part 3) passed');
     '--approval', 'APPROVE HT-POC-L',
   ], { encoding: 'utf8' });
   assert.match(out, /SUCCESS/);
-  assert.equal(fs.readdirSync(pocDir(repo, 'POC-L')).length, 13, 'script creates the 13 files');
+  assert.equal(fs.readdirSync(pocDir(repo, 'POC-L')).length, 14, 'script creates the 14 files');
 
   // Unauthorized script invocation is refused.
   const repo2 = makeRepo();

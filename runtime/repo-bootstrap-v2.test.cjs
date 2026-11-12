@@ -74,18 +74,18 @@ test("repo-bootstrap: bootstrapRepoVault initializes vault and preserves existin
     assert.ok(fs.existsSync(path.join(canonical, ".hypertaks", "NETWORK-DEPENDENCIES.md")));
     assert.ok(fs.existsSync(path.join(canonical, ".hypertaks", "ASSET-INDEX.md")));
 
-    // Verify 13 POC files exist in projects/<repo_id>
-    const visionFile = path.join(canonical, ".hypertaks", "projects", identity.repo_id, "Vision.ctx.md");
+    // Verify 14 POC files exist in projects/<repo_id>
+    const visionFile = path.join(canonical, ".hypertaks", "projects", identity.repo_id, "Visionctx.md");
     assert.ok(fs.existsSync(visionFile));
 
-    // Modify Vision.ctx.md to simulate user edits
+    // Modify Visionctx.md to simulate user edits
     const customContent = "# My Custom Vision Document\nDo not overwrite me!";
     fs.writeFileSync(visionFile, customContent, "utf8");
 
     // Second initialization must be idempotent and preserve custom files
     const result2 = bootstrapRepoVault(canonical, grant);
     assert.equal(result2.success, true);
-    assert.ok(result2.preservedFiles.includes(`.hypertaks/projects/${identity.repo_id}/Vision.ctx.md`));
+    assert.ok(result2.preservedFiles.includes(`.hypertaks/projects/${identity.repo_id}/Visionctx.md`));
 
     // Confirm custom content was untouched
     assert.equal(fs.readFileSync(visionFile, "utf8"), customContent);

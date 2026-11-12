@@ -2,25 +2,27 @@ id: EV-89
 name: hidden_deliverable_foundation_workspace_bootstrap
 group: contract
 setup: |
-  For substantial initiatives or builds where a contract with PERM_FILE_WRITE is approved by the Boss, Hypertaks initializes the internal project workspace under `.hypertaks/projects/<project-id>/` containing all 13 exact Project Operating Context documents (`Vision.ctx.md`, `Requirements.ctx.md`, `U-Experience.ctx.md`, `architecture.ctx.md`, `law.ctx.md`, `database.ctx.md`, `design.ctx.md`, `api.ctx.md`, `coding-rules.ctx.md`, `roadmap.ctx.md`, `preference.ctx.md`, `prompt-build-continunity-prompt.ctx.md`, `security.ctx.md`) with truthful DRAFT scaffolding metadata.
+  For substantial initiatives or builds where a contract with PERM_FILE_WRITE is approved by the Boss, Hypertaks initializes the internal project workspace under `.hypertaks/projects/<project-id>/` containing all 14 exact Project Operating Context documents (`Visionctx.md`, `Requirementsctx.md`, `U-Experiencectx.md`, `architecturectx.md`, `lawctx.md`, `databasectx.md`, `designctx.md`, `apictx.md`, `coding-rulesctx.md`, `roadmapctx.md`, `preferencectx.md`, `prompt-build-continunity-promptctx.md`, `securityctx.md`, `verificationctx.md`) with truthful DRAFT scaffolding metadata.
 expect_pass:
   - Enforces explicit PERM_FILE_WRITE permission check before writing workspace files to disk
-  - Populates all 13 exact context files with YAML frontmatter, DRAFT lifecycle state, and living document headers
-  - Includes `Vision.ctx.md`, `Requirements.ctx.md`, `U-Experience.ctx.md`, `architecture.ctx.md`, `law.ctx.md`, `database.ctx.md`, `design.ctx.md`, `api.ctx.md`, `coding-rules.ctx.md`, `roadmap.ctx.md`, `preference.ctx.md`, `prompt-build-continunity-prompt.ctx.md`, and `security.ctx.md`
+  - Populates all 14 exact context files with YAML frontmatter, DRAFT lifecycle state, and living document headers
+  - Includes `Visionctx.md`, `Requirementsctx.md`, `U-Experiencectx.md`, `architecturectx.md`, `lawctx.md`, `databasectx.md`, `designctx.md`, `apictx.md`, `coding-rulesctx.md`, `roadmapctx.md`, `preferencectx.md`, `prompt-build-continunity-promptctx.md`, `securityctx.md`, and `verificationctx.md`
 expect_fail:
   - Writes context files to disk without explicit PERM_FILE_WRITE authorization
   - Falsely marks freshly scaffolded unverified stubs as VERIFIED lifecycle state
-  - Fails to create the workspace directory or omits any of the 13 required context files when authorized
+  - Fails to create the workspace directory or omits any of the 14 required context files when authorized
 static_precondition:
-  description: Bootstrap module and runtime founder brain declare the 13 exact context file names.
+  description: Bootstrap module and runtime founder brain declare the 14 exact context file names.
   must_match:
     - file: scripts/bootstrap-project-context.js
-      pattern: "Vision.ctx.md"
+      pattern: "Visionctx.md"
     - file: scripts/bootstrap-project-context.js
-      pattern: "Requirements.ctx.md"
+      pattern: "Requirementsctx.md"
     - file: scripts/bootstrap-project-context.js
-      pattern: "U-Experience.ctx.md"
+      pattern: "U-Experiencectx.md"
     - file: scripts/bootstrap-project-context.js
-      pattern: "prompt-build-continunity-prompt.ctx.md"
+      pattern: "prompt-build-continunity-promptctx.md"
+    - file: scripts/bootstrap-project-context.js
+      pattern: "verificationctx.md"
     - file: runtime/founder-brain.ts
       pattern: "PROJECT_OPERATING_CONTEXT_FILES"

@@ -87,7 +87,7 @@ test("scan --depth deep --json reflects deep flag in read-only mode", async () =
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
-test("authorized scan creates .hypertaks with 13 enriched context documents and context verify passes", async () => {
+test("authorized scan creates .hypertaks with 14 enriched context documents and context verify passes", async () => {
   const dir = makeTempRepo({
     "server.ts": "export function handleRequest() { return 200; }",
     "package.json": JSON.stringify({ name: "fixture-service", version: "1.0.0" }),
@@ -118,11 +118,11 @@ test("authorized scan creates .hypertaks with 13 enriched context documents and 
   const verifyRes = await capture(() => runCli(["context", "verify", "--repo", dir, "--json"]));
   assert.equal(verifyRes.code, 0);
   const verifyParsed = JSON.parse(verifyRes.out);
-  assert.equal(verifyParsed.verified, 13);
+  assert.equal(verifyParsed.verified, 14);
   assert.equal(verifyParsed.missing, 0);
 
-  // Verify architecture.ctx.md contains evidence-backed content
-  const archFile = path.join(dir, ".hypertaks", "projects", result.repoId, "architecture.ctx.md");
+  // Verify architecturectx.md contains evidence-backed content
+  const archFile = path.join(dir, ".hypertaks", "projects", result.repoId, "architecturectx.md");
   assert.ok(fs.existsSync(archFile));
   const archContent = fs.readFileSync(archFile, "utf8");
   assert.match(archContent, /Master Architectural Overview/);
@@ -146,7 +146,7 @@ test("authorized scan creates .hypertaks with 13 enriched context documents and 
   assert.equal(rescan.code, 0);
   const rescanParsed = JSON.parse(rescan.out);
   assert.equal(rescanParsed.outcome, "written");
-  assert.ok(rescanParsed.preservedFiles >= 13);
+  assert.ok(rescanParsed.preservedFiles >= 14);
 
   fs.rmSync(dir, { recursive: true, force: true });
 });

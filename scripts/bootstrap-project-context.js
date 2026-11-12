@@ -13,7 +13,7 @@
  *   3. an approved, contained project root revalidated at write time;
  *   4. a valid project id and successful containment.
  *
- * The 13 context documents are rendered by the single canonical template in
+ * The 14 context documents are rendered by the single canonical template in
  * runtime/founder-brain.ts, ensuring this CLI and runtime cannot drift.
  *
  * Usage:
@@ -22,19 +22,20 @@
  *     --permissions PERM_FILE_WRITE --approval "APPROVE HT-<id>"
  *
  * Required context documents:
- *   - Vision.ctx.md
- *   - Requirements.ctx.md
- *   - U-Experience.ctx.md
- *   - architecture.ctx.md
- *   - law.ctx.md
- *   - database.ctx.md
- *   - design.ctx.md
- *   - api.ctx.md
- *   - coding-rules.ctx.md
- *   - roadmap.ctx.md
- *   - preference.ctx.md
- *   - prompt-build-continunity-prompt.ctx.md
- *   - security.ctx.md
+ *   - Visionctx.md
+ *   - Requirementsctx.md
+ *   - U-Experiencectx.md
+ *   - architecturectx.md
+ *   - lawctx.md
+ *   - databasectx.md
+ *   - designctx.md
+ *   - apictx.md
+ *   - coding-rulesctx.md
+ *   - roadmapctx.md
+ *   - preferencectx.md
+ *   - prompt-build-continunity-promptctx.md
+ *   - securityctx.md
+ *   - verificationctx.md
  *
  * Each generated context document functions as a domain-universal living document
  * with standardized sections:
@@ -60,19 +61,20 @@ try {
 }
 
 const CONTEXT_FILES = router.PROJECT_OPERATING_CONTEXT_FILES || [
-  'Vision.ctx.md',
-  'Requirements.ctx.md',
-  'U-Experience.ctx.md',
-  'architecture.ctx.md',
-  'law.ctx.md',
-  'database.ctx.md',
-  'design.ctx.md',
-  'api.ctx.md',
-  'coding-rules.ctx.md',
-  'roadmap.ctx.md',
-  'preference.ctx.md',
-  'prompt-build-continunity-prompt.ctx.md',
-  'security.ctx.md',
+  'Visionctx.md',
+  'Requirementsctx.md',
+  'U-Experiencectx.md',
+  'architecturectx.md',
+  'lawctx.md',
+  'databasectx.md',
+  'designctx.md',
+  'apictx.md',
+  'coding-rulesctx.md',
+  'roadmapctx.md',
+  'preferencectx.md',
+  'prompt-build-continunity-promptctx.md',
+  'securityctx.md',
+  'verificationctx.md',
 ];
 
 function parseArgs(argv) {
