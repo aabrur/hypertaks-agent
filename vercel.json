@@ -1,10 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "git": {
-    "deploymentEnabled": {
-      "main": false
-    }
-  },
   "buildCommand": "npm run build:runtime",
   "outputDirectory": ".build/runtime",
   "functions": {
