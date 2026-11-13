@@ -130,8 +130,8 @@ class OpenAIPublicPluginTests(unittest.TestCase):
                 manifest = json.loads(archive.read("hypertaks/plugin.json"))
                 metadata = json.loads((ROOT / "marketplace/openai/metadata.json").read_text(encoding="utf-8"))
                 self.assertEqual(manifest["name"], "app-6a851e5881dc81919fd10e98f7e19b80")
-                self.assertEqual(manifest["version"], metadata["packageVersion"])
-                self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+$")
+                self.assertEqual(manifest["version"], metadata["version"])
+                self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+(?:\.\d+\.\d+)?$")
                 source = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
                 self.assertEqual(source["name"], "hypertaks")
                 self.assertEqual(source["version"], json.loads((ROOT / "package.json").read_text(encoding="utf-8"))["version"])
@@ -164,7 +164,7 @@ class OpenAIPublicPluginTests(unittest.TestCase):
                         elif mutate == "version":
                             manifest["version"] = "4.5.2"
                         elif mutate == "non-semver":
-                            manifest["version"] = "0.0.4.5.11"
+                            manifest["version"] = "invalid-version"
                         elif mutate == "identity":
                             manifest["name"] = "hypertaks"
                         else:

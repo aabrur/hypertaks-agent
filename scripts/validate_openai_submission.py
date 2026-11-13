@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILLS = {"hypertaks", "hypertaks-verify", "hypertaks-brain", "hypertaks-graph", "hypertaks-continuity"}
 ENDPOINT = "https://hypertaks.crimsonriftstudio.com/mcp"
 OPENAI_PACKAGE_NAME = "app-6a851e5881dc81919fd10e98f7e19b80"
-PACKAGE_VERSION_RE = re.compile(r"(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)")
+PACKAGE_VERSION_RE = re.compile(r"(?:0|[1-9]\d*)(?:\.(?:0|[1-9]\d*)){2,4}")
 SECRET_PATTERNS = (
     r"\bsk-[A-Za-z0-9_-]{20,}\b",
     r"\bgh[pousr]_[A-Za-z0-9]{20,}\b",
@@ -45,8 +45,8 @@ def require(condition: bool, message: str) -> None:
 def openai_package_identity() -> tuple[str, str]:
     metadata = json.loads((ROOT / "marketplace/openai/metadata.json").read_text(encoding="utf-8"))
     require(metadata.get("packageId") == OPENAI_PACKAGE_NAME, "OpenAI package identity must match the existing submission")
-    version = metadata.get("packageVersion")
-    require(isinstance(version, str) and bool(PACKAGE_VERSION_RE.fullmatch(version)), "OpenAI packageVersion must use MAJOR.MINOR.PATCH")
+    version = metadata.get("version")
+    require(isinstance(version, str) and bool(PACKAGE_VERSION_RE.fullmatch(version)), "OpenAI version must be a valid dotted product version")
     return metadata["packageId"], version
 
 
@@ -81,8 +81,8 @@ def validate_files(files: Mapping[str, bytes], expected_version: str) -> dict[st
         errors = list(Draft202012Validator(schema).iter_errors(instance))
         require(not errors, f"{label}.json does not match its pinned Agent Plugins schema")
     require(plugin.get("name") == OPENAI_PACKAGE_NAME, "public package name must match the existing OpenAI submission")
-    require(isinstance(plugin.get("version"), str) and bool(PACKAGE_VERSION_RE.fullmatch(plugin["version"])), "public package version must use MAJOR.MINOR.PATCH")
-    require(plugin.get("version") == expected_version, "public package version differs from OpenAI packageVersion")
+    require(isinstance(plugin.get("version"), str) and bool(PACKAGE_VERSION_RE.fullmatch(plugin["version"])), "public package version must be a valid dotted version")
+    require(plugin.get("version") == expected_version, "public package version differs from OpenAI metadata version")
     manifests = [plugin] + [json.loads(data) for name, data in files.items() if name.endswith("/plugin.json")]
     for manifest in manifests:
         require(manifest.get("apps") is None, "public upload must not declare apps")

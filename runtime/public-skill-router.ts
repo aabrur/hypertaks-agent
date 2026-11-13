@@ -12,6 +12,7 @@
  */
 
 import { createHash } from "node:crypto";
+import { statSync } from "node:fs";
 
 export const PUBLIC_SKILLS = [
   "hypertaks",
@@ -33,7 +34,7 @@ export interface PublicSkillRoute {
 export const PUBLIC_SKILL_ROUTER_MODULE = "public-skill-router" as const;
 
 /** Bumped when deterministic routing semantics change. */
-export const ROUTE_POLICY_VERSION = "a2.1" as const;
+export const ROUTE_POLICY_VERSION = "a2.2" as const;
 
 export const SUPPORTED_LOCALES = ["en", "id"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
@@ -525,13 +526,60 @@ function splitClauses(rawText: string): string[] {
   return whole ? [whole] : [];
 }
 
+const CROSS_LINGUAL_TECH_PHRASES = new Set<string>([
+  "blast radius",
+  "checkpoint",
+  "handoff",
+  "resume",
+  "proof-of-done",
+  "proof of done",
+  "proof of-done",
+  "dependency",
+  "dependencies",
+  "import",
+  "imports",
+  "setup",
+  "install",
+  "scan",
+  "scan-only",
+  "scan only",
+  "runtime",
+  "memory",
+  "mcp adapter",
+  "adapter mcp",
+  "founder",
+  "strategi founder",
+  "brain",
+  "graph",
+  "verify",
+  "continuity",
+]);
+
+const ID_FUNCTION_TOKENS =
+  /\b(?:yang|dan|di|ke|dari|untuk|dengan|pada|ini|itu|tidak|jangan|bukan|buat|periksa|simpan|ambil|lanjut|lanjutkan|tolong|silakan|silahkan|atau|lalu|cek|perubahan|keputusan|pakai|gunakan|menggunakan|arahkan|besok|selesai|rencana|bukti|masalah|dulu|mbak|mas|dong|sih|nya|kah)\b/gu;
+
+const EN_FUNCTION_TOKENS =
+  /\b(?:the|is|are|was|were|this|that|these|those|and|for|with|from|not|do|don't|dont|never|please|how|which|what|why|create|build|just|instead|across|without|even|looks|should|can|would|our|your|into)\b/gu;
+
+function countDistinctTokenMatches(text: string, pattern: RegExp): number {
+  const seen = new Set<string>();
+  const cloned = new RegExp(pattern.source, pattern.flags);
+  for (const match of text.matchAll(cloned)) {
+    if (match[0]) seen.add(match[0]);
+  }
+  return seen.size;
+}
+
 function detectLocaleHints(normalized: string): {
   readonly supportedHit: boolean;
   readonly locales: SupportedLocale[];
-  readonly hasExclusiveEnStrongPhrase?: boolean;
+  readonly idScore?: number;
+  readonly enScore?: number;
 } {
   const hits = new Set<SupportedLocale>();
-  let hasExclusiveEnStrongPhrase = false;
+  let idScore = 0;
+  let enScore = 0;
+
   for (const pack of FOCUSED_SKILL_RULES.locales) {
     const vocab = [
       ...pack.negation,
@@ -547,32 +595,43 @@ function detectLocaleHints(normalized: string): {
     if (anyPhrase(normalized, vocab)) {
       hits.add(pack.id);
     }
-    if (pack.id === "en") {
-      const enStrongVocab = [
-        ...pack.founderPrimary.filter((p) => p !== "strategi founder"),
-        ...FOCUSED_SKILLS.flatMap((skill) => pack.strongPhrases[skill]),
-      ];
-      if (anyPhrase(normalized, enStrongVocab)) {
-        hasExclusiveEnStrongPhrase = true;
+
+    const exclusiveVocab = new Set(
+      vocab.filter((phrase) => !CROSS_LINGUAL_TECH_PHRASES.has(phrase)),
+    );
+    let packHits = 0;
+    for (const phrase of exclusiveVocab) {
+      if (containsPhrase(normalized, phrase)) {
+        packHits += 1;
       }
     }
+    if (pack.id === "id") {
+      idScore += packHits;
+    } else if (pack.id === "en") {
+      enScore += packHits;
+    }
   }
+
+  const enTokens = countDistinctTokenMatches(normalized, EN_FUNCTION_TOKENS);
+  enScore += enTokens;
+
+  const idTokens = countDistinctTokenMatches(normalized, ID_FUNCTION_TOKENS);
+  const hasExtendedLatin = /[à-ÿ]/u.test(normalized);
+  if (hasExtendedLatin || idTokens > 0) {
+    hits.add("id");
+    idScore += idTokens + (hasExtendedLatin ? 1 : 0);
+  }
+
   // ASCII-heavy generic English engineering text still counts as supported en.
   if (/[a-z]/.test(normalized)) {
     hits.add("en");
   }
-  // Indonesian-specific characters or tokens force id support recognition.
-  if (
-    /[à-ÿ]|\b(?:yang|dan|di|ke|dari|untuk|dengan|pada|ini|itu|tidak|jangan|bukan|buat|periksa|simpan|ambil|lanjutkan|tolong|silakan|silahkan|mbak|mas|dong|sih|nya|kah)\b/u.test(
-      normalized,
-    )
-  ) {
-    hits.add("id");
-  }
+
   return {
     supportedHit: hits.size > 0,
     locales: [...hits],
-    hasExclusiveEnStrongPhrase,
+    idScore,
+    enScore,
   };
 }
 
@@ -648,56 +707,62 @@ function resolveExplicitSkillInstruction(
 
   // Short alias with explicit route/use cue only (never bare product nouns).
   for (const clause of clauses) {
-    for (const pack of FOCUSED_SKILL_RULES.locales) {
-      const hasNeg = clauseHasNegation(clause, pack);
-      const hasRouteCue =
-        anyPhrase(clause, pack.explicitUse) ||
-        anyPhrase(clause, pack.explicitRoute) ||
-        containsPhrase(clause, "route") ||
-        containsPhrase(clause, "arahkan");
+    const hasNeg = FOCUSED_SKILL_RULES.locales.some((pack) =>
+      clauseHasNegation(clause, pack),
+    );
+    const hasRouteCue =
+      FOCUSED_SKILL_RULES.locales.some(
+        (pack) =>
+          anyPhrase(clause, pack.explicitUse) ||
+          anyPhrase(clause, pack.explicitRoute),
+      ) ||
+      containsPhrase(clause, "route") ||
+      containsPhrase(clause, "arahkan");
 
-      if (!hasRouteCue) continue;
+    if (!hasRouteCue) continue;
 
-      const aliasHits: PublicSkill[] = [];
-      if (
-        containsPhrase(clause, "hypertaks-verify") ||
-        (containsPhrase(clause, "verify") && hasRouteCue)
-      ) {
-        aliasHits.push("hypertaks-verify");
+    const aliasHits = new Set<PublicSkill>();
+    for (const [alias, skill] of Object.entries(FOCUSED_SKILL_RULES.skillAliases)) {
+      if (skill === "hypertaks") continue;
+      if (!containsPhrase(clause, alias)) continue;
+      if (alias !== skill && suppressedByExclusion(clause, skill as FocusedSkill)) {
+        continue;
       }
-      if (containsPhrase(clause, "hypertaks-brain") || containsPhrase(clause, "brain")) {
-        // "brain" alone is too ambiguous unless full skill or use-brain cue.
+      if (alias === "brain") {
+        // Guard casual idioms ("use your brain") unless explicit skill/route framing matches.
         if (
-          containsPhrase(clause, "hypertaks-brain") ||
-          containsPhrase(clause, "use brain") ||
-          containsPhrase(clause, "route") && containsPhrase(clause, "brain")
+          containsPhrase(clause, "your brain") ||
+          containsPhrase(clause, "my brain")
         ) {
-          aliasHits.push("hypertaks-brain");
+          continue;
         }
+        const explicitBrainCue =
+          hasNeg ||
+          anyPhrase(clause, [
+            "use brain",
+            "using brain",
+            "pakai brain",
+            "gunakan brain",
+            "menggunakan brain",
+            "via brain",
+            "through brain",
+            "lewat skill brain",
+          ]) ||
+          containsPhrase(clause, "route") ||
+          containsPhrase(clause, "arahkan") ||
+          containsPhrase(clause, "kirim ke");
+        if (!explicitBrainCue) continue;
       }
-      if (containsPhrase(clause, "hypertaks-graph")) {
-        aliasHits.push("hypertaks-graph");
-      }
-      if (containsPhrase(clause, "hypertaks-continuity")) {
-        aliasHits.push("hypertaks-continuity");
-      }
-      // "route ke verify" / "jangan route ke verify"
-      if (
-        containsPhrase(clause, "verify") &&
-        !containsPhrase(clause, "hypertaks-verify") &&
-        (containsPhrase(clause, "route") || containsPhrase(clause, "arahkan"))
-      ) {
-        aliasHits.push("hypertaks-verify");
-      }
+      aliasHits.add(skill);
+    }
 
-      for (const skill of aliasHits) {
-        if (skill === "hypertaks") continue;
-        if (hasNeg) {
-          suppressed.add(skill as FocusedSkill);
-          affirmed.delete(skill);
-        } else {
-          affirmed.add(skill);
-        }
+    for (const skill of aliasHits) {
+      if (skill === "hypertaks") continue;
+      if (hasNeg) {
+        suppressed.add(skill as FocusedSkill);
+        affirmed.delete(skill);
+      } else {
+        affirmed.add(skill);
       }
     }
   }
@@ -740,11 +805,30 @@ function resolveExplicitSkillInstruction(
   return { skill: null, suppressed: [...suppressed], reason: null };
 }
 
+function matchesBrainDecisionPair(clause: string): boolean {
+  return (
+    (containsPhrase(clause, "store") ||
+      containsPhrase(clause, "save") ||
+      containsPhrase(clause, "simpan")) &&
+    (containsPhrase(clause, "decision") ||
+      containsPhrase(clause, "keputusan"))
+  );
+}
+
 function actionObjectEligible(
   clause: string,
   skill: FocusedSkill,
   pack: LocalePack,
 ): boolean {
+  if (skill === "hypertaks-brain") {
+    if (containsPhrase(clause, "memory leak")) return false;
+    // Direct decision persistence phrases ("simpan keputusan ...", "save decision ...")
+    // do not require multi-word "product decision" / "keputusan produk" objects.
+    if (matchesBrainDecisionPair(clause)) {
+      return true;
+    }
+  }
+
   const hasAction = anyPhrase(clause, pack.actions[skill]);
   const hasObject = anyPhrase(clause, pack.objects[skill]);
   if (!(hasAction && hasObject)) return false;
@@ -788,18 +872,6 @@ function actionObjectEligible(
       return false;
     }
     return hypertaksObject && verifyAction;
-  }
-
-  if (skill === "hypertaks-brain") {
-    // "store approved product decision" counts as durable memory write.
-    if (
-      (containsPhrase(clause, "store") || containsPhrase(clause, "save") || containsPhrase(clause, "simpan")) &&
-      (containsPhrase(clause, "decision") || containsPhrase(clause, "keputusan"))
-    ) {
-      return true;
-    }
-    // Standalone "memory" without durable-memory action is not enough (handled by hasAction).
-    if (containsPhrase(clause, "memory leak")) return false;
   }
 
   if (skill === "hypertaks-graph") {
@@ -850,11 +922,14 @@ function clauseNegatesSkill(
 ): boolean {
   if (!clauseHasNegation(clause, pack)) return false;
   if (skillMentionedInClause(clause, skill)) return true;
-  // Negate action-object pair in same clause: "do not save memory"
+  // Negate action-object pair in same clause: "do not save memory" or "jangan simpan keputusan"
   if (
     anyPhrase(clause, pack.actions[skill]) &&
     anyPhrase(clause, pack.objects[skill])
   ) {
+    return true;
+  }
+  if (skill === "hypertaks-brain" && matchesBrainDecisionPair(clause)) {
     return true;
   }
   // "jangan route ke verify"
@@ -1098,6 +1173,14 @@ function readTrustedBuildTimestamp(): string {
       return value;
     }
   }
+  try {
+    const stats = statSync(__filename);
+    if (Number.isFinite(stats.mtimeMs) && stats.mtimeMs > 0) {
+      return new Date(stats.mtimeMs).toISOString();
+    }
+  } catch {
+    // Keep honest "unknown" fallback when compiled bundle stat is unavailable.
+  }
   return "unknown";
 }
 
@@ -1128,7 +1211,8 @@ function sortSuppressed(
 function localePresentation(localeHints: {
   readonly supportedHit: boolean;
   readonly locales: SupportedLocale[];
-  readonly hasExclusiveEnStrongPhrase?: boolean;
+  readonly idScore?: number;
+  readonly enScore?: number;
 }): {
   readonly detectedLocale: SupportedLocale | "unknown";
   readonly localeSupport: "full" | "fallback" | "unknown";
@@ -1136,15 +1220,16 @@ function localePresentation(localeHints: {
   if (localeHints.locales.length === 0) {
     return { detectedLocale: "unknown", localeSupport: "unknown" };
   }
-  // Prefer id when present without exclusively English strong phrases.
   const ordered = [...localeHints.locales].sort();
+  const idScore = localeHints.idScore ?? 0;
+  const enScore = localeHints.enScore ?? 0;
   const detected =
-    ordered.includes("en") && ordered.length === 1
-      ? "en"
-      : ordered.includes("id") && ordered.length === 1
+    ordered.length === 1
+      ? ordered[0]!
+      : ordered.includes("id") && idScore > 0 && idScore >= enScore
         ? "id"
-        : ordered.includes("id") && !localeHints.hasExclusiveEnStrongPhrase
-          ? "id"
+        : ordered.includes("en")
+          ? "en"
           : ordered[0]!;
   return {
     detectedLocale: detected,
@@ -1162,7 +1247,8 @@ function finishDiagnostics(input: {
   readonly localeHints: {
     readonly supportedHit: boolean;
     readonly locales: SupportedLocale[];
-    readonly hasExclusiveEnStrongPhrase?: boolean;
+    readonly idScore?: number;
+    readonly enScore?: number;
   };
 }): PublicSkillRouteDiagnostics {
   const locale = localePresentation(input.localeHints);

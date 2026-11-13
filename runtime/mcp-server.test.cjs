@@ -183,6 +183,7 @@ test("manifest and installation verification preserve five-skill identity", asyn
   assert.equal(typeof content.routePolicyVersion, "string");
   assert.match(content.routerRulesDigest, /^[a-f0-9]{64}$/);
   assert.match(String(content.buildRevision), /^(unknown|[0-9a-f]{7,64})$/i);
+  assert.match(String(content.buildTimestamp), /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/);
   assert.ok(Array.isArray(content.supportedLocales));
 
   const verified = await rpc(server.baseUrl, {
@@ -378,6 +379,36 @@ test("token-safe route diagnostics default to none and expose identity only when
   );
   assert.equal(founderCheckpoint.skill, "hypertaks");
   assert.equal(founderCheckpoint.primaryIntent, "founder_strategy");
+
+  // Router policy a2.2 parity checks (brain decision writes, alias negation, code-switching).
+  const brainDecisionRoute = await authedRoute(
+    "simpan keputusan arsitektur ke brain",
+    undefined,
+    "full",
+  );
+  assert.equal(brainDecisionRoute.skill, "hypertaks-brain");
+  assert.equal(brainDecisionRoute.detectedLocale, "id");
+
+  const multiNegRoute = await authedRoute(
+    "do not use graph or verify, just build the SaaS pricing page and check our roadmap",
+    undefined,
+    "full",
+  );
+  assert.deepEqual(
+    multiNegRoute.suppressedSkills.map((item) => item.skill).sort(),
+    ["hypertaks-graph", "hypertaks-verify"],
+  );
+
+  const codeSwitchRoute = await authedRoute(
+    "cek blast radius perubahan file auth dan simpan keputusan arsitektur ke brain untuk lanjut besok",
+    undefined,
+    "full",
+  );
+  assert.equal(codeSwitchRoute.detectedLocale, "id");
+  assert.deepEqual(codeSwitchRoute.secondaryIntents, [
+    "durable_memory",
+    "structural_graph",
+  ]);
 
   const manifest = await authedCall("hypertaks_manifest");
   const verified = await authedCall("hypertaks_verify_installation");

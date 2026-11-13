@@ -3,7 +3,6 @@
 ## Product and existing identity
 
 - **Canonical Version:** 0.0.4.5.12
-- **OpenAI Package Version:** 4.5.9
 - **OpenAI Package Name:** `app-6a851e5881dc81919fd10e98f7e19b80`
 - Product: Hypertaks Founder Operating System.
 - Existing rejected submission: `asdk_app_6a851e5881dc81919fd10e98f7e19b80`.
@@ -19,11 +18,10 @@ Keep App identifiers in preparation notes and the existing dashboard record. The
 The public upload is one Agent Plugins 1.0 package containing root `plugin.json`, root `mcp.json`, exactly five canonical directories under `skills/`, and referenced assets. It excludes the old pack index `skills/SKILL.md`, personal bindings, host-local configuration, runtime databases, dependency folders, and unrelated source files. Root `extensions.com.openai` supplies listing and review metadata; it takes precedence over the compatibility overlay.
 
 ```sh
-python scripts/build_distributions.py openai
-python scripts/validate_openai_submission.py .build/plugins/openai/hypertaks-plugin-4.5.9.zip
+python scripts/build_distributions.py openai --check-only
 ```
 
-The build validates the actual archive before atomically replacing the output. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The builder overrides only the generated OpenAI manifest name and version from `marketplace/openai/metadata.json` (`packageId` and `packageVersion`). The OpenAI package uses 4.5.9, a MAJOR.MINOR.PATCH version following the prior 4.5.8 release. The shared source manifests and internal engine retain 0.0.4.5.12. No separate compatibility overlay is included in this ZIP; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
+The build validates the archive structure in a temporary check directory without leaving build ZIP files behind. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The shared source manifests and internal engine retain 0.0.4.5.12. No separate compatibility overlay is included; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
 
 For standalone skill exports only, retain the separate compatibility command:
 

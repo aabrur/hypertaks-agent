@@ -17,7 +17,7 @@ Hypertaks 0.0.4.5.12 upgrades the Project Operating Context (POC) workspace to 1
 - Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
 - Exactly four read-only public remote MCP tools.
 - Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
-- OpenAI package version remains 4.5.9. The shared product version is 0.0.4.5.12.
+- Shared product version synchronized across all manifests at `0.0.4.5.12`.
 
 ## v0.0.4.5.11 - Session discovery context for capability execution
 

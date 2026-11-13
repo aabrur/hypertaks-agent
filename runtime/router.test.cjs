@@ -432,7 +432,7 @@ assert.equal(
   'hypertaks-continuity',
 );
 assert.equal(router.PUBLIC_SKILL_ROUTER_MODULE, 'public-skill-router');
-assert.equal(router.ROUTE_POLICY_VERSION, 'a2.1');
+assert.equal(router.ROUTE_POLICY_VERSION, 'a2.2');
 assert.deepEqual([...router.SUPPORTED_LOCALES], ['en', 'id']);
 assert.equal(router.normalizeRequestText('Proof of Done!!!').includes('proof-of-done'), true);
 assert.deepEqual([...router.PUBLIC_SKILLS], [
@@ -495,8 +495,41 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.equal(identity.routerRulesDigest, router.getRouterRulesDigest());
   assert.equal(identity.routerRulesDigest, router.computeRouterRulesDigest());
   assert.match(identity.buildRevision, /^(unknown|[0-9a-f]{7,64})$/);
-  assert.match(identity.buildTimestamp, /^(unknown|\d{4}-\d{2}-\d{2}T)/);
+  assert.match(identity.buildTimestamp, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/);
   assert.deepEqual([...identity.supportedLocales], ['en', 'id']);
+
+  // FLAW-01..03 regression checks (action-object brain, skillAliases, ID code-switching)
+  const idBrainDecision = router.diagnosePublicSkillRoute('simpan keputusan arsitektur ke brain');
+  assert.equal(idBrainDecision.skill, 'hypertaks-brain');
+  assert.equal(idBrainDecision.primaryIntent, 'durable_memory');
+  assert.equal(idBrainDecision.detectedLocale, 'id');
+
+  assert.equal(
+    router.routePublicSkill('save architecture decision to brain').skill,
+    'hypertaks-brain',
+  );
+  assert.equal(
+    router.routePublicSkill('Jangan simpan keputusan ini. Buat strategi founder dulu.').skill,
+    'hypertaks',
+  );
+
+  const multiNeg = router.diagnosePublicSkillRoute(
+    'do not use graph or verify, just build the SaaS pricing page and check our roadmap',
+  );
+  assert.equal(multiNeg.skill, 'hypertaks');
+  assert.ok(multiNeg.suppressedSkills.some((s) => s.skill === 'hypertaks-graph' && s.reason === 'explicit_negation'));
+  assert.ok(multiNeg.suppressedSkills.some((s) => s.skill === 'hypertaks-verify' && s.reason === 'explicit_negation'));
+
+  assert.equal(router.routePublicSkill('use graph to trace caller impact').skill, 'hypertaks-graph');
+  assert.equal(router.routePublicSkill('pakai continuity untuk proof-of-done').skill, 'hypertaks-continuity');
+  assert.equal(router.routePublicSkill('use a bar graph for monthly revenue').skill, 'hypertaks');
+
+  const idCodeSwitch = router.diagnosePublicSkillRoute(
+    'cek blast radius perubahan file auth dan simpan keputusan arsitektur ke brain untuk lanjut besok',
+  );
+  assert.equal(idCodeSwitch.detectedLocale, 'id');
+  assert.equal(idCodeSwitch.skill, 'hypertaks');
+  assert.deepEqual([...idCodeSwitch.secondaryIntents], ['durable_memory', 'structural_graph']);
 
   // Secret-like env values must never appear in diagnostics/identity payloads.
   const previousToken = process.env.HYPERTAKS_MCP_BEARER_TOKEN;
