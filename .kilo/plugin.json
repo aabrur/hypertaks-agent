@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "0.0.4.5.12",
+  "version": "0.0.4.5.13",
   "description": "Hypertaks Kilo Code managed skill adapter.",
   "skills": "./skills/"
 }

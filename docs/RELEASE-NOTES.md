@@ -1,5 +1,21 @@
 # Release Notes
 
+## v0.0.4.5.13 - Repository Cleanup, Documentation Alignment & 22-Host Version Sync
+
+Hypertaks 0.0.4.5.13 removes 154 obsolete reports, old plans/specs, and superseded v4.5.2 prototype clutter from the repository, repairs stale and contradictory claims across active evaluation and skill-card documentation, and synchronizes all 22 host distribution surfaces, manifests, and runtime version metadata on `0.0.4.5.13`.
+
+### What shipped
+
+- **Repository & Workspace Hygiene**: Removed 154 tracked obsolete wave reports, old audits, superseded specs/briefs, one-off reorganization scripts, and legacy `prototypes/founder-os-expansion/` files with zero validator or runtime dependencies, while tightening `repomix.config.json` ignore patterns.
+- **Stale Documentation & Evidence Repair**: Updated `docs/hypertaks-skill-card.md`, `evals/EVIDENCE-CURRENT.md`, `evals/README.md`, and `README.md` to align with the verified `90/90` static preconditions, `88/88` Boss-confirmed behavioral ledger (`EV-01..EV-88`), and `EV-91-112` runtime test assertions with zero broken Markdown links.
+- **Synchronized `0.0.4.5.13` Metadata**: Updated `package.json`, `release/version.json` (`0.0.4-5.13`), `runtime/version.ts`, `runtime/capability-engine.ts`, `runtime/mcp-server.mjs`, all 22 host manifests, distribution catalogs, and marketplace metadata to `0.0.4.5.13`.
+
+### Preserved invariants
+
+- Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
+- Exactly four read-only public remote MCP tools (`hypertaks_manifest`, `hypertaks_get_skill`, `hypertaks_route`, `hypertaks_verify_installation`).
+- Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
+
 ## v0.0.4.5.12 - 14-File Project Operating Context (`*ctx.md`), Router `a2.3`, Audit Remediation & 22-Host Sync
 
 Hypertaks 0.0.4.5.12 upgrades the Project Operating Context (POC) workspace to 14 canonical `*ctx.md` deliverables (adding `verificationctx.md`), hardens the bilingual English/Indonesian router (`ROUTE_POLICY_VERSION = "a2.3"`) with opt-in diagnostics, fixes serverless build-timestamp metadata on Vercel, unifies all 22 host distribution surfaces on `0.0.4.5.12` (including OpenAI metadata cleanup), and overhauls the landing documentation.

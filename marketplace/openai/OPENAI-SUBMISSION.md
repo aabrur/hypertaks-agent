@@ -2,7 +2,7 @@
 
 ## Product and existing identity
 
-- **Canonical Version:** 0.0.4.5.12
+- **Canonical Version:** 0.0.4.5.13
 - **OpenAI Package Name:** `app-6a851e5881dc81919fd10e98f7e19b80`
 - Product: Hypertaks Founder Operating System.
 - Existing rejected submission: `asdk_app_6a851e5881dc81919fd10e98f7e19b80`.
@@ -21,7 +21,7 @@ The public upload is one Agent Plugins 1.0 package containing root `plugin.json`
 python scripts/build_distributions.py openai --check-only
 ```
 
-The build validates the archive structure in a temporary check directory without leaving build ZIP files behind. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The shared source manifests and internal engine retain 0.0.4.5.12. No separate compatibility overlay is included; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
+The build validates the archive structure in a temporary check directory without leaving build ZIP files behind. Skill files are copied byte-for-byte from tracked canonical sources. New, explicitly named public manifests are included without staging unrelated files. The shared source manifests and internal engine retain 0.0.4.5.13. No separate compatibility overlay is included; the shared Codex overlay remains unchanged. Dashboard acceptance remains NOT VERIFIED.
 
 For standalone skill exports only, retain the separate compatibility command:
 

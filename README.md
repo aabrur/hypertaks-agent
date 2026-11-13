@@ -10,7 +10,7 @@
 
 **Turn any request into a signed task contract, proportional specialist execution, verified evidence, and a persistent founder-grade result.**
 
-[![Release](https://img.shields.io/badge/release-v0.0.4.5.12-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v0.0.4.5.12)
+[![Release](https://img.shields.io/badge/release-v0.0.4.5.13-2563eb)](https://github.com/aabrur/hypertaks-agent/releases/tag/v0.0.4.5.13)
 [![Public skills](https://img.shields.io/badge/public%20skills-5-111827)](#the-five-public-skills)
 [![Remote MCP](https://img.shields.io/badge/remote%20MCP-live-0284c7)](https://hypertaks.crimsonriftstudio.com/mcp)
 [![Documented host routes](https://img.shields.io/badge/documented%20host%20routes-22-059669)](#installation-routes)
@@ -260,13 +260,12 @@ Actions:    PREPARE -> PREVIEW -> T1 APPROVAL -> COMMIT ONCE -> RECONCILE
 
 ## Package status
 
-| Surface | v0.0.4.5.12 status |
+| Surface | v0.0.4.5.13 status |
 |---|---|
 | Public product | Five canonical Hypertaks skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`) |
 | Remote MCP endpoint | Live HTTPS Streamable HTTP (`/mcp`, `/healthz`, `/manifest`) with 4 read-only tools and `a2.3` router |
 | Founder runtime | Repository Operating Vault (`14 *ctx.md`), 5-layer `context verify`, Local Intelligence Graph, Orchestrator V2, Capability Engine + REA stdio |
 | Host compatibility | **22/22** official host routes documented with tracked adapters and install guides |
-| Expansion Lab | Published in [`prototypes/founder-os-expansion/`](prototypes/founder-os-expansion/) as non-production research and fixtures |
 | Behavioral & static evals | **88/88** behavioral `PASS` (`threshold: 80`, `margin: +8`, `0` non-PASS); **90/90** static `GREEN`; **EV-91-112** v2 runtime checks `PASS` |
 
 ---
@@ -428,12 +427,6 @@ Measured locally via `node runtime/benchmark.cjs` on Node.js `v24.15.0` (`win32`
 
 ---
 
-## v4.5.2 Founder OS Expansion Lab
-
-Version 4.5.2 ships an open research and prototype workspace under [`prototypes/founder-os-expansion/`](prototypes/founder-os-expansion/) alongside design specs in [`docs/superpowers/specs/2026-08-11-hypertaks-founder-os-expansion/`](docs/superpowers/specs/2026-08-11-hypertaks-founder-os-expansion/decision-map.md). It remains strictly decoupled from production defaults until governed acceptance contracts promote specific capabilities.
-
-- Start with the [`decision map`](docs/superpowers/specs/2026-08-11-hypertaks-founder-os-expansion/decision-map.md), [`integration synthesis`](docs/superpowers/specs/2026-08-11-hypertaks-founder-os-expansion/codex.md), and resumable `RESEARCH` slice in [`prototypes/founder-os-expansion/`](prototypes/founder-os-expansion/).
-
 ## Evidence model
 
 | Evidence Class | What It Proves | What It Cannot Prove |
@@ -472,8 +465,7 @@ hypertaks-agent/
 |-- distribution/                   # 22-host compatibility, marketplace readiness, and MCP registry records
 |-- marketplace/                    # Submission metadata across hosts (not live publication proof)
 |-- evals/                          # Static cases, behavioral results ledger, and multi-host archives
-|-- prototypes/founder-os-expansion/# Non-production v4.5.2 expansion lab
-|-- docs/superpowers/specs/         # Contracts, architecture specs, briefs, and decision records
+|-- docs/                           # Release notes, skill card, and canonical skill guidance
 |-- scripts/                        # Distribution builders, validators, eval runner, and unit tests
 |-- assets/                         # Brand SVG and brief/deliverable templates
 `-- .<host>/                        # Host-specific manifests and per-platform INSTALL.md guides
@@ -485,12 +477,13 @@ Keep public product code, skills, manifests, tests, and reproducible validation 
 
 ## Release and project documents
 
-- [`CHANGELOG.md`](CHANGELOG.md): versioned changelog through `v0.0.4.5.12`
+- [`CHANGELOG.md`](CHANGELOG.md): versioned changelog through `v0.0.4.5.13`
 - [`docs/RELEASE-NOTES.md`](docs/RELEASE-NOTES.md): product-facing release notes
 - [`docs/hypertaks-skill-card.md`](docs/hypertaks-skill-card.md): canonical capability and release card
-- [`docs/HYPERTAKS-AGENT-PROMPTS.md`](docs/HYPERTAKS-AGENT-PROMPTS.md): copy-paste Founder prompt library
-- [`PUBLISH-READINESS-REPORT.md`](PUBLISH-READINESS-REPORT.md): readiness report archive
-- [`docs/HYPERTAKS-ROADMAP.md`](docs/HYPERTAKS-ROADMAP.md): staged product roadmap
+- [`docs/canonical-skill-guidance.md`](docs/canonical-skill-guidance.md): canonical contributor and host-adapter rules
+- [`distribution/HOST_LIFECYCLE.md`](distribution/HOST_LIFECYCLE.md): repository operating vault and 22-host lifecycle specification
+- [`marketplace/SUBMISSION-READINESS.md`](marketplace/SUBMISSION-READINESS.md): marketplace submission readiness matrix
+- [`SECURITY.md`](SECURITY.md): threat model, authority lattice, and vulnerability reporting policy
 
 ## License
 

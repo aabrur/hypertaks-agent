@@ -13,6 +13,11 @@
       "*.bundle",
       "*UNSAFE-DO-NOT-SHARE*",
       "repomix-output.*",
+      "hypertaks-agent.xml",
+      "hypertaks-agent.txt",
+      "hypertaks.xml",
+      ".tmp-probe/",
+      ".hypertaks-runtime/",
       "__pycache__/",
       "*.py[cod]"
     ]

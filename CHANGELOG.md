@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4.5.13] - 2026-11-13
+
+### Changed
+- Cleaned repository and local workspace, removing 154 obsolete historical reports, multi-agent wave logs, old eval audits, superseded specs/plans, and non-production v4.5.2 prototype artifacts while preserving every validator-required eval ledger and host adapter.
+- Updated `docs/hypertaks-skill-card.md`, `evals/EVIDENCE-CURRENT.md`, `evals/README.md`, and `README.md` to eliminate stale v4.3.0/v4.5.x contradictions and broken links, aligning documentation with the verified 90-case static suite, 88/88 Boss-confirmed behavioral ledger, and 94/94 V2 runtime suite (`EV-91-112`).
+- Extended `repomix.config.json` ignore patterns to exclude temporary probe directories and local Repomix XML dumps.
+- Synchronized canonical version `0.0.4.5.13` (`v0.0.4.5.13`, semver compatibility `0.0.4-5.13`) across `package.json`, `release/version.json`, runtime adapter/version sources, all 22 host manifests, distribution catalogs, and release documentation.
+
 ## [0.0.4.5.12] - 2026-11-13
 
 ### Added

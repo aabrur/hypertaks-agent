@@ -13,12 +13,12 @@ export interface ReleaseVersionInfo {
 
 export const FALLBACK_RELEASE_VERSION: ReleaseVersionInfo = {
   schema: "hypertaks.release.v2",
-  productVersion: "0.0.4.5.12",
-  displayVersion: "v0.0.4.5.12",
-  semverCompatibilityVersion: "0.0.4-5.12",
-  previousHistoricalVersion: "0.0.4.5.10",
-  previousProductAlias: "0.0.4.5.10",
-  previousSemverCompatibilityVersion: "0.0.4-5.9",
+  productVersion: "0.0.4.5.13",
+  displayVersion: "v0.0.4.5.13",
+  semverCompatibilityVersion: "0.0.4-5.13",
+  previousHistoricalVersion: "0.0.4.5.12",
+  previousProductAlias: "0.0.4.5.12",
+  previousSemverCompatibilityVersion: "0.0.4-5.12",
 };
 
 export function loadReleaseVersion(customRoot?: string): ReleaseVersionInfo {
@@ -40,9 +40,9 @@ export function loadReleaseVersion(customRoot?: string): ReleaseVersionInfo {
         productVersion: parsed.productVersion,
         displayVersion: parsed.displayVersion,
         semverCompatibilityVersion: parsed.semverCompatibilityVersion,
-        previousHistoricalVersion: parsed.previousHistoricalVersion ?? "0.0.4.5.10",
-        previousProductAlias: parsed.previousProductAlias ?? "0.0.4.5.10",
-        previousSemverCompatibilityVersion: parsed.previousSemverCompatibilityVersion ?? "0.0.4-5.9",
+        previousHistoricalVersion: parsed.previousHistoricalVersion ?? "0.0.4.5.12",
+        previousProductAlias: parsed.previousProductAlias ?? "0.0.4.5.12",
+        previousSemverCompatibilityVersion: parsed.previousSemverCompatibilityVersion ?? "0.0.4-5.12",
       };
     }
   } catch {

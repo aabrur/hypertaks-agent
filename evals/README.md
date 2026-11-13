@@ -41,19 +41,22 @@ guard must **stay quiet**. A guard is only correct when both halves pass.
 
 | group | cases | the failure it catches |
 |---|---|---|
-| security | EV-01…EV-05 | approval spoofing (web / tool output), KB poisoning, subagent privilege escalation, secret leakage |
+| security | EV-01…EV-05, EV-69…EV-73 | approval spoofing (web / tool output), KB poisoning, subagent privilege escalation, secret leakage, path traversal |
 | loop | EV-06, EV-07, EV-08, EV-18 | infinite gate, retry exhaustion, unbounded re-contract, silent downgrade |
 | transaction | EV-09, EV-10 | timeout → double send; irreversible effect dressed as "rolled back" |
 | tier | EV-11, EV-12, EV-17 | urgency inflating the tier, high-stakes padding, contracts signed for impossible tasks |
 | quantitative | EV-13, EV-14 | invented EOQ inputs; duty rates recalled from memory |
 | output-shape | EV-15 | a Five Forces table filled with fabricated ratings |
 | recursion | EV-16 | the recursion guard firing on the **Founder**, silencing its own ceremony at Lite |
+| domain | EV-19…EV-38 | multi-domain accuracy, legal/finance/supply-chain/data discipline, calibration |
 | founder | EV-39...EV-44 | business-health stewardship, safe challenge, Boss override, small-task proportionality |
 | capability | EV-45...EV-49, EV-64 | relevant binding, irrelevant rejection, permission gates, honest fallback, plugin adapter boundaries, Nano proportionality |
 | retrieval | EV-50...EV-57 | exact, semantic, hybrid, metadata scope, fusion, reranking, small-corpus proportionality, metric evidence |
 | contract | EV-58, EV-59 | request and evidence preservation, contract-ID build activation |
 | execution | EV-60, EV-61, EV-65 | Python evidence, strict TypeScript runtime, token proportionality |
 | visual | EV-62, EV-63 | visual necessity, rendered validation, image-generation precision boundary |
+| founder-brain & continuity | EV-66...EV-88 | existing brain discovery, Obsidian/Graphify boundaries, Git-aware checkpoints, handoff reconciliation, proof of done |
+| workspace & context | EV-89, EV-90 | automatic workspace bootstrap vs explicit grant, 14-`*ctx.md` context adaptability |
 
 ## The three commands
 
@@ -103,21 +106,22 @@ that final verdict.
 
 ## Release gate
 
-At least 24 behavioral PASS cases from `--report`, with every failure or skip
-documented and final verdict authority recorded. Skipped cases never count, the
-threshold is never rounded up, and it is **never satisfied with static GREENs**.
+At least 80 behavioral PASS cases from `--report` for the 88-case behavioral
+ledger (`EV-01`..`EV-88`), with every failure or skip documented and final
+verdict authority recorded. Skipped cases never count, the threshold is never
+rounded up, and it is **never satisfied with static GREENs**.
 `EVIDENCE_MISSING` never counts and blocks the release gate.
 
-The current suite contains 65 case definitions. The Boss-confirmed 4.3.0
-ledger is explicitly scoped through `meta.case_ids` to EV-01 through EV-49 and
-records 43 Behavioral PASS plus 6 documented non-PASS cases. That historical
-gate passes with a +19 margin and remains evidence for its tested commit only.
+The current checkout contains `90` case definitions (`EV-01`..`EV-90`), `90/90`
+static GREEN. The Boss-confirmed behavioral ledger in `evals/results.yaml` is
+scoped via `meta.case_ids` to `EV-01`..`EV-88` and records `88/88` Behavioral
+PASS (`+8` margin, `0` non-PASS; archived source reports preserved under
+`evals/archive/ev-01-88-source-reports-2026-09-20.zip` alongside the historical
+4.3.0 ledger).
 
-EV-50 through EV-65 are new and require fresh independent behavioral runs.
-Static GREEN for those cases is not certification. A new release report must
-include its own complete case scope, tested commit, provenance, verdict source,
-and human confirmation before the 4.4.0 release may use the Behaviorally
-Certified label.
+`EV-89` and `EV-90` are newer workspace-bootstrap and 14-`*ctx.md` context
+definitions verified statically (`--static`); they do not count as behavioral
+PASS until independent runs and Boss confirmation are archived in `results.yaml`.
 
 "Behaviorally Certified" is a repository release-gate status. It is not formal
 third-party certification and does not guarantee security or outcomes.

@@ -1,6 +1,6 @@
 {
   "name": "hypertaks",
-  "version": "0.0.4.5.12",
+  "version": "0.0.4.5.13",
   "description": "Hypertaks micro-agent adapter for OpenHands.",
   "skills": "./skills/"
 }

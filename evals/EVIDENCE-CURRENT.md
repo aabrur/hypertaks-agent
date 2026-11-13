@@ -1,8 +1,8 @@
 # Hypertaks evaluation evidence (current checkout)
 
-Date (local): 2026-08-03  
-Working tree: local uncommitted changes may exist; see `git status`.  
-Authority: repository eval rules in `evals/README.md` and `evals/rubric.md`.
+- **Date (local):** 2026-11-13
+- **Working tree:** local uncommitted changes may exist; see `git status`.
+- **Authority:** repository eval rules in `evals/README.md` and `evals/rubric.md`.
 
 ## Hard rule (do not collapse layers)
 
@@ -21,7 +21,7 @@ A GREEN static line is never a behavioral PASS.
 
 ```text
 python scripts/run_evals.py --check
-# 88 eval cases OK
+# 90 eval cases OK
 # exit 0
 ```
 
@@ -29,12 +29,14 @@ python scripts/run_evals.py --check
 
 ```text
 python scripts/run_evals.py --static
-# 88/88 GREEN
+# 90/90 GREEN
 # exit 0
 ```
 
-Meaning: the skill files contain the artifacts required for each case to be
-possible. This does **not** prove model conduct on EV-50 through EV-88.
+Meaning: the skill files contain the artifacts required for `EV-01` through `EV-90`
+to be structurally possible (`EV-89` workspace bootstrap and `EV-90` 14-`*ctx.md`
+context adaptability remain static-verified definitions added after the `EV-01..EV-88`
+behavioral ledger).
 
 ### 3) Behavioral ledger (`evals/results.yaml`)
 
@@ -84,39 +86,39 @@ python scripts/validate_public_skills.py
 ### 5) Runtime / MCP engineering evidence (current local code)
 
 ```text
-npm run typecheck          # exit 0
-npm run build:runtime      # exit 0
-npm run test:runtime       # runtime router tests passed, exit 0
-npm run test:mcp       # 8/8 pass, exit 0
+npm run test:all           # 94/94 V2 + 12/12 MCP + 10/10 stress + 15/15 security + 16/16 integrity + 22/22 edge, exit 0
+npm run check:distribution # 22/22 host compatibility, marketplace readiness, version sync, dry builds, exit 0
 ```
 
-MCP suite covers: generic adapter metadata, 3 protocol versions, 4 tools,
-read-only annotations, bilingual/negation routing, preferredSkill override,
-invalid skill rejection, oversized body 413, unauthorized Origin 403,
-25 concurrent local requests.
+Runtime engineering coverage includes:
+- `test:runtime`: `a2.3` EN/ID routing, cross-locale negation isolation, 14-`*ctx.md` POC gate enforcement
+- `test:mcp`: generic adapter metadata, 3 MCP protocol versions, 4 read-only tools, `none`/`compact`/`full` diagnostics, A4 regression matrix, CORS/origin & payload fail-closed (`12/12` pass)
+- `test:v2` (18 suites, `94/94` pass): vault bootstrap, `RepoIdentity`, deep scanner, local structural graph & incremental freshness, Orchestrator V2 DAG resume + `BLOCKED` propagation, Agency injection containment, 5-layer `context verify`, and REA stdio 5-step E2E (`EV-91` through `EV-112`)
+- `test:stress` (`10/10`), `test:security` (`15/15`), `test:skill-integrity` (`16/16`), `test:edge` (`22/22`)
 
 ## What is NOT claimed
 
-1. **Not 88/88 behavioral PASS.** EV-50 through EV-88 have static GREEN only.
-   Fresh independent behavioral runs + Boss confirmation + hashed source-report
-   archive are still required before expanding `meta.case_ids`.
-2. **Not 49/49 behavioral PASS.** Six security/subagent cases remain
-   SKIPPED(harness) with documented evidence quotes.
-3. **Not third-party certification.** "BEHAVIORALLY CERTIFIED" is the repository
-   release-gate label for the scoped 4.3.0 ledger only.
-4. **Not external host PASS** for ChatGPT, Grok, Claude, or Gemini live surfaces
-   from this local session. Mark those **NOT TESTED** until live harness runs
-   exist.
+1. **Behavioral scope of `results.yaml` is `EV-01` through `EV-88`.** `EV-89` and
+   `EV-90` have static `GREEN` preconditions (`90/90 GREEN`) rather than behavioral
+   transcript rows in `evals/results.yaml`, and `EV-91` through `EV-112` are
+   automated engineering runtime tests (`npm run test:v2`).
+2. **Not third-party certification.** "BEHAVIORALLY CERTIFIED" is the repository
+   release-gate status for the Boss-confirmed `EV-01`..`EV-88` multi-host ledger
+   in `evals/results.yaml` and does not imply external audit or universal correctness.
+3. **Not external host PASS** for untested SaaS/web surfaces (ChatGPT, Claude.ai,
+   Gemini App) from local protocol checks alone; inspect `evals/cross-host/results.json`
+   for exact per-host evidence classification.
 
 ## Boss confirmation
 
-The existing `evals/results.yaml` already records `confirmed_by_boss: true` for
-the EV-01..EV-49 ledger and the release gate **PASSED** under that confirmation.
+The current `evals/results.yaml` records `confirmed_by_boss: true` across
+`meta.case_ids` `EV-01` through `EV-88` (`88/88 PASS`, threshold `80`, margin `+8`).
 
-Boss confirmation of a **new** 4.5.1 full-suite behavioral ledger requires:
+Promoting new behavioral cases (such as `EV-89`, `EV-90`, or live SaaS host runs)
+into `evals/results.yaml` requires:
 
 1. Real behavioral runs (or main-agent review of final per-case source reports)
-2. Hashed source-report ZIP under `evals/archive/`
+2. Hashed source-report archive under `evals/archive/`
 3. Provenance (`tested_commit`, `tested_tree`, `skill_root_hash`) for that commit
 4. Explicit Boss confirmation after review
 
@@ -130,12 +132,8 @@ python scripts/run_evals.py --check
 python scripts/run_evals.py --static
 python scripts/run_evals.py --report evals/results.yaml
 python scripts/validate_public_skills.py
-npm run typecheck
-npm run build:runtime
-npm run test:runtime
-npm run test:mcp
+npm run test:all
+npm run check:distribution
 ```
 
-All commands above returned exit 0 in this evidence session for the listed
-layers. Behavioral coverage remains the scoped 4.3.0 ledger, not the full 88
-case set.
+All commands above return exit 0 on the verified `v0.0.4.5.13` checkout.

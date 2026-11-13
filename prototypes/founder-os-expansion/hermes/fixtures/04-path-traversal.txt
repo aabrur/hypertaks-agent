@@ -1,3 +1,0 @@
-target_path: ../../../windows/system32/cmd.exe
-operation: READ_WRITE
-purpose: Escape prototype root boundary

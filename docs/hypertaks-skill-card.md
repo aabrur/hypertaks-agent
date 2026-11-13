@@ -1,17 +1,15 @@
 # Hypertaks Skill Card
 
-**Version:** 0.0.4.5.12
+**Version:** 0.0.4.5.13
 
 ## Release status
 
-**Public release - behavioral re-certification pending.**
+**Public release (`v0.0.4.5.13`) - repository behavioral ledger `EV-01`..`EV-88` Boss-confirmed PASS; static and runtime engineering gates green.**
 
-- Structural eval definitions: 88
-- Historical certified ledger: 4.3.0, 43/49 Behavioral PASS
-- New retrieval and execution cases requiring fresh runs: EV-50 through EV-65
-- New founder brain and continuity cases requiring fresh runs: EV-66 through EV-88
-- Founder OS expansion prototypes: research and implementation evidence only
-- Static GREEN and CI success are structural evidence only
+- Structural eval definitions: `90` (`EV-01` through `EV-90`, `90/90` static `GREEN`)
+- Boss-confirmed behavioral ledger (`evals/results.yaml`): `88/88` Behavioral `PASS` across `EV-01` through `EV-88` (release threshold `80`, margin `+8`, `0` documented non-PASS)
+- V2 runtime and architectural eval assertions (`npm run test:v2`): `EV-91` through `EV-112` automated `PASS` (`94/94` subtests across 18 suites)
+- Static `GREEN` (`EV-89`, `EV-90`) and CI runtime checks remain structural and engineering evidence distinct from live multi-host behavioral transcripts.
 
 This status does not claim formal third-party certification, absolute security,
 or guaranteed outcomes.
@@ -71,7 +69,21 @@ and session continuity.
 - **Visual Necessity Router:** required, recommended, optional, or not-needed
   visual status and precision-aware medium selection.
 - **Token Discipline:** separate gate, retrieval, production, and verification
-  budgets with proportional Nano and Lite behavior.
+  budgets with proportional Nano and Lite behavior, plus conditional Phase 2/3 reading.
+- **Public Skill Router (`a2.3`):** deterministic EN/ID bilingual routing with
+  cross-locale negation isolation (`CROSS_LINGUAL_TECH_PHRASES`), brain idiom
+  exclusions (`BRAIN_IDIOM_EXCLUSIONS`), and decision record disambiguation
+  (`DECISION_RECORD_NOUNS`).
+- **14-File Project Operating Context & Verification (`context verify`):** `<namefile>ctx.md`
+  project context architecture (including `verificationctx.md`) with 5-layer
+  validation (`STRUCTURAL`, `EVIDENCE`, `FRESHNESS`, `INTEGRITY`, `CONSISTENCY`).
+- **Local Structural Graph Engine:** `runtime/repository-intelligence/local-graph.ts`,
+  `deep-scanner.ts`, and `incremental-refresh.ts` for offline AST/symbol/import
+  blast-radius analysis and hash-based staleness tracking.
+- **Orchestrator V2 & Capability Engine:** persistent DAG wave execution with
+  `resumeWaveExecution()` and `BLOCKED` propagation (`runtime/orchestrator-v2/`),
+  paired with `runtime/capability-engine.ts`, live REA stdio MCP client
+  (`runtime/mcp-stdio-client.ts`), and 6-tier binary fallback chain.
 
 ## Requirements and dependencies
 
@@ -158,6 +170,8 @@ and session continuity.
 
 ## Work log
 
+`2026-11-13 | Hypertaks v0.0.4.5.13: repository cleanup removing 154 obsolete reports, briefs, audits, plans, and superseded prototypes; repaired stale skill-card, eval evidence, and README links; synchronized 22-host metadata.`
+`2026-11-13 | Hypertaks v0.0.4.5.12: router a2.3 cross-locale negation isolation, 14-file <namefile>ctx.md operating context + 5-layer verification, local structural graph, Orchestrator V2 DAG resume, live REA stdio integration, and synchronized 5-part version metadata.`
 `2026-09-08 | Hypertaks v4.5.7 maintenance release: canonical naming guidance and synchronized active release metadata with the legacy logo filename retained for compatibility.`
 `2026-08-31 | Hypertaks v4.5.6 patch release: private authorization registry encapsulation and removal of public activation injection APIs.`
 `2026-08-31 | Hypertaks v4.5.5 patch release: trusted workspace write capability provenance, direct bootstrap bypass closure, and dedicated POC regression suite.`
