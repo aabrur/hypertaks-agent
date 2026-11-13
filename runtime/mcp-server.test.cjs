@@ -381,7 +381,7 @@ test("token-safe route diagnostics default to none and expose identity only when
   assert.equal(founderCheckpoint.skill, "hypertaks");
   assert.equal(founderCheckpoint.primaryIntent, "founder_strategy");
 
-  // Router policy a2.2 parity checks (brain decision writes, alias negation, code-switching).
+  // Router policy a2.3 parity checks (brain decision writes, alias negation, code-switching, single-clause negation).
   const brainDecisionRoute = await authedRoute(
     "simpan keputusan arsitektur ke brain",
     undefined,
@@ -389,6 +389,20 @@ test("token-safe route diagnostics default to none and expose identity only when
   );
   assert.equal(brainDecisionRoute.skill, "hypertaks-brain");
   assert.equal(brainDecisionRoute.detectedLocale, "id");
+
+  const negatedIdBrainRoute = await authedRoute(
+    "Jangan simpan keputusan arsitektur ke brain",
+    undefined,
+    "full",
+  );
+  assert.equal(negatedIdBrainRoute.skill, "hypertaks");
+  assert.equal(negatedIdBrainRoute.detectedLocale, "id");
+  assert.ok(
+    negatedIdBrainRoute.suppressedSkills.some(
+      (item) =>
+        item.skill === "hypertaks-brain" && item.reason === "explicit_negation",
+    ),
+  );
 
   const multiNegRoute = await authedRoute(
     "do not use graph or verify, just build the SaaS pricing page and check our roadmap",

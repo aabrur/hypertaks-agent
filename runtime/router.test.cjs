@@ -432,7 +432,7 @@ assert.equal(
   'hypertaks-continuity',
 );
 assert.equal(router.PUBLIC_SKILL_ROUTER_MODULE, 'public-skill-router');
-assert.equal(router.ROUTE_POLICY_VERSION, 'a2.2');
+assert.equal(router.ROUTE_POLICY_VERSION, 'a2.3');
 assert.deepEqual([...router.SUPPORTED_LOCALES], ['en', 'id']);
 assert.equal(router.normalizeRequestText('Proof of Done!!!').includes('proof-of-done'), true);
 assert.deepEqual([...router.PUBLIC_SKILLS], [
@@ -531,6 +531,44 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.equal(idCodeSwitch.detectedLocale, 'id');
   assert.equal(idCodeSwitch.skill, 'hypertaks');
   assert.deepEqual([...idCodeSwitch.secondaryIntents], ['durable_memory', 'structural_graph']);
+
+  // Single-clause, strong-phrase, cross-locale, and prepositional negation checks (a2.3)
+  for (const [negPrompt, suppressedSkill, expectedLocale] of [
+    ['Jangan simpan keputusan arsitektur ke brain', 'hypertaks-brain', 'id'],
+    ['Do not save architecture decision to brain', 'hypertaks-brain', 'en'],
+    ['Do not save memory.', 'hypertaks-brain', 'en'],
+    ['Do not verify the installation.', 'hypertaks-verify', 'en'],
+    ['Jangan cek blast radius', 'hypertaks-graph', 'id'],
+    ['Jangan buat checkpoint', 'hypertaks-continuity', 'id'],
+    ['do not simpan keputusan produk', 'hypertaks-brain', 'id'],
+  ]) {
+    const diag = router.diagnosePublicSkillRoute(negPrompt);
+    assert.equal(diag.skill, 'hypertaks', `Expected negated "${negPrompt}" to fall back to hypertaks`);
+    assert.ok(
+      diag.suppressedSkills.some((s) => s.skill === suppressedSkill && s.reason === 'explicit_negation'),
+      `Expected ${suppressedSkill} explicit_negation on "${negPrompt}"`,
+    );
+    assert.equal(diag.detectedLocale, expectedLocale, `Expected locale ${expectedLocale} on "${negPrompt}"`);
+  }
+
+  const negatedBrainPivotGraph = router.diagnosePublicSkillRoute(
+    'Jangan simpan keputusan ke brain, langsung cek blast radius',
+  );
+  assert.equal(negatedBrainPivotGraph.skill, 'hypertaks-graph');
+  assert.ok(
+    negatedBrainPivotGraph.suppressedSkills.some(
+      (s) => s.skill === 'hypertaks-brain' && s.reason === 'explicit_negation',
+    ),
+  );
+
+  const withoutBrainUseGraph = router.diagnosePublicSkillRoute('use graph without brain');
+  assert.equal(withoutBrainUseGraph.skill, 'hypertaks-graph');
+  assert.ok(
+    withoutBrainUseGraph.suppressedSkills.some(
+      (s) => s.skill === 'hypertaks-brain' && s.reason === 'explicit_negation',
+    ),
+  );
+  assert.equal(router.routePublicSkill('Verify installation without writing files.').skill, 'hypertaks-verify');
 
   // Secret-like env values must never appear in diagnostics/identity payloads.
   const previousToken = process.env.HYPERTAKS_MCP_BEARER_TOKEN;

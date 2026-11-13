@@ -35,7 +35,7 @@ export interface PublicSkillRoute {
 export const PUBLIC_SKILL_ROUTER_MODULE = "public-skill-router" as const;
 
 /** Bumped when deterministic routing semantics change. */
-export const ROUTE_POLICY_VERSION = "a2.2" as const;
+export const ROUTE_POLICY_VERSION = "a2.3" as const;
 
 export const SUPPORTED_LOCALES = ["en", "id"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
@@ -518,7 +518,7 @@ function anyPhrase(haystack: string, phrases: readonly string[]): boolean {
 function splitClauses(rawText: string): string[] {
   const rough = rawText
     .split(
-      /\s*(?:[!?;\n]+|\.(?=\s|$|["')\]])|\b(?:but|however|instead|except|tapi|namun|melainkan|sebaliknya)\b)\s*/iu,
+      /\s*(?:[!?;\n]+|\.(?=\s|$|["')\]])|,\s*(?=(?:just|instead|rather|lanjut|langsung|cukup)\b)|\b(?:but|however|instead|except|tapi|namun|melainkan|sebaliknya)\b)\s*/iu,
     )
     .map((part) => normalizeRequestText(part))
     .filter(Boolean);
@@ -646,8 +646,39 @@ function suppressedByExclusion(
   );
 }
 
+const PREPOSITIONAL_NEGATIONS = new Set<string>(["without", "tanpa"]);
+
 function clauseHasNegation(clause: string, pack: LocalePack): boolean {
   return anyPhrase(clause, pack.negation);
+}
+
+function clauseHasAnyNegation(clause: string): boolean {
+  return FOCUSED_SKILL_RULES.locales.some((pack) =>
+    clauseHasNegation(clause, pack),
+  );
+}
+
+/**
+ * Scope negation precisely: clause-prefix negations cover the clause,
+ * while prepositional negations ("without", "tanpa") only cover the phrase
+ * immediately after them so prior actions ("Verify installation without writing files")
+ * remain intact.
+ */
+function negatedSpanInClause(clause: string): string | null {
+  const hasClauseNegation = FOCUSED_SKILL_RULES.locales.some((pack) =>
+    pack.negation.some(
+      (phrase) =>
+        !PREPOSITIONAL_NEGATIONS.has(phrase) && containsPhrase(clause, phrase),
+    ),
+  );
+  if (hasClauseNegation) {
+    return clause;
+  }
+  const prepMatch = /\b(?:without|tanpa)\b([^,]*)/u.exec(clause);
+  if (prepMatch?.[1]) {
+    return prepMatch[1].trim() || null;
+  }
+  return null;
 }
 
 function skillMentionedInClause(clause: string, skill: FocusedSkill): boolean {
@@ -708,9 +739,8 @@ function resolveExplicitSkillInstruction(
 
   // Short alias with explicit route/use cue only (never bare product nouns).
   for (const clause of clauses) {
-    const hasNeg = FOCUSED_SKILL_RULES.locales.some((pack) =>
-      clauseHasNegation(clause, pack),
-    );
+    const hasNeg = clauseHasAnyNegation(clause);
+    const negSpan = negatedSpanInClause(clause);
     const hasRouteCue =
       FOCUSED_SKILL_RULES.locales.some(
         (pack) =>
@@ -722,7 +752,7 @@ function resolveExplicitSkillInstruction(
 
     if (!hasRouteCue) continue;
 
-    const aliasHits = new Set<PublicSkill>();
+    const aliasStates = new Map<PublicSkill, boolean>();
     for (const [alias, skill] of Object.entries(FOCUSED_SKILL_RULES.skillAliases)) {
       if (skill === "hypertaks") continue;
       if (!containsPhrase(clause, alias)) continue;
@@ -754,12 +784,14 @@ function resolveExplicitSkillInstruction(
           containsPhrase(clause, "kirim ke");
         if (!explicitBrainCue) continue;
       }
-      aliasHits.add(skill);
+      const aliasNegated = Boolean(negSpan && containsPhrase(negSpan, alias));
+      const priorNegated = aliasStates.get(skill) ?? false;
+      aliasStates.set(skill, priorNegated || aliasNegated);
     }
 
-    for (const skill of aliasHits) {
+    for (const [skill, aliasNegated] of aliasStates.entries()) {
       if (skill === "hypertaks") continue;
-      if (hasNeg) {
+      if (aliasNegated) {
         suppressed.add(skill as FocusedSkill);
         affirmed.delete(skill);
       } else {
@@ -921,22 +953,25 @@ function clauseNegatesSkill(
   skill: FocusedSkill,
   pack: LocalePack,
 ): boolean {
-  if (!clauseHasNegation(clause, pack)) return false;
-  if (skillMentionedInClause(clause, skill)) return true;
-  // Negate action-object pair in same clause: "do not save memory" or "jangan simpan keputusan"
+  const span = negatedSpanInClause(clause);
+  if (!span) return false;
+  if (skillMentionedInClause(span, skill)) return true;
+  if (strongPhraseEligible(span, skill, pack)) return true;
+  if (actionObjectEligible(span, skill, pack)) return true;
+  // Negate action-object pair in same negated span: "do not save memory" or "jangan simpan keputusan"
   if (
-    anyPhrase(clause, pack.actions[skill]) &&
-    anyPhrase(clause, pack.objects[skill])
+    anyPhrase(span, pack.actions[skill]) &&
+    anyPhrase(span, pack.objects[skill])
   ) {
     return true;
   }
-  if (skill === "hypertaks-brain" && matchesBrainDecisionPair(clause)) {
+  if (skill === "hypertaks-brain" && matchesBrainDecisionPair(span)) {
     return true;
   }
   // "jangan route ke verify"
   if (
     skill === "hypertaks-verify" &&
-    (containsPhrase(clause, "verify") || containsPhrase(clause, "verifikasi"))
+    (containsPhrase(span, "verify") || containsPhrase(span, "verifikasi"))
   ) {
     return true;
   }
@@ -975,6 +1010,7 @@ function collectFocusedMatches(
   normalized: string,
   clauses: readonly string[],
   suppressed: ReadonlySet<FocusedSkill>,
+  clauseNegatedOut?: Set<FocusedSkill>,
 ): FocusedMatch[] {
   const matches: FocusedMatch[] = [];
 
@@ -985,16 +1021,16 @@ function collectFocusedMatches(
     let hit = false;
     let via: FocusedMatch["via"] = "strong_phrase";
     let primary = false;
+    let negatedInAnyClause = false;
 
     for (const clause of clauses) {
-      let negated = false;
-      for (const pack of FOCUSED_SKILL_RULES.locales) {
-        if (clauseNegatesSkill(clause, skill, pack)) {
-          negated = true;
-          break;
-        }
+      const negated = FOCUSED_SKILL_RULES.locales.some((pack) =>
+        clauseNegatesSkill(clause, skill, pack),
+      );
+      if (negated) {
+        negatedInAnyClause = true;
+        continue;
       }
-      if (negated) continue;
 
       for (const pack of FOCUSED_SKILL_RULES.locales) {
         if (strongPhraseEligible(clause, skill, pack)) {
@@ -1009,8 +1045,8 @@ function collectFocusedMatches(
       }
     }
 
-    // Whole-text strong phrases (multi-clause coverage)
-    if (!hit) {
+    // Whole-text fallback must never resurrect a skill already negated in any clause.
+    if (!hit && !negatedInAnyClause) {
       for (const pack of FOCUSED_SKILL_RULES.locales) {
         if (strongPhraseEligible(normalized, skill, pack)) {
           hit = true;
@@ -1024,7 +1060,12 @@ function collectFocusedMatches(
       }
     }
 
-    if (!hit) continue;
+    if (!hit) {
+      if (negatedInAnyClause) {
+        clauseNegatedOut?.add(skill);
+      }
+      continue;
+    }
 
     if (skill === "hypertaks-continuity" && isSupportingContinuity(normalized, normalized)) {
       primary = false;
@@ -1362,7 +1403,15 @@ export function diagnosePublicSkillRoute(
     });
   }
 
-  const focused = collectFocusedMatches(normalized, clauses, suppressed);
+  const clauseNegated = new Set<FocusedSkill>();
+  const focused = collectFocusedMatches(normalized, clauses, suppressed, clauseNegated);
+  for (const skill of clauseNegated) {
+    if (!suppressed.has(skill)) {
+      suppressed.add(skill);
+      suppressedList.push({ skill, reason: "explicit_negation" });
+      signals.push(`negation:${skill}`);
+    }
+  }
   const founderPrimary = hasFounderPrimary(normalized, clauses);
   if (founderPrimary) signals.push("founder_primary");
 
