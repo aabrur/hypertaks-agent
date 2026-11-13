@@ -5,20 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.4.5.12] - 2026-11-12
+## [0.0.4.5.12] - 2026-11-13
 
 ### Added
 - 14th Project Operating Context Deliverable (`verificationctx.md`): Verification, Test Evidence, Audit Trail, and Proof-of-Done Operating Context, expanding the canonical Project Operating Context workspace from 13 to 14 `*ctx.md` living documents (`Visionctx.md` through `verificationctx.md`).
 - Governance Floor vs. Work Parallelism Guard in `skills/hypertaks/references/intake-protocol.md` clarifying high-stakes single-domain task scoring and QA/Red-Team verification without artificial domain padding.
+- Opt-In Router Diagnostics & Runtime Identity: Added `diagnostics` (`none`, `compact`, `full`) to `hypertaks_route` and immutable identity fields (`routePolicyVersion`, `routerRulesDigest`, `buildRevision`, `buildTimestamp`, `supportedLocales`) to `hypertaks_manifest` in `runtime/public-skill-router.ts` and `runtime/mcp-server.mjs`.
 
 ### Fixed
-- Public Skill Router Clause-Safe Negation & Locale Detection: Scoped explicit negation and verify-route guards per clause in `runtime/public-skill-router.ts` to prevent cross-clause bleed, and improved Indonesian function-word detection so Indonesian prompts report `detectedLocale: "id"`.
+- Public Skill Router `a2.3` (Cross-Locale Scoped Negation & Locale Detection): Scoped explicit skill negation and verify-route guards per clause with cross-locale negation isolation (`en`/`id`), blocked `verify` fallback resurrection when only explicitly negated verify tokens appear, refined Indonesian function-word detection with English code-switching tech-phrase resistance, and protected idiomatic `brain` phrasing in `runtime/public-skill-router.ts`.
+- Vercel Serverless Build Timestamp Preservation (`readTrustedBuildTimestamp`): Emitted `.build/runtime/build-metadata.json` during `npm run build:runtime`, added it to `vercel.json` `includeFiles`, and enforced an epoch plausibility guard (`minPlausibleMs`) so serverless Lambda mtime clamping never emits stale 2018 build timestamps.
 - Bounded Direct Repository Search: Excluded `node_modules`, `.hypertaks`, `.build`, and `dist` directories and enforced `timeout` and `maxBuffer` limits in `directSearch` (`runtime/founder-brain.ts`).
 - File-Size-Aware Token Estimation & Reactive DAG Blocking: Included on-disk file byte length (up to 256 KB per file) in `packContextForNode` (`runtime/orchestrator/context-packer.ts`) and propagated `BLOCKED` status to downstream dependent nodes on wave failure (`runtime/orchestrator/orchestrator.ts`).
 
 ### Changed
 - Upgraded Project Operating Context filenames across runtime, enricher, verifier, CLI, bootstrapper, skills, and test suites to the 14-file `<name>ctx.md` convention.
-- Transitioned version identity to `0.0.4.5.12` (`v0.0.4.5.12`) across all 22 host adapters, distribution records, manifests, and documentation surfaces.
+- Synchronized canonical version identity (`0.0.4.5.12` / `v0.0.4.5.12`) across all 22 host adapters, distribution records, manifests, and OpenAI marketplace metadata, removing split `packageVersion` overrides and redundant submission `.zip` build artifacts.
+- Re-enabled automatic `main` branch deployment in `vercel.json` and overhauled `README.md` with streamlined installation instructions, complete Phase 0 to Phase 5 workflow documentation, 14-file `*ctx.md` reference, and verified benchmark/eval quality tables.
 - Preserved exactly five canonical public skills, four read-only public MCP tools, and zero em dashes across all files.
 
 ## [0.0.4.5.11] - 2026-10-27

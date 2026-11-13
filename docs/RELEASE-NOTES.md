@@ -1,21 +1,24 @@
 # Release Notes
 
-## v0.0.4.5.12 - 14-File Project Operating Context (`*ctx.md`), Audit Remediation & Router Hardening
+## v0.0.4.5.12 - 14-File Project Operating Context (`*ctx.md`), Router `a2.3`, Audit Remediation & 22-Host Sync
 
-Hypertaks 0.0.4.5.12 upgrades the Project Operating Context (POC) workspace to 14 canonical `*ctx.md` deliverables (adding `verificationctx.md`), remediates runtime and router audit findings, and synchronizes all 22 host distribution surfaces to `0.0.4.5.12`.
+Hypertaks 0.0.4.5.12 upgrades the Project Operating Context (POC) workspace to 14 canonical `*ctx.md` deliverables (adding `verificationctx.md`), hardens the bilingual English/Indonesian router (`ROUTE_POLICY_VERSION = "a2.3"`) with opt-in diagnostics, fixes serverless build-timestamp metadata on Vercel, unifies all 22 host distribution surfaces on `0.0.4.5.12` (including OpenAI metadata cleanup), and overhauls the landing documentation.
 
 ### What shipped
 
-- **14 Living Context Deliverables (`*ctx.md`)**: Upgraded the Project Operating Context convention from 13 `.ctx.md` files to 14 `*ctx.md` files (`Visionctx.md`, `Requirementsctx.md`, `U-Experiencectx.md`, `architecturectx.md`, `lawctx.md`, `databasectx.md`, `designctx.md`, `apictx.md`, `coding-rulesctx.md`, `roadmapctx.md`, `preferencectx.md`, `prompt-build-continunity-promptctx.md`, `securityctx.md`, and `verificationctx.md`).
-- **Clause-Safe Negation & Locale Detection**: Scoped explicit skill negation per clause in `runtime/public-skill-router.ts` and refined Indonesian locale detection over ASCII fallbacks.
+- **14 Living Context Deliverables (`*ctx.md`)**: Upgraded the Project Operating Context convention from 13 `.ctx.md` files to 14 `*ctx.md` files (`Visionctx.md`, `Requirementsctx.md`, `U-Experiencectx.md`, `architecturectx.md`, `lawctx.md`, `databasectx.md`, `designctx.md`, `apictx.md`, `coding-rulesctx.md`, `roadmapctx.md`, `preferencectx.md`, `prompt-build-continunity-promptctx.md`, `securityctx.md`, and `verificationctx.md`), paired with 5-layer `hypertaks context verify`.
+- **Public Skill Router `a2.3` & Diagnostics**: Scoped explicit negation and verify-route guards per clause with cross-locale negation isolation (`en`/`id`), prevented verify fallback resurrection on explicitly negated clauses, hardened Indonesian vs. English code-switching locale detection, added `brain` idiom exclusions, and introduced token-safe `diagnostics` levels (`none`, `compact`, `full`) plus immutable runtime identity fields (`routePolicyVersion`, `routerRulesDigest`, `buildRevision`, `buildTimestamp`).
+- **Vercel Build-Metadata Timestamp & Auto-Deploy**: Added `.build/runtime/build-metadata.json` emission to `npm run build:runtime`, bundled it in `vercel.json` `includeFiles`, enforced `minPlausibleMs` against frozen Lambda file mtimes, and re-enabled automatic `main` deployment.
+- **Unified `0.0.4.5.12` Packaging Across 22 Hosts**: Eliminated the legacy OpenAI `packageVersion` split and stale submission `.zip` build artifacts so all 22 host adapters and distribution records share a single canonical `0.0.4.5.12` version.
 - **Bounded Direct Search**: Added directory exclusions (`node_modules`, `.hypertaks`, `.build`, `dist`) and execution bounds (`timeout: 15_000`, `maxBuffer: 8 MB`) to `directSearch` in `runtime/founder-brain.ts`.
 - **Orchestrator & Context Packer Hardening**: `packContextForNode` incorporates on-disk file sizes (up to 256 KB per file) into token budget estimation, and `OrchestratorEngine.executeWaveSchedule` propagates `BLOCKED` status to downstream dependent nodes when a wave fails.
 - **Governance Floor vs. Work Parallelism Guard**: Clarified in `intake-protocol.md` that single-domain tasks reaching high scores via reversibility or audit-evidence points enforce the Deep Gate, per-action T1 approval, and a dedicated QA/Red-Team pass without padding artificial domains.
+- **Comprehensive `README.md` Overhaul**: Streamlined quick-start and 22-host installation routes (including live HTTPS remote MCP), complete Phase 0 to Phase 5 workflow walkthrough, CLI reference, and verified test/eval quality reporting.
 
 ### Preserved invariants
 
 - Exactly five canonical public skills (`hypertaks`, `hypertaks-verify`, `hypertaks-brain`, `hypertaks-graph`, `hypertaks-continuity`).
-- Exactly four read-only public remote MCP tools.
+- Exactly four read-only public remote MCP tools (`hypertaks_manifest`, `hypertaks_get_skill`, `hypertaks_route`, `hypertaks_verify_installation`).
 - Zero em dashes (U+2014) across all code, tests, documentation, and metadata.
 - Shared product version synchronized across all manifests at `0.0.4.5.12`.
 
