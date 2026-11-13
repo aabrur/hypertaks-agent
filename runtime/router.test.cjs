@@ -496,6 +496,7 @@ assert.deepEqual([...router.PUBLIC_SKILLS], [
   assert.equal(identity.routerRulesDigest, router.computeRouterRulesDigest());
   assert.match(identity.buildRevision, /^(unknown|[0-9a-f]{7,64})$/);
   assert.match(identity.buildTimestamp, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/);
+  assert.ok(Date.parse(identity.buildTimestamp) > Date.UTC(2025, 0, 1));
   assert.deepEqual([...identity.supportedLocales], ['en', 'id']);
 
   // FLAW-01..03 regression checks (action-object brain, skillAliases, ID code-switching)

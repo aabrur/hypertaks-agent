@@ -12,7 +12,8 @@
  */
 
 import { createHash } from "node:crypto";
-import { statSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 export const PUBLIC_SKILLS = [
   "hypertaks",
@@ -1173,9 +1174,24 @@ function readTrustedBuildTimestamp(): string {
       return value;
     }
   }
+  const minPlausibleMs = Date.UTC(2020, 0, 1);
+  try {
+    const rawMeta = readFileSync(join(__dirname, "build-metadata.json"), "utf8");
+    const parsedMeta = JSON.parse(rawMeta) as { buildTimestamp?: unknown };
+    if (
+      typeof parsedMeta.buildTimestamp === "string" &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(parsedMeta.buildTimestamp) &&
+      Date.parse(parsedMeta.buildTimestamp) > minPlausibleMs
+    ) {
+      return parsedMeta.buildTimestamp;
+    }
+  } catch {
+    // Compiled build metadata file is optional under raw tsc invocations.
+  }
   try {
     const stats = statSync(__filename);
-    if (Number.isFinite(stats.mtimeMs) && stats.mtimeMs > 0) {
+    // Reject reproducible-build / Lambda layer epoch clamps (e.g. 2018-10-20T01:46:40Z).
+    if (Number.isFinite(stats.mtimeMs) && stats.mtimeMs > minPlausibleMs) {
       return new Date(stats.mtimeMs).toISOString();
     }
   } catch {

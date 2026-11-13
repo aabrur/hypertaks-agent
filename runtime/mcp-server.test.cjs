@@ -184,6 +184,7 @@ test("manifest and installation verification preserve five-skill identity", asyn
   assert.match(content.routerRulesDigest, /^[a-f0-9]{64}$/);
   assert.match(String(content.buildRevision), /^(unknown|[0-9a-f]{7,64})$/i);
   assert.match(String(content.buildTimestamp), /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/);
+  assert.ok(Date.parse(String(content.buildTimestamp)) > Date.UTC(2025, 0, 1));
   assert.ok(Array.isArray(content.supportedLocales));
 
   const verified = await rpc(server.baseUrl, {

@@ -4,7 +4,7 @@
   "outputDirectory": ".build/runtime",
   "functions": {
     "api/*.mjs": {
-      "includeFiles": "{skills/**,assets/Hypertask.svg}"
+      "includeFiles": "{skills/**,assets/Hypertask.svg,.build/runtime/build-metadata.json}"
     }
   }
 }
